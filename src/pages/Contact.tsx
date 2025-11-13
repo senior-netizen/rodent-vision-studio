@@ -121,7 +121,7 @@ const Contact = () => {
                     <div className="space-y-1">
                       <div className="font-medium">Location</div>
                       <div className="text-muted-foreground">
-                        Harare, Zimbabwe
+                        Bulawayo, Zimbabwe
                         <br />
                         SADC Region
                       </div>
