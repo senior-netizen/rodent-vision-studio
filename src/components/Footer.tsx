@@ -7,6 +7,8 @@ const footerLinks = {
     { label: "Squirrel API Studio", href: "/projects/squirrel-api-studio" },
     { label: "ShedSense", href: "/projects/shedsense" },
     { label: "VAWT Lab", href: "/projects/vawt-lab" },
+    { label: "Lights Out", href: "/projects/lights-out" },
+    { label: "TrustChain", href: "/projects/trustchain" },
   ],
   Company: [
     { label: "Studio", href: "/studio" },
@@ -80,9 +82,14 @@ export const Footer = () => {
         </div>
 
         <div className="pt-8 border-t border-border/50 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Rodent Inc. All rights reserved.
-          </p>
+          <div className="space-y-1 text-center md:text-left">
+            <p className="text-sm text-muted-foreground">
+              © {new Date().getFullYear()} Rodent Inc. All rights reserved.
+            </p>
+            <p className="text-sm text-muted-foreground">
+              Rodent, Inc. is a trade name for SquirrelLab Technologies Pvt Ltd.
+            </p>
+          </div>
           <div className="flex items-center gap-6 text-sm text-muted-foreground">
             <Link to="/privacy" className="hover:text-accent transition-colors">
               Privacy Policy

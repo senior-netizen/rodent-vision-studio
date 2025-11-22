@@ -20,19 +20,20 @@ export const projects: Project[] = [
     slug: "squirrel-api-studio",
     name: "Squirrel API Studio",
     category: "DevTools",
-    headline: "Design, test, and ship production-grade APIs in minutes",
+    headline: "Design, test, and govern APIs that survive African network realities",
     summary:
-      "A premium API client and governance layer that makes collaboration, testing, and rollout feel effortless for African engineering teams.",
+      "A premium API workspace with offline modes, observability, and collaboration built for distributed teams shipping critical integrations across the continent.",
     problem:
-      "Teams juggle fragmented tools for API design, versioning, and security. Rollouts break, documentation lags, and governance is an afterthought.",
+      "Enterprise teams in Africa wrangle unreliable networks, fragmented tools, and slow approvals—pushing API delivery from weeks to months.",
     solution:
-      "Squirrel API Studio unifies API design, testing, analytics, and rollout controls with opinionated workflows built for bandwidth-constrained environments.",
+      "Squirrel API Studio compresses design, testing, and rollout into a single offline-capable surface with AI validation, queue simulation, and real-time governance.",
     features: [
-      "Visual design + contract testing with automatic changelogs",
-      "Team workspaces with granular environments and approvals",
-      "Mock servers, performance budgets, and regression snapshots",
-      "Zero-trust secrets handling and audit-grade logging",
-      "CLI + SDKs for CI/CD integration across stacks",
+      "AI-powered test and doc generation that understands African payment rails",
+      "Offline collections with bandwidth-aware diffing and sync",
+      "Queue and WebSocket simulators for mobile-first traffic",
+      "OAuth, MTLS, and secrets isolation with audit-grade logging",
+      "Observability overlays with latency, retries, and error budgets",
+      "Team workspaces, reviews, and rollout approvals",
     ],
     techStack: ["React", "TypeScript", "Node.js", "OpenAPI", "PostgreSQL"],
     status: "Private Beta",
@@ -125,21 +126,22 @@ export const projects: Project[] = [
     cta: "Request a walkthrough",
   },
   {
-    slug: "techchain",
+    slug: "trustchain",
     name: "TrustChain",
     category: "Fintech",
-    headline: "Transparent risk, claims, and treasury rails for Africa",
+    headline: "Transparent claims and payouts for insurers and cooperatives",
     summary:
-      "Hybrid on-chain/off-chain infrastructure for insurers, asset managers, and cooperatives to operate with trust and speed.",
+      "Hybrid blockchain infrastructure that makes policy storage, claims adjudication, and treasury flows verifiable end to end.",
     problem:
-      "Legacy core systems are opaque, slow to reconcile, and disconnected from modern digital channels across the continent.",
+      "Claims across the continent can take 30-90 days to settle, with little visibility for policyholders or reinsurers.",
     solution:
-      "TrustChain provides programmatic policies, automated claims adjudication, and DAO-style governance for collaborative funds.",
+      "TrustChain captures every claim and policy change on an auditable ledger, automates evidence checks, and unlocks programmatic payouts.",
     features: [
-      "Programmable policies and event-driven claims",
-      "Identity, KYC, and fraud controls tuned for regional regs",
-      "Treasury dashboards with on/off-ramp automation",
-      "Member governance with transparent voting and audits",
+      "Transparent policy storage with verifiable updates",
+      "Evidence-backed claims workflows and shared audit trails",
+      "Treasury automation with tokenized or fiat payouts",
+      "DAO-style voting for mutuals and captives",
+      "API hooks for reinsurer notifications and reserves",
     ],
     techStack: ["Solidity", "Node.js", "React", "PostgreSQL"],
     status: "In Development",
@@ -170,28 +172,53 @@ export const projects: Project[] = [
     slug: "vawt-lab",
     name: "VAWT Lab",
     category: "Hardware",
-    headline: "Vertical-axis wind and microgrid intelligence",
+    headline: "Vertical-axis wind hardware tuned for dense African cities",
     summary:
-      "Hardware R&D for compact turbines, smart inverters, and grid-edge analytics tailored to African urban density.",
+      "Biomimicry-inspired turbines with IoT telemetry, solar coupling, and predictive maintenance for rooftops and industrial parks.",
     problem:
-      "Traditional turbines underperform in turbulent urban wind and require expensive maintenance, limiting deployment in cities.",
+      "Urban wind in Lagos or Harare is turbulent and low-speed; traditional turbines stall and maintenance overwhelms OPEX.",
     solution:
-      "VAWT Lab prototypes vertical-axis hardware with modular blades, IoT telemetry, and predictive maintenance driven by digital twins.",
+      "Rodent Labs prototypes modular VAWTs with low-wind start torque, sensor-rich nacelles, and digital twins that forecast service windows.",
     features: [
-      "CFD-informed blade geometries for low-wind starts",
-      "Modular drivetrain for fast field servicing",
-      "Sensor stack with vibration, torque, and weather data",
-      "Digital twin with predictive maintenance models",
+      "IoT telemetry stack with vibration, torque, and weather feeds",
+      "Modular blades and drivetrain for 90-minute swaps",
+      "Hybrid solar coupling with shared inverters and storage",
+      "Predictive maintenance using digital twins and edge AI",
+      "Quiet, biomimicry-led aero profiles for rooftops",
     ],
     techStack: ["CAD", "CFD", "Embedded", "Edge AI"],
     status: "In Development",
     cta: "Collaborate with Labs",
+  },
+  {
+    slug: "lights-out",
+    name: "Lights Out",
+    category: "Energy",
+    headline: "Grid-aware utilities companion with smart alerts",
+    summary:
+      "Consumer and SME energy intelligence with region-based alerts, outage-resistant schedules, and a marketplace for backup options.",
+    problem:
+      "Load shedding across Zimbabwe and SADC still blindsides households and SMEs, leading to spoilage, diesel overspend, and unplanned downtime.",
+    solution:
+      "Lights Out tracks municipal APIs, citizen signals, and generator telemetry to deliver reliable schedules, predictive alerts, and a trusted backup marketplace.",
+    features: [
+      "Region-based alerts with language localization",
+      "Offline-first schedules for low-connectivity zones",
+      "Fault reporting with utility-friendly evidence bundles",
+      "Fuel market and solar marketplace with verified suppliers",
+      "Generator + battery monitoring with smart thresholds",
+      "Municipality and utility API partnerships for authoritative data",
+    ],
+    techStack: ["React", "IoT", "Edge Compute", "Mapbox", "PostgreSQL"],
+    status: "In Development",
+    cta: "Join the beta",
   },
 ];
 
 export const flagshipSlugs = [
   "squirrel-api-studio",
   "shedsense",
-  "techchain",
+  "trustchain",
   "vawt-lab",
+  "lights-out",
 ];
