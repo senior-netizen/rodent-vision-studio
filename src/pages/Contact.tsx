@@ -14,8 +14,13 @@ import {
 } from "@/components/ui/select";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { usePageMetadata } from "@/hooks/usePageMetadata";
 
 const Contact = () => {
+  usePageMetadata(
+    "Contact",
+    "Contact Rodent Inc. to collaborate on developer tools, energy intelligence, fintech, or hardware projects."
+  );
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
