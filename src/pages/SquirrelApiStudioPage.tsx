@@ -99,6 +99,24 @@ const audiences = [
   },
 ];
 
+const solutionHighlights = [
+  {
+    title: "Resilience for African networks",
+    detail:
+      "Bandwidth-aware sync, offline workspaces, and queue rehearsal mean Harare, Lagos, or Kigali teams keep shipping during fibre cuts.",
+  },
+  {
+    title: "Collaboration without drift",
+    detail:
+      "Team spaces, AI-generated changelogs, and review-ready diffs ensure regulators, partners, and engineers stay aligned.",
+  },
+  {
+    title: "Governed delivery",
+    detail:
+      "WebSocket and OAuth testers, secrets isolation, and observability overlays keep every rollout auditable and SLA-honest.",
+  },
+];
+
 const imageryBlocks = [
   {
     title: "Bandwidth-aware diffs",
@@ -119,7 +137,7 @@ const SquirrelApiStudioPage = () => {
     "Squirrel API Studio is Rodent's offline-first API workspace with AI validation, observability overlays, and rollout governance built for African engineering teams.";
 
   usePageMetadata("Squirrel API Studio", description, {
-    url: "https://rodent.inc/projects/squirrel-api-studio",
+    url: "https://rodent-vision-studio.vercel.app/projects/squirrel-api-studio",
   });
 
   const schema = {
@@ -140,7 +158,7 @@ const SquirrelApiStudioPage = () => {
       availability: "PreOrder",
       price: "0",
       priceCurrency: "USD",
-      url: "https://rodent.inc/projects/squirrel-api-studio",
+      url: "https://rodent-vision-studio.vercel.app/projects/squirrel-api-studio",
     },
   };
 
@@ -213,22 +231,59 @@ const SquirrelApiStudioPage = () => {
           </div>
         </section>
 
-        <section className="py-20" id="problem">
-          <div className="container mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-10 items-start">
-            <div className="space-y-4">
-              <h2 className="text-3xl lg:text-4xl font-bold">The problem</h2>
-              <p className="text-muted-foreground leading-relaxed text-lg">
-                African engineering teams battle intermittent connectivity, expensive bandwidth, and fragmented approval chains. Every new partner API adds risk—queues back up, retries explode, and documentation drifts the moment contracts change.
-              </p>
-            </div>
-            <div className="space-y-4">
-              <h2 className="text-3xl lg:text-4xl font-bold">Our approach</h2>
-              <p className="text-muted-foreground leading-relaxed text-lg">
-                Squirrel API Studio was built to keep shipping moving even when the internet is not. Offline-first workspaces, AI validation, and observability overlays mean your teams can design, test, and approve confidently—no matter where they sit.
-              </p>
-            </div>
+      <section className="py-20" id="problem">
+        <div className="container mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-10 items-start">
+          <div className="space-y-4">
+            <h2 className="text-3xl lg:text-4xl font-bold">The problem</h2>
+            <p className="text-muted-foreground leading-relaxed text-lg">
+              African engineering teams battle intermittent connectivity, expensive bandwidth, and fragmented approval chains. Every new partner API adds risk—queues back up, retries explode, and documentation drifts the moment contracts change.
+            </p>
+            <ul className="space-y-2 text-muted-foreground">
+              <li className="flex gap-2 text-sm">
+                <span aria-hidden>•</span>
+                <span>Cloud tools throttle or stall on 2G/3G fallbacks common outside CBDs.</span>
+              </li>
+              <li className="flex gap-2 text-sm">
+                <span aria-hidden>•</span>
+                <span>Banking and telco partners change contracts fast, leaving teams reconciling versions manually.</span>
+              </li>
+              <li className="flex gap-2 text-sm">
+                <span aria-hidden>•</span>
+                <span>Travel for in-person approvals slows launches while outages force repeated QA runs.</span>
+              </li>
+            </ul>
           </div>
-        </section>
+          <div className="space-y-4">
+            <h2 className="text-3xl lg:text-4xl font-bold">Our approach</h2>
+            <p className="text-muted-foreground leading-relaxed text-lg">
+              Squirrel API Studio was built to keep shipping moving even when the internet is not. Offline-first workspaces, AI validation, and observability overlays mean your teams can design, test, and approve confidently—no matter where they sit.
+            </p>
+            <p className="text-muted-foreground leading-relaxed text-lg">
+              We pair performance with accountability: every request, policy, and approval is logged, reproducible, and accessible to auditors and partners without sacrificing speed.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-secondary/30" id="solution">
+        <div className="container mx-auto px-6 lg:px-8 space-y-8">
+          <div className="space-y-3 text-center max-w-3xl mx-auto">
+            <p className="text-sm font-semibold text-accent uppercase tracking-[0.12em]">The solution</p>
+            <h2 className="text-3xl lg:text-4xl font-bold">Purpose-built for African delivery realities</h2>
+            <p className="text-muted-foreground">
+              From low-bandwidth sync to auditable rollouts, Squirrel API Studio compresses the entire API lifecycle into a single, resilient surface.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6">
+            {solutionHighlights.map((item) => (
+              <div key={item.title} className="glass rounded-2xl p-6 space-y-3 border border-border/60">
+                <h3 className="text-xl font-semibold">{item.title}</h3>
+                <p className="text-muted-foreground leading-relaxed text-sm">{item.detail}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
         <section className="py-20 bg-gradient-to-b from-secondary/40 via-background to-background" id="features">
           <div className="container mx-auto px-6 lg:px-8">

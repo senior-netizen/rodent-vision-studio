@@ -14,7 +14,7 @@ const areas = [
     title: "Energy & Hardware",
     description:
       "Grid intelligence, IoT sensors, and vertical-axis wind R&D tuned for the realities of African power systems.",
-    highlights: ["ShedSense", "VAWT Lab", "Edge telemetry"],
+    highlights: ["ShedSense", "Rodent Labs — VAWT", "Edge telemetry"],
     tone: "energy",
   },
   {

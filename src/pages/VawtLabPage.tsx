@@ -69,12 +69,30 @@ const audiences = [
   },
 ];
 
+const solutionHighlights = [
+  {
+    title: "Urban-tuned aerodynamics",
+    detail:
+      "CFD models trained on Harare and Lagos wind roses keep the turbine spinning in low, turbulent conditions other VAWTs ignore.",
+  },
+  {
+    title: "Telemetry-first hardware",
+    detail:
+      "Sensors across torque, vibration, weather, and power electronics feed dashboards and digital twins for predictive maintenance.",
+  },
+  {
+    title: "Hybrid energy stack",
+    detail:
+      "Shared inverters and storage orchestration allow solar + VAWT deployments without duplicating expensive infrastructure.",
+  },
+];
+
 const VawtLabPage = () => {
   const description =
     "Rodent Labs is engineering vertical-axis wind hardware for dense African cities—low-wind start torque, IoT telemetry, hybrid solar coupling, and predictive maintenance.";
 
   usePageMetadata("Rodent Labs — VAWT", description, {
-    url: "https://rodent.inc/projects/vawt-lab",
+    url: "https://rodent-vision-studio.vercel.app/projects/rodent-labs-vawt",
   });
 
   const schema = {
@@ -95,7 +113,7 @@ const VawtLabPage = () => {
       availability: "PreOrder",
       price: "0",
       priceCurrency: "USD",
-      url: "https://rodent.inc/projects/vawt-lab",
+      url: "https://rodent-vision-studio.vercel.app/projects/rodent-labs-vawt",
     },
   };
 
@@ -103,19 +121,19 @@ const VawtLabPage = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       <main>
-        <section className="pt-32 pb-24 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-energy/10 via-accent/10 to-background" aria-hidden />
-          <div className="container mx-auto px-6 lg:px-8 relative z-10">
-            <div className="max-w-5xl mx-auto text-center space-y-8 animate-fade-in">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-border/60">
-                <span className="text-sm font-semibold text-energy">Hardware + IoT R&D</span>
-              </div>
-              <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
-                Rodent Labs — Vertical-axis wind hardware for dense African cities
-              </h1>
-              <p className="text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                Biomimicry blades, IoT telemetry, and predictive maintenance to keep rooftops generating in low, turbulent wind.
-              </p>
+      <section className="pt-32 pb-24 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-energy/10 via-accent/10 to-background" aria-hidden />
+        <div className="container mx-auto px-6 lg:px-8 relative z-10">
+          <div className="max-w-5xl mx-auto text-center space-y-8 animate-fade-in">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-border/60">
+              <span className="text-sm font-semibold text-energy">Hardware + IoT R&D</span>
+            </div>
+            <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
+              Rodent Labs — Vertical-axis wind hardware for dense African cities
+            </h1>
+            <p className="text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+              Biomimicry blades, IoT telemetry, and predictive maintenance to keep rooftops generating in low, turbulent wind.
+            </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Button variant="hero" size="lg" asChild>
                   <Link to="#features">Explore Features</Link>
@@ -173,22 +191,59 @@ const VawtLabPage = () => {
           </div>
         </section>
 
-        <section className="py-20" id="problem">
-          <div className="container mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-10 items-start">
-            <div className="space-y-4">
-              <h2 className="text-3xl lg:text-4xl font-bold">The problem</h2>
-              <p className="text-muted-foreground leading-relaxed text-lg">
-                African cities have turbulent, low-speed wind; conventional turbines stall or burn through maintenance budgets. Diesel remains a default, even as costs spike.
-              </p>
-            </div>
-            <div className="space-y-4">
-              <h2 className="text-3xl lg:text-4xl font-bold">Our solution</h2>
-              <p className="text-muted-foreground leading-relaxed text-lg">
-                Rodent Labs combines biomimicry-inspired blades, an IoT telemetry stack, and digital twins. The result: turbines that start in gentle winds, stay quiet, and tell you when they need attention.
-              </p>
-            </div>
+      <section className="py-20" id="problem">
+        <div className="container mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-10 items-start">
+          <div className="space-y-4">
+            <h2 className="text-3xl lg:text-4xl font-bold">The problem</h2>
+            <p className="text-muted-foreground leading-relaxed text-lg">
+              African cities have turbulent, low-speed wind; conventional turbines stall or burn through maintenance budgets. Diesel remains a default, even as costs spike.
+            </p>
+            <ul className="space-y-2 text-muted-foreground">
+              <li className="flex gap-2 text-sm">
+                <span aria-hidden>•</span>
+                <span>Low rooftops and crowded skylines create chaotic airflows traditional turbines cannot capture.</span>
+              </li>
+              <li className="flex gap-2 text-sm">
+                <span aria-hidden>•</span>
+                <span>Importing spare parts and cranes inflates OPEX, making smaller installs financially risky.</span>
+              </li>
+              <li className="flex gap-2 text-sm">
+                <span aria-hidden>•</span>
+                <span>Diesel dependence drains budgets and increases noise and emissions near homes and hospitals.</span>
+              </li>
+            </ul>
           </div>
-        </section>
+          <div className="space-y-4">
+            <h2 className="text-3xl lg:text-4xl font-bold">Our solution</h2>
+            <p className="text-muted-foreground leading-relaxed text-lg">
+              Rodent Labs combines biomimicry-inspired blades, an IoT telemetry stack, and digital twins. The result: turbines that start in gentle winds, stay quiet, and tell you when they need attention.
+            </p>
+            <p className="text-muted-foreground leading-relaxed text-lg">
+              Modular blades, cartridge generators, and shared solar coupling make servicing predictable and minimize downtime even in hard-to-reach rooftops.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-secondary/30" id="solution">
+        <div className="container mx-auto px-6 lg:px-8 space-y-8">
+          <div className="space-y-3 text-center max-w-3xl mx-auto">
+            <p className="text-sm font-semibold text-energy uppercase tracking-[0.12em]">The solution</p>
+            <h2 className="text-3xl lg:text-4xl font-bold">Hardware, telemetry, and service in one loop</h2>
+            <p className="text-muted-foreground">
+              We design for rooftops that experience everything from Harmattan gusts to still mornings, keeping uptime high without expensive maintenance crews.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6">
+            {solutionHighlights.map((item) => (
+              <div key={item.title} className="glass rounded-2xl p-6 space-y-3 border border-border/60">
+                <h3 className="text-xl font-semibold">{item.title}</h3>
+                <p className="text-muted-foreground leading-relaxed text-sm">{item.detail}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
         <section className="py-20 bg-gradient-to-b from-secondary/40 via-background to-background" id="features">
           <div className="container mx-auto px-6 lg:px-8">

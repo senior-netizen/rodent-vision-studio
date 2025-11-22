@@ -72,11 +72,31 @@ const audiences = [
   },
 ];
 
+const solutionHighlights = [
+  {
+    title: "Verifiable from day one",
+    detail:
+      "Claims, policy updates, and evidence are hashed to a shared ledger so brokers, underwriters, and reinsurers see the same record in near real time.",
+  },
+  {
+    title: "Programmatic treasury",
+    detail:
+      "Smart disbursement rules trigger mobile money, bank, or tokenized payouts with controls for reserves and regulatory approvals.",
+  },
+  {
+    title: "Compliance-first rails",
+    detail:
+      "Audit exports, KYC hooks, and dispute-ready timelines help insurers satisfy regulators while serving policyholders faster.",
+  },
+];
+
 const TrustChainPage = () => {
   const description =
     "TrustChain is Rodent's hybrid blockchain infrastructure for transparent claims, verifiable policy storage, and programmable treasury automation across Africa.";
 
-  usePageMetadata("TrustChain", description, { url: "https://rodent.inc/projects/trustchain" });
+  usePageMetadata("TrustChain", description, {
+    url: "https://rodent-vision-studio.vercel.app/projects/trustchain",
+  });
 
   const schema = {
     "@context": "https://schema.org",
@@ -93,7 +113,7 @@ const TrustChainPage = () => {
       availability: "PreOrder",
       price: "0",
       priceCurrency: "USD",
-      url: "https://rodent.inc/projects/trustchain",
+      url: "https://rodent-vision-studio.vercel.app/projects/trustchain",
     },
   };
 
@@ -169,22 +189,59 @@ const TrustChainPage = () => {
           </div>
         </section>
 
-        <section className="py-20" id="problem">
-          <div className="container mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-10 items-start">
-            <div className="space-y-4">
-              <h2 className="text-3xl lg:text-4xl font-bold">The problem</h2>
-              <p className="text-muted-foreground leading-relaxed text-lg">
-                Claims across the continent can take months to resolve. Policyholders lose trust; reinsurers face reconciliation drags; regulators lack visibility.
-              </p>
-            </div>
-            <div className="space-y-4">
-              <h2 className="text-3xl lg:text-4xl font-bold">Our solution</h2>
-              <p className="text-muted-foreground leading-relaxed text-lg">
-                TrustChain combines transparent ledgers with pragmatic APIs. Everyone—from brokers to regulators—sees the same timeline, making disputes rare and payouts faster.
-              </p>
-            </div>
+      <section className="py-20" id="problem">
+        <div className="container mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-10 items-start">
+          <div className="space-y-4">
+            <h2 className="text-3xl lg:text-4xl font-bold">The problem</h2>
+            <p className="text-muted-foreground leading-relaxed text-lg">
+              Claims across the continent can take months to resolve. Policyholders lose trust; reinsurers face reconciliation drags; regulators lack visibility.
+            </p>
+            <ul className="space-y-2 text-muted-foreground">
+              <li className="flex gap-2 text-sm">
+                <span aria-hidden>•</span>
+                <span>Manual paperwork and opaque status updates frustrate policyholders waiting on payouts.</span>
+              </li>
+              <li className="flex gap-2 text-sm">
+                <span aria-hidden>•</span>
+                <span>Reinsurers struggle to verify exposure quickly, delaying settlements across borders.</span>
+              </li>
+              <li className="flex gap-2 text-sm">
+                <span aria-hidden>•</span>
+                <span>Regulators demand auditability, but fragmented systems make compliance expensive.</span>
+              </li>
+            </ul>
           </div>
-        </section>
+          <div className="space-y-4">
+            <h2 className="text-3xl lg:text-4xl font-bold">Our solution</h2>
+            <p className="text-muted-foreground leading-relaxed text-lg">
+              TrustChain combines transparent ledgers with pragmatic APIs. Everyone—from brokers to regulators—sees the same timeline, making disputes rare and payouts faster.
+            </p>
+            <p className="text-muted-foreground leading-relaxed text-lg">
+              With configurable privacy zones, African data residency, and arbitration-ready audit trails, TrustChain modernizes claims without forcing teams to rewrite their core systems.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-secondary/30" id="solution">
+        <div className="container mx-auto px-6 lg:px-8 space-y-8">
+          <div className="space-y-3 text-center max-w-3xl mx-auto">
+            <p className="text-sm font-semibold text-tech uppercase tracking-[0.12em]">The solution</p>
+            <h2 className="text-3xl lg:text-4xl font-bold">Proof, speed, and accountability</h2>
+            <p className="text-muted-foreground">
+              TrustChain merges on-ledger confidence with the usability insurers expect—no crypto jargon, just faster, auditable claims.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6">
+            {solutionHighlights.map((item) => (
+              <div key={item.title} className="glass rounded-2xl p-6 space-y-3 border border-border/60">
+                <h3 className="text-xl font-semibold">{item.title}</h3>
+                <p className="text-muted-foreground leading-relaxed text-sm">{item.detail}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
         <section className="py-20 bg-gradient-to-b from-secondary/40 via-background to-background" id="features">
           <div className="container mx-auto px-6 lg:px-8">
