@@ -79,11 +79,31 @@ const audiences = [
   },
 ];
 
+const solutionHighlights = [
+  {
+    title: "Multi-source truth",
+    detail:
+      "Municipal APIs, citizen reports, and IoT telemetry are fused to deliver reliable schedules even when one signal fails.",
+  },
+  {
+    title: "Offline-first experience",
+    detail:
+      "Schedules and alerts cache locally so households and SMEs in low-connectivity zones stay informed during rolling blackouts.",
+  },
+  {
+    title: "Actionable resiliency",
+    detail:
+      "Region-aware notifications link directly to vetted fuel, solar, and battery suppliers to reduce downtime and price gouging.",
+  },
+];
+
 const LightsOutPage = () => {
   const description =
     "Lights Out is Rodent's grid-aware utility companion—region-based alerts, offline schedules, predictive fault reporting, and a trusted marketplace for backup power.";
 
-  usePageMetadata("Lights Out", description, { url: "https://rodent.inc/projects/lights-out" });
+  usePageMetadata("Lights Out", description, {
+    url: "https://rodent-vision-studio.vercel.app/projects/lights-out",
+  });
 
   const schema = {
     "@context": "https://schema.org",
@@ -100,7 +120,7 @@ const LightsOutPage = () => {
       availability: "PreOrder",
       price: "0",
       priceCurrency: "USD",
-      url: "https://rodent.inc/projects/lights-out",
+      url: "https://rodent-vision-studio.vercel.app/projects/lights-out",
     },
   };
 
@@ -176,22 +196,59 @@ const LightsOutPage = () => {
           </div>
         </section>
 
-        <section className="py-20" id="problem">
-          <div className="container mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-10 items-start">
-            <div className="space-y-4">
-              <h2 className="text-3xl lg:text-4xl font-bold">The problem</h2>
-              <p className="text-muted-foreground leading-relaxed text-lg">
-                Load shedding cuts can exceed 12 hours a day. Families and SMEs face spoilage, stalled production, and fuel overspend because information is late, patchy, or expensive to access.
-              </p>
-            </div>
-            <div className="space-y-4">
-              <h2 className="text-3xl lg:text-4xl font-bold">The solution</h2>
-              <p className="text-muted-foreground leading-relaxed text-lg">
-                Lights Out fuses municipal APIs, crowdsourced signals, and IoT telemetry. The result is reliable schedules, predictive alerts, and a vetted marketplace that reduces downtime and wasted diesel.
-              </p>
-            </div>
+      <section className="py-20" id="problem">
+        <div className="container mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-10 items-start">
+          <div className="space-y-4">
+            <h2 className="text-3xl lg:text-4xl font-bold">The problem</h2>
+            <p className="text-muted-foreground leading-relaxed text-lg">
+              Load shedding cuts can exceed 12 hours a day. Families and SMEs face spoilage, stalled production, and fuel overspend because information is late, patchy, or expensive to access.
+            </p>
+            <ul className="space-y-2 text-muted-foreground">
+              <li className="flex gap-2 text-sm">
+                <span aria-hidden>•</span>
+                <span>Municipal feeds are often unreliable; SMS trees and WhatsApp forwards become the default source of truth.</span>
+              </li>
+              <li className="flex gap-2 text-sm">
+                <span aria-hidden>•</span>
+                <span>Backup fuel and solar stockouts happen without warning, driving up costs for SMEs.</span>
+              </li>
+              <li className="flex gap-2 text-sm">
+                <span aria-hidden>•</span>
+                <span>Residents lack a way to submit structured fault evidence that utilities can act on quickly.</span>
+              </li>
+            </ul>
           </div>
-        </section>
+          <div className="space-y-4">
+            <h2 className="text-3xl lg:text-4xl font-bold">The solution</h2>
+            <p className="text-muted-foreground leading-relaxed text-lg">
+              Lights Out fuses municipal APIs, crowdsourced signals, and IoT telemetry. The result is reliable schedules, predictive alerts, and a vetted marketplace that reduces downtime and wasted diesel.
+            </p>
+            <p className="text-muted-foreground leading-relaxed text-lg">
+              Communities, installers, and utilities see the same timeline, supported by localization in English, Shona, and Ndebele so nobody is left out.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-secondary/30" id="solution">
+        <div className="container mx-auto px-6 lg:px-8 space-y-8">
+          <div className="space-y-3 text-center max-w-3xl mx-auto">
+            <p className="text-sm font-semibold text-energy uppercase tracking-[0.12em]">The solution</p>
+            <h2 className="text-3xl lg:text-4xl font-bold">Reliability for every neighborhood</h2>
+            <p className="text-muted-foreground">
+              Whether you are in Harare CBD or a rural growth point, Lights Out keeps information flowing and backup options available.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6">
+            {solutionHighlights.map((item) => (
+              <div key={item.title} className="glass rounded-2xl p-6 space-y-3 border border-border/60">
+                <h3 className="text-xl font-semibold">{item.title}</h3>
+                <p className="text-muted-foreground leading-relaxed text-sm">{item.detail}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
         <section className="py-20 bg-gradient-to-b from-secondary/40 via-background to-background" id="features">
           <div className="container mx-auto px-6 lg:px-8">

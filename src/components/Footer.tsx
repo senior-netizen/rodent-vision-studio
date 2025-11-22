@@ -6,7 +6,7 @@ const footerLinks = {
     { label: "Portfolio", href: "/projects" },
     { label: "Squirrel API Studio", href: "/projects/squirrel-api-studio" },
     { label: "ShedSense", href: "/projects/shedsense" },
-    { label: "VAWT Lab", href: "/projects/vawt-lab" },
+    { label: "Rodent Labs — VAWT", href: "/projects/rodent-labs-vawt" },
     { label: "Lights Out", href: "/projects/lights-out" },
     { label: "TrustChain", href: "/projects/trustchain" },
   ],

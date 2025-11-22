@@ -169,8 +169,8 @@ export const projects: Project[] = [
     cta: "Join early access",
   },
   {
-    slug: "vawt-lab",
-    name: "VAWT Lab",
+    slug: "rodent-labs-vawt",
+    name: "Rodent Labs — VAWT",
     category: "Hardware",
     headline: "Vertical-axis wind hardware tuned for dense African cities",
     summary:
@@ -219,6 +219,6 @@ export const flagshipSlugs = [
   "squirrel-api-studio",
   "shedsense",
   "trustchain",
-  "vawt-lab",
+  "rodent-labs-vawt",
   "lights-out",
 ];
