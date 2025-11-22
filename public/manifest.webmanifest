@@ -1,0 +1,19 @@
+{
+  "name": "Rodent Inc.",
+  "short_name": "Rodent",
+  "description": "Rodent, Inc. — a trade name for Squirrellabs Technologies (Private) Limited, Bulawayo, Zimbabwe.",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "id": "/?source=pwa",
+  "display": "standalone",
+  "background_color": "#1d2025",
+  "theme_color": "#1d2025",
+  "icons": [
+    {
+      "src": "/favicon.svg?v=1.0.0",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
