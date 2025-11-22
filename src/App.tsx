@@ -9,6 +9,12 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import ShedSense from "./pages/ShedSense";
 import NotFound from "./pages/NotFound";
+import ProjectDetail from "./pages/ProjectDetail";
+import Studio from "./pages/Studio";
+import Labs from "./pages/Labs";
+import Opportunities from "./pages/Opportunities";
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
 
 const queryClient = new QueryClient();
 
@@ -20,10 +26,17 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/projects" element={<Products />} />
+          <Route path="/projects/:slug" element={<ProjectDetail />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/shedsense" element={<ShedSense />} />
           <Route path="/about" element={<About />} />
+          <Route path="/studio" element={<Studio />} />
+          <Route path="/labs" element={<Labs />} />
+          <Route path="/opportunities" element={<Opportunities />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/privacy" element={<Privacy />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

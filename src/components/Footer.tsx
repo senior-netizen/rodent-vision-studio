@@ -1,31 +1,29 @@
 import { Link } from "react-router-dom";
-import { Github, Twitter, Linkedin, Mail } from "lucide-react";
+import { Github, Linkedin, Mail } from "lucide-react";
 
 const footerLinks = {
-  Products: [
-    { label: "Squirrel API Studio", href: "/products/api-studio" },
-    { label: "Squirrel API Vision", href: "/products/api-vision" },
-    { label: "ShedSense", href: "/products/shedsense" },
-    { label: "TechChain", href: "/products/techchain" },
-  ],
-  Solutions: [
-    { label: "For Developers", href: "#developers" },
-    { label: "For Utilities", href: "#utilities" },
-    { label: "For Financial Institutions", href: "#fintech" },
-    { label: "For Enterprises", href: "#enterprises" },
+  Projects: [
+    { label: "Portfolio", href: "/projects" },
+    { label: "Squirrel API Studio", href: "/projects/squirrel-api-studio" },
+    { label: "ShedSense", href: "/projects/shedsense" },
+    { label: "VAWT Lab", href: "/projects/vawt-lab" },
   ],
   Company: [
-    { label: "About", href: "/about" },
-    { label: "Resources", href: "#resources" },
+    { label: "Studio", href: "/studio" },
+    { label: "Labs", href: "/labs" },
+    { label: "Work With Us", href: "/opportunities" },
     { label: "Contact", href: "/contact" },
+  ],
+  Resources: [
+    { label: "Privacy Policy", href: "/privacy" },
+    { label: "Terms of Use", href: "/terms" },
   ],
 };
 
 const socialLinks = [
-  { icon: Github, href: "#", label: "GitHub" },
-  { icon: Twitter, href: "#", label: "Twitter" },
-  { icon: Linkedin, href: "#", label: "LinkedIn" },
-  { icon: Mail, href: "/contact", label: "Email" },
+  { icon: Github, href: "https://github.com", label: "GitHub" },
+  { icon: Linkedin, href: "https://www.linkedin.com", label: "LinkedIn" },
+  { icon: Mail, href: "mailto:anesu@rodent.co.zw", label: "Email" },
 ];
 
 export const Footer = () => {
@@ -33,7 +31,6 @@ export const Footer = () => {
     <footer className="border-t border-border/50 bg-card/20 backdrop-blur-sm">
       <div className="container mx-auto px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-12">
-          {/* Brand Column */}
           <div className="lg:col-span-2 space-y-6">
             <Link to="/" className="flex items-center space-x-2 group">
               <div className="w-10 h-10 bg-gradient-to-br from-accent to-tech rounded-xl flex items-center justify-center shadow-glow">
@@ -42,27 +39,27 @@ export const Footer = () => {
               <span className="text-2xl font-bold gradient-text">Rodent Inc.</span>
             </Link>
             <p className="text-muted-foreground leading-relaxed max-w-md">
-              Building the infrastructure for the next decade of African innovation.
-              From electrons to endpoints, we ship production-grade solutions that matter.
+              Building the infrastructure for the next decade of African innovation. From electrons to endpoints, we ship production-grade solutions that matter.
             </p>
             <div className="flex items-center gap-4">
               {socialLinks.map((social) => {
                 const Icon = social.icon;
                 return (
-                  <Link
+                  <a
                     key={social.label}
-                    to={social.href}
+                    href={social.href}
                     className="w-10 h-10 rounded-lg glass flex items-center justify-center hover:bg-accent/10 hover:border-accent/30 transition-all"
                     aria-label={social.label}
+                    target={social.href.startsWith("http") ? "_blank" : undefined}
+                    rel={social.href.startsWith("http") ? "noreferrer" : undefined}
                   >
                     <Icon className="w-5 h-5 text-muted-foreground hover:text-accent transition-colors" />
-                  </Link>
+                  </a>
                 );
               })}
             </div>
           </div>
 
-          {/* Links Columns */}
           {Object.entries(footerLinks).map(([category, links]) => (
             <div key={category} className="space-y-4">
               <h3 className="font-semibold text-foreground">{category}</h3>
@@ -82,17 +79,16 @@ export const Footer = () => {
           ))}
         </div>
 
-        {/* Bottom Bar */}
         <div className="pt-8 border-t border-border/50 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground">
             © {new Date().getFullYear()} Rodent Inc. All rights reserved.
           </p>
           <div className="flex items-center gap-6 text-sm text-muted-foreground">
-            <Link to="#" className="hover:text-accent transition-colors">
+            <Link to="/privacy" className="hover:text-accent transition-colors">
               Privacy Policy
             </Link>
-            <Link to="#" className="hover:text-accent transition-colors">
-              Terms of Service
+            <Link to="/terms" className="hover:text-accent transition-colors">
+              Terms of Use
             </Link>
           </div>
         </div>

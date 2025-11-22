@@ -3,40 +3,44 @@ import { Code, Building2, Landmark, Rocket } from "lucide-react";
 const audiences = [
   {
     icon: Code,
-    title: "Developers",
-    description: "Build faster with our API platforms, CLI tools, and AI-powered development assistants.",
-    features: ["API Studio", "CLI Tools", "AI Assistance", "Documentation"],
+    title: "Engineering Teams",
+    description:
+      "API-first workflows, observability, and AI copilots that respect your constraints and compliance needs.",
+    features: ["Contract testing", "CLI automation", "AI runbooks", "Secure auth"],
   },
   {
     icon: Building2,
     title: "Utilities & Cities",
-    description: "Transform grid intelligence and citizen experience with real-time outage tracking and smart infrastructure.",
-    features: ["ShedSense API", "Outage Tracking", "VAWT Integration", "Analytics"],
+    description:
+      "Grid-aware tooling, outage intelligence, and IoT telemetry to keep critical services resilient when power is unstable.",
+    features: ["ShedSense API", "Load-shedding alerts", "Device telemetry", "Predictive models"],
   },
   {
     icon: Landmark,
-    title: "Banks & Insurers",
-    description: "Enable transparent, decentralized insurance models with blockchain-powered claims and governance.",
-    features: ["TechChain Platform", "DAO Governance", "Claims Automation", "Risk Analytics"],
+    title: "Financial Institutions",
+    description:
+      "Transparent rails for insurance, treasury, and compliance with programmable governance baked in.",
+    features: ["TrustChain", "KYC & fraud", "Treasury automation", "Audit trails"],
   },
   {
     icon: Rocket,
-    title: "Startups & Enterprises",
-    description: "Deploy production-ready infrastructure for property management, energy monitoring, and fintech.",
-    features: ["White-label Solutions", "Enterprise APIs", "Scalable Architecture", "24/7 Support"],
+    title: "Studios & Enterprises",
+    description:
+      "Co-creation, pilots, and venture building for property, mobility, and infrastructure products across Africa.",
+    features: ["Rapid prototyping", "Embedded payments", "Energy dashboards", "Co-branded launches"],
   },
 ];
 
 export const WhoWeServe = () => {
   return (
-    <section className="py-24 relative">
+    <section id="who-we-serve" className="py-24 relative">
       <div className="container mx-auto px-6 lg:px-8">
         <div className="text-center mb-16 space-y-4 animate-fade-in">
           <h2 className="text-4xl lg:text-5xl font-bold">
-            Who We <span className="gradient-text">Serve</span>
+            Built for the <span className="gradient-text">Builders</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Solutions tailored for every part of the innovation ecosystem
+            Whether you're coding, financing, or deploying infrastructure, Rodent delivers dependable rails.
           </p>
         </div>
 
@@ -56,16 +60,11 @@ export const WhoWeServe = () => {
                   <div className="space-y-4 flex-1">
                     <div className="space-y-2">
                       <h3 className="text-2xl font-semibold">{audience.title}</h3>
-                      <p className="text-muted-foreground leading-relaxed">
-                        {audience.description}
-                      </p>
+                      <p className="text-muted-foreground leading-relaxed">{audience.description}</p>
                     </div>
                     <div className="grid grid-cols-2 gap-2">
-                      {audience.features.map((feature) => (
-                        <div
-                          key={feature}
-                          className="flex items-center gap-2 text-sm text-muted-foreground"
-                        >
+                      {audiences[index].features.map((feature) => (
+                        <div key={feature} className="flex items-center gap-2 text-sm text-muted-foreground">
                           <div className="w-1.5 h-1.5 rounded-full bg-accent" />
                           {feature}
                         </div>
