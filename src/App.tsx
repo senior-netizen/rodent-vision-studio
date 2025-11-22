@@ -8,6 +8,10 @@ import Products from "./pages/Products";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import ShedSense from "./pages/ShedSense";
+import SquirrelApiStudioPage from "./pages/SquirrelApiStudioPage";
+import VawtLabPage from "./pages/VawtLabPage";
+import LightsOutPage from "./pages/LightsOutPage";
+import TrustChainPage from "./pages/TrustChainPage";
 import NotFound from "./pages/NotFound";
 import ProjectDetail from "./pages/ProjectDetail";
 import Studio from "./pages/Studio";
@@ -27,6 +31,10 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/projects" element={<Products />} />
+          <Route path="/projects/squirrel-api-studio" element={<SquirrelApiStudioPage />} />
+          <Route path="/projects/vawt-lab" element={<VawtLabPage />} />
+          <Route path="/projects/lights-out" element={<LightsOutPage />} />
+          <Route path="/projects/trustchain" element={<TrustChainPage />} />
           <Route path="/projects/:slug" element={<ProjectDetail />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/shedsense" element={<ShedSense />} />
