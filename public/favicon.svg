@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Rodent Inc. Favicon</title>
+  <desc id="desc">Circular Rodent Inc. mark with teal ring and orange rodent profile</desc>
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="65%">
+      <stop offset="0%" stop-color="#1d2025" />
+      <stop offset="100%" stop-color="#24282e" />
+    </radialGradient>
+    <linearGradient id="ear" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#2ec2ea" />
+      <stop offset="100%" stop-color="#33e6e6" />
+    </linearGradient>
+  </defs>
+  <circle cx="256" cy="256" r="240" fill="url(#bg)" stroke="#33e6e6" stroke-width="18" />
+  <ellipse cx="248" cy="270" rx="120" ry="95" fill="#f9941f" />
+  <circle cx="188" cy="170" r="54" fill="url(#ear)" />
+  <circle cx="188" cy="170" r="34" fill="#2ec2ea" />
+  <circle cx="166" cy="156" r="12" fill="#ffffff" opacity="0.9" />
+  <ellipse cx="310" cy="272" rx="88" ry="68" fill="#2ec2ea" />
+  <circle cx="338" cy="276" r="14" fill="#33e6e6" />
+  <circle cx="262" cy="238" r="18" fill="#ffffff" />
+  <circle cx="262" cy="238" r="9" fill="#1d2025" />
+  <circle cx="292" cy="290" r="20" fill="#ffc878" opacity="0.8" />
+  <path d="M340 330 C 392 360, 430 330, 452 270" fill="none" stroke="#33e6e6" stroke-width="12" stroke-linecap="round" />
+  <circle cx="452" cy="270" r="8" fill="#33e6e6" />
+  <path d="M210 250 L140 236" stroke="#33e6e6" stroke-width="8" stroke-linecap="round" />
+  <path d="M214 268 L136 278" stroke="#33e6e6" stroke-width="8" stroke-linecap="round" />
+  <path d="M214 286 L146 306" stroke="#33e6e6" stroke-width="8" stroke-linecap="round" />
+</svg>
