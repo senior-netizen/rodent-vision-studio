@@ -23,8 +23,8 @@ const footerLinks = {
 };
 
 const socialLinks = [
-  { icon: Github, href: "https://github.com", label: "GitHub" },
-  { icon: Linkedin, href: "https://www.linkedin.com", label: "LinkedIn" },
+  { icon: Github, href: "https://github.com/Rodent-Inc", label: "GitHub" },
+  { icon: Linkedin, href: "https://zw.linkedin.com/company/rodent-zimbabwe", label: "LinkedIn" },
   { icon: Mail, href: "mailto:anesu@rodent.co.zw", label: "Email" },
 ];
 
