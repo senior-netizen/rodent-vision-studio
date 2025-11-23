@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { CTAButton } from "@/components/CTAButton";
 import { MobileNav } from "@/components/MobileNav";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { cn } from "@/lib/utils";
 
 export const Navigation = () => {
@@ -48,6 +49,7 @@ export const Navigation = () => {
           </div>
 
           <div className="hidden md:flex items-center space-x-3">
+            <ThemeToggle />
             <CTAButton to="/projects" className="px-4 py-2 text-sm">Explore Projects</CTAButton>
             <CTAButton to="/contact" variant="secondary" className="px-4 py-2 text-sm">Contact Team</CTAButton>
           </div>
