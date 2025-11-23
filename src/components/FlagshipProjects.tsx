@@ -1,9 +1,16 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { projects, flagshipSlugs } from "@/data/projects";
 import { BadgeCheck, ArrowUpRight } from "lucide-react";
+import { initTiltCards } from "@/effects/tiltCards";
 
 export const FlagshipProjects = () => {
   const featured = projects.filter((project) => flagshipSlugs.includes(project.slug));
+
+  useEffect(() => {
+    const cleanup = initTiltCards("#flagships [data-tilt-card]", 10);
+    return () => cleanup();
+  }, []);
 
   return (
     <section id="flagships" className="py-24 relative overflow-hidden">
@@ -35,6 +42,7 @@ export const FlagshipProjects = () => {
               key={project.slug}
               to={`/projects/${project.slug}`}
               className="group glass-hover rounded-2xl p-7 space-y-4 hover-lift animate-fade-in-up"
+              data-tilt-card
               style={{ animationDelay: `${index * 0.08}s` }}
             >
               <div className="flex items-center justify-between">

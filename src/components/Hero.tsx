@@ -1,11 +1,47 @@
+import { useEffect, useRef } from "react";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import heroDashboard from "@/assets/hero-dashboard.jpg";
+import { initParticleField } from "@/effects/particleField";
+import { initFloatingLogo } from "@/effects/floatingLogo";
+import { initParallax } from "@/effects/parallax";
 
 export const Hero = () => {
+  const heroRef = useRef<HTMLElement | null>(null);
+  const particleRef = useRef<HTMLDivElement | null>(null);
+  const logoRef = useRef<HTMLCanvasElement | null>(null);
+  const mediaRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    let cleanupField = () => {};
+    let cleanupLogo = () => {};
+    let cleanupParallax = () => {};
+
+    initParticleField(particleRef.current).then((cleanup) => {
+      cleanupField = cleanup;
+    });
+
+    initFloatingLogo(logoRef.current).then((cleanup) => {
+      cleanupLogo = cleanup;
+    });
+
+    cleanupParallax = initParallax([heroRef.current, mediaRef.current], { strength: 12 });
+
+    return () => {
+      cleanupField();
+      cleanupLogo();
+      cleanupParallax();
+    };
+  }, []);
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+    <section
+      ref={heroRef}
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16"
+      data-parallax-depth="8"
+    >
+      <div ref={particleRef} className="absolute inset-0 -z-10" aria-hidden />
       <div className="absolute inset-0 bg-gradient-glow opacity-50" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,hsl(var(--energy)/0.1),transparent_50%)]" />
 
@@ -29,13 +65,13 @@ export const Hero = () => {
             </p>
 
             <div className="flex flex-wrap gap-4">
-              <Button variant="hero" size="lg" asChild>
+              <Button variant="hero" size="lg" className="aurora-border" asChild>
                 <Link to="/projects">
                   Explore Our Work
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Link>
               </Button>
-              <Button variant="premium" size="lg" asChild>
+              <Button variant="premium" size="lg" className="aurora-border" asChild>
                 <Link to="/opportunities">Work With Us</Link>
               </Button>
             </div>
@@ -58,8 +94,12 @@ export const Hero = () => {
             </div>
           </div>
 
-          <div className="relative animate-fade-in">
-            <div className="relative group">
+          <div ref={mediaRef} className="relative animate-fade-in" data-parallax-depth="10">
+            <div className="absolute -right-6 -top-10 hidden lg:block">
+              <canvas ref={logoRef} className="floating-logo-canvas" aria-hidden />
+            </div>
+
+            <div className="relative group aurora-border">
               <div className="absolute -inset-4 bg-gradient-to-r from-accent/20 to-tech/20 rounded-3xl blur-3xl group-hover:blur-2xl transition-all duration-500 animate-glow" />
 
               <div className="relative glass rounded-2xl p-2 shadow-premium hover:shadow-glow transition-all duration-500 hover:-translate-y-2">

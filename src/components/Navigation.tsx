@@ -38,9 +38,9 @@ export const Navigation = () => {
                   key={link.href}
                   to={link.href}
                   className={cn(
-                    "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
+                    "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 nav-link-aurora",
                     "hover:text-foreground hover:bg-accent/10",
-                    isActive ? "text-foreground bg-accent/10" : "text-muted-foreground"
+                    isActive ? "text-foreground bg-accent/10 is-active" : "text-muted-foreground"
                   )}
                 >
                   {link.label}
@@ -50,10 +50,10 @@ export const Navigation = () => {
           </div>
 
           <div className="hidden md:flex items-center space-x-3">
-            <Button variant="ghost" size="sm" asChild>
+            <Button variant="ghost" size="sm" className="aurora-border" asChild>
               <Link to="/contact">Contact</Link>
             </Button>
-            <Button variant="hero" size="sm" asChild>
+            <Button variant="hero" size="sm" className="aurora-border" asChild>
               <Link to="/projects">Explore Our Work</Link>
             </Button>
           </div>
@@ -86,12 +86,12 @@ export const Navigation = () => {
             </Link>
           ))}
           <div className="pt-4 space-y-2">
-            <Button variant="ghost" size="sm" className="w-full" asChild>
+            <Button variant="ghost" size="sm" className="w-full aurora-border" asChild>
               <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>
                 Contact
               </Link>
             </Button>
-            <Button variant="hero" size="sm" className="w-full" asChild>
+            <Button variant="hero" size="sm" className="w-full aurora-border" asChild>
               <Link to="/projects" onClick={() => setMobileMenuOpen(false)}>
                 Explore Our Work
               </Link>
