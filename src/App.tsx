@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -19,38 +20,46 @@ import Labs from "./pages/Labs";
 import Opportunities from "./pages/Opportunities";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
+import { initSmoothScroll } from "./effects/parallax";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/projects" element={<Products />} />
-          <Route path="/projects/squirrel-api-studio" element={<SquirrelApiStudioPage />} />
-          <Route path="/projects/rodent-labs-vawt" element={<VawtLabPage />} />
-          <Route path="/projects/lights-out" element={<LightsOutPage />} />
-          <Route path="/projects/trustchain" element={<TrustChainPage />} />
-          <Route path="/projects/:slug" element={<ProjectDetail />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/products/shedsense" element={<ShedSense />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/studio" element={<Studio />} />
-          <Route path="/labs" element={<Labs />} />
-          <Route path="/opportunities" element={<Opportunities />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/terms" element={<Terms />} />
-          <Route path="/privacy" element={<Privacy />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  useEffect(() => {
+    const teardownSmooth = initSmoothScroll();
+    return () => teardownSmooth();
+  }, []);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/projects" element={<Products />} />
+            <Route path="/projects/squirrel-api-studio" element={<SquirrelApiStudioPage />} />
+            <Route path="/projects/rodent-labs-vawt" element={<VawtLabPage />} />
+            <Route path="/projects/lights-out" element={<LightsOutPage />} />
+            <Route path="/projects/trustchain" element={<TrustChainPage />} />
+            <Route path="/projects/:slug" element={<ProjectDetail />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/products/shedsense" element={<ShedSense />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/studio" element={<Studio />} />
+            <Route path="/labs" element={<Labs />} />
+            <Route path="/opportunities" element={<Opportunities />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy" element={<Privacy />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;

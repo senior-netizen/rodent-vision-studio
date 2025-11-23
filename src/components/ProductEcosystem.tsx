@@ -1,8 +1,15 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { projects } from "@/data/projects";
 import { ArrowUpRight } from "lucide-react";
+import { initTiltCards } from "@/effects/tiltCards";
 
 export const ProductEcosystem = () => {
+  useEffect(() => {
+    const cleanup = initTiltCards("#ecosystem [data-tilt-card]", 9);
+    return () => cleanup();
+  }, []);
+
   return (
     <section id="ecosystem" className="py-24 bg-card/20">
       <div className="container mx-auto px-6 lg:px-8">
@@ -19,6 +26,7 @@ export const ProductEcosystem = () => {
               key={product.slug}
               to={`/projects/${product.slug}`}
               className="group glass-hover rounded-2xl p-7 space-y-4 hover-lift animate-fade-in-up"
+              data-tilt-card
               style={{ animationDelay: `${index * 0.05}s` }}
             >
               <div className="flex items-center justify-between">
