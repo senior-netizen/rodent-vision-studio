@@ -107,8 +107,11 @@ const ShedSense = () => {
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Link>
               </Button>
-              <Button variant="premium" size="lg">
-                View Documentation
+              <Button variant="premium" size="lg" asChild>
+                <Link to="#api-docs">
+                  View API Documentation
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Link>
               </Button>
             </div>
 
@@ -148,7 +151,7 @@ const ShedSense = () => {
       </section>
 
       {/* Features Grid */}
-      <section className="py-20 relative overflow-hidden">
+      <section className="py-20 relative overflow-hidden" id="features">
         <div className="absolute inset-0 bg-gradient-tech opacity-10" />
         <div className="container mx-auto px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16 space-y-4">
@@ -240,12 +243,17 @@ const ShedSense = () => {
               </div>
 
               <div className="flex gap-4 pt-4">
-                <Button variant="outline" className="flex-1">
-                  <Smartphone className="w-4 h-4 mr-2" />
-                  Download App
+                <Button variant="outline" className="flex-1" asChild>
+                  <Link to="/contact">
+                    <Smartphone className="w-4 h-4 mr-2" />
+                    Request App Access
+                  </Link>
                 </Button>
-                <Button variant="premium" className="flex-1">
-                  View Features
+                <Button variant="premium" className="flex-1" asChild>
+                  <Link to="#features">
+                    View Features
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Link>
                 </Button>
               </div>
             </div>
@@ -254,7 +262,7 @@ const ShedSense = () => {
       </section>
 
       {/* API Documentation Preview */}
-      <section className="py-20 relative overflow-hidden">
+      <section className="py-20 relative overflow-hidden" id="api-docs">
         <div className="absolute inset-0 bg-gradient-glow opacity-30" />
         <div className="container mx-auto px-6 lg:px-8 relative z-10">
           <div className="max-w-5xl mx-auto">
@@ -270,8 +278,11 @@ const ShedSense = () => {
             <div className="glass rounded-2xl p-8 space-y-6 animate-fade-in">
               <div className="flex items-center justify-between">
                 <h3 className="text-2xl font-semibold">API Endpoints</h3>
-                <Button variant="premium" size="sm">
-                  Full Documentation
+                <Button variant="premium" size="sm" asChild>
+                  <Link to="/contact">
+                    Talk to DevRel
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Link>
                 </Button>
               </div>
 
@@ -315,8 +326,11 @@ fetch('https://api.shedsense.rodent.co.zw/v1/schedule/byo-area-12')
                 <Button variant="hero" className="flex-1" asChild>
                   <Link to="/contact">Get API Key</Link>
                 </Button>
-                <Button variant="outline" className="flex-1">
-                  View Examples
+                <Button variant="outline" className="flex-1" asChild>
+                  <Link to="/contact">
+                    Request Example Collection
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Link>
                 </Button>
               </div>
             </div>
@@ -343,8 +357,11 @@ fetch('https://api.shedsense.rodent.co.zw/v1/schedule/byo-area-12')
                     <ArrowRight className="w-5 h-5 ml-2" />
                   </Link>
                 </Button>
-                <Button variant="premium" size="lg">
-                  Schedule Demo
+                <Button variant="premium" size="lg" asChild>
+                  <Link to="/contact">
+                    Schedule Demo
+                    <ArrowRight className="w-5 h-5 ml-2" />
+                  </Link>
                 </Button>
               </div>
             </div>
