@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { cn } from "@/lib/utils";
 
 type NavLink = { label: string; href: string };
@@ -54,6 +55,10 @@ export const MobileNav = ({ navLinks }: MobileNavProps) => {
               </Link>
             );
           })}
+          <div className="pt-2 pb-4 flex items-center justify-between">
+            <span className="text-sm font-medium text-muted-foreground">Theme</span>
+            <ThemeToggle />
+          </div>
           <div className="pt-4 space-y-2">
             <Button variant="ghost" size="sm" className="w-full aurora-border" asChild>
               <Link to="/contact" onClick={() => setOpen(false)}>
