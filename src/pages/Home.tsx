@@ -1,13 +1,15 @@
+import { Suspense, lazy } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Hero } from "@/components/Hero";
-import { WhatWeBuild } from "@/components/WhatWeBuild";
-import { FlagshipProjects } from "@/components/FlagshipProjects";
-import { ProductEcosystem } from "@/components/ProductEcosystem";
-import { WhyRodent } from "@/components/WhyRodent";
-import { WhoWeServe } from "@/components/WhoWeServe";
-import { EngagementTracks } from "@/components/EngagementTracks";
 import { Footer } from "@/components/Footer";
 import { usePageMetadata } from "@/hooks/usePageMetadata";
+
+const WhatWeBuild = lazy(() => import("@/components/WhatWeBuild").then((m) => ({ default: m.WhatWeBuild })));
+const FlagshipProjects = lazy(() => import("@/components/FlagshipProjects").then((m) => ({ default: m.FlagshipProjects })));
+const ProductEcosystem = lazy(() => import("@/components/ProductEcosystem").then((m) => ({ default: m.ProductEcosystem })));
+const WhyRodent = lazy(() => import("@/components/WhyRodent").then((m) => ({ default: m.WhyRodent })));
+const WhoWeServe = lazy(() => import("@/components/WhoWeServe").then((m) => ({ default: m.WhoWeServe })));
+const EngagementTracks = lazy(() => import("@/components/EngagementTracks").then((m) => ({ default: m.EngagementTracks })));
 
 const Home = () => {
   usePageMetadata(
@@ -19,12 +21,14 @@ const Home = () => {
     <div className="min-h-screen">
       <Navigation />
       <Hero />
-      <WhatWeBuild />
-      <FlagshipProjects />
-      <ProductEcosystem />
-      <WhyRodent />
-      <WhoWeServe />
-      <EngagementTracks />
+      <Suspense fallback={<div className="py-16 text-center text-muted-foreground">Loading experience…</div>}>
+        <WhatWeBuild />
+        <FlagshipProjects />
+        <ProductEcosystem />
+        <WhyRodent />
+        <WhoWeServe />
+        <EngagementTracks />
+      </Suspense>
       <Footer />
     </div>
   );

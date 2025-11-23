@@ -21,11 +21,13 @@ import Opportunities from "./pages/Opportunities";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import { initSmoothScroll } from "./effects/parallax";
+import { shouldDeferHeavyEffects } from "./utils/performance";
 
 const queryClient = new QueryClient();
 
 const App = () => {
   useEffect(() => {
+    if (shouldDeferHeavyEffects()) return () => {};
     const teardownSmooth = initSmoothScroll();
     return () => teardownSmooth();
   }, []);

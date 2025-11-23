@@ -230,6 +230,8 @@ const ShedSense = () => {
                     src={lightsOutSchedule}
                     alt="Lights Out Schedule View"
                     className="w-full h-auto rounded-2xl shadow-premium group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
                 <div className="group relative overflow-hidden rounded-2xl">
@@ -238,6 +240,8 @@ const ShedSense = () => {
                     src={lightsOutMap}
                     alt="Lights Out Map View"
                     className="w-full h-auto rounded-2xl shadow-premium group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
               </div>

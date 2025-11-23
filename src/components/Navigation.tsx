@@ -1,11 +1,9 @@
-import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { CTAButton } from "@/components/CTAButton";
+import { MobileNav } from "@/components/MobileNav";
 import { cn } from "@/lib/utils";
 
 export const Navigation = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
 
   const navLinks = [
@@ -50,53 +48,11 @@ export const Navigation = () => {
           </div>
 
           <div className="hidden md:flex items-center space-x-3">
-            <Button variant="ghost" size="sm" className="aurora-border" asChild>
-              <Link to="/contact">Contact</Link>
-            </Button>
-            <Button variant="hero" size="sm" className="aurora-border" asChild>
-              <Link to="/projects">Explore Our Work</Link>
-            </Button>
+            <CTAButton to="/projects" className="px-4 py-2 text-sm">Explore Projects</CTAButton>
+            <CTAButton to="/contact" variant="secondary" className="px-4 py-2 text-sm">Contact Team</CTAButton>
           </div>
 
-          <button
-            className="md:hidden p-2 rounded-lg hover:bg-accent/10 transition-colors"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-          >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
-      </div>
-
-      <div
-        className={cn(
-          "md:hidden absolute top-16 left-0 right-0 glass border-b border-border/50 transition-all duration-300 overflow-hidden",
-          mobileMenuOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
-        )}
-      >
-        <div className="container mx-auto px-6 py-4 space-y-2">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              to={link.href}
-              className="block px-4 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/10 transition-all"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              {link.label}
-            </Link>
-          ))}
-          <div className="pt-4 space-y-2">
-            <Button variant="ghost" size="sm" className="w-full aurora-border" asChild>
-              <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>
-                Contact
-              </Link>
-            </Button>
-            <Button variant="hero" size="sm" className="w-full aurora-border" asChild>
-              <Link to="/projects" onClick={() => setMobileMenuOpen(false)}>
-                Explore Our Work
-              </Link>
-            </Button>
-          </div>
+          <MobileNav navLinks={navLinks} />
         </div>
       </div>
     </nav>
