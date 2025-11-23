@@ -110,6 +110,10 @@ All colors MUST be HSL.
     @apply bg-background text-foreground antialiased;
   }
 
+  a, button {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+  }
+
   html {
     scroll-behavior: smooth;
   }
@@ -158,6 +162,21 @@ All colors MUST be HSL.
 
   .gradient-text-energy {
     @apply bg-gradient-to-r from-energy to-accent bg-clip-text text-transparent;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+
+    .animate-fade-in,
+    .animate-fade-in-up,
+    .animate-slide-in-right {
+      animation: none !important;
+    }
   }
 }
 

@@ -24,6 +24,7 @@ export default defineConfig(({ mode }) => ({
       ...(hasLocalModule("lenis")
         ? {}
         : { lenis: path.resolve(__dirname, "./src/vendor/lenis-lite") }),
+      "framer-motion": path.resolve(__dirname, "./src/vendor/framer-motion"),
     },
   },
 }));

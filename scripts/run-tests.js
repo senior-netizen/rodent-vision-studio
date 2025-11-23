@@ -20,6 +20,7 @@ Object.defineProperty(globalThis, "navigator", {
 
 const { isFrameRateHealthy } = await import("../src/effects/threeEngine.js");
 const { shouldUseStaticBackground } = await import("../src/utils/gpuCheck.js");
+const { performanceBudget, shouldEnableWebGL } = await import("../src/utils/performance.js");
 
 // Performance expectation for mid-tier devices
 const fpsSamples = [45, 52, 47, 44, 49, 46];
@@ -29,5 +30,14 @@ assert.equal(isFrameRateHealthy(fpsSamples, 40), true, "Average FPS should stay 
 // @ts-ignore
 window.matchMedia = () => ({ matches: true });
 assert.equal(shouldUseStaticBackground(), true, "Reduced motion should trigger static fallback");
+
+// Lighthouse and viewport budgets present
+assert.deepEqual(performanceBudget.viewports, [360, 412, 768], "Expected responsive breakpoints for audits");
+assert.ok(performanceBudget.lighthouse.performance > 0.9, "Performance budget should be declared");
+
+// WebGL fallback detection
+// @ts-ignore
+window.WebGLRenderingContext = undefined;
+assert.equal(shouldEnableWebGL(), false, "WebGL disabled should block heavy effects");
 
 console.log("✅ Basic performance and fallback tests passed");

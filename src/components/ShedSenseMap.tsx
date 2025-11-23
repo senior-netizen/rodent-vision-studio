@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import mapboxgl from 'mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { AlertCircle } from 'lucide-react';
+import { shouldEnableWebGL } from '@/utils/performance';
 
 interface ShedSenseMapProps {
   className?: string;
@@ -12,15 +11,29 @@ interface ShedSenseMapProps {
 
 const ShedSenseMap = ({ className }: ShedSenseMapProps) => {
   const mapContainer = useRef<HTMLDivElement>(null);
-  const map = useRef<mapboxgl.Map | null>(null);
+  const map = useRef<any>(null);
   const [mapboxToken, setMapboxToken] = useState('');
   const [isMapLoaded, setIsMapLoaded] = useState(false);
+  const [isWebGLReady, setIsWebGLReady] = useState(shouldEnableWebGL());
 
-  const loadMap = (token: string) => {
+  useEffect(() => {
+    setIsWebGLReady(shouldEnableWebGL());
+  }, []);
+
+  const loadMap = async (token: string) => {
     if (!mapContainer.current || !token) return;
+    if (!shouldEnableWebGL()) {
+      setIsWebGLReady(false);
+      return;
+    }
+
+    const [{ default: mapboxgl }] = await Promise.all([
+      import('mapbox-gl'),
+      import('mapbox-gl/dist/mapbox-gl.css'),
+    ]);
 
     mapboxgl.accessToken = token;
-    
+
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/dark-v11',
@@ -28,7 +41,6 @@ const ShedSenseMap = ({ className }: ShedSenseMapProps) => {
       zoom: 6,
     });
 
-    // Add navigation controls
     map.current.addControl(
       new mapboxgl.NavigationControl({
         visualizePitch: true,
@@ -91,6 +103,15 @@ const ShedSenseMap = ({ className }: ShedSenseMapProps) => {
     return (
       <div className={className}>
         <div className="glass rounded-2xl p-8 space-y-6">
+          {!isWebGLReady && (
+            <div className="flex items-start gap-3 p-3 rounded-lg bg-destructive/10 border border-destructive/30" aria-live="polite">
+              <AlertCircle className="w-5 h-5 text-destructive mt-0.5" aria-hidden />
+              <p className="text-sm text-muted-foreground">
+                Your device or browser has WebGL disabled. Heavy map effects are paused to keep the experience smooth.
+              </p>
+            </div>
+          )}
+
           <div className="flex items-start gap-4 p-4 rounded-lg bg-accent/10 border border-accent/20">
             <AlertCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
             <div className="space-y-2 text-sm">
@@ -125,9 +146,9 @@ const ShedSenseMap = ({ className }: ShedSenseMapProps) => {
               onClick={() => loadMap(mapboxToken)}
               variant="hero"
               className="w-full"
-              disabled={!mapboxToken}
+              disabled={!mapboxToken || !isWebGLReady}
             >
-              Load Interactive Map
+              {isWebGLReady ? 'Load Interactive Map' : 'Enable WebGL to load map'}
             </Button>
           </div>
         </div>

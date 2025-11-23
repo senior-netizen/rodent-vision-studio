@@ -4,7 +4,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "framer-motion": ["./src/vendor/framer-motion"]
     },
     "noImplicitAny": false,
     "noUnusedParameters": false,
