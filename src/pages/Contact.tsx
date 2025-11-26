@@ -36,23 +36,71 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    const endpoint =
+      import.meta.env.VITE_CONTACT_ENDPOINT || "https://api.web3forms.com/submit";
+    const accessKey = import.meta.env.VITE_CONTACT_ACCESS_KEY;
 
-    toast({
-      title: "Message sent successfully!",
-      description: "We'll get back to you within 24 hours.",
-    });
+    if (!accessKey) {
+      toast({
+        title: "Missing contact configuration",
+        description:
+          "Set VITE_CONTACT_ACCESS_KEY in your environment to enable message delivery.",
+        variant: "destructive",
+      });
+      setIsSubmitting(false);
+      return;
+    }
 
-    setFormData({
-      name: "",
-      email: "",
-      company: "",
-      phone: "",
-      topic: "",
-      message: "",
-    });
-    setIsSubmitting(false);
+    try {
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          name: formData.name,
+          email: formData.email,
+          company: formData.company,
+          phone: formData.phone,
+          topic: formData.topic,
+          message: formData.message,
+          subject: `New contact from ${formData.name}`,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || "Failed to send message");
+      }
+
+      toast({
+        title: "Message sent successfully!",
+        description: "We'll get back to you within 24 hours.",
+      });
+
+      setFormData({
+        name: "",
+        email: "",
+        company: "",
+        phone: "",
+        topic: "",
+        message: "",
+      });
+    } catch (error) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Something went wrong sending your message.";
+      toast({
+        title: "Unable to deliver message",
+        description: message,
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (
