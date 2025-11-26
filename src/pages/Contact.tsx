@@ -101,6 +101,13 @@ const Contact = () => {
                       >
                         anesu@rodent.co.zw
                       </a>
+                      <div className="text-sm text-muted-foreground">Alternative contact</div>
+                      <a
+                        href="mailto:vulamachiri@rodent.co.zw"
+                        className="text-muted-foreground hover:text-tech transition-colors"
+                      >
+                        vulamachiri@rodent.co.zw
+                      </a>
                     </div>
                   </div>
 
