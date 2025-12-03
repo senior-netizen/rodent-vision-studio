@@ -1,8 +1,9 @@
-import gsap, { ScrollTrigger } from "gsap";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import { prefersReducedMotion } from "../utils/gpuCheck.js";
 
-gsap.registerPlugin?.(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger);
 
 export const initSmoothScroll = () => {
   if (prefersReducedMotion()) return () => {};
