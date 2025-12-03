@@ -26,5 +26,9 @@ export default defineConfig(({ mode }) => ({
         : { lenis: path.resolve(__dirname, "./src/vendor/lenis-lite") }),
       "framer-motion": path.resolve(__dirname, "./src/vendor/framer-motion"),
     },
+    dedupe: ["react", "react-dom"],
+  },
+  optimizeDeps: {
+    include: ["react", "react-dom"],
   },
 }));
