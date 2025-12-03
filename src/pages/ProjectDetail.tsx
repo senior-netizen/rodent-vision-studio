@@ -63,10 +63,10 @@ const ProjectDetail = () => {
                 </div>
                 {project.cta && (
                   <Button variant="hero" size="lg" asChild>
-                    <a href="/contact">
+                    <Link to="/contact">
                       {project.cta}
                       <ArrowUpRight className="w-4 h-4 ml-2" />
-                    </a>
+                    </Link>
                   </Button>
                 )}
               </div>

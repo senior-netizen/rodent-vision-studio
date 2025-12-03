@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { usePageMetadata } from "@/hooks/usePageMetadata";
@@ -54,16 +55,16 @@ const About = () => {
 
           <div className="flex flex-wrap gap-4 justify-center">
             <Button variant="hero" size="lg" className="aurora-border" asChild>
-              <a href="/studio">
+              <Link to="/studio">
                 Explore the Studio
                 <ArrowRight className="w-4 h-4 ml-2" />
-              </a>
+              </Link>
             </Button>
             <Button variant="premium" size="lg" className="aurora-border" asChild>
-              <a href="/labs">
+              <Link to="/labs">
                 Visit Labs
                 <ArrowRight className="w-4 h-4 ml-2" />
-              </a>
+              </Link>
             </Button>
           </div>
         </div>
