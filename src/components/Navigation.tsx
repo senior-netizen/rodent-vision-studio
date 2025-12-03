@@ -3,6 +3,7 @@ import { CTAButton } from "@/components/CTAButton";
 import { MobileNav } from "@/components/MobileNav";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { cn } from "@/lib/utils";
+import rodentLogo from "@/assets/rodent-logo.svg";
 
 export const Navigation = () => {
   const location = useLocation();
@@ -20,10 +21,15 @@ export const Navigation = () => {
       <div className="container mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center space-x-2 group">
-            <div className="w-8 h-8 bg-gradient-to-br from-accent to-tech rounded-lg flex items-center justify-center shadow-glow">
-              <span className="text-primary-foreground font-bold text-sm">R</span>
+            <div className="w-10 h-10 rounded-xl bg-card/60 border border-border/60 shadow-glow overflow-hidden">
+              <img
+                src={rodentLogo}
+                alt="Rodent Inc. logo"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
             </div>
-            <span className="text-xl font-bold gradient-text">Rodent Inc.</span>
+            <span className="text-xl font-bold gradient-text leading-tight">Rodent Inc.</span>
           </Link>
 
           <div className="hidden md:flex items-center space-x-1">
