@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { usePageMetadata } from "@/hooks/usePageMetadata";
@@ -71,13 +72,13 @@ const Labs = () => {
                       </span>
                     ))}
                   </div>
-                  <a
-                    href="/contact"
+                  <Link
+                    to="/contact"
                     className="inline-flex items-center gap-2 text-sm font-semibold text-accent"
                   >
                     Collaborate with Labs
                     <ArrowUpRight className="w-4 h-4" />
-                  </a>
+                  </Link>
                 </div>
               );
             })}

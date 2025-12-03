@@ -21,25 +21,32 @@ const variants: Record<NonNullable<CTAButtonProps["variant"]>, string> = {
     "glass border border-border/60 text-foreground hover:-translate-y-0.5 hover:shadow-premium",
 };
 
-export const CTAButton = forwardRef<
-  HTMLButtonElement | HTMLAnchorElement,
-  CTAButtonProps
->(function CTAButton({ to, href, children, variant = "primary", className, ...props }, ref) {
-  const Component = to ? Link : href ? "a" : "button";
-  const componentProps = to ? { to } : href ? { href } : {};
-  const type = !to && !href ? "button" : undefined;
+export const CTAButton = forwardRef<HTMLButtonElement, CTAButtonProps>(
+  function CTAButton({ to, href, children, variant = "primary", className, ...props }, ref) {
+    const classes = cn(baseStyles, variants[variant], className);
 
-  return (
-    <Component
-      ref={ref}
-      className={cn(baseStyles, variants[variant], className)}
-      type={type}
-      {...componentProps}
-      {...props}
-    >
-      {children}
-    </Component>
-  );
-});
+    if (to) {
+      return (
+        <Link to={to} className={classes} {...(props as React.AnchorHTMLAttributes<HTMLAnchorElement>)}>
+          {children}
+        </Link>
+      );
+    }
+
+    if (href) {
+      return (
+        <a href={href} className={classes} {...(props as React.AnchorHTMLAttributes<HTMLAnchorElement>)}>
+          {children}
+        </a>
+      );
+    }
+
+    return (
+      <button ref={ref} type="button" className={classes} {...(props as React.ButtonHTMLAttributes<HTMLButtonElement>)}>
+        {children}
+      </button>
+    );
+  }
+);
 
 export default CTAButton;
