@@ -1,91 +1,23 @@
-import { useEffect, useRef } from "react";
 import { ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
 import { CTAButton } from "@/components/CTAButton";
 import heroDashboard from "@/assets/hero-dashboard.jpg";
-import { shouldDeferHeavyEffects, dynamicImportGuard } from "@/utils/performance";
-import { motion } from "framer-motion";
 
 export const Hero = () => {
-  const heroRef = useRef<HTMLElement | null>(null);
-  const particleRef = useRef<HTMLDivElement | null>(null);
-  const logoRef = useRef<HTMLCanvasElement | null>(null);
-  const mediaRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (shouldDeferHeavyEffects()) return () => {};
-
-    let cleanupField = () => {};
-    let cleanupLogo = () => {};
-    let cleanupParallax = () => {};
-    let observer: IntersectionObserver | null = null;
-
-    const activateEffects = () => {
-      if (shouldDeferHeavyEffects()) return;
-
-      dynamicImportGuard(() => import("@/effects/particleField")).then((module) => {
-        module?.initParticleField?.(particleRef.current).then((cleanup) => {
-          cleanupField = cleanup;
-        });
-      });
-
-      dynamicImportGuard(() => import("@/effects/floatingLogo")).then((module) => {
-        module?.initFloatingLogo?.(logoRef.current).then((cleanup) => {
-          cleanupLogo = cleanup;
-        });
-      });
-
-      dynamicImportGuard(() => import("@/effects/parallax")).then((module) => {
-        cleanupParallax = module?.initParallax?.([heroRef.current, mediaRef.current], { strength: 12 }) ?? (() => {});
-      });
-    };
-
-    if (typeof window !== "undefined" && "IntersectionObserver" in window && heroRef.current) {
-      observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              activateEffects();
-              observer?.disconnect();
-            }
-          });
-        },
-        { threshold: 0.25 }
-      );
-
-      observer.observe(heroRef.current);
-    } else {
-      activateEffects();
-    }
-
-    return () => {
-      cleanupField();
-      cleanupLogo();
-      cleanupParallax();
-      observer?.disconnect();
-    };
-  }, []);
-
   return (
     <section
-      ref={heroRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16"
-      data-parallax-depth="8"
     >
-      <div ref={particleRef} className="absolute inset-0 -z-10" aria-hidden />
       <div className="absolute inset-0 bg-gradient-glow opacity-50" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,hsl(var(--energy)/0.1),transparent_50%)]" />
 
       <div className="container mx-auto px-6 lg:px-8 py-20 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <motion.div
-            className="space-y-8 animate-fade-in-up"
+          <div
+            className="space-y-8"
             aria-label="Rodent value proposition"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-accent/20" role="note">
-              <Sparkles className="w-4 h-4 text-accent animate-glow" aria-hidden />
+              <Sparkles className="w-4 h-4 text-accent" aria-hidden />
               <span className="text-sm font-medium text-muted-foreground">
                 Africa-first infrastructure studio built for unstable grids
               </span>
@@ -94,7 +26,7 @@ export const Hero = () => {
             <h1 className="text-5xl lg:text-7xl font-bold leading-tight tracking-tight">
               Rodent builds resilient
               <span className="gradient-text"> energy, API, and hardware stacks</span>
-               for Africa's operators
+               for Africa's operators
             </h1>
 
             <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-3xl">
@@ -131,28 +63,13 @@ export const Hero = () => {
                 <div className="text-sm text-muted-foreground">Verticalized delivery from sensor to cloud</div>
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            ref={mediaRef}
-            className="relative animate-fade-in"
-            data-parallax-depth="10"
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.9 }}
-          >
-            <div className="absolute -right-6 -top-10 hidden lg:block">
-              <canvas ref={logoRef} className="floating-logo-canvas" aria-hidden />
-            </div>
-
+          <div className="relative">
             <div className="relative group aurora-border">
-              <div className="absolute -inset-4 bg-gradient-to-r from-accent/20 to-tech/20 rounded-3xl blur-3xl group-hover:blur-2xl transition-all duration-500 animate-glow" />
+              <div className="absolute -inset-4 bg-gradient-to-r from-accent/20 to-tech/20 rounded-3xl blur-3xl transition-all duration-500" />
 
-              <motion.div
-                className="relative glass rounded-2xl p-2 shadow-premium hover:shadow-glow transition-all duration-500 hover:-translate-y-2"
-                whileHover={{ scale: 1.01 }}
-                transition={{ duration: 0.6 }}
-              >
+              <div className="relative glass rounded-2xl p-2 shadow-premium transition-all duration-500">
                 <img
                   src={heroDashboard}
                   alt="Rodent control plane interface"
@@ -169,10 +86,10 @@ export const Hero = () => {
                 <div className="absolute -bottom-4 -left-4 glass rounded-lg px-4 py-2 shadow-card border border-energy/30">
                   <div className="text-xs font-medium text-energy">Production ready</div>
                 </div>
-              </motion.div>
+              </div>
             </div>
 
-            <div className="absolute top-1/4 -right-8 hidden xl:block animate-slide-in-right">
+            <div className="absolute top-1/4 -right-8 hidden xl:block">
               <div className="glass rounded-lg p-4 shadow-card border border-border/50">
                 <div className="flex items-center gap-2 mb-1">
                   <ShieldCheck className="w-4 h-4 text-tech" aria-hidden />
@@ -183,7 +100,7 @@ export const Hero = () => {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
