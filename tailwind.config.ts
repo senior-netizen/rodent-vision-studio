@@ -61,6 +61,7 @@ export default {
         'gradient-tech': 'var(--gradient-tech)',
         'gradient-energy': 'var(--gradient-energy)',
         'gradient-glow': 'var(--gradient-glow)',
+        'gradient-radial': 'radial-gradient(circle, var(--tw-gradient-stops))',
       },
       boxShadow: {
         'premium': 'var(--shadow-premium)',
