@@ -171,6 +171,13 @@ const Contact = () => {
                       >
                         +263 78 700 8238
                       </a>
+                      <div className="text-sm text-muted-foreground">Alternative</div>
+                      <a
+                        href="tel:+263711950555"
+                        className="text-muted-foreground hover:text-energy transition-colors"
+                      >
+                        +263 71 195 0555
+                      </a>
                     </div>
                   </div>
 
