@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Github, Linkedin, Mail } from "lucide-react";
+import rodentLogo from "@/assets/rodent-logo.svg";
 
 const footerLinks = {
   Projects: [
@@ -35,10 +36,10 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-12">
           <div className="lg:col-span-2 space-y-6">
             <Link to="/" className="flex items-center space-x-2 group">
-              <div className="w-10 h-10 bg-gradient-to-br from-accent to-tech rounded-xl flex items-center justify-center shadow-glow">
-                <span className="text-primary-foreground font-bold">R</span>
+              <div className="w-12 h-12 rounded-2xl bg-card/60 border border-border/60 shadow-glow overflow-hidden">
+                <img src={rodentLogo} alt="Rodent Inc. logo" className="w-full h-full object-cover" loading="lazy" />
               </div>
-              <span className="text-2xl font-bold gradient-text">Rodent Inc.</span>
+              <span className="text-2xl font-bold gradient-text leading-tight">Rodent Inc.</span>
             </Link>
             <p className="text-muted-foreground leading-relaxed max-w-md">
               Building the infrastructure for the next decade of African innovation. From electrons to endpoints, we ship production-grade solutions that matter.

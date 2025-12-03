@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import rodentLogo from "@/assets/rodent-logo.svg";
 
 interface PreloaderProps {
   minDuration?: number;
@@ -45,13 +46,13 @@ export const Preloader = ({ minDuration = 1200 }: PreloaderProps) => {
           
           {/* Logo container */}
           <div className="relative w-24 h-24 flex items-center justify-center">
-            <div 
+            <div
               className={cn(
-                "w-16 h-16 bg-gradient-to-br from-accent via-tech to-energy rounded-xl flex items-center justify-center shadow-glow",
+                "w-20 h-20 rounded-2xl overflow-hidden shadow-glow ring-1 ring-border/70 bg-card/80",
                 "animate-[pulse_1.5s_ease-in-out_infinite]"
               )}
             >
-              <span className="text-primary-foreground font-bold text-2xl">R</span>
+              <img src={rodentLogo} alt="Rodent Inc. logo" className="w-full h-full object-cover" />
             </div>
           </div>
         </div>
