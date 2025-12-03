@@ -1,11 +1,11 @@
-import React, { forwardRef, useMemo, useState } from "react";
+import { forwardRef, useMemo, useState, createElement, type ReactNode, type CSSProperties, type ComponentType, type MouseEvent } from "react";
 import { prefersReducedMotion } from "@/utils/gpuCheck.js";
 
-const useSafeMotion = (style?: React.CSSProperties, initial?: React.CSSProperties, animate?: React.CSSProperties) => {
+const useSafeMotion = (style?: CSSProperties, initial?: CSSProperties, animate?: CSSProperties) => {
   const reduce = prefersReducedMotion();
   return useMemo(() => {
     if (reduce) return style;
-    return { ...initial, ...animate, ...style } as React.CSSProperties;
+    return { ...initial, ...animate, ...style } as CSSProperties;
   }, [style, initial, animate, reduce]);
 };
 
@@ -16,15 +16,15 @@ const createMotionComponent = (tag: keyof JSX.IntrinsicElements) =>
       const baseStyle = useSafeMotion(style, initial, animate);
       const hoverStyle = !prefersReducedMotion() && hovered && whileHover ? whileHover : {};
 
-      return React.createElement(tag, {
+      return createElement(tag, {
         ...props,
         ref,
         style: { ...baseStyle, ...hoverStyle, transition: transition?.duration ? `${transition.duration}s ease` : undefined },
-        onMouseEnter: (event: React.MouseEvent) => {
+        onMouseEnter: (event: MouseEvent) => {
           setHovered(true);
           props?.onMouseEnter?.(event);
         },
-        onMouseLeave: (event: React.MouseEvent) => {
+        onMouseLeave: (event: MouseEvent) => {
           setHovered(false);
           props?.onMouseLeave?.(event);
         },
@@ -33,7 +33,7 @@ const createMotionComponent = (tag: keyof JSX.IntrinsicElements) =>
     }
   );
 
-export const motion: Record<string, React.ComponentType<any>> = new Proxy(
+export const motion: Record<string, ComponentType<any>> = new Proxy(
   {},
   {
     get: (_target, key: string) => createMotionComponent(key as keyof JSX.IntrinsicElements),
@@ -41,6 +41,6 @@ export const motion: Record<string, React.ComponentType<any>> = new Proxy(
 );
 
 export const m = motion;
-export const AnimatePresence = ({ children }: { children: React.ReactNode }) => <>{children}</>;
-export const LazyMotion = ({ children }: { children: React.ReactNode }) => <>{children}</>;
+export const AnimatePresence = ({ children }: { children: ReactNode }) => <>{children}</>;
+export const LazyMotion = ({ children }: { children: ReactNode }) => <>{children}</>;
 export const useReducedMotion = () => prefersReducedMotion();
