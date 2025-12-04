@@ -3,7 +3,7 @@ import { CTAButton } from "@/components/CTAButton";
 import { MobileNav } from "@/components/MobileNav";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { cn } from "@/lib/utils";
-import rodentLogo from "@/assets/rodent-logo.svg";
+import rodentLogo from "@/assets/rodent-logo.jpeg";
 
 export const Navigation = () => {
   const location = useLocation();
