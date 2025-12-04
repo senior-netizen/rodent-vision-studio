@@ -45,7 +45,7 @@ export const Preloader = ({ minDuration = 1200 }: PreloaderProps) => {
           <div className="absolute inset-2 w-20 h-20 rounded-xl border-2 border-tech/40 animate-[spin_2s_linear_infinite_reverse]" />
           
           {/* Logo container */}
-          <div className="relative w-24 h-24 flex items-center justify-center">
+          <div className="relative w-24 h-24 flex items-center justify-center animate-[bounce-subtle_2s_ease-in-out_infinite]">
             <div
               className={cn(
                 "w-20 h-20 rounded-2xl overflow-hidden shadow-glow ring-1 ring-border/70 bg-card/80",
@@ -78,6 +78,10 @@ export const Preloader = ({ minDuration = 1200 }: PreloaderProps) => {
           0% { width: 0%; margin-left: 0; }
           50% { width: 70%; margin-left: 15%; }
           100% { width: 0%; margin-left: 100%; }
+        }
+        @keyframes bounce-subtle {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-8px); }
         }
       `}</style>
     </div>
