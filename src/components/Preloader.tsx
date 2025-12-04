@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-import rodentLogo from "@/assets/rodent-logo.jpeg";
+import { useTransparentLogo } from "@/hooks/useTransparentLogo";
 
 interface PreloaderProps {
   minDuration?: number;
@@ -9,6 +9,7 @@ interface PreloaderProps {
 export const Preloader = ({ minDuration = 1200 }: PreloaderProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isExiting, setIsExiting] = useState(false);
+  const { logoSrc } = useTransparentLogo();
 
   useEffect(() => {
     const minTimer = setTimeout(() => {
@@ -52,7 +53,7 @@ export const Preloader = ({ minDuration = 1200 }: PreloaderProps) => {
                 "animate-[pulse_1.5s_ease-in-out_infinite]"
               )}
             >
-              <img src={rodentLogo} alt="Rodent Inc. logo" className="w-full h-full object-cover" />
+              <img src={logoSrc} alt="Rodent Inc. logo" className="w-full h-full object-cover" />
             </div>
           </div>
         </div>

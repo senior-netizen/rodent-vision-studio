@@ -3,10 +3,11 @@ import { CTAButton } from "@/components/CTAButton";
 import { MobileNav } from "@/components/MobileNav";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { cn } from "@/lib/utils";
-import rodentLogo from "@/assets/rodent-logo.jpeg";
+import { useTransparentLogo } from "@/hooks/useTransparentLogo";
 
 export const Navigation = () => {
   const location = useLocation();
+  const { logoSrc } = useTransparentLogo();
 
   const navLinks = [
     { label: "Home", href: "/" },
@@ -23,7 +24,7 @@ export const Navigation = () => {
           <Link to="/" className="flex items-center space-x-2 group">
             <div className="w-10 h-10 rounded-xl bg-card/60 border border-border/60 shadow-glow overflow-hidden">
               <img
-                src={rodentLogo}
+                src={logoSrc}
                 alt="Rodent Inc. logo"
                 className="w-full h-full object-cover"
                 loading="lazy"
