@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Github, Linkedin, Mail } from "lucide-react";
-import { useTransparentLogo } from "@/hooks/useTransparentLogo";
+import rodentLogo from "@/assets/rodent-logo.jpeg";
 
 const footerLinks = {
   Projects: [
@@ -30,8 +30,6 @@ const socialLinks = [
 ];
 
 export const Footer = () => {
-  const { logoSrc } = useTransparentLogo();
-
   return (
     <footer className="border-t border-border/50 bg-card/20 backdrop-blur-sm">
       <div className="container mx-auto px-6 lg:px-8 py-16">
@@ -39,7 +37,7 @@ export const Footer = () => {
           <div className="lg:col-span-2 space-y-6">
             <Link to="/" className="flex items-center space-x-2 group">
               <div className="w-12 h-12 rounded-2xl bg-card/60 border border-border/60 shadow-glow overflow-hidden">
-                <img src={logoSrc} alt="Rodent Inc. logo" className="w-full h-full object-cover" loading="lazy" />
+                <img src={rodentLogo} alt="Rodent Inc. logo" className="w-full h-full object-cover" loading="lazy" />
               </div>
               <span className="text-2xl font-bold gradient-text leading-tight">Rodent Inc.</span>
             </Link>
