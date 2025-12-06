@@ -12,13 +12,13 @@ type CTAButtonProps = {
   React.AnchorHTMLAttributes<HTMLAnchorElement>;
 
 const baseStyles =
-  "inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 font-semibold shadow-premium transition-transform duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background";
+  "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-300 ease-apple focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
 const variants: Record<NonNullable<CTAButtonProps["variant"]>, string> = {
   primary:
-    "bg-gradient-to-r from-accent via-tech to-energy text-primary-foreground hover:shadow-glow hover:-translate-y-0.5",
+    "bg-primary text-primary-foreground shadow-sm hover:shadow-md hover:scale-[1.02] active:scale-[0.98]",
   secondary:
-    "glass border border-border/60 text-foreground hover:-translate-y-0.5 hover:shadow-premium",
+    "bg-secondary text-secondary-foreground border border-border/50 hover:bg-secondary/80 hover:border-border active:scale-[0.98]",
 };
 
 export const CTAButton = forwardRef<HTMLButtonElement, CTAButtonProps>(

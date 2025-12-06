@@ -1,102 +1,122 @@
-import { ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { CTAButton } from "@/components/CTAButton";
 import heroDashboard from "@/assets/hero-dashboard.jpg";
 
 export const Hero = () => {
   return (
-    <section
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16"
-    >
-      <div className="absolute inset-0 bg-gradient-glow opacity-50" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,hsl(var(--energy)/0.1),transparent_50%)]" />
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+      {/* Subtle gradient background */}
+      <div className="absolute inset-0 bg-gradient-hero" />
+      <div className="absolute inset-0 bg-gradient-glow" />
 
-      <div className="container mx-auto px-6 lg:px-8 py-20 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div
-            className="space-y-8"
-            aria-label="Rodent value proposition"
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-accent/20" role="note">
-              <Sparkles className="w-4 h-4 text-accent" aria-hidden />
+      <div className="container mx-auto px-6 lg:px-8 py-24 md:py-32 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+          {/* Left content */}
+          <div className="space-y-10 max-w-2xl" aria-label="Rodent value proposition">
+            {/* Badge */}
+            <div 
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/80 border border-border/50 animate-fade-in"
+              style={{ animationDelay: '0.1s' }}
+            >
+              <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
               <span className="text-sm font-medium text-muted-foreground">
-                Africa-first infrastructure studio built for unstable grids
+                Africa-first infrastructure studio
               </span>
             </div>
 
-            <h1 className="text-5xl lg:text-7xl font-bold leading-tight tracking-tight">
-              Rodent builds resilient
-              <span className="gradient-text"> energy, API, and hardware stacks</span>
-               for Africa's operators
+            {/* Headline */}
+            <h1 
+              className="text-5xl md:text-6xl lg:text-7xl font-semibold leading-[1.08] tracking-tight text-balance animate-fade-in-up"
+              style={{ animationDelay: '0.2s' }}
+            >
+              Building resilient
+              <span className="gradient-text"> infrastructure</span>
+              {" "}for Africa
             </h1>
 
-            <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-3xl">
-              We ship production control planes, fintech rails, and rugged IoT for governments, utilities, and venture-backed
-              teams—engineered on the ground so services stay online even when the grid does not.
+            {/* Description */}
+            <p 
+              className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl animate-fade-in-up"
+              style={{ animationDelay: '0.3s' }}
+            >
+              Production-grade APIs, energy intelligence, and hardware systems engineered for operators who need uptime—even when the grid doesn't.
             </p>
 
-            <p className="text-base lg:text-lg text-muted-foreground leading-relaxed max-w-3xl">
-              Trusted by ministries, utilities, and climate hardware builders who need uptime-first systems, integrated firmware
-              to cloud observability, and a partner that executes across frontier environments.
-            </p>
-
-            <div className="flex flex-wrap gap-4" role="group" aria-label="Primary actions">
-              <CTAButton to="/projects" className="shadow-glow">
+            {/* CTAs */}
+            <div 
+              className="flex flex-wrap gap-4 pt-2 animate-fade-in-up"
+              style={{ animationDelay: '0.4s' }}
+            >
+              <CTAButton to="/projects">
                 Explore Projects
-                <ArrowRight className="w-5 h-5" aria-hidden />
+                <ArrowRight className="w-4 h-4" aria-hidden />
               </CTAButton>
-              <CTAButton to="/contact" variant="secondary" className="backdrop-blur-lg">
+              <CTAButton to="/contact" variant="secondary">
                 Contact Team
               </CTAButton>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 pt-4" aria-label="Proof points">
+            {/* Stats */}
+            <div 
+              className="grid grid-cols-3 gap-8 pt-8 border-t border-border/50 animate-fade-in-up"
+              style={{ animationDelay: '0.5s' }}
+            >
               <div className="space-y-1">
-                <div className="text-3xl font-bold gradient-text">8+</div>
-                <div className="text-sm text-muted-foreground">Products engineered and shipped</div>
+                <div className="text-3xl md:text-4xl font-semibold gradient-text">8+</div>
+                <div className="text-sm text-muted-foreground">Products shipped</div>
               </div>
               <div className="space-y-1">
-                <div className="text-3xl font-bold gradient-text-energy">SADC</div>
-                <div className="text-sm text-muted-foreground">Built for power-unstable regions</div>
+                <div className="text-3xl md:text-4xl font-semibold gradient-text-energy">SADC</div>
+                <div className="text-sm text-muted-foreground">Regional focus</div>
               </div>
               <div className="space-y-1">
-                <div className="text-3xl font-bold gradient-text">API + Hardware</div>
-                <div className="text-sm text-muted-foreground">Verticalized delivery from sensor to cloud</div>
+                <div className="text-3xl md:text-4xl font-semibold gradient-text">Full</div>
+                <div className="text-sm text-muted-foreground">Stack delivery</div>
               </div>
             </div>
           </div>
 
-          <div className="relative">
-            <div className="relative group aurora-border">
-              <div className="absolute -inset-4 bg-gradient-to-r from-accent/20 to-tech/20 rounded-3xl blur-3xl transition-all duration-500" />
+          {/* Right visual */}
+          <div 
+            className="relative animate-fade-in-up lg:animate-slide-in-right"
+            style={{ animationDelay: '0.3s' }}
+          >
+            <div className="relative">
+              {/* Glow effect */}
+              <div className="absolute -inset-8 bg-gradient-to-r from-accent/10 via-tech/10 to-energy/10 rounded-3xl blur-3xl opacity-60" />
 
-              <div className="relative glass rounded-2xl p-2 shadow-premium transition-all duration-500">
+              {/* Main image container */}
+              <div className="relative rounded-2xl overflow-hidden border border-border/50 shadow-xl bg-card/50 backdrop-blur-sm">
                 <img
                   src={heroDashboard}
                   alt="Rodent control plane interface"
-                  className="rounded-xl w-full h-auto"
+                  className="w-full h-auto"
                   loading="eager"
                   decoding="async"
                   fetchPriority="high"
-                  sizes="(min-width: 1024px) 540px, 90vw"
                 />
 
-                <div className="absolute -top-4 -right-4 glass rounded-lg px-4 py-2 shadow-card border border-tech/30">
-                  <div className="text-xs font-medium text-tech">API Studio</div>
+                {/* Overlay badges */}
+                <div className="absolute top-4 right-4 px-3 py-1.5 rounded-full bg-card/90 backdrop-blur-md border border-border/50 shadow-lg">
+                  <span className="text-xs font-medium text-accent">API Studio</span>
                 </div>
-                <div className="absolute -bottom-4 -left-4 glass rounded-lg px-4 py-2 shadow-card border border-energy/30">
-                  <div className="text-xs font-medium text-energy">Production ready</div>
+                <div className="absolute bottom-4 left-4 px-3 py-1.5 rounded-full bg-card/90 backdrop-blur-md border border-border/50 shadow-lg">
+                  <span className="text-xs font-medium text-energy">Production ready</span>
                 </div>
               </div>
-            </div>
 
-            <div className="absolute top-1/4 -right-8 hidden xl:block">
-              <div className="glass rounded-lg p-4 shadow-card border border-border/50">
-                <div className="flex items-center gap-2 mb-1">
-                  <ShieldCheck className="w-4 h-4 text-tech" aria-hidden />
-                  <div className="text-xs text-muted-foreground">Zero-downtime delivery</div>
-                </div>
-                <div className="font-mono text-xs text-tech" aria-label="API response success">
-                  200 OK
+              {/* Floating card */}
+              <div className="absolute -bottom-6 -right-6 hidden lg:block">
+                <div className="rounded-xl bg-card/95 backdrop-blur-xl border border-border/50 p-4 shadow-xl">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
+                      <span className="text-accent font-mono text-sm font-medium">200</span>
+                    </div>
+                    <div>
+                      <div className="text-sm font-medium">Zero-downtime</div>
+                      <div className="text-xs text-muted-foreground">API response OK</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
