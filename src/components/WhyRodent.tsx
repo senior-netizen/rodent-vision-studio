@@ -35,34 +35,42 @@ const pillars = [
 
 export const WhyRodent = () => {
   return (
-    <section id="why-rodent" className="py-24 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-tech opacity-25" />
+    <section id="why-rodent" className="section-padding-sm relative overflow-hidden">
+      {/* Subtle gradient */}
+      <div className="absolute inset-0 bg-gradient-glow opacity-30" />
 
-      <div className="container mx-auto px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-16 space-y-4 animate-fade-in">
-          <h2 className="text-4xl lg:text-5xl font-bold">
-            Why <span className="gradient-text">Rodent</span>
+      <div className="container mx-auto relative z-10">
+        {/* Header */}
+        <div className="text-center mb-16 md:mb-20 max-w-3xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-6 animate-fade-in">
+            Why Rodent
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed animate-fade-in" style={{ animationDelay: '0.1s' }}>
             Building Africa's innovation infrastructure with precision, speed, and a relentless engineering culture.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Pillars grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {pillars.map((pillar, index) => {
             const Icon = pillar.icon;
             return (
               <div
                 key={pillar.title}
-                className="glass rounded-2xl p-8 space-y-6 hover-lift animate-fade-in-up"
-                style={{ animationDelay: `${index * 0.08}s` }}
+                className="group rounded-2xl bg-card border border-border/50 p-8 space-y-6 transition-all duration-300 hover:border-border hover:shadow-lg animate-fade-in-up"
+                style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-accent/20 to-tech/20 border border-accent/20 flex items-center justify-center">
+                {/* Icon */}
+                <div className="w-14 h-14 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center group-hover:bg-accent/15 transition-colors duration-300">
                   <Icon className="w-7 h-7 text-accent" />
                 </div>
+
+                {/* Content */}
                 <div className="space-y-3">
                   <h3 className="text-xl font-semibold">{pillar.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{pillar.description}</p>
+                  <p className="text-muted-foreground leading-relaxed">
+                    {pillar.description}
+                  </p>
                 </div>
               </div>
             );
