@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-import rodentLogo from "@/assets/rodent-logo.jpeg";
+import rodentLogo from "@/assets/rodent-logo-transparent.png";
 
 interface PreloaderProps {
   minDuration?: number;
