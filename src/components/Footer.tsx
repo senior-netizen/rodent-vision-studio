@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Github, Linkedin, Mail } from "lucide-react";
-import rodentLogo from "@/assets/rodent-logo.jpeg";
+import rodentLogo from "@/assets/rodent-logo-transparent.png";
 
 const footerLinks = {
   Projects: [
