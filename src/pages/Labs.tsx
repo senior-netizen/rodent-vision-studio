@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { usePageMetadata } from "@/hooks/usePageMetadata";
-import { Cpu, Wind, Activity, ArrowUpRight } from "lucide-react";
+import { Cpu, Wind, Activity, ArrowUpRight, Beaker } from "lucide-react";
 
 const experiments = [
   {
@@ -35,46 +35,61 @@ const Labs = () => {
   );
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-background">
       <Navigation />
-      <main className="pt-32 pb-24">
-        <div className="container mx-auto px-6 lg:px-8 space-y-14">
-          <div className="text-center space-y-4 animate-fade-in">
-            <h1 className="text-5xl lg:text-6xl font-bold">Rodent Labs</h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              The experimental arm of Rodent, building hardware and intelligence that turn African constraints into competitive advantage.
+      
+      <main className="section-padding">
+        <div className="container mx-auto px-6 lg:px-8 max-w-6xl">
+          {/* Hero Section */}
+          <div className="text-center space-y-6 mb-20 animate-fade-in">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border/50 text-sm text-muted-foreground">
+              <Beaker className="w-4 h-4 text-energy" />
+              Research & Development
+            </div>
+            <h1 className="text-5xl lg:text-7xl font-semibold tracking-tight">
+              Rodent Labs
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              The experimental arm of Rodent, building hardware and intelligence 
+              that turn African constraints into competitive advantage.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Experiments Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {experiments.map((experiment, index) => {
               const Icon = experiment.icon;
               return (
                 <div
                   key={experiment.title}
-                  className="glass rounded-2xl p-7 space-y-4 hover-lift animate-fade-in-up"
-                  style={{ animationDelay: `${index * 0.08}s` }}
+                  className="card-premium group animate-fade-in-up"
+                  style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-energy/20 to-tech/20 border border-border/60 flex items-center justify-center">
-                      <Icon className="w-6 h-6 text-energy" />
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-14 h-14 rounded-2xl bg-secondary flex items-center justify-center group-hover:bg-accent/10 transition-colors">
+                      <Icon className="w-7 h-7 text-energy" />
                     </div>
                     <h2 className="text-2xl font-semibold">{experiment.title}</h2>
                   </div>
-                  <p className="text-muted-foreground leading-relaxed">{experiment.description}</p>
-                  <div className="flex flex-wrap gap-2">
+                  
+                  <p className="text-muted-foreground leading-relaxed mb-6">
+                    {experiment.description}
+                  </p>
+                  
+                  <div className="flex flex-wrap gap-2 mb-6">
                     {experiment.outcomes.map((item) => (
                       <span
                         key={item}
-                        className="px-3 py-1 rounded-full text-xs bg-card border border-border/60 text-muted-foreground"
+                        className="badge-premium"
                       >
                         {item}
                       </span>
                     ))}
                   </div>
+                  
                   <Link
                     to="/contact"
-                    className="inline-flex items-center gap-2 text-sm font-semibold text-accent"
+                    className="inline-flex items-center gap-2 text-sm font-medium text-accent hover:text-accent/80 transition-colors"
                   >
                     Collaborate with Labs
                     <ArrowUpRight className="w-4 h-4" />
@@ -85,6 +100,7 @@ const Labs = () => {
           </div>
         </div>
       </main>
+      
       <Footer />
     </div>
   );

@@ -1,7 +1,7 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { usePageMetadata } from "@/hooks/usePageMetadata";
-import { Mail, Handshake, Users, Rocket, ArrowUpRight } from "lucide-react";
+import { Mail, Handshake, Users, Rocket, ArrowUpRight, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const lanes = [
@@ -38,40 +38,54 @@ const Opportunities = () => {
   );
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-background">
       <Navigation />
-      <main className="pt-32 pb-24">
-        <div className="container mx-auto px-6 lg:px-8 space-y-14">
-          <div className="text-center space-y-4 animate-fade-in">
-            <h1 className="text-5xl lg:text-6xl font-bold">Work With Us</h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Collaborate on groundbreaking products, join the studio, or partner with us to scale innovation across Africa.
+      
+      <main className="section-padding">
+        <div className="container mx-auto px-6 lg:px-8 max-w-6xl">
+          {/* Hero Section */}
+          <div className="text-center space-y-6 mb-20 animate-fade-in">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border/50 text-sm text-muted-foreground">
+              <Briefcase className="w-4 h-4 text-tech" />
+              Opportunities
+            </div>
+            <h1 className="text-5xl lg:text-7xl font-semibold tracking-tight">
+              Work With Us
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              Collaborate on groundbreaking products, join the studio, or partner 
+              with us to scale innovation across Africa.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Opportunities Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
             {lanes.map((lane, index) => {
               const Icon = lane.icon;
               return (
                 <a
                   key={lane.title}
                   href={lane.href}
-                  className="group glass-hover rounded-2xl p-7 space-y-4 hover-lift animate-fade-in-up"
-                  style={{ animationDelay: `${index * 0.08}s` }}
+                  className="card-premium group animate-fade-in-up"
+                  style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-tech/20 to-accent/20 border border-border/60 flex items-center justify-center">
-                        <Icon className="w-5 h-5 text-tech" />
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center group-hover:bg-accent/10 transition-colors">
+                        <Icon className="w-6 h-6 text-tech" />
                       </div>
                       <h2 className="text-xl font-semibold">{lane.title}</h2>
                     </div>
-                    <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-accent transition" />
+                    <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-accent transition-colors" />
                   </div>
-                  <p className="text-muted-foreground leading-relaxed">{lane.description}</p>
+                  
+                  <p className="text-muted-foreground leading-relaxed mb-6">
+                    {lane.description}
+                  </p>
+                  
                   <div className="space-y-2">
                     {lane.bullets.map((bullet) => (
-                      <div key={bullet} className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <div key={bullet} className="flex items-center gap-3 text-sm text-muted-foreground">
                         <div className="w-1.5 h-1.5 rounded-full bg-accent" />
                         {bullet}
                       </div>
@@ -82,25 +96,30 @@ const Opportunities = () => {
             })}
           </div>
 
+          {/* Direct Line CTA */}
           <div
             id="investors"
-            className="glass rounded-3xl p-8 border border-border/60 space-y-4 flex flex-col lg:flex-row lg:items-center lg:justify-between"
+            className="card-premium flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 animate-fade-in-up"
+            style={{ animationDelay: "0.3s" }}
           >
-            <div className="space-y-2">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-card border border-border/60 text-xs uppercase tracking-[0.08em] text-muted-foreground">
-                <Mail className="w-4 h-4" /> Direct line
+            <div className="space-y-3">
+              <div className="badge-premium">
+                <Mail className="w-3.5 h-3.5" /> 
+                Direct line
               </div>
               <h3 className="text-2xl font-semibold">Looking to collaborate on a launch or invest?</h3>
-              <p className="text-muted-foreground max-w-2xl">
-                Tell us about your mandate and timeline. We prioritize partners who move fast, value transparency, and want to build enduring infrastructure in Africa.
+              <p className="text-muted-foreground max-w-xl">
+                Tell us about your mandate and timeline. We prioritize partners who move fast, 
+                value transparency, and want to build enduring infrastructure in Africa.
               </p>
             </div>
-            <Button variant="hero" size="lg" asChild>
+            <Button size="lg" className="rounded-full px-8 flex-shrink-0" asChild>
               <a href="mailto:anesu@rodent.co.zw">anesu@rodent.co.zw</a>
             </Button>
           </div>
         </div>
       </main>
+      
       <Footer />
     </div>
   );

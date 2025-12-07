@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { usePageMetadata } from "@/hooks/usePageMetadata";
@@ -24,58 +25,73 @@ const Studio = () => {
   );
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-background">
       <Navigation />
-      <main className="pt-32 pb-24">
-        <div className="container mx-auto px-6 lg:px-8 space-y-16">
-          <section className="text-center space-y-6 animate-fade-in">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-accent/20">
+      
+      <main className="section-padding">
+        <div className="container mx-auto px-6 lg:px-8 max-w-6xl">
+          {/* Hero Section */}
+          <section className="text-center space-y-6 mb-20 animate-fade-in">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border/50 text-sm text-muted-foreground">
               <Sparkles className="w-4 h-4 text-accent" />
-              <span className="text-sm text-muted-foreground">Rodent Studio</span>
+              Rodent Studio
             </div>
-            <h1 className="text-5xl lg:text-6xl font-bold">
-              Engineering the backbone of African innovation
+            <h1 className="text-5xl lg:text-7xl font-semibold tracking-tight text-balance">
+              Engineering the backbone of
+              <span className="block gradient-text">African innovation</span>
             </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              We are a hybrid software-hardware studio building resilient infrastructure for builders across the continent—from developer APIs to turbines.
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              We are a hybrid software-hardware studio building resilient infrastructure 
+              for builders across the continent—from developer APIs to turbines.
             </p>
           </section>
 
-          <section className="grid lg:grid-cols-2 gap-10">
-            <div className="glass rounded-3xl p-8 space-y-5 shadow-premium">
-              <h2 className="text-2xl font-semibold">How we work</h2>
-              <p className="text-muted-foreground leading-relaxed">
-                Rodent operates like a product company and a lab. We run sprints with measurable outcomes, maintain production-grade pipelines, and pair design with engineering from day one.
+          {/* Content Grid */}
+          <section className="grid lg:grid-cols-2 gap-8">
+            {/* How We Work */}
+            <div className="card-premium animate-fade-in-up">
+              <h2 className="text-2xl font-semibold mb-4">How we work</h2>
+              <p className="text-muted-foreground leading-relaxed mb-6">
+                Rodent operates like a product company and a lab. We run sprints with 
+                measurable outcomes, maintain production-grade pipelines, and pair 
+                design with engineering from day one.
               </p>
-              <div className="space-y-3">
+              <div className="space-y-4 mb-6">
                 {principles.map((item) => (
                   <div key={item} className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-accent mt-1" />
+                    <CheckCircle2 className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
                     <p className="text-muted-foreground leading-relaxed">{item}</p>
                   </div>
                 ))}
               </div>
-              <div className="inline-flex items-center gap-2 text-accent font-semibold">
+              <Link
+                to="/projects"
+                className="inline-flex items-center gap-2 text-sm font-medium text-accent hover:text-accent/80 transition-colors"
+              >
                 See our projects
                 <ArrowUpRight className="w-4 h-4" />
-              </div>
+              </Link>
             </div>
 
-            <div className="glass rounded-3xl p-8 space-y-6 border border-border/60">
-              <h3 className="text-xl font-semibold">Milestones</h3>
+            {/* Milestones */}
+            <div className="card-premium animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
+              <h3 className="text-xl font-semibold mb-6">Milestones</h3>
               <div className="space-y-4">
-                {milestones.map((milestone) => (
+                {milestones.map((milestone, index) => (
                   <div
                     key={milestone.year}
-                    className="flex gap-4 p-4 rounded-2xl bg-card border border-border/60 hover:border-accent/50 transition"
+                    className="flex gap-4 p-4 rounded-xl bg-secondary/50 border border-border/50 hover:border-accent/30 transition-colors animate-fade-in-up"
+                    style={{ animationDelay: `${(index + 2) * 0.1}s` }}
                   >
-                    <div className="flex flex-col items-center w-16">
-                      <Calendar className="w-5 h-5 text-accent" />
+                    <div className="flex flex-col items-center w-16 flex-shrink-0">
+                      <Calendar className="w-5 h-5 text-accent mb-1" />
                       <span className="text-sm font-semibold">{milestone.year}</span>
                     </div>
                     <div className="space-y-1">
                       <p className="font-semibold">{milestone.title}</p>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{milestone.description}</p>
+                      <p className="text-sm text-muted-foreground leading-relaxed">
+                        {milestone.description}
+                      </p>
                     </div>
                   </div>
                 ))}
@@ -84,6 +100,7 @@ const Studio = () => {
           </section>
         </div>
       </main>
+      
       <Footer />
     </div>
   );
