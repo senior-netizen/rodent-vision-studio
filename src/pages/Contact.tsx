@@ -12,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Mail, Phone, MapPin, Send, MessageCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { usePageMetadata } from "@/hooks/usePageMetadata";
 
@@ -113,46 +113,52 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-background">
       <Navigation />
-      <div className="pt-32 pb-24">
-        <div className="container mx-auto px-6 lg:px-8">
-          <div className="text-center mb-16 space-y-4 animate-fade-in">
-            <h1 className="text-5xl lg:text-6xl font-bold">
+      
+      <main className="section-padding">
+        <div className="container mx-auto px-6 lg:px-8 max-w-6xl">
+          {/* Hero Section */}
+          <div className="text-center mb-20 space-y-6 animate-fade-in">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border/50 text-sm text-muted-foreground">
+              <MessageCircle className="w-4 h-4 text-accent" />
+              Contact Us
+            </div>
+            <h1 className="text-5xl lg:text-7xl font-semibold tracking-tight">
               Get in <span className="gradient-text">Touch</span>
             </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-xl text-muted-foreground max-w-xl mx-auto leading-relaxed">
               Let's discuss how Rodent Inc. can power your next innovation
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Info */}
-            <div className="space-y-8 animate-fade-in">
-              <div className="glass rounded-2xl p-8 space-y-6">
-                <h2 className="text-2xl font-bold">Contact Information</h2>
-                <p className="text-muted-foreground">
+            <div className="space-y-6 animate-fade-in-up">
+              <div className="card-premium">
+                <h2 className="text-2xl font-semibold mb-4">Contact Information</h2>
+                <p className="text-muted-foreground mb-8">
                   Reach out directly or fill in the form. We're here to help build
                   the future together.
                 </p>
 
-                <div className="space-y-6 pt-4">
+                <div className="space-y-6">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-tech/10 border border-tech/20 flex items-center justify-center flex-shrink-0">
+                    <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center flex-shrink-0">
                       <Mail className="w-5 h-5 text-tech" />
                     </div>
                     <div className="space-y-1">
                       <div className="font-medium">Email</div>
                       <a
                         href="mailto:anesu@rodent.co.zw"
-                        className="text-muted-foreground hover:text-tech transition-colors"
+                        className="text-muted-foreground hover:text-accent transition-colors"
                       >
                         anesu@rodent.co.zw
                       </a>
                       <div className="text-sm text-muted-foreground">Alternative contact</div>
                       <a
                         href="mailto:vulamachiri@rodent.co.zw"
-                        className="text-muted-foreground hover:text-tech transition-colors"
+                        className="text-muted-foreground hover:text-accent transition-colors"
                       >
                         vulamachiri@rodent.co.zw
                       </a>
@@ -160,21 +166,21 @@ const Contact = () => {
                   </div>
 
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-energy/10 border border-energy/20 flex items-center justify-center flex-shrink-0">
+                    <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center flex-shrink-0">
                       <Phone className="w-5 h-5 text-energy" />
                     </div>
                     <div className="space-y-1">
                       <div className="font-medium">Phone</div>
                       <a
                         href="tel:+263787008238"
-                        className="text-muted-foreground hover:text-energy transition-colors"
+                        className="text-muted-foreground hover:text-accent transition-colors"
                       >
                         +263 78 700 8238
                       </a>
                       <div className="text-sm text-muted-foreground">Alternative</div>
                       <a
                         href="tel:+263711950555"
-                        className="text-muted-foreground hover:text-energy transition-colors"
+                        className="text-muted-foreground hover:text-accent transition-colors"
                       >
                         +263 71 195 0555
                       </a>
@@ -182,7 +188,7 @@ const Contact = () => {
                   </div>
 
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0">
+                    <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center flex-shrink-0">
                       <MapPin className="w-5 h-5 text-accent" />
                     </div>
                     <div className="space-y-1">
@@ -197,8 +203,8 @@ const Contact = () => {
                 </div>
               </div>
 
-              <div className="glass rounded-2xl p-8 space-y-4">
-                <h3 className="text-xl font-semibold">What we can help with</h3>
+              <div className="card-premium">
+                <h3 className="text-lg font-semibold mb-4">What we can help with</h3>
                 <ul className="space-y-3">
                   {[
                     "API integration & developer tools",
@@ -218,7 +224,7 @@ const Contact = () => {
             </div>
 
             {/* Contact Form */}
-            <div className="glass rounded-2xl p-8 animate-fade-in">
+            <div className="card-premium animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-2">
                   <Label htmlFor="name">Name *</Label>
@@ -229,6 +235,7 @@ const Contact = () => {
                     onChange={handleChange}
                     placeholder="Your full name"
                     required
+                    className="h-12"
                   />
                 </div>
 
@@ -242,6 +249,7 @@ const Contact = () => {
                     onChange={handleChange}
                     placeholder="your.email@example.com"
                     required
+                    className="h-12"
                   />
                 </div>
 
@@ -254,6 +262,7 @@ const Contact = () => {
                       value={formData.company}
                       onChange={handleChange}
                       placeholder="Your company"
+                      className="h-12"
                     />
                   </div>
 
@@ -266,6 +275,7 @@ const Contact = () => {
                       value={formData.phone}
                       onChange={handleChange}
                       placeholder="+263 ..."
+                      className="h-12"
                     />
                   </div>
                 </div>
@@ -279,7 +289,7 @@ const Contact = () => {
                     }
                     required
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className="h-12">
                       <SelectValue placeholder="Select a topic" />
                     </SelectTrigger>
                     <SelectContent>
@@ -301,16 +311,16 @@ const Contact = () => {
                     value={formData.message}
                     onChange={handleChange}
                     placeholder="Tell us about your project or inquiry..."
-                    rows={6}
+                    rows={5}
                     required
+                    className="resize-none"
                   />
                 </div>
 
                 <Button
                   type="submit"
-                  variant="hero"
                   size="lg"
-                  className="w-full"
+                  className="w-full h-12 rounded-full"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (
@@ -326,7 +336,8 @@ const Contact = () => {
             </div>
           </div>
         </div>
-      </div>
+      </main>
+      
       <Footer />
     </div>
   );
