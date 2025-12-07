@@ -4,11 +4,8 @@
 
 /* ============================================================================
    APPLE-INSPIRED DESIGN SYSTEM
-   Premium, minimal, world-class aesthetics
+   Premium, minimal, world-class aesthetics with crisp mobile experience
    ============================================================================ */
-
-/* Import SF Pro-inspired system font stack */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=SF+Pro+Display:wght@300;400;500;600;700&display=swap');
 
 @layer base {
   :root {
@@ -151,9 +148,11 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     font-feature-settings: 'cv11', 'ss01';
     letter-spacing: -0.01em;
+    text-rendering: optimizeLegibility;
+    -webkit-text-size-adjust: 100%;
   }
 
   /* Apple-style focus rings */
@@ -161,19 +160,36 @@
     @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background;
   }
 
-  /* Premium typography */
+  /* Premium typography - Display headings */
   h1, h2, h3, h4, h5, h6 {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-weight: 600;
     letter-spacing: -0.025em;
-    line-height: 1.15;
+    line-height: 1.1;
+    text-wrap: balance;
   }
 
-  h1 { @apply text-5xl md:text-6xl lg:text-7xl; }
-  h2 { @apply text-4xl md:text-5xl; }
-  h3 { @apply text-2xl md:text-3xl; }
+  /* Responsive heading scales */
+  h1 { 
+    @apply text-[2rem] sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl;
+    letter-spacing: -0.03em;
+  }
+  h2 { 
+    @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl;
+    letter-spacing: -0.025em;
+  }
+  h3 { 
+    @apply text-xl sm:text-2xl md:text-3xl;
+    letter-spacing: -0.02em;
+  }
+  h4 {
+    @apply text-lg sm:text-xl md:text-2xl;
+    letter-spacing: -0.015em;
+  }
 
   p {
     line-height: 1.7;
+    letter-spacing: -0.005em;
   }
 
   /* Premium glassmorphism */
@@ -195,13 +211,17 @@
 }
 
 @layer utilities {
-  /* Apple-style section spacing */
+  /* Apple-style section spacing - mobile-first */
   .section-padding {
-    @apply py-24 md:py-32 lg:py-40;
+    @apply py-14 sm:py-16 md:py-24 lg:py-32 xl:py-36;
   }
 
   .section-padding-sm {
-    @apply py-16 md:py-24 lg:py-32;
+    @apply py-10 sm:py-12 md:py-16 lg:py-24;
+  }
+
+  .section-padding-xs {
+    @apply py-8 sm:py-10 md:py-14 lg:py-18;
   }
 
   /* Premium animations */
@@ -313,7 +333,7 @@
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -324,7 +344,7 @@
 @keyframes fadeInDown {
   from {
     opacity: 0;
-    transform: translateY(-24px);
+    transform: translateY(-20px);
   }
   to {
     opacity: 1;
@@ -335,7 +355,7 @@
 @keyframes slideInRight {
   from {
     opacity: 0;
-    transform: translateX(32px);
+    transform: translateX(24px);
   }
   to {
     opacity: 1;
@@ -379,7 +399,7 @@
 @layer components {
   /* Apple-style navigation link */
   .nav-link {
-    @apply relative px-4 py-2 text-sm font-medium text-muted-foreground transition-colors duration-200;
+    @apply relative px-3 sm:px-4 py-2 text-sm font-medium text-muted-foreground transition-colors duration-200;
   }
 
   .nav-link:hover {
@@ -401,9 +421,9 @@
     @apply w-4;
   }
 
-  /* Premium card */
+  /* Premium card - mobile optimized */
   .card-premium {
-    @apply rounded-2xl bg-card border border-border/50 p-8 transition-all duration-300;
+    @apply rounded-xl sm:rounded-2xl bg-card border border-border/50 p-5 sm:p-6 md:p-8 transition-all duration-300;
     box-shadow: var(--shadow-sm);
   }
 
@@ -415,12 +435,19 @@
 
   /* Premium badge */
   .badge-premium {
-    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium;
+    @apply inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-full text-xs font-medium;
     @apply bg-secondary text-secondary-foreground border border-border/50;
   }
 
   /* Apple-style divider */
   .divider {
     @apply h-px w-full bg-gradient-to-r from-transparent via-border to-transparent;
+  }
+
+  /* Touch-friendly tap targets for mobile */
+  @media (max-width: 640px) {
+    .card-premium:hover {
+      transform: none;
+    }
   }
 }
