@@ -1,7 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { CTAButton } from "@/components/CTAButton";
 import { MobileNav } from "@/components/MobileNav";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { cn } from "@/lib/utils";
 import rodentLogo from "@/assets/rodent-logo-transparent.png";
 
@@ -64,7 +63,6 @@ export const Navigation = () => {
 
           {/* Right actions */}
           <div className="hidden md:flex items-center gap-2 lg:gap-3">
-            <ThemeToggle />
             <CTAButton to="/contact" variant="secondary" className="px-3 lg:px-4 py-1.5 lg:py-2 text-sm">
               Contact
             </CTAButton>
