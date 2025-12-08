@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, HeartHandshake, TerminalSquare, Globe } from "lucide-react";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { cn } from "@/lib/utils";
 
 const tracks = [
   {
@@ -41,15 +43,20 @@ const accentColors = {
 };
 
 export const EngagementTracks = () => {
+  const { ref, isVisible } = useScrollAnimation({ threshold: 0.1 });
+
   return (
-    <section id="engagement" className="section-padding-sm">
+    <section id="engagement" className="section-padding-sm" ref={ref}>
       <div className="container mx-auto">
         {/* Header */}
-        <div className="text-center mb-16 md:mb-20 max-w-3xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-6 animate-fade-in">
+        <div className={cn(
+          "text-center mb-16 md:mb-20 max-w-3xl mx-auto transition-all duration-700",
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+        )}>
+          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-6">
             Choose How You Engage
           </h2>
-          <p className="text-lg text-muted-foreground leading-relaxed animate-fade-in" style={{ animationDelay: '0.1s' }}>
+          <p className="text-lg text-muted-foreground leading-relaxed">
             Developers, enterprises, and investors plug into Rodent through clear, outcome-driven tracks.
           </p>
         </div>
@@ -62,8 +69,11 @@ export const EngagementTracks = () => {
               <Link
                 key={track.title}
                 to={track.href}
-                className="group rounded-2xl bg-card border border-border/50 p-8 space-y-6 transition-all duration-300 hover:border-border hover:shadow-lg hover:-translate-y-1 animate-fade-in-up"
-                style={{ animationDelay: `${index * 0.1}s` }}
+                className={cn(
+                  "group rounded-2xl bg-card border border-border/50 p-8 space-y-6 transition-all duration-500 hover:border-border hover:shadow-lg hover:-translate-y-1",
+                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                )}
+                style={{ transitionDelay: isVisible ? `${index * 100}ms` : '0ms' }}
               >
                 {/* Header with icon */}
                 <div className="flex items-center justify-between">
