@@ -5,7 +5,7 @@ import "./styles/effects.css";
 import { ThemeProvider } from "@/components/theme-provider";
 
 createRoot(document.getElementById("root")!).render(
-  <ThemeProvider attribute="class" defaultTheme="system" storageKey="rodent-theme">
+<ThemeProvider attribute="class" defaultTheme="system" enableSystem storageKey="rodent-theme">
     <App />
   </ThemeProvider>
 );
