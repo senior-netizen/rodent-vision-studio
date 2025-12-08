@@ -3,22 +3,29 @@ import { Link } from "react-router-dom";
 import { projects } from "@/data/projects";
 import { ArrowUpRight } from "lucide-react";
 import { initTiltCards } from "@/effects/tiltCards";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { cn } from "@/lib/utils";
 
 export const ProductEcosystem = () => {
+  const { ref, isVisible } = useScrollAnimation({ threshold: 0.1 });
+
   useEffect(() => {
     const cleanup = initTiltCards("#ecosystem [data-tilt-card]", 6);
     return () => cleanup();
   }, []);
 
   return (
-    <section id="ecosystem" className="section-padding-sm bg-secondary/30">
+    <section id="ecosystem" className="section-padding-sm bg-secondary/30" ref={ref}>
       <div className="container mx-auto">
         {/* Header */}
-        <div className="text-center mb-16 md:mb-20 max-w-3xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-6 animate-fade-in">
+        <div className={cn(
+          "text-center mb-16 md:mb-20 max-w-3xl mx-auto transition-all duration-700",
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+        )}>
+          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-6">
             The Rodent Ecosystem
           </h2>
-          <p className="text-lg text-muted-foreground leading-relaxed animate-fade-in" style={{ animationDelay: '0.1s' }}>
+          <p className="text-lg text-muted-foreground leading-relaxed">
             A cohesive family of software, hardware, and energy products sharing a common design language, APIs, and security model.
           </p>
         </div>
@@ -29,9 +36,12 @@ export const ProductEcosystem = () => {
             <Link
               key={product.slug}
               to={`/projects/${product.slug}`}
-              className="group rounded-2xl bg-card border border-border/50 p-7 space-y-5 transition-all duration-300 hover:border-border hover:shadow-lg hover:-translate-y-1 animate-fade-in-up"
+              className={cn(
+                "group rounded-2xl bg-card border border-border/50 p-7 space-y-5 transition-all duration-500 hover:border-border hover:shadow-lg hover:-translate-y-1",
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              )}
               data-tilt-card
-              style={{ animationDelay: `${index * 0.06}s` }}
+              style={{ transitionDelay: isVisible ? `${index * 60}ms` : '0ms' }}
             >
               {/* Header */}
               <div className="flex items-center justify-between">

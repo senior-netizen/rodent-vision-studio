@@ -1,4 +1,6 @@
 import { Code, Building2, Landmark, Rocket } from "lucide-react";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { cn } from "@/lib/utils";
 
 const audiences = [
   {
@@ -32,15 +34,20 @@ const audiences = [
 ];
 
 export const WhoWeServe = () => {
+  const { ref, isVisible } = useScrollAnimation({ threshold: 0.1 });
+
   return (
-    <section id="who-we-serve" className="section-padding-sm bg-secondary/30">
+    <section id="who-we-serve" className="section-padding-sm bg-secondary/30" ref={ref}>
       <div className="container mx-auto">
         {/* Header */}
-        <div className="text-center mb-16 md:mb-20 max-w-3xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-6 animate-fade-in">
+        <div className={cn(
+          "text-center mb-16 md:mb-20 max-w-3xl mx-auto transition-all duration-700",
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+        )}>
+          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-6">
             Built for the Builders
           </h2>
-          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed animate-fade-in" style={{ animationDelay: '0.1s' }}>
+          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
             Whether you're coding, financing, or deploying infrastructure, Rodent delivers dependable rails.
           </p>
         </div>
@@ -52,8 +59,11 @@ export const WhoWeServe = () => {
             return (
               <div
                 key={audience.title}
-                className="group rounded-2xl bg-card border border-border/50 p-8 transition-all duration-300 hover:border-border hover:shadow-lg animate-fade-in-up"
-                style={{ animationDelay: `${index * 0.1}s` }}
+                className={cn(
+                  "group rounded-2xl bg-card border border-border/50 p-8 transition-all duration-500 hover:border-border hover:shadow-lg",
+                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                )}
+                style={{ transitionDelay: isVisible ? `${index * 100}ms` : '0ms' }}
               >
                 <div className="flex items-start gap-6">
                   {/* Icon */}

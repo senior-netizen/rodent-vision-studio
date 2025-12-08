@@ -1,4 +1,6 @@
 import { Globe, Layers, Cpu, Award, Route } from "lucide-react";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { cn } from "@/lib/utils";
 
 const pillars = [
   {
@@ -34,18 +36,23 @@ const pillars = [
 ];
 
 export const WhyRodent = () => {
+  const { ref, isVisible } = useScrollAnimation({ threshold: 0.1 });
+
   return (
-    <section id="why-rodent" className="section-padding-sm relative overflow-hidden">
+    <section id="why-rodent" className="section-padding-sm relative overflow-hidden" ref={ref}>
       {/* Subtle gradient */}
       <div className="absolute inset-0 bg-gradient-glow opacity-30" />
 
       <div className="container mx-auto relative z-10">
         {/* Header */}
-        <div className="text-center mb-16 md:mb-20 max-w-3xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-6 animate-fade-in">
+        <div className={cn(
+          "text-center mb-16 md:mb-20 max-w-3xl mx-auto transition-all duration-700",
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+        )}>
+          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-6">
             Why Rodent
           </h2>
-          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed animate-fade-in" style={{ animationDelay: '0.1s' }}>
+          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
             Building Africa's innovation infrastructure with precision, speed, and a relentless engineering culture.
           </p>
         </div>
@@ -57,8 +64,11 @@ export const WhyRodent = () => {
             return (
               <div
                 key={pillar.title}
-                className="group rounded-2xl bg-card border border-border/50 p-8 space-y-6 transition-all duration-300 hover:border-border hover:shadow-lg animate-fade-in-up"
-                style={{ animationDelay: `${index * 0.1}s` }}
+                className={cn(
+                  "group rounded-2xl bg-card border border-border/50 p-8 space-y-6 transition-all duration-500 hover:border-border hover:shadow-lg",
+                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                )}
+                style={{ transitionDelay: isVisible ? `${index * 100}ms` : '0ms' }}
               >
                 {/* Icon */}
                 <div className="w-14 h-14 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center group-hover:bg-accent/15 transition-colors duration-300">

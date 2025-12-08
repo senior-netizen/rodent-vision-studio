@@ -1,4 +1,6 @@
 import { Cpu, BatteryCharging, Shield, Globe2 } from "lucide-react";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { cn } from "@/lib/utils";
 
 const areas = [
   {
@@ -42,20 +44,20 @@ const toneColors = {
 };
 
 export const WhatWeBuild = () => {
+  const { ref, isVisible } = useScrollAnimation({ threshold: 0.1 });
+
   return (
-    <section id="what-we-build" className="section-padding-sm bg-gradient-subtle">
+    <section id="what-we-build" className="section-padding-sm bg-gradient-subtle" ref={ref}>
       <div className="container mx-auto">
         {/* Header */}
-        <div className="text-center mb-16 md:mb-20 max-w-3xl mx-auto">
-          <h2 
-            className="text-4xl md:text-5xl font-semibold tracking-tight mb-6 animate-fade-in"
-          >
+        <div className={cn(
+          "text-center mb-16 md:mb-20 max-w-3xl mx-auto transition-all duration-700",
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+        )}>
+          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-6">
             What We Build
           </h2>
-          <p 
-            className="text-lg text-muted-foreground leading-relaxed animate-fade-in"
-            style={{ animationDelay: '0.1s' }}
-          >
+          <p className="text-lg text-muted-foreground leading-relaxed">
             A full-stack studio shipping devtools, energy intelligence, and fintech rails designed for Africa's unique context.
           </p>
         </div>
@@ -67,8 +69,11 @@ export const WhatWeBuild = () => {
             return (
               <div
                 key={area.title}
-                className="group rounded-2xl bg-card border border-border/50 p-8 space-y-6 transition-all duration-300 hover:border-border hover:shadow-lg animate-fade-in-up"
-                style={{ animationDelay: `${index * 0.08}s` }}
+                className={cn(
+                  "group rounded-2xl bg-card border border-border/50 p-8 space-y-6 transition-all duration-500 hover:border-border hover:shadow-lg",
+                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                )}
+                style={{ transitionDelay: isVisible ? `${index * 100}ms` : '0ms' }}
               >
                 {/* Icon */}
                 <div className={`w-12 h-12 rounded-xl border flex items-center justify-center ${toneColors[area.tone]}`}>
