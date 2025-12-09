@@ -36,7 +36,7 @@ export const FlagshipProjects = () => {
           </div>
           <Link
             to="/projects"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium bg-secondary border border-border/50 text-foreground hover:bg-secondary/80 hover:border-border transition-all duration-300"
+            className="inline-flex items-center gap-2 neumorphic-button text-sm"
           >
             View all work
             <ArrowUpRight className="w-4 h-4" />
@@ -50,7 +50,7 @@ export const FlagshipProjects = () => {
               key={project.slug}
               to={`/projects/${project.slug}`}
               className={cn(
-                "group rounded-2xl bg-card border border-border/50 p-8 space-y-5 transition-all duration-500 hover:border-border hover:shadow-lg hover:-translate-y-1",
+                "group glass-card p-8 space-y-5 hover:-translate-y-1",
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               )}
               data-tilt-card
