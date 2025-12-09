@@ -70,13 +70,13 @@ export const WhatWeBuild = () => {
               <div
                 key={area.title}
                 className={cn(
-                  "group rounded-2xl bg-card border border-border/50 p-8 space-y-6 transition-all duration-500 hover:border-border hover:shadow-lg",
+                  "group glass-card p-8 space-y-6",
                   isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                 )}
                 style={{ transitionDelay: isVisible ? `${index * 100}ms` : '0ms' }}
               >
                 {/* Icon */}
-                <div className={`w-12 h-12 rounded-xl border flex items-center justify-center ${toneColors[area.tone]}`}>
+                <div className={`w-12 h-12 rounded-xl neumorphic-inset flex items-center justify-center ${toneColors[area.tone]}`}>
                   <Icon className="w-6 h-6" />
                 </div>
 

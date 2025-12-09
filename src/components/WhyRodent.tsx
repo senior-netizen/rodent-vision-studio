@@ -65,13 +65,13 @@ export const WhyRodent = () => {
               <div
                 key={pillar.title}
                 className={cn(
-                  "group rounded-2xl bg-card border border-border/50 p-8 space-y-6 transition-all duration-500 hover:border-border hover:shadow-lg",
+                  "group glass-card p-8 space-y-6",
                   isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                 )}
                 style={{ transitionDelay: isVisible ? `${index * 100}ms` : '0ms' }}
               >
                 {/* Icon */}
-                <div className="w-14 h-14 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center group-hover:bg-accent/15 transition-colors duration-300">
+                <div className="w-14 h-14 rounded-xl neumorphic-inset flex items-center justify-center group-hover:bg-accent/10 transition-colors duration-300">
                   <Icon className="w-7 h-7 text-accent" />
                 </div>
 
