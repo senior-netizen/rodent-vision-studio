@@ -93,7 +93,7 @@ export const Footer = () => {
               © {new Date().getFullYear()} Rodent Inc. All rights reserved.
             </p>
             <p className="text-[11px] sm:text-xs text-muted-foreground">
-              A trade name for SquirrelLab Technologies Pvt Ltd.
+              A trade name for SquirrelLab Technologies Pvt Ltd. | Reg. No: 72190A01122025
             </p>
           </div>
           <div className="flex items-center gap-4 sm:gap-6 text-xs sm:text-sm text-muted-foreground">
