@@ -181,7 +181,7 @@ const SquirrelApiStudioPage = () => {
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Button variant="hero" size="lg" asChild>
-                  <Link to="#features">Explore Features</Link>
+                  <a href="#features">Explore Features</a>
                 </Button>
                 <Button variant="premium" size="lg" asChild>
                   <Link to="/contact">Request Access</Link>
