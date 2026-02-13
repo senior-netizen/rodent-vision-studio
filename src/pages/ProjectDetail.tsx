@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link, useNavigate, Navigate } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { projects } from "@/data/projects";
@@ -10,7 +10,31 @@ import { usePageMetadata } from "@/hooks/usePageMetadata";
 const ProjectDetail = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
+
+  const normalizeProjectValue = (value?: string) =>
+    (value || "")
+      .trim()
+      .toLowerCase()
+      .replace(/%20/g, " ")
+      .replace(/[_\s]+/g, "-")
+      .replace(/[^a-z0-9-]/g, "")
+      .replace(/-{2,}/g, "-")
+      .replace(/^-+|-+$/g, "");
+
   const project = useMemo(() => projects.find((item) => item.slug === slug), [slug]);
+
+  const normalizedSlug = normalizeProjectValue(slug);
+  const aliasMatch = useMemo(
+    () =>
+      projects.find((item) => {
+        const normalizedName = normalizeProjectValue(item.name);
+        const normalizedItemSlug = normalizeProjectValue(item.slug);
+        return normalizedSlug === normalizedItemSlug || normalizedSlug === normalizedName;
+      }),
+    [normalizedSlug]
+  );
+
+  const suggestedProjects = useMemo(() => projects.slice(0, 3), []);
 
   usePageMetadata(
     project ? project.name : "Project",
@@ -19,16 +43,33 @@ const ProjectDetail = () => {
       : "Explore Rodent Inc. projects spanning devtools, energy, fintech, and hardware innovation in Africa."
   );
 
+  if (!project && aliasMatch) {
+    return <Navigate to={`/projects/${aliasMatch.slug}`} replace />;
+  }
+
   if (!project) {
     return (
       <div className="min-h-screen">
         <Navigation />
         <div className="pt-32 pb-24">
-          <div className="container mx-auto px-6 lg:px-8 text-center space-y-6">
+          <div className="container mx-auto px-6 lg:px-8 text-center space-y-8">
             <h1 className="text-4xl font-bold">Project not found</h1>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              The project you're looking for does not exist. Explore our full portfolio to find the right solution.
+              We couldn't find that project link. Try one of these live projects or go back to the portfolio.
             </p>
+            <div className="grid md:grid-cols-3 gap-4 text-left max-w-5xl mx-auto">
+              {suggestedProjects.map((item) => (
+                <Link
+                  key={item.slug}
+                  to={`/projects/${item.slug}`}
+                  className="glass rounded-2xl p-5 border border-border/60 hover:border-accent/50 hover-lift space-y-2"
+                >
+                  <p className="text-xs text-muted-foreground">{item.category}</p>
+                  <p className="font-semibold">{item.name}</p>
+                  <p className="text-sm text-muted-foreground line-clamp-2">{item.summary}</p>
+                </Link>
+              ))}
+            </div>
             <Button variant="hero" onClick={() => navigate("/projects")}>Back to projects</Button>
           </div>
         </div>
