@@ -108,10 +108,10 @@ const ShedSense = () => {
                 </Link>
               </Button>
               <Button variant="premium" size="lg" asChild>
-                <Link to="#api-docs">
+                <a href="#api-docs">
                   View API Documentation
                   <ArrowRight className="w-5 h-5 ml-2" />
-                </Link>
+                </a>
               </Button>
             </div>
 
@@ -254,10 +254,10 @@ const ShedSense = () => {
                   </Link>
                 </Button>
                 <Button variant="premium" className="flex-1" asChild>
-                  <Link to="#features">
+                  <a href="#features">
                     View Features
                     <ArrowRight className="w-4 h-4 ml-2" />
-                  </Link>
+                  </a>
                 </Button>
               </div>
             </div>

@@ -136,7 +136,7 @@ const TrustChainPage = () => {
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Button variant="hero" size="lg" asChild>
-                  <Link to="#features">Explore Features</Link>
+                  <a href="#features">Explore Features</a>
                 </Button>
                 <Button variant="premium" size="lg" asChild>
                   <Link to="/contact">Explore partnerships</Link>
@@ -295,7 +295,7 @@ const TrustChainPage = () => {
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
               <RoadmapCard title="✔ Live / Beta" items={roadmap.live} />
               <RoadmapCard title="🧪 In Development" items={roadmap.building} />
-              <RoadmapCard title="🚧 Coming Soon" items={roadmap.coming} />
+              <RoadmapCard title="🗓 Planned Next" items={roadmap.coming} />
               <RoadmapCard title="🧭 Future Direction" items={roadmap.future} />
             </div>
           </div>

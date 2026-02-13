@@ -32,6 +32,19 @@ const Contact = () => {
     message: "",
   });
 
+  const quickTopics = [
+    { value: "dev-tools", label: "Developer tools" },
+    { value: "energy", label: "Energy platform" },
+    { value: "fintech", label: "Fintech / insurance" },
+    { value: "partnerships", label: "Partnership" },
+  ];
+
+  const isFormValid =
+    formData.name.trim().length > 1 &&
+    formData.email.trim().includes("@") &&
+    formData.topic.trim().length > 0 &&
+    formData.message.trim().length >= 20;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -226,6 +239,29 @@ const Contact = () => {
             {/* Contact Form */}
             <div className="card-premium animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
               <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="space-y-3">
+                  <Label>Quick start</Label>
+                  <div className="flex flex-wrap gap-2">
+                    {quickTopics.map((topic) => {
+                      const active = formData.topic === topic.value;
+                      return (
+                        <button
+                          key={topic.value}
+                          type="button"
+                          onClick={() => setFormData((prev) => ({ ...prev, topic: topic.value }))}
+                          className={`px-3 py-1.5 rounded-full text-sm border transition-colors ${
+                            active
+                              ? "bg-accent text-accent-foreground border-accent"
+                              : "bg-secondary text-muted-foreground border-border hover:text-foreground"
+                          }`}
+                        >
+                          {topic.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
                 <div className="space-y-2">
                   <Label htmlFor="name">Name *</Label>
                   <Input
@@ -315,13 +351,17 @@ const Contact = () => {
                     required
                     className="resize-none"
                   />
+                  <div className="flex items-center justify-between text-xs text-muted-foreground">
+                    <span>Share goals, timeline, and expected launch date.</span>
+                    <span>{formData.message.length}/800</span>
+                  </div>
                 </div>
 
                 <Button
                   type="submit"
                   size="lg"
                   className="w-full h-12 rounded-full"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || !isFormValid}
                 >
                   {isSubmitting ? (
                     "Sending..."
@@ -332,6 +372,14 @@ const Contact = () => {
                     </>
                   )}
                 </Button>
+
+                <p className="text-xs text-muted-foreground text-center">
+                  Prefer a direct line? Email{" "}
+                  <a href="mailto:anesu@rodent.co.zw" className="text-accent hover:underline">
+                    anesu@rodent.co.zw
+                  </a>{" "}
+                  and we usually respond within 24 hours.
+                </p>
               </form>
             </div>
           </div>
