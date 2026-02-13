@@ -7,6 +7,34 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowUpRight, CheckCircle2 } from "lucide-react";
 import { usePageMetadata } from "@/hooks/usePageMetadata";
 
+const normalizeProjectValue = (value?: string) =>
+  (value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/%20/g, " ")
+    .replace(/[_\s]+/g, "-")
+    .replace(/[^a-z0-9-]/g, "")
+    .replace(/-{2,}/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+const tokenize = (value?: string) => normalizeProjectValue(value).split("-").filter(Boolean);
+
+const getProjectRelevance = (query: string, candidate: (typeof projects)[number]) => {
+  const normalizedQuery = normalizeProjectValue(query);
+  const normalizedSlug = normalizeProjectValue(candidate.slug);
+  const normalizedName = normalizeProjectValue(candidate.name);
+
+  if (!normalizedQuery) return 0;
+  if (normalizedQuery === normalizedSlug || normalizedQuery === normalizedName) return 100;
+  if (normalizedSlug.includes(normalizedQuery) || normalizedName.includes(normalizedQuery)) return 75;
+
+  const queryTokens = tokenize(query);
+  const candidateTokens = new Set([...tokenize(candidate.slug), ...tokenize(candidate.name)]);
+  const overlapCount = queryTokens.filter((token) => candidateTokens.has(token)).length;
+
+  return overlapCount * 10;
+};
+
 const ProjectDetail = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
@@ -49,7 +77,7 @@ const ProjectDetail = () => {
 
   if (!project) {
     return (
-      <div className="min-h-screen">
+      <div className="min-h-screen bg-gradient-subtle">
         <Navigation />
         <div className="pt-32 pb-24">
           <div className="container mx-auto px-6 lg:px-8 text-center space-y-8">

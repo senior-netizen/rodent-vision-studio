@@ -297,7 +297,7 @@ const VawtLabPage = () => {
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
               <RoadmapCard title="✔ Live / Beta" items={roadmap.live} />
               <RoadmapCard title="🧪 In Development" items={roadmap.building} />
-              <RoadmapCard title="🚧 Coming Soon" items={roadmap.coming} />
+              <RoadmapCard title="🗓 Planned Next" items={roadmap.coming} />
               <RoadmapCard title="🧭 Future Direction" items={roadmap.future} />
             </div>
           </div>
