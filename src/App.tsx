@@ -24,6 +24,11 @@ import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import { initSmoothScroll } from "./effects/parallax";
 import { shouldDeferHeavyEffects } from "./utils/performance";
+import Blog from "./pages/Blog";
+import BlogPostPage from "./pages/BlogPostPage";
+import BlogLogin from "./pages/BlogLogin";
+import BlogNewPost from "./pages/BlogNewPost";
+import { BlogAuthProvider } from "@/context/BlogAuthContext";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +53,7 @@ const App = () => {
       <TooltipProvider>
         <Toaster />
         <Sonner />
+        <BlogAuthProvider>
         <BrowserRouter>
           <ScrollToTop />
           <PageTransition>
@@ -66,6 +72,10 @@ const App = () => {
               <Route path="/labs" element={<Labs />} />
               <Route path="/opportunities" element={<Opportunities />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/login" element={<BlogLogin />} />
+              <Route path="/blog/new" element={<BlogNewPost />} />
+              <Route path="/blog/:slug" element={<BlogPostPage />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/privacy" element={<Privacy />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
@@ -73,6 +83,7 @@ const App = () => {
             </Routes>
           </PageTransition>
         </BrowserRouter>
+        </BlogAuthProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );
