@@ -4,8 +4,9 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { projects } from "@/data/projects";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ArrowUpRight, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, CheckCircle2, Download } from "lucide-react";
 import { usePageMetadata } from "@/hooks/usePageMetadata";
+import { downloadProjectAbstract } from "@/lib/projectAbstractDownload";
 
 const normalizeProjectValue = (value?: string) =>
   (value || "")
@@ -75,6 +76,26 @@ const ProjectDetail = () => {
     return <Navigate to={`/projects/${aliasMatch.slug}`} replace />;
   }
 
+
+
+  const handleDownloadAbstract = () => {
+    if (!project) return;
+
+    downloadProjectAbstract({
+      title: project.name,
+      subtitle: project.headline,
+      filename: `${project.slug}-abstract`,
+      generatedBy: "Rodent Inc.",
+      sections: [
+        { heading: "Summary", body: project.summary },
+        { heading: "Problem", body: project.problem },
+        { heading: "Solution", body: project.solution },
+        { heading: "Key features", body: project.features.join("; ") },
+        { heading: "Tech stack", body: project.techStack.join(", ") },
+      ],
+    });
+  };
+
   if (!project) {
     return (
       <div className="min-h-screen bg-gradient-subtle">
@@ -130,14 +151,20 @@ const ProjectDetail = () => {
                   <h1 className="text-4xl lg:text-5xl font-bold">{project.name}</h1>
                   <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">{project.headline}</p>
                 </div>
-                {project.cta && (
-                  <Button variant="hero" size="lg" asChild>
-                    <Link to="/contact">
-                      {project.cta}
-                      <ArrowUpRight className="w-4 h-4 ml-2" />
-                    </Link>
+                <div className="flex flex-wrap items-center gap-3">
+                  <Button variant="outline" size="lg" onClick={handleDownloadAbstract}>
+                    Download abstract
+                    <Download className="w-4 h-4 ml-2" />
                   </Button>
-                )}
+                  {project.cta && (
+                    <Button variant="hero" size="lg" asChild>
+                      <Link to="/contact">
+                        {project.cta}
+                        <ArrowUpRight className="w-4 h-4 ml-2" />
+                      </Link>
+                    </Button>
+                  )}
+                </div>
               </div>
 
               <div className="grid lg:grid-cols-2 gap-8">
