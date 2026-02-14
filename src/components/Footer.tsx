@@ -16,6 +16,7 @@ const footerLinks = {
     { label: "Labs", href: "/labs" },
     { label: "Work With Us", href: "/opportunities" },
     { label: "Contact", href: "/contact" },
+    { label: "Blog", href: "/blog" },
   ],
   Resources: [
     { label: "Privacy Policy", href: "/privacy" },
@@ -43,7 +44,7 @@ export const Footer = () => {
               <span className="text-lg sm:text-xl font-semibold font-display text-foreground">Rodent Inc.</span>
             </Link>
             <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-md">
-              Building the infrastructure for the next decade of African innovation. From electrons to endpoints, we ship production-grade solutions that matter.
+              We build practical software and hardware systems for African operators, utilities, and engineering teams.
             </p>
             
             {/* Social links */}

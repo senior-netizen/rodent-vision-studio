@@ -15,7 +15,7 @@ const EngagementTracks = lazy(() => import("@/components/EngagementTracks").then
 const Home = () => {
   usePageMetadata(
     "Home",
-    "Rodent Inc. builds Africa's innovation infrastructure—APIs, energy intelligence, fintech rails, and hardware designed for the continent."
+    "Rodent Inc. builds APIs, energy operations tooling, and hardware systems for African operating environments."
   );
 
   return (

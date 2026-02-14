@@ -4,8 +4,9 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { projects } from "@/data/projects";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ArrowUpRight, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, CheckCircle2, Download } from "lucide-react";
 import { usePageMetadata } from "@/hooks/usePageMetadata";
+import { downloadProjectAbstract } from "@/lib/projectAbstractDownload";
 
 const normalizeProjectValue = (value?: string) =>
   (value || "")
@@ -68,12 +69,32 @@ const ProjectDetail = () => {
     project ? project.name : "Project",
     project
       ? project.summary
-      : "Explore Rodent Inc. projects spanning devtools, energy, fintech, and hardware innovation in Africa."
+      : "Explore Rodent Inc. projects across developer tools, energy operations, fintech systems, and hardware in Africa."
   );
 
   if (!project && aliasMatch) {
     return <Navigate to={`/projects/${aliasMatch.slug}`} replace />;
   }
+
+
+
+  const handleDownloadAbstract = () => {
+    if (!project) return;
+
+    downloadProjectAbstract({
+      title: project.name,
+      subtitle: project.headline,
+      filename: `${project.slug}-abstract`,
+      generatedBy: "Rodent Inc.",
+      sections: [
+        { heading: "Summary", body: project.summary },
+        { heading: "Problem", body: project.problem },
+        { heading: "Solution", body: project.solution },
+        { heading: "Key features", body: project.features.join("; ") },
+        { heading: "Tech stack", body: project.techStack.join(", ") },
+      ],
+    });
+  };
 
   if (!project) {
     return (
@@ -130,14 +151,20 @@ const ProjectDetail = () => {
                   <h1 className="text-4xl lg:text-5xl font-bold">{project.name}</h1>
                   <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">{project.headline}</p>
                 </div>
-                {project.cta && (
-                  <Button variant="hero" size="lg" asChild>
-                    <Link to="/contact">
-                      {project.cta}
-                      <ArrowUpRight className="w-4 h-4 ml-2" />
-                    </Link>
+                <div className="flex flex-wrap items-center gap-3">
+                  <Button variant="outline" size="lg" onClick={handleDownloadAbstract}>
+                    Download abstract
+                    <Download className="w-4 h-4 ml-2" />
                   </Button>
-                )}
+                  {project.cta && (
+                    <Button variant="hero" size="lg" asChild>
+                      <Link to="/contact">
+                        {project.cta}
+                        <ArrowUpRight className="w-4 h-4 ml-2" />
+                      </Link>
+                    </Button>
+                  )}
+                </div>
               </div>
 
               <div className="grid lg:grid-cols-2 gap-8">
@@ -153,7 +180,7 @@ const ProjectDetail = () => {
 
               <div className="grid lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2 space-y-4">
-                  <h3 className="text-lg font-semibold">Key features</h3>
+                  <h3 className="text-lg font-semibold">What it does</h3>
                   <div className="grid md:grid-cols-2 gap-3">
                     {project.features.map((feature) => (
                       <div key={feature} className="flex items-start gap-3 p-3 rounded-xl bg-card border border-border/60">
@@ -176,9 +203,9 @@ const ProjectDetail = () => {
                     ))}
                   </div>
                   <div className="p-4 rounded-2xl bg-gradient-to-br from-accent/10 to-tech/10 border border-border/60 space-y-2">
-                    <p className="text-sm font-semibold">Engage the team</p>
+                    <p className="text-sm font-semibold">Contact the team</p>
                     <p className="text-sm text-muted-foreground">
-                      Schedule a technical walk-through, request access, or propose a collaboration.
+                      Request access, discuss integration, or start a pilot conversation.
                     </p>
                     <Button variant="premium" size="sm" asChild>
                       <Link to="/contact">Talk to us</Link>
