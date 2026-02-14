@@ -3,6 +3,7 @@ import { createContext, useContext, useMemo, useState, type ReactNode } from "re
 type BlogAuthContextValue = {
   isLoggedIn: boolean;
   login: (email: string, password: string) => boolean;
+  login: (password: string) => boolean;
   logout: () => void;
 };
 
@@ -10,23 +11,21 @@ const BLOG_SESSION_KEY = "rodent_blog_admin_session";
 const BLOG_ADMIN_EMAIL = "anesu@rodent.co.zw";
 const BLOG_ADMIN_PASSWORD = "rodent@2526";
 
-const isBrowser = typeof window !== "undefined";
-
-const readSession = () => {
-  if (!isBrowser) return false;
-  return window.localStorage.getItem(BLOG_SESSION_KEY) === "true";
-};
-
 const BlogAuthContext = createContext<BlogAuthContextValue | undefined>(undefined);
 
 export const BlogAuthProvider = ({ children }: { children: ReactNode }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => readSession());
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => localStorage.getItem(BLOG_SESSION_KEY) === "true");
 
   const login = (email: string, password: string) => {
     const success = email.trim().toLowerCase() === BLOG_ADMIN_EMAIL && password === BLOG_ADMIN_PASSWORD;
 
+  const login = (password: string) => {
+    const configuredPassword = import.meta.env.VITE_BLOG_ADMIN_PASSWORD;
+    if (!configuredPassword) return false;
+
+    const success = password === configuredPassword;
     if (success) {
-      if (isBrowser) window.localStorage.setItem(BLOG_SESSION_KEY, "true");
+      localStorage.setItem(BLOG_SESSION_KEY, "true");
       setIsLoggedIn(true);
     }
 
@@ -34,7 +33,7 @@ export const BlogAuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = () => {
-    if (isBrowser) window.localStorage.removeItem(BLOG_SESSION_KEY);
+    localStorage.removeItem(BLOG_SESSION_KEY);
     setIsLoggedIn(false);
   };
 

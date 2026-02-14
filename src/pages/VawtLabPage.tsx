@@ -6,6 +6,10 @@ import { Link } from "react-router-dom";
 import { usePageMetadata } from "@/hooks/usePageMetadata";
 import { downloadProjectAbstract } from "@/lib/projectAbstractDownload";
 import { exportAuditCsv } from "@/lib/analyticsAudit";
+import { Activity, Download, Leaf, ShieldCheck, Sun, Wind, Wrench } from "lucide-react";
+import { Link } from "react-router-dom";
+import { usePageMetadata } from "@/hooks/usePageMetadata";
+import { downloadProjectAbstract } from "@/lib/projectAbstractDownload";
 
 const featureGrid = [
   {

@@ -1,7 +1,6 @@
 import { BLOG_FORMATS, type BlogFormat, type BlogPost } from "@/types/blog";
 
 const BLOG_STORAGE_KEY = "rodent_blog_posts";
-const isBrowser = typeof window !== "undefined";
 
 const seedPosts: BlogPost[] = [
   {
@@ -28,8 +27,6 @@ const seedPosts: BlogPost[] = [
   },
 ];
 
-const makeId = () => (typeof crypto !== "undefined" && "randomUUID" in crypto ? crypto.randomUUID() : `post-${Date.now()}`);
-
 const normalizeFormat = (value: unknown): BlogFormat => {
   if (typeof value === "string" && BLOG_FORMATS.includes(value as BlogFormat)) {
     return value as BlogFormat;
@@ -38,7 +35,7 @@ const normalizeFormat = (value: unknown): BlogFormat => {
 };
 
 const normalizePost = (post: Partial<BlogPost> & Record<string, unknown>): BlogPost => ({
-  id: String(post.id ?? makeId()),
+  id: String(post.id ?? crypto.randomUUID()),
   title: String(post.title ?? "Untitled post"),
   slug: String(post.slug ?? "untitled-post"),
   excerpt: String(post.excerpt ?? ""),
@@ -48,22 +45,10 @@ const normalizePost = (post: Partial<BlogPost> & Record<string, unknown>): BlogP
   createdAt: String(post.createdAt ?? new Date().toISOString()),
 });
 
-const readRaw = () => {
-  if (!isBrowser) return null;
-  return window.localStorage.getItem(BLOG_STORAGE_KEY);
-};
-
-const writeRaw = (value: string) => {
-  if (!isBrowser) return;
-  window.localStorage.setItem(BLOG_STORAGE_KEY, value);
-};
-
 export const getBlogPosts = (): BlogPost[] => {
-  if (!isBrowser) return seedPosts;
-
-  const raw = readRaw();
+  const raw = localStorage.getItem(BLOG_STORAGE_KEY);
   if (!raw) {
-    writeRaw(JSON.stringify(seedPosts));
+    localStorage.setItem(BLOG_STORAGE_KEY, JSON.stringify(seedPosts));
     return seedPosts;
   }
 
@@ -71,10 +56,10 @@ export const getBlogPosts = (): BlogPost[] => {
     const parsed = JSON.parse(raw) as Array<Partial<BlogPost> & Record<string, unknown>>;
     const normalized = parsed.map(normalizePost);
     const sorted = normalized.sort((a, b) => +new Date(b.createdAt) - +new Date(a.createdAt));
-    writeRaw(JSON.stringify(sorted));
+    localStorage.setItem(BLOG_STORAGE_KEY, JSON.stringify(sorted));
     return sorted;
   } catch {
-    writeRaw(JSON.stringify(seedPosts));
+    localStorage.setItem(BLOG_STORAGE_KEY, JSON.stringify(seedPosts));
     return seedPosts;
   }
 };
@@ -82,7 +67,7 @@ export const getBlogPosts = (): BlogPost[] => {
 export const saveBlogPost = (post: BlogPost) => {
   const posts = getBlogPosts();
   const next = [post, ...posts];
-  writeRaw(JSON.stringify(next));
+  localStorage.setItem(BLOG_STORAGE_KEY, JSON.stringify(next));
 };
 
 export const findPostBySlug = (slug: string) => getBlogPosts().find((p) => p.slug === slug);

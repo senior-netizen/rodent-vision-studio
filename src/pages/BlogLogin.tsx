@@ -19,6 +19,14 @@ const BlogLogin = () => {
     const ok = login(email, password);
     if (!ok) {
       setError("Invalid email or password.");
+    if (!import.meta.env.VITE_BLOG_ADMIN_PASSWORD) {
+      setError("Admin login is not configured yet. Set VITE_BLOG_ADMIN_PASSWORD in your environment.");
+      return;
+    }
+
+    const ok = login(password);
+    if (!ok) {
+      setError("Invalid password.");
       return;
     }
 
@@ -45,6 +53,12 @@ const BlogLogin = () => {
               <Input
                 type="password"
                 placeholder="Password"
+            <p className="text-sm text-muted-foreground">Login to create and publish blog posts.</p>
+
+            <form className="space-y-4" onSubmit={handleLogin}>
+              <Input
+                type="password"
+                placeholder="Admin password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
