@@ -3,6 +3,7 @@ import { createContext, useContext, useMemo, useState, type ReactNode } from "re
 type BlogAuthContextValue = {
   isLoggedIn: boolean;
   login: (email: string, password: string) => boolean;
+  login: (password: string) => boolean;
   logout: () => void;
 };
 
@@ -18,6 +19,11 @@ export const BlogAuthProvider = ({ children }: { children: ReactNode }) => {
   const login = (email: string, password: string) => {
     const success = email.trim().toLowerCase() === BLOG_ADMIN_EMAIL && password === BLOG_ADMIN_PASSWORD;
 
+  const login = (password: string) => {
+    const configuredPassword = import.meta.env.VITE_BLOG_ADMIN_PASSWORD;
+    if (!configuredPassword) return false;
+
+    const success = password === configuredPassword;
     if (success) {
       localStorage.setItem(BLOG_SESSION_KEY, "true");
       setIsLoggedIn(true);
