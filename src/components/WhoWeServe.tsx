@@ -45,10 +45,10 @@ export const WhoWeServe = () => {
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         )}>
           <h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-6">
-            Built for the Builders
+            Who This Is For
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-            Whether you're coding, financing, or deploying infrastructure, Rodent delivers dependable rails.
+            For teams building, running, financing, or regulating infrastructure products.
           </p>
         </div>
 

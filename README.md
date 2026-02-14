@@ -71,3 +71,17 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+
+## Blog admin setup (new)
+
+This project includes a built-in blog with admin login and post publishing routes:
+- `/blog` (public list)
+- `/blog/:slug` (public post page)
+- `/blog/login` (admin login)
+- `/blog/new` (create post)
+
+Admin credentials currently configured in-app:
+- Email: `anesu@rodent.co.zw`
+- Password: `rodent@2526`
+
+Editorial formats built in: Engineering notes, Field reports, Build logs, Grid experiments, Post-mortems, Research drops.

@@ -7,8 +7,8 @@ const tracks = [
   {
     title: "For Developers",
     description:
-      "Ship faster with our API suite, CLI, and AI copilots. Designed for bandwidth-aware teams that need reliability and speed.",
-    cta: "Explore developer stack",
+      "Use our API products, CLI tools, and engineering workflows to ship and operate faster.",
+    cta: "View developer products",
     href: "/projects",
     icon: TerminalSquare,
     accent: "tech" as const,
@@ -17,7 +17,7 @@ const tracks = [
   {
     title: "For Partners",
     description:
-      "Co-build production pilots in energy, fintech, and infrastructure. We move from concept to deployment with you.",
+      "Run pilots with us in energy, fintech, or infrastructure and move from design to rollout.",
     cta: "Partner with us",
     href: "/opportunities",
     icon: HeartHandshake,
@@ -27,7 +27,7 @@ const tracks = [
   {
     title: "For Investors",
     description:
-      "Back a studio compounding software and hardware advantages across Africa's infrastructure decade.",
+      "Review our studio model across software and hardware bets in African infrastructure.",
     cta: "Investor brief",
     href: "/opportunities#investors",
     icon: Globe,
@@ -54,10 +54,10 @@ export const EngagementTracks = () => {
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         )}>
           <h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-6">
-            Choose How You Engage
+            Ways to Work With Rodent
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            Developers, enterprises, and investors plug into Rodent through clear, outcome-driven tracks.
+            Pick the path that matches your role: build, partner, or invest.
           </p>
         </div>
 

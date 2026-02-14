@@ -23,10 +23,10 @@ export const ProductEcosystem = () => {
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         )}>
           <h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-6">
-            The Rodent Ecosystem
+            Product Portfolio
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            A cohesive family of software, hardware, and energy products sharing a common design language, APIs, and security model.
+            A connected set of software and hardware products that share APIs, data models, and operational standards.
           </p>
         </div>
 
@@ -77,7 +77,7 @@ export const ProductEcosystem = () => {
 
               {/* CTA */}
               <div className="inline-flex items-center text-sm font-medium text-accent">
-                View project
+                Read project brief
                 <ArrowUpRight className="w-4 h-4 ml-1 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </div>
             </Link>

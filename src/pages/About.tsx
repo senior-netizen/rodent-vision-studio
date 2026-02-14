@@ -11,17 +11,17 @@ import { initParallax } from "@/effects/parallax";
 const highlights = [
   {
     title: "Engineering studio",
-    description: "Founder-led teams that ship production-grade products with clarity and speed.",
+    description: "Founder-led teams that design, build, and deploy production systems.",
     icon: Sparkles,
   },
   {
     title: "Hardware & software",
-    description: "From turbines and IoT to cloud APIs and AI, we build the full stack.",
+    description: "From turbines and IoT to cloud APIs, we build and integrate the full stack.",
     icon: Target,
   },
   {
     title: "Africa-first",
-    description: "Products designed for the realities of African markets—resilient, secure, and pragmatic.",
+    description: "Products built for African market conditions: unstable power, tight budgets, and strict uptime requirements.",
     icon: Globe,
   },
 ];
@@ -29,7 +29,7 @@ const highlights = [
 const About = () => {
   usePageMetadata(
     "About",
-    "Learn about Rodent Inc., the deep-tech studio building Africa's innovation infrastructure across software, hardware, and energy.",
+    "Learn about Rodent Inc., an engineering studio building practical software, hardware, and energy systems for African operators.",
   );
 
   const bannerRef = useRef<HTMLDivElement | null>(null);
@@ -56,12 +56,11 @@ const About = () => {
               About Rodent Inc.
             </div>
             <h1 className="text-5xl lg:text-7xl font-semibold tracking-tight text-balance">
-              Building Africa's
-              <span className="block gradient-text">innovation infrastructure</span>
+              Building systems
+              <span className="block gradient-text">that operators can rely on</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              We are a founder-led engineering studio building API-first platforms, 
-              energy intelligence, and hardware for Africa's builders.
+              We are an engineering studio building APIs, energy operations tools, and hardware for teams working across Africa.
             </p>
           </div>
 

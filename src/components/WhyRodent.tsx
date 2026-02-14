@@ -5,33 +5,33 @@ import { cn } from "@/lib/utils";
 const pillars = [
   {
     icon: Globe,
-    title: "African Innovation First",
+    title: "Built for African constraints",
     description:
-      "We design for intermittent power, patchy bandwidth, and diverse regulatory environments—because that's our backyard.",
+      "We design for intermittent power, low bandwidth, and changing policy environments because that is where we operate.",
   },
   {
     icon: Layers,
-    title: "Full-Stack Craft",
+    title: "End-to-end execution",
     description:
-      "From wind turbines and IoT sensors to cloud APIs and AI copilots, we build the stack end-to-end with composable modules.",
+      "We handle hardware, firmware, backend, and interface layers in one delivery stream.",
   },
   {
     icon: Cpu,
-    title: "Engineering Rigor",
+    title: "Engineering discipline",
     description:
-      "Production-grade standards, automated testing, and observability are baked into every release, not tacked on.",
+      "Testing, monitoring, and release controls are part of every build cycle.",
   },
   {
     icon: Route,
-    title: "Velocity with Governance",
+    title: "Fast delivery with controls",
     description:
-      "Rapid prototyping paired with clear controls, approvals, and rollout safety—so enterprises can move without fear.",
+      "We move quickly, but with approvals, rollback paths, and deployment checks.",
   },
   {
     icon: Award,
-    title: "Founder-Led Studio",
+    title: "Hands-on leadership",
     description:
-      "Rodent is hands-on: leadership codes, designs, and ships alongside partners to unlock real-world outcomes.",
+      "Leads stay in delivery, working directly with teams and partners.",
   },
 ];
 
@@ -53,7 +53,7 @@ export const WhyRodent = () => {
             Why Rodent
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-            Building Africa's innovation infrastructure with precision, speed, and a relentless engineering culture.
+            We focus on reliable delivery for teams running real infrastructure in Africa.
           </p>
         </div>
 
