@@ -20,7 +20,7 @@ export const Hero = () => {
             >
               <span className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-accent animate-pulse" />
               <span className="text-xs sm:text-sm font-medium text-muted-foreground">
-                Africa-first infrastructure studio
+                Built for African operating conditions
               </span>
             </div>
 
@@ -31,7 +31,7 @@ export const Hero = () => {
             >
               Building resilient
               <span className="gradient-text"> infrastructure</span>
-              {" "}for Africa
+              {" "}that stays online
             </h1>
 
             {/* Description - Optimized for readability */}
@@ -39,7 +39,7 @@ export const Hero = () => {
               className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed max-w-prose animate-fade-in-up"
               style={{ animationDelay: '0.3s' }}
             >
-              Production-grade APIs, energy intelligence, and hardware systems engineered for operators who need uptime—even when the grid doesn't.
+              We build APIs, power visibility tools, and field-ready hardware for teams that run in unstable grid and network conditions.
             </p>
 
             {/* CTAs - Mobile optimized */}
@@ -63,15 +63,15 @@ export const Hero = () => {
             >
               <div className="space-y-0.5 sm:space-y-1">
                 <div className="text-2xl sm:text-3xl md:text-4xl font-semibold font-display gradient-text">8+</div>
-                <div className="text-xs sm:text-sm text-muted-foreground">Products shipped</div>
+                <div className="text-xs sm:text-sm text-muted-foreground">Products in active build</div>
               </div>
               <div className="space-y-0.5 sm:space-y-1">
                 <div className="text-2xl sm:text-3xl md:text-4xl font-semibold font-display gradient-text-energy">SADC</div>
-                <div className="text-xs sm:text-sm text-muted-foreground">Regional focus</div>
+                <div className="text-xs sm:text-sm text-muted-foreground">Primary operating region</div>
               </div>
               <div className="space-y-0.5 sm:space-y-1">
                 <div className="text-2xl sm:text-3xl md:text-4xl font-semibold font-display gradient-text">Full</div>
-                <div className="text-xs sm:text-sm text-muted-foreground">Stack delivery</div>
+                <div className="text-xs sm:text-sm text-muted-foreground">Software + hardware delivery</div>
               </div>
             </div>
           </div>
@@ -101,7 +101,7 @@ export const Hero = () => {
                   <span className="text-[10px] sm:text-xs font-medium text-accent">API Studio</span>
                 </div>
                 <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-card/90 backdrop-blur-md border border-border/50 shadow-lg">
-                  <span className="text-[10px] sm:text-xs font-medium text-energy">Production ready</span>
+                  <span className="text-[10px] sm:text-xs font-medium text-energy">Field tested</span>
                 </div>
               </div>
 
@@ -113,7 +113,7 @@ export const Hero = () => {
                       <span className="text-accent font-mono text-sm font-medium">200</span>
                     </div>
                     <div>
-                      <div className="text-sm font-medium">Zero-downtime</div>
+                      <div className="text-sm font-medium">Uptime monitored</div>
                       <div className="text-xs text-muted-foreground">API response OK</div>
                     </div>
                   </div>
