@@ -50,8 +50,7 @@ const Labs = () => {
               Rodent Labs
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              The experimental arm of Rodent, building hardware and intelligence 
-              that turn African constraints into competitive advantage.
+              Our R&D unit for testing hardware and operational intelligence in real African field conditions.
             </p>
           </div>
 

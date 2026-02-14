@@ -96,8 +96,7 @@ const ShedSense = () => {
             </h1>
 
             <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              ShedSense is the definitive load-shedding intelligence platform for SADC.
-              Real-time schedules, predictive alerts, and developer APIs for the energy-constrained world.
+              ShedSense tracks load-shedding schedules across SADC with live updates, practical alerts, and developer APIs.
             </p>
 
             <div className="flex flex-wrap gap-4 justify-center pt-4">
@@ -142,7 +141,7 @@ const ShedSense = () => {
               Live Outage <span className="gradient-text-energy">Map</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Real-time visualization of power outages across the region
+              Live outage mapping across covered regions
             </p>
           </div>
 
