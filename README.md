@@ -84,6 +84,19 @@ This project now includes a built-in blog with admin login and post publishing r
 Admin credentials currently configured in-app:
 - Email: `anesu@rodent.co.zw`
 - Password: `rodent@2526`
+
+Editorial formats built in: Engineering notes, Field reports, Build logs, Grid experiments, Post-mortems, Research drops.
+
+
+## Abstract export templates and audit trail
+
+Project abstract downloads now use a premium PDF template mode (default) with:
+- cover-style title hierarchy
+- accent dividers
+- footer page numbering
+- PDF metadata (title/author/subject)
+
+Each abstract download also records an audit event in browser local storage (`rodent_audit_events`) and can be exported as CSV from project pages.
 To enable admin login, set an environment variable before running the app:
 
 `VITE_BLOG_ADMIN_PASSWORD=your-strong-password`

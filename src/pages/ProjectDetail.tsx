@@ -4,6 +4,10 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { projects } from "@/data/projects";
 import { Button } from "@/components/ui/button";
+import { ArrowLeft, ArrowUpRight, CheckCircle2, Download, FileSpreadsheet } from "lucide-react";
+import { usePageMetadata } from "@/hooks/usePageMetadata";
+import { downloadProjectAbstract } from "@/lib/projectAbstractDownload";
+import { exportAuditCsv } from "@/lib/analyticsAudit";
 import { ArrowLeft, ArrowUpRight, CheckCircle2, Download } from "lucide-react";
 import { usePageMetadata } from "@/hooks/usePageMetadata";
 import { downloadProjectAbstract } from "@/lib/projectAbstractDownload";
@@ -86,6 +90,10 @@ const ProjectDetail = () => {
       subtitle: project.headline,
       filename: `${project.slug}-abstract`,
       generatedBy: "Rodent Inc.",
+      projectSlug: project.slug,
+      projectName: project.name,
+      source: "project_detail",
+      template: "premium",
       sections: [
         { heading: "Summary", body: project.summary },
         { heading: "Problem", body: project.problem },
@@ -155,6 +163,10 @@ const ProjectDetail = () => {
                   <Button variant="outline" size="lg" onClick={handleDownloadAbstract}>
                     Download abstract
                     <Download className="w-4 h-4 ml-2" />
+                  </Button>
+                  <Button variant="ghost" size="lg" onClick={() => exportAuditCsv(project.slug, project.name)}>
+                    Export audit CSV
+                    <FileSpreadsheet className="w-4 h-4 ml-2" />
                   </Button>
                   {project.cta && (
                     <Button variant="hero" size="lg" asChild>

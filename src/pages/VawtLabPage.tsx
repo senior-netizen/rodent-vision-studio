@@ -1,6 +1,11 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
+import { Activity, Download, FileSpreadsheet, Leaf, ShieldCheck, Sun, Wind, Wrench } from "lucide-react";
+import { Link } from "react-router-dom";
+import { usePageMetadata } from "@/hooks/usePageMetadata";
+import { downloadProjectAbstract } from "@/lib/projectAbstractDownload";
+import { exportAuditCsv } from "@/lib/analyticsAudit";
 import { Activity, Download, Leaf, ShieldCheck, Sun, Wind, Wrench } from "lucide-react";
 import { Link } from "react-router-dom";
 import { usePageMetadata } from "@/hooks/usePageMetadata";
@@ -112,6 +117,10 @@ const VawtLabPage = () => {
       subtitle: "Vertical-axis wind hardware abstract for dense African cities",
       filename: "rodent-labs-vawt-abstract",
       generatedBy: "Rodent Labs",
+      projectSlug: "rodent-labs-vawt",
+      projectName: "Rodent Labs — VAWT",
+      source: "vawt_lab_page",
+      template: "premium",
       sections: [
         { heading: "Abstract", body: description },
         { heading: "Technical highlights", body: featureSummary },
@@ -171,6 +180,10 @@ const VawtLabPage = () => {
                 <Button variant="outline" size="lg" onClick={handleDownloadAbstract}>
                   Download abstract
                   <Download className="w-4 h-4 ml-2" />
+                </Button>
+                <Button variant="ghost" size="lg" onClick={() => exportAuditCsv("rodent-labs-vawt", "Rodent Labs — VAWT")}>
+                  Export audit CSV
+                  <FileSpreadsheet className="w-4 h-4 ml-2" />
                 </Button>
               </div>
             </div>
@@ -371,6 +384,10 @@ const VawtLabPage = () => {
               <Button variant="outline" size="lg" onClick={handleDownloadAbstract}>
                 Download VAWT abstract
                 <Download className="w-4 h-4 ml-2" />
+              </Button>
+              <Button variant="ghost" size="lg" onClick={() => exportAuditCsv("rodent-labs-vawt", "Rodent Labs — VAWT")}>
+                Export audit CSV
+                <FileSpreadsheet className="w-4 h-4 ml-2" />
               </Button>
             </div>
           </div>
