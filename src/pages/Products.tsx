@@ -10,7 +10,7 @@ const categoryOrder = ["DevTools", "Energy", "Fintech", "Infrastructure", "Hardw
 const Projects = () => {
   usePageMetadata(
     "Projects",
-    "Explore Rodent Inc.'s portfolio of developer tools, energy intelligence, fintech rails, and hardware R&D built for Africa."
+    "Browse Rodent Inc. products across developer tooling, energy operations, fintech infrastructure, and hardware R&D."
   );
 
   const sortedProjects = [...projects].sort(
@@ -24,10 +24,10 @@ const Projects = () => {
         <div className="container mx-auto px-6 lg:px-8">
           <div className="text-center mb-14 space-y-4 animate-fade-in">
             <h1 className="text-5xl lg:text-6xl font-bold">
-              Our <span className="gradient-text">Work</span>
+              Project <span className="gradient-text">Portfolio</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Every project is built for Africa's realities: bandwidth-aware, regulation-ready, and production-focused.
+              Each project is built for real deployment constraints: low bandwidth, unstable power, and strict operational requirements.
             </p>
           </div>
 

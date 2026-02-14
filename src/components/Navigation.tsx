@@ -13,6 +13,7 @@ export const Navigation = () => {
     { label: "Studio", href: "/studio" },
     { label: "Labs", href: "/labs" },
     { label: "Opportunities", href: "/opportunities" },
+    { label: "Blog", href: "/blog" },
   ];
 
   return (

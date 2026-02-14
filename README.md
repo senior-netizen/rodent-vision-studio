@@ -71,3 +71,28 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+
+## Blog admin setup (new)
+
+This project includes a built-in blog with admin login and post publishing routes:
+- `/blog` (public list)
+- `/blog/:slug` (public post page)
+- `/blog/login` (admin login)
+- `/blog/new` (create post)
+
+Admin credentials currently configured in-app:
+- Email: `anesu@rodent.co.zw`
+- Password: `rodent@2526`
+
+Editorial formats built in: Engineering notes, Field reports, Build logs, Grid experiments, Post-mortems, Research drops.
+
+
+## Abstract export templates and audit trail
+
+Project abstract downloads now use a premium PDF template mode (default) with:
+- cover-style title hierarchy
+- accent dividers
+- footer page numbering
+- PDF metadata (title/author/subject)
+
+Each abstract download also records an audit event in browser local storage (`rodent_audit_events`) and can be exported as CSV from project pages.

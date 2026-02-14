@@ -1,9 +1,11 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { Activity, Leaf, ShieldCheck, Sun, Wind, Wrench } from "lucide-react";
+import { Activity, Download, FileSpreadsheet, Leaf, ShieldCheck, Sun, Wind, Wrench } from "lucide-react";
 import { Link } from "react-router-dom";
 import { usePageMetadata } from "@/hooks/usePageMetadata";
+import { downloadProjectAbstract } from "@/lib/projectAbstractDownload";
+import { exportAuditCsv } from "@/lib/analyticsAudit";
 
 const featureGrid = [
   {
@@ -95,6 +97,36 @@ const VawtLabPage = () => {
     url: "https://rodent-vision-studio.vercel.app/projects/rodent-labs-vawt",
   });
 
+
+  const handleDownloadAbstract = () => {
+    const featureSummary = featureGrid.map((item) => `${item.title}: ${item.description}`).join(" ");
+    const roadmapSummary = [
+      `Live/Beta: ${roadmap.live.join("; ")}`,
+      `In Development: ${roadmap.building.join("; ")}`,
+      `Planned Next: ${roadmap.coming.join("; ")}`,
+      `Future Direction: ${roadmap.future.join("; ")}`,
+    ].join(" ");
+    const audienceSummary = audiences.map((item) => `${item.title}: ${item.benefit}`).join(" ");
+
+    downloadProjectAbstract({
+      title: "Rodent Labs — VAWT",
+      subtitle: "Vertical-axis wind hardware abstract for dense African cities",
+      filename: "rodent-labs-vawt-abstract",
+      generatedBy: "Rodent Labs",
+      projectSlug: "rodent-labs-vawt",
+      projectName: "Rodent Labs — VAWT",
+      source: "vawt_lab_page",
+      template: "premium",
+      sections: [
+        { heading: "Abstract", body: description },
+        { heading: "Technical highlights", body: featureSummary },
+        { heading: "Solution focus", body: solutionHighlights.map((item) => `${item.title}: ${item.detail}`).join(" ") },
+        { heading: "Roadmap snapshot", body: roadmapSummary },
+        { heading: "Deployment audiences", body: audienceSummary },
+      ],
+    });
+  };
+
   const schema = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -140,6 +172,14 @@ const VawtLabPage = () => {
                 </Button>
                 <Button variant="premium" size="lg" asChild>
                   <Link to="/contact">Join the pilot program</Link>
+                </Button>
+                <Button variant="outline" size="lg" onClick={handleDownloadAbstract}>
+                  Download abstract
+                  <Download className="w-4 h-4 ml-2" />
+                </Button>
+                <Button variant="ghost" size="lg" onClick={() => exportAuditCsv("rodent-labs-vawt", "Rodent Labs — VAWT")}>
+                  Export audit CSV
+                  <FileSpreadsheet className="w-4 h-4 ml-2" />
                 </Button>
               </div>
             </div>
@@ -336,6 +376,14 @@ const VawtLabPage = () => {
               </Button>
               <Button variant="ghost" size="lg" asChild>
                 <a href="mailto:anesu@rodent.co.zw">Email the lab</a>
+              </Button>
+              <Button variant="outline" size="lg" onClick={handleDownloadAbstract}>
+                Download VAWT abstract
+                <Download className="w-4 h-4 ml-2" />
+              </Button>
+              <Button variant="ghost" size="lg" onClick={() => exportAuditCsv("rodent-labs-vawt", "Rodent Labs — VAWT")}>
+                Export audit CSV
+                <FileSpreadsheet className="w-4 h-4 ml-2" />
               </Button>
             </div>
           </div>

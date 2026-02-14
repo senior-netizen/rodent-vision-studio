@@ -290,7 +290,7 @@ const SquirrelApiStudioPage = () => {
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-12">
               <div className="space-y-3">
                 <p className="text-sm font-semibold text-accent uppercase tracking-[0.12em]">Capabilities</p>
-                <h2 className="text-3xl lg:text-4xl font-bold">A premium API workspace, end to end</h2>
+                <h2 className="text-3xl lg:text-4xl font-bold">An API workspace from design to rollout</h2>
                 <p className="text-muted-foreground max-w-3xl">
                   Every workflow is tuned for low-latency collaboration: fast search, gentle animations, and accessible navigation from keyboard or screen readers.
                 </p>
@@ -326,7 +326,7 @@ const SquirrelApiStudioPage = () => {
               <p className="text-sm font-semibold text-accent uppercase tracking-[0.12em]">Visual system</p>
               <h2 className="text-3xl lg:text-4xl font-bold">Built like a precision instrument</h2>
               <p className="text-muted-foreground leading-relaxed">
-                Smooth parallax hero art, scroll-reveal feature cards, and micro-hover states keep the experience premium without sacrificing clarity. Every widget is navigable by keyboard and screen readers.
+                The interface uses clear motion cues and keyboard-friendly controls so teams can work quickly without losing accessibility.
               </p>
               <div className="grid grid-cols-2 gap-4">
                 <div className="p-4 rounded-2xl bg-card border border-border/60">

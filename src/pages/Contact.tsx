@@ -19,7 +19,7 @@ import { usePageMetadata } from "@/hooks/usePageMetadata";
 const Contact = () => {
   usePageMetadata(
     "Contact",
-    "Contact Rodent Inc. to collaborate on developer tools, energy intelligence, fintech, or hardware projects."
+    "Contact Rodent Inc. about developer tooling, energy operations systems, fintech infrastructure, or hardware projects."
   );
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -135,13 +135,13 @@ const Contact = () => {
           <div className="text-center mb-20 space-y-6 animate-fade-in">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border/50 text-sm text-muted-foreground">
               <MessageCircle className="w-4 h-4 text-accent" />
-              Contact Us
+              Contact
             </div>
             <h1 className="text-5xl lg:text-7xl font-semibold tracking-tight">
-              Get in <span className="gradient-text">Touch</span>
+              Talk to <span className="gradient-text">the Team</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-xl mx-auto leading-relaxed">
-              Let's discuss how Rodent Inc. can power your next innovation
+              Share your project scope, timeline, and technical needs.
             </p>
           </div>
 
@@ -149,10 +149,9 @@ const Contact = () => {
             {/* Contact Info */}
             <div className="space-y-6 animate-fade-in-up">
               <div className="card-premium">
-                <h2 className="text-2xl font-semibold mb-4">Contact Information</h2>
+                <h2 className="text-2xl font-semibold mb-4">Direct Contacts</h2>
                 <p className="text-muted-foreground mb-8">
-                  Reach out directly or fill in the form. We're here to help build
-                  the future together.
+                  Email us directly or send details through the form. We respond with next steps and fit.
                 </p>
 
                 <div className="space-y-6">
@@ -217,13 +216,13 @@ const Contact = () => {
               </div>
 
               <div className="card-premium">
-                <h3 className="text-lg font-semibold mb-4">What we can help with</h3>
+                <h3 className="text-lg font-semibold mb-4">Common requests</h3>
                 <ul className="space-y-3">
                   {[
                     "API integration & developer tools",
                     "Energy intelligence solutions",
                     "Fintech & insurance platforms",
-                    "Custom enterprise solutions",
+                    "Custom software delivery",
                     "Partnership opportunities",
                     "Media & press inquiries",
                   ].map((item) => (
@@ -346,13 +345,13 @@ const Contact = () => {
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    placeholder="Tell us about your project or inquiry..."
+                    placeholder="Describe your project, current system, and what you need next."
                     rows={5}
                     required
                     className="resize-none"
                   />
                   <div className="flex items-center justify-between text-xs text-muted-foreground">
-                    <span>Share goals, timeline, and expected launch date.</span>
+                    <span>Include scope, timeline, and expected deployment date.</span>
                     <span>{formData.message.length}/800</span>
                   </div>
                 </div>
@@ -374,11 +373,11 @@ const Contact = () => {
                 </Button>
 
                 <p className="text-xs text-muted-foreground text-center">
-                  Prefer a direct line? Email{" "}
+                  Need a direct line? Email{" "}
                   <a href="mailto:anesu@rodent.co.zw" className="text-accent hover:underline">
                     anesu@rodent.co.zw
                   </a>{" "}
-                  and we usually respond within 24 hours.
+                  for a response, usually within 24 hours.
                 </p>
               </form>
             </div>
