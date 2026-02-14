@@ -8,6 +8,9 @@ import { ArrowLeft, ArrowUpRight, CheckCircle2, Download, FileSpreadsheet } from
 import { usePageMetadata } from "@/hooks/usePageMetadata";
 import { downloadProjectAbstract } from "@/lib/projectAbstractDownload";
 import { exportAuditCsv } from "@/lib/analyticsAudit";
+import { ArrowLeft, ArrowUpRight, CheckCircle2, Download } from "lucide-react";
+import { usePageMetadata } from "@/hooks/usePageMetadata";
+import { downloadProjectAbstract } from "@/lib/projectAbstractDownload";
 
 const normalizeProjectValue = (value?: string) =>
   (value || "")

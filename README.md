@@ -75,6 +75,7 @@ Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/c
 ## Blog admin setup (new)
 
 This project includes a built-in blog with admin login and post publishing routes:
+This project now includes a built-in blog with admin login and post publishing routes:
 - `/blog` (public list)
 - `/blog/:slug` (public post page)
 - `/blog/login` (admin login)
@@ -96,3 +97,10 @@ Project abstract downloads now use a premium PDF template mode (default) with:
 - PDF metadata (title/author/subject)
 
 Each abstract download also records an audit event in browser local storage (`rodent_audit_events`) and can be exported as CSV from project pages.
+To enable admin login, set an environment variable before running the app:
+
+`VITE_BLOG_ADMIN_PASSWORD=your-strong-password`
+
+Without this variable, login is intentionally blocked so the blog cannot be edited accidentally.
+
+Editorial formats built in: Engineering notes, Field reports, Build logs, Grid experiments, Post-mortems, Research drops.
