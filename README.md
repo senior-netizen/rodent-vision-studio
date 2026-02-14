@@ -74,14 +74,16 @@ Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/c
 
 ## Blog admin setup (new)
 
-This project includes a built-in blog with admin login and post publishing routes:
+This project now includes a built-in blog with admin login and post publishing routes:
 - `/blog` (public list)
 - `/blog/:slug` (public post page)
 - `/blog/login` (admin login)
 - `/blog/new` (create post)
 
-Admin credentials currently configured in-app:
-- Email: `anesu@rodent.co.zw`
-- Password: `rodent@2526`
+To enable admin login, set an environment variable before running the app:
+
+`VITE_BLOG_ADMIN_PASSWORD=your-strong-password`
+
+Without this variable, login is intentionally blocked so the blog cannot be edited accidentally.
 
 Editorial formats built in: Engineering notes, Field reports, Build logs, Grid experiments, Post-mortems, Research drops.
