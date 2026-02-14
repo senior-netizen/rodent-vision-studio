@@ -34,7 +34,7 @@ const lanes = [
 const Opportunities = () => {
   usePageMetadata(
     "Opportunities",
-    "Work with Rodent Inc. as a collaborator, team member, or investor building the infrastructure for Africa's innovation decade."
+    "Work with Rodent Inc. as a collaborator, team member, or investor supporting software and hardware delivery in Africa."
   );
 
   return (
@@ -53,8 +53,7 @@ const Opportunities = () => {
               Work With Us
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Collaborate on groundbreaking products, join the studio, or partner 
-              with us to scale innovation across Africa.
+              Collaborate on live products, join the team, or invest in the studio.
             </p>
           </div>
 
@@ -107,10 +106,9 @@ const Opportunities = () => {
                 <Mail className="w-3.5 h-3.5" /> 
                 Direct line
               </div>
-              <h3 className="text-2xl font-semibold">Looking to collaborate on a launch or invest?</h3>
+              <h3 className="text-2xl font-semibold">Want to collaborate or invest?</h3>
               <p className="text-muted-foreground max-w-xl">
-                Tell us about your mandate and timeline. We prioritize partners who move fast, 
-                value transparency, and want to build enduring infrastructure in Africa.
+                Share your scope and timeline. We prioritize partners with clear goals, fast decision cycles, and long-term delivery plans.
               </p>
             </div>
             <Button size="lg" className="rounded-full px-8 flex-shrink-0" asChild>

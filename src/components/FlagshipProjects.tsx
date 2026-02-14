@@ -28,17 +28,17 @@ export const FlagshipProjects = () => {
         )}>
           <div className="max-w-2xl">
             <h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-4">
-              Flagship Projects
+              Projects in Production and Pilot
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              Production-grade platforms spanning developer tools, energy intelligence, and trust infrastructure.
+              Tools and infrastructure currently deployed, in pilot, or in private beta.
             </p>
           </div>
           <Link
             to="/projects"
             className="inline-flex items-center gap-2 neumorphic-button text-sm"
           >
-            View all work
+            See all projects
             <ArrowUpRight className="w-4 h-4" />
           </Link>
         </div>
@@ -88,7 +88,7 @@ export const FlagshipProjects = () => {
 
               {/* CTA */}
               <div className="inline-flex items-center text-sm font-medium text-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                Explore project
+                Open project details
                 <ArrowUpRight className="w-4 h-4 ml-1" />
               </div>
             </Link>

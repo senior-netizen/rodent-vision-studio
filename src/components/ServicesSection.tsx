@@ -5,50 +5,50 @@ import { cn } from "@/lib/utils";
 const services = [
   {
     icon: Globe,
-    title: "Web Development",
+    title: "Web Platforms",
     description:
-      "Modern, responsive websites and web applications built with cutting-edge technologies. From landing pages to complex enterprise solutions.",
-    features: ["React & Next.js", "E-commerce", "Progressive Web Apps", "SEO Optimization"],
+      "Web apps and portals that stay usable on slow networks and older devices.",
+    features: ["React & Next.js", "Admin portals", "PWA support", "Performance tuning"],
     accent: "tech" as const,
   },
   {
     icon: Smartphone,
-    title: "Mobile App Development",
+    title: "Mobile Applications",
     description:
-      "Native and cross-platform mobile applications for iOS and Android. Seamless user experiences optimized for performance.",
-    features: ["iOS & Android", "React Native", "Flutter", "App Store Deployment"],
+      "Mobile products for Android and iOS with offline handling and stable sync.",
+    features: ["iOS & Android", "React Native", "Flutter", "Store deployment"],
     accent: "energy" as const,
   },
   {
     icon: Database,
-    title: "Backend & APIs",
+    title: "Backend Systems & APIs",
     description:
-      "Robust server-side solutions, RESTful APIs, and database architecture. Scalable infrastructure that grows with your business.",
-    features: ["Node.js & Python", "Cloud Services", "Database Design", "API Integration"],
+      "Backend services, data models, and APIs designed for long-term maintainability.",
+    features: ["Node.js & Python", "API design", "Database architecture", "System integration"],
     accent: "accent" as const,
   },
   {
     icon: Palette,
-    title: "UI/UX Design",
+    title: "Interface Design",
     description:
-      "User-centered design that combines aesthetics with functionality. Creating intuitive interfaces that delight users.",
-    features: ["Wireframing", "Prototyping", "Design Systems", "User Research"],
+      "Clear interface design for dashboards, operator tools, and customer flows.",
+    features: ["Wireframes", "Prototypes", "Design systems", "Usability reviews"],
     accent: "tech" as const,
   },
   {
     icon: Code,
-    title: "Custom Software",
+    title: "Custom Engineering",
     description:
-      "Tailored software solutions to automate processes and solve unique business challenges. Built to your exact specifications.",
-    features: ["Process Automation", "Legacy Modernization", "Integration", "Maintenance"],
+      "Purpose-built software for operational bottlenecks that off-the-shelf tools do not solve.",
+    features: ["Workflow automation", "Legacy integration", "Ops tooling", "Long-term support"],
     accent: "energy" as const,
   },
   {
     icon: Zap,
-    title: "Technical Consulting",
+    title: "Technical Advisory",
     description:
-      "Strategic guidance on technology choices, architecture decisions, and digital transformation initiatives.",
-    features: ["Tech Strategy", "Code Review", "Performance Audit", "Team Training"],
+      "Architecture, delivery, and reliability guidance for teams shipping under real constraints.",
+    features: ["Architecture reviews", "Code audits", "Performance checks", "Team enablement"],
     accent: "accent" as const,
   },
 ];
@@ -65,23 +65,21 @@ export const ServicesSection = () => {
   return (
     <section id="services" className="section-padding-sm bg-background" ref={ref}>
       <div className="container mx-auto">
-        {/* Header */}
         <div className={cn(
           "text-center mb-16 md:mb-20 max-w-3xl mx-auto transition-all duration-700",
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         )}>
           <span className="inline-block px-4 py-1.5 rounded-full text-sm font-medium bg-primary/10 text-primary border border-primary/20 mb-6">
-            Our Services
+            Core Services
           </span>
           <h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-6">
-            Development Services
+            Product Engineering
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            End-to-end development solutions from concept to deployment. We bring your digital vision to life with modern technologies and best practices.
+            We help teams design, build, and run software that has to work in production, not just in demos.
           </p>
         </div>
 
-        {/* Services grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, index) => {
             const Icon = service.icon;
@@ -94,7 +92,6 @@ export const ServicesSection = () => {
                 )}
                 style={{ transitionDelay: isVisible ? `${index * 80}ms` : '0ms' }}
               >
-                {/* Icon */}
                 <div className={cn(
                   "w-14 h-14 rounded-xl neumorphic-inset flex items-center justify-center",
                   accentColors[service.accent]
@@ -102,7 +99,6 @@ export const ServicesSection = () => {
                   <Icon className="w-7 h-7" />
                 </div>
 
-                {/* Content */}
                 <div className="space-y-3">
                   <h3 className="text-xl font-semibold group-hover:text-primary transition-colors">
                     {service.title}
@@ -112,7 +108,6 @@ export const ServicesSection = () => {
                   </p>
                 </div>
 
-                {/* Features */}
                 <div className="flex flex-wrap gap-2">
                   {service.features.map((feature) => (
                     <span
@@ -128,7 +123,6 @@ export const ServicesSection = () => {
           })}
         </div>
 
-        {/* CTA */}
         <div className={cn(
           "text-center mt-12 transition-all duration-700 delay-500",
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
@@ -137,7 +131,7 @@ export const ServicesSection = () => {
             href="/contact"
             className="neumorphic-button inline-flex items-center gap-2 px-8 py-3 rounded-full font-medium text-primary hover:text-primary-foreground hover:bg-primary transition-all duration-300"
           >
-            Start Your Project
+            Start a Conversation
             <Zap className="w-4 h-4" />
           </a>
         </div>

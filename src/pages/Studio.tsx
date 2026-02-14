@@ -21,7 +21,7 @@ const principles = [
 const Studio = () => {
   usePageMetadata(
     "Studio",
-    "Rodent is a deep-tech studio building API-first software, energy intelligence, and hardware for Africa's innovation era."
+    "Rodent is an engineering studio building API software, energy operations tools, and hardware for African markets."
   );
 
   return (
@@ -37,12 +37,11 @@ const Studio = () => {
               Rodent Studio
             </div>
             <h1 className="text-5xl lg:text-7xl font-semibold tracking-tight text-balance">
-              Engineering the backbone of
-              <span className="block gradient-text">African innovation</span>
+              Building software and hardware
+              <span className="block gradient-text">for hard operating environments</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              We are a hybrid software-hardware studio building resilient infrastructure 
-              for builders across the continent—from developer APIs to turbines.
+              We are a software and hardware studio building tools for operators, utilities, and engineering teams.
             </p>
           </section>
 
@@ -50,11 +49,9 @@ const Studio = () => {
           <section className="grid lg:grid-cols-2 gap-8">
             {/* How We Work */}
             <div className="card-premium animate-fade-in-up">
-              <h2 className="text-2xl font-semibold mb-4">How we work</h2>
+              <h2 className="text-2xl font-semibold mb-4">How we deliver</h2>
               <p className="text-muted-foreground leading-relaxed mb-6">
-                Rodent operates like a product company and a lab. We run sprints with 
-                measurable outcomes, maintain production-grade pipelines, and pair 
-                design with engineering from day one.
+                We work in short build cycles with clear delivery goals, measurable reliability targets, and shared ownership from design through deployment.
               </p>
               <div className="space-y-4 mb-6">
                 {principles.map((item) => (

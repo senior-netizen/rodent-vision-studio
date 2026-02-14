@@ -7,7 +7,7 @@ const areas = [
     icon: Cpu,
     title: "Software & DevTools",
     description:
-      "API-first platforms, AI copilots, and developer experiences that keep teams shipping with confidence.",
+      "API platforms, tooling, and assistant workflows that help teams ship and maintain integrations.",
     highlights: ["API Studio", "CLI workflows", "AI copilots"],
     tone: "tech" as const,
   },
@@ -15,7 +15,7 @@ const areas = [
     icon: BatteryCharging,
     title: "Energy & Hardware",
     description:
-      "Grid intelligence, IoT sensors, and wind R&D tuned for the realities of African power systems.",
+      "Outage tracking, IoT sensors, and wind hardware research for unstable power systems.",
     highlights: ["ShedSense", "VAWT Research", "Edge telemetry"],
     tone: "energy" as const,
   },
@@ -23,7 +23,7 @@ const areas = [
     icon: Shield,
     title: "Fintech & Trust",
     description:
-      "Hybrid on/off-chain rails for insurance, treasury, and compliance where transparency matters.",
+      "Claim, treasury, and compliance workflows with auditable records and clear approval trails.",
     highlights: ["TrustChain", "Identity & KYC", "Auditability"],
     tone: "accent" as const,
   },
@@ -31,7 +31,7 @@ const areas = [
     icon: Globe2,
     title: "Infrastructure",
     description:
-      "Operational software for property, mobility, and civic systems with embedded payments.",
+      "Operational software for property, mobility, and civic workflows with integrated payments.",
     highlights: ["Property ops", "Mobility", "GovTech"],
     tone: "tech" as const,
   },
@@ -58,7 +58,7 @@ export const WhatWeBuild = () => {
             What We Build
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            A full-stack studio shipping devtools, energy intelligence, and fintech rails designed for Africa's unique context.
+            We build practical systems across developer tooling, energy operations, and financial workflows.
           </p>
         </div>
 
