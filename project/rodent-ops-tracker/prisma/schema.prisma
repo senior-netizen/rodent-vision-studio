@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum ProjectStatus {
+  PLANNING
+  ACTIVE
+  ON_HOLD
+  COMPLETED
+}
+
+enum ExpenseCategory {
+  EQUIPMENT
+  LABOR
+  SOFTWARE
+  TRAVEL
+  OTHER
+}
+
+model Project {
+  id        String        @id @default(cuid())
+  name      String
+  status    ProjectStatus @default(PLANNING)
+  revenue   Float         @default(0)
+  startDate DateTime
+  endDate   DateTime?
+  expenses  Expense[]
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+model Expense {
+  id         String          @id @default(cuid())
+  title      String
+  amount     Float
+  date       DateTime
+  category   ExpenseCategory
+  projectId  String
+  project    Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+
+  @@index([projectId])
+  @@index([date])
+}
