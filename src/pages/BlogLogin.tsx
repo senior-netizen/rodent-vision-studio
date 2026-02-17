@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { useBlogAuth } from "@/context/BlogAuthContext";
 
 const BlogLogin = () => {
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -16,9 +15,6 @@ const BlogLogin = () => {
   const handleLogin = (e: FormEvent) => {
     e.preventDefault();
 
-    const ok = login(email, password);
-    if (!ok) {
-      setError("Invalid email or password.");
     if (!import.meta.env.VITE_BLOG_ADMIN_PASSWORD) {
       setError("Admin login is not configured yet. Set VITE_BLOG_ADMIN_PASSWORD in your environment.");
       return;
@@ -40,19 +36,6 @@ const BlogLogin = () => {
         <div className="container mx-auto px-6 lg:px-8 max-w-md">
           <div className="rounded-2xl border border-border/60 bg-card p-6 space-y-5">
             <h1 className="text-2xl font-semibold">Blog Admin Login</h1>
-            <p className="text-sm text-muted-foreground">Use your admin credentials to create and publish journal entries.</p>
-
-            <form className="space-y-4" onSubmit={handleLogin}>
-              <Input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-              <Input
-                type="password"
-                placeholder="Password"
             <p className="text-sm text-muted-foreground">Login to create and publish blog posts.</p>
 
             <form className="space-y-4" onSubmit={handleLogin}>
@@ -64,10 +47,14 @@ const BlogLogin = () => {
                 required
               />
               {error ? <p className="text-sm text-destructive">{error}</p> : null}
-              <Button className="w-full" type="submit">Login</Button>
+              <Button className="w-full" type="submit">
+                Login
+              </Button>
             </form>
 
-            <Link to="/blog" className="text-sm text-accent">Back to blog</Link>
+            <Link to="/blog" className="text-sm text-accent">
+              Back to blog
+            </Link>
           </div>
         </div>
       </main>

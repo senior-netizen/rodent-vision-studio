@@ -24,15 +24,6 @@ const PAGE_HEIGHT = 841.89;
 const MARGIN_X = 56;
 const TOP_MARGIN = 68;
 const BOTTOM_MARGIN = 56;
-  sections: AbstractSection[];
-};
-
-const PAGE_WIDTH = 595.28; // A4 width in pt
-const PAGE_HEIGHT = 841.89; // A4 height in pt
-const MARGIN_X = 56;
-const TOP_MARGIN = 68;
-const BOTTOM_MARGIN = 56;
-const BODY_FONT_SIZE = 12;
 const LINE_HEIGHT = 18;
 
 const escapePdfText = (text: string) => text.replace(/\\/g, "\\\\").replace(/\(/g, "\\(").replace(/\)/g, "\\)");
@@ -86,11 +77,6 @@ const buildPdfBuffer = (payload: ProjectAbstractDocument) => {
 
   const pushText = (text: string, size = bodySize, spacingAfter = 0, lineChars = maxChars) => {
     const lines = approximateWrap(text, lineChars);
-    }
-  };
-
-  const pushText = (text: string, size = BODY_FONT_SIZE, spacingAfter = 0, maxChars = 78) => {
-    const lines = approximateWrap(text, maxChars);
     for (const line of lines) {
       ensureSpace(LINE_HEIGHT);
       drawLine(pages[pageIndex], MARGIN_X, cursorY, size, line);
@@ -116,18 +102,6 @@ const buildPdfBuffer = (payload: ProjectAbstractDocument) => {
   });
 
   const objects: string[] = [];
-  // Title block
-  pushText("PROJECT ABSTRACT", 10, 8, 90);
-  pushText(payload.title, 26, 8, 40);
-  pushText(payload.subtitle, 15, 12, 66);
-  pushText(`Generated ${new Date().toLocaleDateString()}${payload.generatedBy ? ` · ${payload.generatedBy}` : ""}`, 10, 16, 90);
-
-  for (const section of payload.sections) {
-    pushText(section.heading.toUpperCase(), 12, 4, 90);
-    pushText(section.body, BODY_FONT_SIZE, 12, 88);
-  }
-
-  const objects: string[] = [];
 
   const addObject = (content: string) => {
     objects.push(content);
@@ -149,12 +123,13 @@ const buildPdfBuffer = (payload: ProjectAbstractDocument) => {
 
   const pagesObj = addObject(`<< /Type /Pages /Count ${pageObjects.length} /Kids [${pageObjects.map((id) => `${id} 0 R`).join(" ")}] >>`);
 
-  // patch parent references
   for (const id of pageObjects) {
     objects[id - 1] = objects[id - 1].replace("/Parent 0 0 R", `/Parent ${pagesObj} 0 R`);
   }
 
-  const infoObj = addObject(`<< /Title (${escapePdfText(payload.title)}) /Author (${escapePdfText(payload.generatedBy ?? "Rodent Inc.")}) /Creator (Rodent Abstract Exporter) /Subject (${escapePdfText(payload.subtitle)}) >>`);
+  const infoObj = addObject(
+    `<< /Title (${escapePdfText(payload.title)}) /Author (${escapePdfText(payload.generatedBy ?? "Rodent Inc.")}) /Creator (Rodent Abstract Exporter) /Subject (${escapePdfText(payload.subtitle)}) >>`
+  );
   const catalogObj = addObject(`<< /Type /Catalog /Pages ${pagesObj} 0 R >>`);
 
   let pdf = "%PDF-1.4\n";
@@ -174,7 +149,6 @@ const buildPdfBuffer = (payload: ProjectAbstractDocument) => {
   }
 
   pdf += `trailer\n<< /Size ${objects.length + 1} /Root ${catalogObj} 0 R /Info ${infoObj} 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`;
-  pdf += `trailer\n<< /Size ${objects.length + 1} /Root ${catalogObj} 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`;
 
   return new TextEncoder().encode(pdf);
 };
@@ -215,13 +189,4 @@ export const downloadProjectAbstract = (payload: ProjectAbstractDocument) => {
       details: error instanceof Error ? error.message : "Unknown error",
     });
   }
-  const pdfBytes = buildPdfBuffer(payload);
-  const blob = new Blob([pdfBytes], { type: "application/pdf" });
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = payload.filename.endsWith(".pdf") ? payload.filename : `${payload.filename}.pdf`;
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-  URL.revokeObjectURL(link.href);
 };
