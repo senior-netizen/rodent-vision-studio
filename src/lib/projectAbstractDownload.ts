@@ -79,6 +79,7 @@ const drawDualBrandHeader = (ops: string[], topY: number) => {
   drawRect(ops, { x: rightX, y: cardY + 5, w: 14, h: 14, color: "0.95 0.40 0.17" });
   drawText(ops, { x: rightX + 3.2, y: cardY + 8.4, size: 8, text: "S", font: "F2", color: "1 1 1" });
   drawText(ops, { x: rightX + 20, y: cardY + 8, size: 11, text: "Squirrell (R)", font: "F2", color: "0.08 0.08 0.08" });
+  drawText(ops, { x: rightX + 20, y: cardY + 8, size: 11, text: "Squirrell®", font: "F2", color: "0.08 0.08 0.08" });
 };
 
 const buildPdfBuffer = (payload: ProjectAbstractDocument) => {
@@ -129,6 +130,7 @@ const buildPdfBuffer = (payload: ProjectAbstractDocument) => {
   pushText(payload.title, { size: titleSize, spacingAfter: 8, lineChars: 42, font: "F2", color: "0.08 0.08 0.1" });
   pushText(payload.subtitle, { size: subtitleSize, spacingAfter: 12, lineChars: 68, color: "0.26 0.26 0.28" });
   pushText(`Generated ${new Date().toLocaleDateString()}${payload.generatedBy ? ` - ${payload.generatedBy}` : ""}`, {
+  pushText(`Generated ${new Date().toLocaleDateString()}${payload.generatedBy ? ` · ${payload.generatedBy}` : ""}`, {
     size: 9,
     spacingAfter: 18,
     lineChars: 92,
@@ -146,6 +148,7 @@ const buildPdfBuffer = (payload: ProjectAbstractDocument) => {
       y: 28,
       size: 8.5,
       text: `Rodent Inc. x Squirrell (R) - ${payload.projectName} - Page ${i + 1}/${pages.length}`,
+      text: `Rodent Inc. × Squirrell® · ${payload.projectName} · Page ${i + 1}/${pages.length}`,
       color: "0.42 0.42 0.45",
     });
   });
@@ -180,6 +183,8 @@ const buildPdfBuffer = (payload: ProjectAbstractDocument) => {
 
   const infoObj = addObject(
     `<< /Title (${escapePdfText(payload.title)}) /Author (${escapePdfText(payload.generatedBy ?? "Rodent Inc.")}) /Creator (Rodent Abstract Exporter - Helvetica Sans) /Subject (${escapePdfText(payload.subtitle)}) >>`
+    `<< /Title (${escapePdfText(payload.title)}) /Author (${escapePdfText(payload.generatedBy ?? "Rodent Inc.")}) /Creator (Rodent Abstract Exporter · Helvetica Sans) /Subject (${escapePdfText(payload.subtitle)}) >>`
+    `<< /Title (${escapePdfText(payload.title)}) /Author (${escapePdfText(payload.generatedBy ?? "Rodent Inc.")}) /Creator (Rodent Abstract Exporter) /Subject (${escapePdfText(payload.subtitle)}) >>`
   );
   const catalogObj = addObject(`<< /Type /Catalog /Pages ${pagesObj} 0 R >>`);
 
