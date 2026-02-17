@@ -78,6 +78,7 @@ const drawDualBrandHeader = (ops: string[], topY: number) => {
   const rightX = PAGE_WIDTH - MARGIN_X - 172;
   drawRect(ops, { x: rightX, y: cardY + 5, w: 14, h: 14, color: "0.95 0.40 0.17" });
   drawText(ops, { x: rightX + 3.2, y: cardY + 8.4, size: 8, text: "S", font: "F2", color: "1 1 1" });
+  drawText(ops, { x: rightX + 20, y: cardY + 8, size: 11, text: "Squirrell (R)", font: "F2", color: "0.08 0.08 0.08" });
   drawText(ops, { x: rightX + 20, y: cardY + 8, size: 11, text: "Squirrell®", font: "F2", color: "0.08 0.08 0.08" });
 };
 
@@ -128,6 +129,7 @@ const buildPdfBuffer = (payload: ProjectAbstractDocument) => {
   pushText("PROJECT ABSTRACT", { size: 9.5, spacingAfter: 8, lineChars: 90, font: "F2", color: "0.42 0.42 0.44" });
   pushText(payload.title, { size: titleSize, spacingAfter: 8, lineChars: 42, font: "F2", color: "0.08 0.08 0.1" });
   pushText(payload.subtitle, { size: subtitleSize, spacingAfter: 12, lineChars: 68, color: "0.26 0.26 0.28" });
+  pushText(`Generated ${new Date().toLocaleDateString()}${payload.generatedBy ? ` - ${payload.generatedBy}` : ""}`, {
   pushText(`Generated ${new Date().toLocaleDateString()}${payload.generatedBy ? ` · ${payload.generatedBy}` : ""}`, {
     size: 9,
     spacingAfter: 18,
@@ -145,6 +147,7 @@ const buildPdfBuffer = (payload: ProjectAbstractDocument) => {
       x: MARGIN_X,
       y: 28,
       size: 8.5,
+      text: `Rodent Inc. x Squirrell (R) - ${payload.projectName} - Page ${i + 1}/${pages.length}`,
       text: `Rodent Inc. × Squirrell® · ${payload.projectName} · Page ${i + 1}/${pages.length}`,
       color: "0.42 0.42 0.45",
     });
@@ -164,7 +167,8 @@ const buildPdfBuffer = (payload: ProjectAbstractDocument) => {
 
   for (const pageOps of pages) {
     const stream = pageOps.join("\n");
-    const contentObj = addObject(`<< /Length ${stream.length} >>\nstream\n${stream}\nendstream`);
+    const streamLength = new TextEncoder().encode(stream).length;
+    const contentObj = addObject(`<< /Length ${streamLength} >>\nstream\n${stream}\nendstream`);
     const pageObj = addObject(
       `<< /Type /Page /Parent 0 0 R /MediaBox [0 0 ${PAGE_WIDTH.toFixed(2)} ${PAGE_HEIGHT.toFixed(2)}] /Resources << /Font << /F1 ${fontObjRegular} 0 R /F2 ${fontObjBold} 0 R >> >> /Contents ${contentObj} 0 R >>`
     );
@@ -178,6 +182,7 @@ const buildPdfBuffer = (payload: ProjectAbstractDocument) => {
   }
 
   const infoObj = addObject(
+    `<< /Title (${escapePdfText(payload.title)}) /Author (${escapePdfText(payload.generatedBy ?? "Rodent Inc.")}) /Creator (Rodent Abstract Exporter - Helvetica Sans) /Subject (${escapePdfText(payload.subtitle)}) >>`
     `<< /Title (${escapePdfText(payload.title)}) /Author (${escapePdfText(payload.generatedBy ?? "Rodent Inc.")}) /Creator (Rodent Abstract Exporter · Helvetica Sans) /Subject (${escapePdfText(payload.subtitle)}) >>`
     `<< /Title (${escapePdfText(payload.title)}) /Author (${escapePdfText(payload.generatedBy ?? "Rodent Inc.")}) /Creator (Rodent Abstract Exporter) /Subject (${escapePdfText(payload.subtitle)}) >>`
   );
@@ -217,12 +222,16 @@ export const downloadProjectAbstract = (payload: ProjectAbstractDocument) => {
     const pdfBytes = buildPdfBuffer(payload);
     const blob = new Blob([pdfBytes], { type: "application/pdf" });
     const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
+    const objectUrl = URL.createObjectURL(blob);
+    link.href = objectUrl;
     link.download = payload.filename.endsWith(".pdf") ? payload.filename : `${payload.filename}.pdf`;
+    link.rel = "noopener";
     document.body.appendChild(link);
     link.click();
     link.remove();
-    URL.revokeObjectURL(link.href);
+
+    // Delay revoke to avoid interrupting downloads in some browsers (notably Safari/WebKit).
+    setTimeout(() => URL.revokeObjectURL(objectUrl), 1500);
 
     recordAuditEvent({
       eventType: "abstract_download_succeeded",
