@@ -47,12 +47,38 @@ const approximateWrap = (text: string, maxCharsPerLine: number) => {
   return lines;
 };
 
-const drawLine = (ops: string[], x: number, y: number, size: number, text: string) => {
-  ops.push(`BT /F1 ${size} Tf 1 0 0 1 ${x.toFixed(2)} ${y.toFixed(2)} Tm (${escapePdfText(text)}) Tj ET`);
+const drawText = (
+  ops: string[],
+  {
+    x,
+    y,
+    size,
+    text,
+    font = "F1",
+    color = "0 0 0",
+  }: { x: number; y: number; size: number; text: string; font?: "F1" | "F2"; color?: string }
+) => {
+  ops.push(`BT /${font} ${size} Tf ${color} rg 1 0 0 1 ${x.toFixed(2)} ${y.toFixed(2)} Tm (${escapePdfText(text)}) Tj ET`);
 };
 
-const drawAccentBar = (ops: string[], y: number) => {
-  ops.push(`q 0.67 0.73 0.93 rg ${MARGIN_X.toFixed(2)} ${y.toFixed(2)} ${(PAGE_WIDTH - MARGIN_X * 2).toFixed(2)} 2 re f Q`);
+const drawRect = (ops: string[], { x, y, w, h, color }: { x: number; y: number; w: number; h: number; color: string }) => {
+  ops.push(`q ${color} rg ${x.toFixed(2)} ${y.toFixed(2)} ${w.toFixed(2)} ${h.toFixed(2)} re f Q`);
+};
+
+const drawDualBrandHeader = (ops: string[], topY: number) => {
+  const cardY = topY - 32;
+  drawRect(ops, { x: MARGIN_X, y: cardY, w: PAGE_WIDTH - MARGIN_X * 2, h: 26, color: "0.97 0.97 0.98" });
+
+  // Rodent lockup (left)
+  drawRect(ops, { x: MARGIN_X + 10, y: cardY + 5, w: 14, h: 14, color: "0.13 0.13 0.13" });
+  drawText(ops, { x: MARGIN_X + 13.4, y: cardY + 8.4, size: 7.5, text: "R", font: "F2", color: "1 1 1" });
+  drawText(ops, { x: MARGIN_X + 30, y: cardY + 8, size: 11, text: "Rodent", font: "F2", color: "0.13 0.13 0.13" });
+
+  // Squirrell lockup (right, alongside company logo)
+  const rightX = PAGE_WIDTH - MARGIN_X - 172;
+  drawRect(ops, { x: rightX, y: cardY + 5, w: 14, h: 14, color: "0.95 0.40 0.17" });
+  drawText(ops, { x: rightX + 3.2, y: cardY + 8.4, size: 8, text: "S", font: "F2", color: "1 1 1" });
+  drawText(ops, { x: rightX + 20, y: cardY + 8, size: 11, text: "Squirrell®", font: "F2", color: "0.08 0.08 0.08" });
 };
 
 const buildPdfBuffer = (payload: ProjectAbstractDocument) => {
@@ -71,34 +97,57 @@ const buildPdfBuffer = (payload: ProjectAbstractDocument) => {
       pages.push([]);
       pageIndex += 1;
       cursorY = PAGE_HEIGHT - TOP_MARGIN;
-      if (isPremium) drawAccentBar(pages[pageIndex], cursorY + 8);
+      drawDualBrandHeader(pages[pageIndex], cursorY + 18);
+      cursorY -= 36;
     }
   };
 
-  const pushText = (text: string, size = bodySize, spacingAfter = 0, lineChars = maxChars) => {
+  const pushText = (
+    text: string,
+    {
+      size = bodySize,
+      spacingAfter = 0,
+      lineChars = maxChars,
+      font = "F1",
+      color = "0.16 0.16 0.16",
+    }: { size?: number; spacingAfter?: number; lineChars?: number; font?: "F1" | "F2"; color?: string } = {}
+  ) => {
     const lines = approximateWrap(text, lineChars);
     for (const line of lines) {
       ensureSpace(LINE_HEIGHT);
-      drawLine(pages[pageIndex], MARGIN_X, cursorY, size, line);
+      drawText(pages[pageIndex], { x: MARGIN_X, y: cursorY, size, text: line, font, color });
       cursorY -= LINE_HEIGHT;
     }
     cursorY -= spacingAfter;
   };
 
-  if (isPremium) drawAccentBar(pages[pageIndex], cursorY + 8);
+  drawDualBrandHeader(pages[pageIndex], cursorY + 18);
+  cursorY -= 36;
 
-  pushText("PROJECT ABSTRACT", 10, 8, 90);
-  pushText(payload.title, titleSize, 8, 42);
-  pushText(payload.subtitle, subtitleSize, 12, 68);
-  pushText(`Generated ${new Date().toLocaleDateString()}${payload.generatedBy ? ` · ${payload.generatedBy}` : ""}`, 10, 16, 92);
+  // Apple-like clean sans-serif style via Helvetica/Helvetica-Bold
+  pushText("PROJECT ABSTRACT", { size: 9.5, spacingAfter: 8, lineChars: 90, font: "F2", color: "0.42 0.42 0.44" });
+  pushText(payload.title, { size: titleSize, spacingAfter: 8, lineChars: 42, font: "F2", color: "0.08 0.08 0.1" });
+  pushText(payload.subtitle, { size: subtitleSize, spacingAfter: 12, lineChars: 68, color: "0.26 0.26 0.28" });
+  pushText(`Generated ${new Date().toLocaleDateString()}${payload.generatedBy ? ` · ${payload.generatedBy}` : ""}`, {
+    size: 9,
+    spacingAfter: 18,
+    lineChars: 92,
+    color: "0.45 0.45 0.48",
+  });
 
   for (const section of payload.sections) {
-    pushText(section.heading.toUpperCase(), 12, 4, 90);
-    pushText(section.body, bodySize, 12, maxChars);
+    pushText(section.heading.toUpperCase(), { size: 11, spacingAfter: 4, lineChars: 90, font: "F2", color: "0.14 0.14 0.16" });
+    pushText(section.body, { size: bodySize, spacingAfter: 12, lineChars: maxChars, color: "0.18 0.18 0.2" });
   }
 
   pages.forEach((ops, i) => {
-    drawLine(ops, MARGIN_X, 28, 9, `Rodent Inc. · ${payload.projectName} · Page ${i + 1}/${pages.length}`);
+    drawText(ops, {
+      x: MARGIN_X,
+      y: 28,
+      size: 8.5,
+      text: `Rodent Inc. × Squirrell® · ${payload.projectName} · Page ${i + 1}/${pages.length}`,
+      color: "0.42 0.42 0.45",
+    });
   });
 
   const objects: string[] = [];
@@ -108,7 +157,8 @@ const buildPdfBuffer = (payload: ProjectAbstractDocument) => {
     return objects.length;
   };
 
-  const fontObj = addObject("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>");
+  const fontObjRegular = addObject("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>");
+  const fontObjBold = addObject("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>");
 
   const pageObjects: number[] = [];
 
@@ -116,7 +166,7 @@ const buildPdfBuffer = (payload: ProjectAbstractDocument) => {
     const stream = pageOps.join("\n");
     const contentObj = addObject(`<< /Length ${stream.length} >>\nstream\n${stream}\nendstream`);
     const pageObj = addObject(
-      `<< /Type /Page /Parent 0 0 R /MediaBox [0 0 ${PAGE_WIDTH.toFixed(2)} ${PAGE_HEIGHT.toFixed(2)}] /Resources << /Font << /F1 ${fontObj} 0 R >> >> /Contents ${contentObj} 0 R >>`
+      `<< /Type /Page /Parent 0 0 R /MediaBox [0 0 ${PAGE_WIDTH.toFixed(2)} ${PAGE_HEIGHT.toFixed(2)}] /Resources << /Font << /F1 ${fontObjRegular} 0 R /F2 ${fontObjBold} 0 R >> >> /Contents ${contentObj} 0 R >>`
     );
     pageObjects.push(pageObj);
   }
@@ -128,6 +178,7 @@ const buildPdfBuffer = (payload: ProjectAbstractDocument) => {
   }
 
   const infoObj = addObject(
+    `<< /Title (${escapePdfText(payload.title)}) /Author (${escapePdfText(payload.generatedBy ?? "Rodent Inc.")}) /Creator (Rodent Abstract Exporter · Helvetica Sans) /Subject (${escapePdfText(payload.subtitle)}) >>`
     `<< /Title (${escapePdfText(payload.title)}) /Author (${escapePdfText(payload.generatedBy ?? "Rodent Inc.")}) /Creator (Rodent Abstract Exporter) /Subject (${escapePdfText(payload.subtitle)}) >>`
   );
   const catalogObj = addObject(`<< /Type /Catalog /Pages ${pagesObj} 0 R >>`);
