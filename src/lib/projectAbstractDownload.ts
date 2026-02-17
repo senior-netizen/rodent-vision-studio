@@ -179,6 +179,7 @@ const buildPdfBuffer = (payload: ProjectAbstractDocument) => {
 
   const infoObj = addObject(
     `<< /Title (${escapePdfText(payload.title)}) /Author (${escapePdfText(payload.generatedBy ?? "Rodent Inc.")}) /Creator (Rodent Abstract Exporter · Helvetica Sans) /Subject (${escapePdfText(payload.subtitle)}) >>`
+    `<< /Title (${escapePdfText(payload.title)}) /Author (${escapePdfText(payload.generatedBy ?? "Rodent Inc.")}) /Creator (Rodent Abstract Exporter) /Subject (${escapePdfText(payload.subtitle)}) >>`
   );
   const catalogObj = addObject(`<< /Type /Catalog /Pages ${pagesObj} 0 R >>`);
 
