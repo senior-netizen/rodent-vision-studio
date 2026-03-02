@@ -129,7 +129,6 @@ const buildPdfBuffer = (payload: ProjectAbstractDocument) => {
   pushText("PROJECT ABSTRACT", { size: 9.5, spacingAfter: 8, lineChars: 90, font: "F2", color: "0.42 0.42 0.44" });
   pushText(payload.title, { size: titleSize, spacingAfter: 8, lineChars: 42, font: "F2", color: "0.08 0.08 0.1" });
   pushText(payload.subtitle, { size: subtitleSize, spacingAfter: 12, lineChars: 68, color: "0.26 0.26 0.28" });
-  pushText(`Generated ${new Date().toLocaleDateString()}${payload.generatedBy ? ` - ${payload.generatedBy}` : ""}`, {
   pushText(`Generated ${new Date().toLocaleDateString()}${payload.generatedBy ? ` · ${payload.generatedBy}` : ""}`, {
     size: 9,
     spacingAfter: 18,
@@ -147,7 +146,6 @@ const buildPdfBuffer = (payload: ProjectAbstractDocument) => {
       x: MARGIN_X,
       y: 28,
       size: 8.5,
-      text: `Rodent Inc. x Squirrell (R) - ${payload.projectName} - Page ${i + 1}/${pages.length}`,
       text: `Rodent Inc. × Squirrell® · ${payload.projectName} · Page ${i + 1}/${pages.length}`,
       color: "0.42 0.42 0.45",
     });
