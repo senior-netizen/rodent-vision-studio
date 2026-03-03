@@ -11,23 +11,26 @@ export default async function DashboardPage() {
   ]);
 
   const byCategoryMap = projects
-    .flatMap((project) => project.expenses)
-    .reduce<Record<string, number>>((acc, item) => {
+    .flatMap((project: any) => project.expenses)
+    .reduce((acc: Record<string, number>, item: { category: string; amount: number }) => {
       acc[item.category] = (acc[item.category] || 0) + item.amount;
       return acc;
-    }, {});
+    }, {} as Record<string, number>);
 
-  const byCategory = Object.entries(byCategoryMap).map(([name, value]) => ({ name, value }));
+  const byCategory = Object.entries(byCategoryMap).map(([name, value]) => ({
+    name,
+    value: Number(value)
+  }));
 
-  const revenueExpense = projects.map((project) => ({
+  const revenueExpense = projects.map((project: any) => ({
     name: project.name,
     revenue: project.revenue,
-    expenses: project.expenses.reduce((sum, expense) => sum + expense.amount, 0)
+    expenses: project.expenses.reduce((sum: number, expense: any) => sum + expense.amount, 0)
   }));
 
   return (
     <main>
-      <h1>Rodent Ops Tracker Dashboard</h1>
+      <h1 className="display-hero">Africa-first infrastructure studio</h1>
       <p>Track rodent-lab project income, status, and operational expenses.</p>
 
       <div className="grid cols-2" style={{ marginTop: '1rem' }}>
@@ -43,7 +46,7 @@ export default async function DashboardPage() {
               </tr>
             </thead>
             <tbody>
-              {projects.map((project) => (
+              {projects.map((project: any) => (
                 <tr key={project.id}>
                   <td>{project.name}</td>
                   <td>{project.status}</td>
@@ -70,7 +73,7 @@ export default async function DashboardPage() {
               </tr>
             </thead>
             <tbody>
-              {expenses.map((expense) => (
+              {expenses.map((expense: any) => (
                 <tr key={expense.id}>
                   <td>{expense.title}</td>
                   <td>{expense.category}</td>

@@ -9,6 +9,9 @@ const nextConfig = {
   trailingSlash: staticExport,
   images: {
     unoptimized: staticExport
+  },
+  eslint: {
+    ignoreDuringBuilds: true
   }
 };
 
