@@ -1,6 +1,30 @@
+@font-face {
+  font-family: 'OctopusGame';
+  src: url('/OctopusGame-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'OctopusGame';
+  src: url('/OctopusGame-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
 :root {
   color-scheme: light;
-  font-family: Inter, system-ui, -apple-system, sans-serif;
+  --font-display: 'OctopusGame', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  --text-hero: clamp(3rem, 6vw, 5rem);
+  --text-h1: clamp(2.25rem, 4vw, 3rem);
+  --text-h2: clamp(1.75rem, 3vw, 2.25rem);
+  --text-h3: 1.4rem;
+  --text-body-lg: 1.125rem;
+  --text-body: 1rem;
 }
 
 * {
@@ -11,6 +35,10 @@ body {
   margin: 0;
   background: #f8fafc;
   color: #0f172a;
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
 main {
@@ -40,6 +68,40 @@ h1,
 h2,
 h3 {
   margin: 0 0 0.75rem;
+}
+
+.display-hero {
+  font-family: var(--font-display);
+  font-size: var(--text-hero);
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-size: var(--text-h1);
+  letter-spacing: -0.015em;
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-size: var(--text-h2);
+}
+
+h3 {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+}
+
+.section-label {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+p {
+  font-family: var(--font-body);
 }
 
 table {
