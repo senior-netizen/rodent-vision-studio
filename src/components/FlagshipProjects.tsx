@@ -70,15 +70,15 @@ export const FlagshipProjects = () => {
                 data-tilt-card
                 style={{ transitionDelay: isVisible ? `${index * 100}ms` : "0ms" }}
               >
-                <div className="relative overflow-hidden rounded-2xl border border-border/60 bg-background/60">
+                <div className="editorial-frame relative rounded-2xl border border-border/60 bg-background/60">
                   <div className="absolute inset-0 bg-gradient-to-t from-background via-background/10 to-transparent z-10" aria-hidden />
                   <img
                     src={image.src}
                     alt={image.alt}
                     className={cn(
-                      "h-44 w-full transition-transform duration-500 group-hover:scale-105",
+                      "editorial-image h-44 w-full transition-transform duration-500 group-hover:scale-105",
                       image.fit === "contain"
-                        ? "object-contain bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_70%)] p-7"
+                        ? "editorial-image-logo object-contain bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_70%)] p-7"
                         : "object-cover"
                     )}
                     loading="lazy"

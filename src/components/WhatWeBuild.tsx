@@ -87,15 +87,15 @@ export const WhatWeBuild = () => {
                 )}
                 style={{ transitionDelay: isVisible ? `${index * 100}ms` : "0ms" }}
               >
-                <div className="relative overflow-hidden rounded-2xl border border-border/60 bg-background/60">
+                <div className="editorial-frame relative rounded-2xl border border-border/60 bg-background/60">
                   <div className="absolute inset-0 bg-gradient-to-t from-background via-background/15 to-transparent z-10" aria-hidden />
                   <img
                     src={area.image}
                     alt={area.imageAlt}
                     className={cn(
-                      "h-40 w-full transition-transform duration-500 group-hover:scale-105",
+                      "editorial-image h-40 w-full transition-transform duration-500 group-hover:scale-105",
                       area.fit === "contain"
-                        ? "object-contain bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_70%)] p-6"
+                        ? "editorial-image-logo object-contain bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_70%)] p-6"
                         : "object-cover"
                     )}
                     loading="lazy"
