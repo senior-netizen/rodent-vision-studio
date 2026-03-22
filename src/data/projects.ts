@@ -169,6 +169,28 @@ export const projects: Project[] = [
     cta: "Join early access",
   },
   {
+    slug: "open-claw",
+    name: "Open Claw",
+    category: "Hardware",
+    headline: "Tele-operated robotics for inspection, handling, and field intervention",
+    summary:
+      "A modular robotic claw platform with edge autonomy, operator controls, and telemetry for harsh industrial environments.",
+    problem:
+      "Industrial teams often need to inspect, retrieve, or manipulate equipment in unsafe or inaccessible areas, but existing robotic systems are expensive, brittle, and difficult to adapt locally.",
+    solution:
+      "Open Claw combines a configurable gripper, embedded control stack, and browser-based operations console so teams can deploy tele-operated workflows with local safety fallbacks and low-bandwidth controls.",
+    features: [
+      "Modular end-effector and actuator assembly for different payload profiles",
+      "Browser-based tele-operation console with low-bandwidth video and control channels",
+      "Edge safety interlocks, local fail-safe routines, and operator audit trails",
+      "Sensor telemetry for grip force, motor current, temperature, and battery health",
+      "Simulation-first workflow for testing grasp logic before field deployment",
+    ],
+    techStack: ["ROS 2", "TypeScript", "Rust", "Embedded Linux", "WebRTC"],
+    status: "In Development",
+    cta: "Discuss a pilot",
+  },
+  {
     slug: "rodent-labs-vawt",
     name: "Rodent Labs — VAWT",
     category: "Hardware",

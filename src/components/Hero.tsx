@@ -62,7 +62,7 @@ export const Hero = () => {
               style={{ animationDelay: '0.5s' }}
             >
               <div className="space-y-0.5 sm:space-y-1">
-                <div className="text-2xl sm:text-3xl md:text-4xl font-semibold font-display gradient-text">8+</div>
+                <div className="text-2xl sm:text-3xl md:text-4xl font-semibold font-display gradient-text">9+</div>
                 <div className="text-xs sm:text-sm text-muted-foreground">Products in active build</div>
               </div>
               <div className="space-y-0.5 sm:space-y-1">

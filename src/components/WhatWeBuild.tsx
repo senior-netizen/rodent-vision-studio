@@ -16,7 +16,7 @@ const areas = [
     title: "Energy & Hardware",
     description:
       "Outage tracking, IoT sensors, and wind hardware research for unstable power systems.",
-    highlights: ["ShedSense", "VAWT Research", "Edge telemetry"],
+    highlights: ["ShedSense", "Open Claw", "VAWT Research"],
     tone: "energy" as const,
   },
   {
