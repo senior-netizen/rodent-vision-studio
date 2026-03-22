@@ -6,6 +6,7 @@ import { usePageMetadata } from "@/hooks/usePageMetadata";
 
 const WhatWeBuild = lazy(() => import("@/components/WhatWeBuild").then((m) => ({ default: m.WhatWeBuild })));
 const ServicesSection = lazy(() => import("@/components/ServicesSection").then((m) => ({ default: m.ServicesSection })));
+const VisualShowcase = lazy(() => import("@/components/VisualShowcase").then((m) => ({ default: m.VisualShowcase })));
 const FlagshipProjects = lazy(() => import("@/components/FlagshipProjects").then((m) => ({ default: m.FlagshipProjects })));
 const ProductEcosystem = lazy(() => import("@/components/ProductEcosystem").then((m) => ({ default: m.ProductEcosystem })));
 const WhyRodent = lazy(() => import("@/components/WhyRodent").then((m) => ({ default: m.WhyRodent })));
@@ -23,6 +24,7 @@ const Home = () => {
       <Navigation />
       <Hero />
       <Suspense fallback={<div className="py-16 text-center text-muted-foreground">Loading experience…</div>}>
+        <VisualShowcase />
         <WhatWeBuild />
         <ServicesSection />
         <FlagshipProjects />

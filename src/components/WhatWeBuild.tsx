@@ -1,4 +1,8 @@
 import { Cpu, BatteryCharging, Shield, Globe2 } from "lucide-react";
+import heroDashboard from "@/assets/hero-dashboard.jpg";
+import lightsOutMap from "@/assets/lights-out-map.jpg";
+import lightsOutSchedule from "@/assets/lights-out-schedule.jpg";
+import rodentLogo from "@/assets/rodent-logo-transparent.png";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { cn } from "@/lib/utils";
 
@@ -10,6 +14,8 @@ const areas = [
       "API platforms, tooling, and assistant workflows that help teams ship and maintain integrations.",
     highlights: ["API Studio", "CLI workflows", "AI copilots"],
     tone: "tech" as const,
+    image: heroDashboard,
+    imageAlt: "Product dashboard for developer tooling",
   },
   {
     icon: BatteryCharging,
@@ -18,6 +24,8 @@ const areas = [
       "Outage tracking, IoT sensors, and wind hardware research for unstable power systems.",
     highlights: ["ShedSense", "MeterFlow", "VAWT Research"],
     tone: "energy" as const,
+    image: lightsOutSchedule,
+    imageAlt: "Energy planning interface showing outage schedule",
   },
   {
     icon: Shield,
@@ -26,6 +34,9 @@ const areas = [
       "Claim, treasury, and compliance workflows with auditable records and clear approval trails.",
     highlights: ["TrustChain", "Identity & KYC", "Auditability"],
     tone: "accent" as const,
+    image: rodentLogo,
+    imageAlt: "Rodent brand mark representing trust and platform services",
+    fit: "contain" as const,
   },
   {
     icon: Globe2,
@@ -34,6 +45,8 @@ const areas = [
       "Operational software for property, mobility, and field digitization workflows with integrated payments.",
     highlights: ["Property ops", "Meter reading", "Field ops"],
     tone: "tech" as const,
+    image: lightsOutMap,
+    imageAlt: "Operational map interface for field infrastructure workflows",
   },
 ];
 
@@ -49,46 +62,57 @@ export const WhatWeBuild = () => {
   return (
     <section id="what-we-build" className="section-padding-sm bg-gradient-subtle" ref={ref}>
       <div className="container mx-auto">
-        {/* Header */}
-        <div className={cn(
-          "text-center mb-16 md:mb-20 max-w-3xl mx-auto transition-all duration-700",
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-        )}>
-          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-6">
-            What We Build
-          </h2>
+        <div
+          className={cn(
+            "text-center mb-16 md:mb-20 max-w-3xl mx-auto transition-all duration-700",
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          )}
+        >
+          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-6">What We Build</h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
             We build practical systems across developer tooling, energy operations, and financial workflows.
           </p>
         </div>
 
-        {/* Cards grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {areas.map((area, index) => {
             const Icon = area.icon;
+
             return (
               <div
                 key={area.title}
                 className={cn(
-                  "group glass-card p-8 space-y-6",
+                  "group glass-card p-5 sm:p-6 space-y-5",
                   isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                 )}
-                style={{ transitionDelay: isVisible ? `${index * 100}ms` : '0ms' }}
+                style={{ transitionDelay: isVisible ? `${index * 100}ms` : "0ms" }}
               >
-                {/* Icon */}
+                <div className="relative overflow-hidden rounded-2xl border border-border/60 bg-background/60">
+                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/15 to-transparent z-10" aria-hidden />
+                  <img
+                    src={area.image}
+                    alt={area.imageAlt}
+                    className={cn(
+                      "h-40 w-full transition-transform duration-500 group-hover:scale-105",
+                      area.fit === "contain"
+                        ? "object-contain bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_70%)] p-6"
+                        : "object-cover"
+                    )}
+                    loading="lazy"
+                    decoding="async"
+                    sizes="(min-width: 1280px) 25vw, (min-width: 768px) 50vw, 100vw"
+                  />
+                </div>
+
                 <div className={`w-12 h-12 rounded-xl neumorphic-inset flex items-center justify-center ${toneColors[area.tone]}`}>
                   <Icon className="w-6 h-6" />
                 </div>
 
-                {/* Content */}
                 <div className="space-y-3">
                   <h3 className="text-xl font-semibold">{area.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {area.description}
-                  </p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{area.description}</p>
                 </div>
 
-                {/* Tags */}
                 <div className="flex flex-wrap gap-2">
                   {area.highlights.map((item) => (
                     <span
