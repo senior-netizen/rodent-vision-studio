@@ -19,7 +19,7 @@ const features = [
   {
     icon: Bell,
     title: "Predictive smart alerts",
-    description: "Signal outages early using municipal feeds, citizen reports, and generator telemetry.",
+    description: "Signal outages early using schedule data, citizen reports, and generator telemetry.",
   },
   {
     icon: Fuel,
@@ -29,7 +29,7 @@ const features = [
   {
     icon: Smartphone,
     title: "Fault reporting",
-    description: "Capture geotagged evidence, meter numbers, and media that utilities can triage quickly.",
+    description: "Capture geotagged evidence and media that response teams can triage quickly.",
   },
   {
     icon: Activity,
@@ -38,8 +38,8 @@ const features = [
   },
   {
     icon: Shield,
-    title: "Municipality API partnerships",
-    description: "Authoritative data ingestion with uptime SLAs and rollback channels for unreliable feeds.",
+    title: "Operational data partnerships",
+    description: "Authoritative data ingestion with uptime SLAs and rollback channels for unreliable schedule feeds.",
   },
   {
     icon: Zap,
@@ -51,7 +51,7 @@ const features = [
 const roadmap = {
   live: ["Offline-first schedule caching", "Region-based alerting for major metros"],
   building: [
-    "Municipality API pilots with ZESA/ZETDC partners",
+    "Operational data pilots with regional power partners",
     "Predictive models combining citizen signals and IoT telemetry",
   ],
   coming: [
@@ -59,7 +59,7 @@ const roadmap = {
     "SME dashboards for generator + battery efficiency",
   ],
   future: [
-    "Grid API for utilities to broadcast planned outages",
+    "Grid API for operators to broadcast planned outages",
     "Battery and EV charging orchestration for neighborhoods",
   ],
 };
@@ -70,7 +70,7 @@ const audiences = [
     benefit: "Protect inventory with precise outage windows, fuel guidance, and SLA-friendly alerts.",
   },
   {
-    title: "Utilities & municipalities",
+    title: "Operators & communities",
     benefit: "Better field response through structured citizen reports and API-first communication.",
   },
   {
@@ -83,7 +83,7 @@ const solutionHighlights = [
   {
     title: "Multi-source truth",
     detail:
-      "Municipal APIs, citizen reports, and IoT telemetry are fused to deliver reliable schedules even when one signal fails.",
+      "Schedule feeds, citizen reports, and IoT telemetry are fused to deliver reliable schedules even when one signal fails.",
   },
   {
     title: "Offline-first experience",
@@ -99,7 +99,7 @@ const solutionHighlights = [
 
 const LightsOutPage = () => {
   const description =
-    "Lights Out is Rodent's grid-aware utility companion—region-based alerts, offline schedules, predictive fault reporting, and a trusted marketplace for backup power.";
+    "Lights Out is Rodent's grid-aware operations companion—region-based alerts, offline schedules, predictive fault reporting, and a trusted marketplace for backup power.";
 
   usePageMetadata("Lights Out", description, {
     url: "https://rodent-vision-studio.vercel.app/projects/lights-out",
@@ -112,7 +112,7 @@ const LightsOutPage = () => {
     description,
     brand: { "@type": "Organization", name: "Rodent Inc." },
     audience: [
-      { "@type": "Audience", audienceType: "Utilities" },
+      { "@type": "Audience", audienceType: "Operators" },
       { "@type": "Audience", audienceType: "Small Business" },
     ],
     offers: {
@@ -133,7 +133,7 @@ const LightsOutPage = () => {
           <div className="container mx-auto px-6 lg:px-8 relative z-10">
             <div className="max-w-5xl mx-auto text-center space-y-8 animate-fade-in">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-border/60">
-                <span className="text-sm font-semibold text-energy">Utilities + Energy Monitoring</span>
+                <span className="text-sm font-semibold text-energy">Operations + Energy Monitoring</span>
               </div>
               <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
                 Lights Out — Smart alerts and energy intelligence for load shedding reality
@@ -206,7 +206,7 @@ const LightsOutPage = () => {
             <ul className="space-y-2 text-muted-foreground">
               <li className="flex gap-2 text-sm">
                 <span aria-hidden>•</span>
-                <span>Municipal feeds are often unreliable; SMS trees and WhatsApp forwards become the default source of truth.</span>
+                <span>Schedule feeds are often unreliable; SMS trees and WhatsApp forwards become the default source of truth.</span>
               </li>
               <li className="flex gap-2 text-sm">
                 <span aria-hidden>•</span>
@@ -214,17 +214,17 @@ const LightsOutPage = () => {
               </li>
               <li className="flex gap-2 text-sm">
                 <span aria-hidden>•</span>
-                <span>Residents lack a way to submit structured fault evidence that utilities can act on quickly.</span>
+                <span>Residents lack a way to submit structured fault evidence that response teams can act on quickly.</span>
               </li>
             </ul>
           </div>
           <div className="space-y-4">
             <h2 className="text-3xl lg:text-4xl font-bold">The solution</h2>
             <p className="text-muted-foreground leading-relaxed text-lg">
-              Lights Out fuses municipal APIs, crowdsourced signals, and IoT telemetry. The result is reliable schedules, predictive alerts, and a vetted marketplace that reduces downtime and wasted diesel.
+              Lights Out fuses schedule feeds, crowdsourced signals, and IoT telemetry. The result is reliable schedules, predictive alerts, and a vetted marketplace that reduces downtime and wasted diesel.
             </p>
             <p className="text-muted-foreground leading-relaxed text-lg">
-              Communities, installers, and utilities see the same timeline, supported by localization in English, Shona, and Ndebele so nobody is left out.
+              Communities, installers, and operators see the same timeline, supported by localization in English, Shona, and Ndebele so nobody is left out.
             </p>
           </div>
         </div>
@@ -290,7 +290,7 @@ const LightsOutPage = () => {
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
               <div className="space-y-3">
                 <p className="text-sm font-semibold text-energy uppercase tracking-[0.12em]">Roadmap</p>
-                <h2 className="text-3xl lg:text-4xl font-bold">Building with utilities and communities</h2>
+                <h2 className="text-3xl lg:text-4xl font-bold">Building with operators and communities</h2>
                 <p className="text-muted-foreground max-w-2xl">
                   We ship in measured, accountable increments to keep quality high and misinformation low.
                 </p>
@@ -314,7 +314,7 @@ const LightsOutPage = () => {
               <p className="text-sm font-semibold text-energy uppercase tracking-[0.12em]">Who it’s for</p>
               <h2 className="text-3xl lg:text-4xl font-bold">Everyone navigating outages</h2>
               <p className="text-muted-foreground">
-                From households to utilities, Lights Out is designed to keep people informed, prepared, and protected.
+                From households to operators, Lights Out is designed to keep people informed, prepared, and protected.
               </p>
             </div>
             <div className="lg:col-span-2 grid md:grid-cols-2 gap-6">
@@ -333,7 +333,7 @@ const LightsOutPage = () => {
             <p className="text-sm font-semibold text-energy uppercase tracking-[0.12em]">Partner with Rodent</p>
             <h2 className="text-4xl font-bold">Pilot Lights Out in your region</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              We partner with utilities, installers, and NGOs to keep communities informed and powered. Let’s start with one city block.
+              We partner with operators, installers, and NGOs to keep communities informed and powered. Let’s start with one city block.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button variant="hero" size="lg" asChild>

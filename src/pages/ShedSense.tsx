@@ -158,7 +158,7 @@ const ShedSense = () => {
               Everything You <span className="gradient-text">Need</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Comprehensive tools for businesses, developers, and utilities
+              Comprehensive tools for businesses, developers, and operations teams
             </p>
           </div>
 

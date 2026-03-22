@@ -12,10 +12,10 @@ const audiences = [
   },
   {
     icon: Building2,
-    title: "Utilities & Cities",
+    title: "Field Operations Teams",
     description:
-      "Grid-aware tooling, outage intelligence, and IoT telemetry to keep critical services resilient.",
-    features: ["ShedSense API", "Load-shedding alerts", "Device telemetry", "Predictive models"],
+      "Digitized workflows, outage intelligence, and telemetry that keep revenue and service operations moving.",
+    features: ["MeterFlow", "Load-shedding alerts", "Device telemetry", "Supervisor dashboards"],
   },
   {
     icon: Landmark,

@@ -21,7 +21,7 @@ const principles = [
 const Studio = () => {
   usePageMetadata(
     "Studio",
-    "Rodent is an engineering studio building API software, energy operations tools, and hardware for African markets."
+    "Rodent is an engineering studio building API software, digitized field operations tools, and hardware for African markets."
   );
 
   return (
@@ -41,7 +41,7 @@ const Studio = () => {
               <span className="block gradient-text">for hard operating environments</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              We are a software and hardware studio building tools for operators, utilities, and engineering teams.
+              We are a software and hardware studio building tools for operators, digitized field teams, and engineering teams.
             </p>
           </section>
 
