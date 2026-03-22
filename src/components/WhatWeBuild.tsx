@@ -16,7 +16,7 @@ const areas = [
     title: "Energy & Hardware",
     description:
       "Outage tracking, IoT sensors, and wind hardware research for unstable power systems.",
-    highlights: ["ShedSense", "Open Claw", "VAWT Research"],
+    highlights: ["ShedSense", "MeterFlow", "VAWT Research"],
     tone: "energy" as const,
   },
   {
@@ -31,8 +31,8 @@ const areas = [
     icon: Globe2,
     title: "Infrastructure",
     description:
-      "Operational software for property, mobility, and civic workflows with integrated payments.",
-    highlights: ["Property ops", "Mobility", "GovTech"],
+      "Operational software for property, mobility, and field digitization workflows with integrated payments.",
+    highlights: ["Property ops", "Meter reading", "Field ops"],
     tone: "tech" as const,
   },
 ];

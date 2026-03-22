@@ -87,11 +87,11 @@ export const projects: Project[] = [
     category: "Energy",
     headline: "Outage intelligence for load-shedding regions",
     summary:
-      "APIs, dashboards, and alerts that help utilities, cities, and businesses plan around unstable power.",
+      "APIs, dashboards, and alerts that help operators, site teams, and businesses plan around unstable power.",
     problem:
-      "Utilities and operators often lack reliable programmatic outage visibility, causing downtime and costly decisions.",
+      "Operators and site teams often lack reliable programmatic outage visibility, causing downtime and costly decisions.",
     solution:
-      "ShedSense combines utility schedules, field telemetry, and user reports to provide clearer outage timelines and actions.",
+      "ShedSense combines schedule data, field telemetry, and user reports to provide clearer outage timelines and actions.",
     features: [
       "Outage schedules and incident APIs with dashboards",
       "Diesel and battery autonomy forecasting",
@@ -169,26 +169,26 @@ export const projects: Project[] = [
     cta: "Join early access",
   },
   {
-    slug: "open-claw",
-    name: "Open Claw",
-    category: "Hardware",
-    headline: "Tele-operated robotics for inspection, handling, and field intervention",
+    slug: "meterflow",
+    name: "MeterFlow",
+    category: "Infrastructure",
+    headline: "Digitized meter reading for water and sanitation field operations",
     summary:
-      "A modular robotic claw platform with edge autonomy, operator controls, and telemetry for harsh industrial environments.",
+      "A mobile-first platform for water and sanitation teams that replaces manual meter books with verified digital captures, routing, and billing-ready exports.",
     problem:
-      "Industrial teams often need to inspect, retrieve, or manipulate equipment in unsafe or inaccessible areas, but existing robotic systems are expensive, brittle, and difficult to adapt locally.",
+      "Water and sanitation teams still depend on manual meter reading, paper routes, and delayed reconciliations that create revenue leakage and slow customer service.",
     solution:
-      "Open Claw combines a configurable gripper, embedded control stack, and browser-based operations console so teams can deploy tele-operated workflows with local safety fallbacks and low-bandwidth controls.",
+      "MeterFlow digitizes the full reading cycle with mobile capture, photo evidence, exception workflows, and back-office exports for billing systems.",
     features: [
-      "Modular end-effector and actuator assembly for different payload profiles",
-      "Browser-based tele-operation console with low-bandwidth video and control channels",
-      "Edge safety interlocks, local fail-safe routines, and operator audit trails",
-      "Sensor telemetry for grip force, motor current, temperature, and battery health",
-      "Simulation-first workflow for testing grasp logic before field deployment",
+      "Mobile meter reading with offline-first capture and timestamped photo evidence",
+      "Route planning, assignment, and supervisor approval workflows",
+      "Anomaly flags for unread meters, leaks, tamper events, and consumption spikes",
+      "Billing-ready exports and API hooks for finance and ERP systems",
+      "Dashboards for field productivity, coverage, and collection follow-up",
     ],
-    techStack: ["ROS 2", "TypeScript", "Rust", "Embedded Linux", "WebRTC"],
-    status: "In Development",
-    cta: "Discuss a pilot",
+    techStack: ["React", "TypeScript", "Node.js", "PostgreSQL", "Flutter"],
+    status: "Production",
+    cta: "Book a walkthrough",
   },
   {
     slug: "rodent-labs-vawt",
@@ -222,14 +222,14 @@ export const projects: Project[] = [
     problem:
       "Load shedding still causes product loss, diesel overspend, and avoidable downtime for homes and SMEs.",
     solution:
-      "Lights Out combines municipal data, user reports, and device telemetry to improve schedule reliability and response.",
+      "Lights Out combines schedule data, user reports, and device telemetry to improve reliability and response.",
     features: [
       "Region-based alerts with local language support",
       "Offline-first schedule access",
       "Fault reporting with evidence capture",
       "Fuel and solar supplier listings",
       "Generator and battery monitoring thresholds",
-      "Utility API integrations where available",
+      "Operational data integrations where available",
     ],
     techStack: ["React", "IoT", "Edge Compute", "Mapbox", "PostgreSQL"],
     status: "In Development",

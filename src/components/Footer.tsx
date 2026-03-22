@@ -10,7 +10,7 @@ const footerLinks = {
     { label: "VAWT Lab", href: "/projects/rodent-labs-vawt" },
     { label: "Lights Out", href: "/projects/lights-out" },
     { label: "TrustChain", href: "/projects/trustchain" },
-    { label: "Open Claw", href: "/projects/open-claw" },
+    { label: "MeterFlow", href: "/projects/meterflow" },
   ],
   Company: [
     { label: "Studio", href: "/studio" },
@@ -45,7 +45,7 @@ export const Footer = () => {
               <span className="text-lg sm:text-xl font-semibold font-display text-foreground">Rodent Inc.</span>
             </Link>
             <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-md">
-              We build practical software and hardware systems for African operators, utilities, and engineering teams.
+              We build practical software and hardware systems for African operators, field teams, and engineering teams.
             </p>
             
             {/* Social links */}

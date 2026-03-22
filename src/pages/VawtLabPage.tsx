@@ -63,7 +63,7 @@ const roadmap = {
 const audiences = [
   {
     title: "Property portfolios",
-    benefit: "Rooftop micro-generation that offsets diesel and keeps tenants powered during municipal outages.",
+    benefit: "Rooftop micro-generation that offsets diesel and keeps tenants powered during extended outages.",
   },
   {
     title: "Industrial parks",
