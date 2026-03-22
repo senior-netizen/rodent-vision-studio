@@ -10,6 +10,7 @@ const footerLinks = {
     { label: "VAWT Lab", href: "/projects/rodent-labs-vawt" },
     { label: "Lights Out", href: "/projects/lights-out" },
     { label: "TrustChain", href: "/projects/trustchain" },
+    { label: "Open Claw", href: "/projects/open-claw" },
   ],
   Company: [
     { label: "Studio", href: "/studio" },
