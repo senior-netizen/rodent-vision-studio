@@ -86,11 +86,11 @@ export const Hero = () => {
               <div className="absolute -inset-4 sm:-inset-8 bg-gradient-to-r from-accent/10 via-tech/10 to-energy/10 rounded-3xl blur-2xl sm:blur-3xl opacity-60" />
 
               {/* Main image container */}
-              <div className="relative rounded-xl sm:rounded-2xl overflow-hidden border border-border/50 shadow-xl bg-card/50 backdrop-blur-sm">
+              <div className="editorial-frame relative rounded-xl sm:rounded-2xl border border-border/50 shadow-xl bg-card/50 backdrop-blur-sm">
                 <img
                   src={heroDashboard}
                   alt="Rodent control plane interface"
-                  className="w-full h-auto"
+                  className="editorial-image w-full h-auto"
                   loading="eager"
                   decoding="async"
                   fetchPriority="high"

@@ -66,7 +66,7 @@ export const VisualShowcase = () => {
             <article
               key={card.title}
               className={cn(
-                "group relative overflow-hidden rounded-3xl border border-border/60 bg-card/70 shadow-xl backdrop-blur-sm transition-all duration-700",
+                "group editorial-frame relative rounded-3xl border border-border/60 bg-card/70 shadow-xl backdrop-blur-sm transition-all duration-700",
                 card.className,
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               )}
@@ -77,8 +77,9 @@ export const VisualShowcase = () => {
                 src={card.image}
                 alt={card.alt}
                 className={cn(
-                  "h-64 w-full object-cover transition-transform duration-700 group-hover:scale-[1.03] lg:h-80",
-                  card.imageClassName
+                  "editorial-image h-64 w-full object-cover transition-transform duration-700 group-hover:scale-[1.03] lg:h-80",
+                  card.imageClassName,
+                  card.imageClassName ? "editorial-image-logo" : undefined
                 )}
                 loading="lazy"
                 decoding="async"

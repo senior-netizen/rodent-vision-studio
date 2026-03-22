@@ -223,22 +223,22 @@ const ShedSense = () => {
               </div>
 
               <div className="grid grid-cols-2 gap-6 pt-4">
-                <div className="group relative overflow-hidden rounded-2xl">
+                <div className="group editorial-frame rounded-2xl">
                   <div className="absolute inset-0 bg-gradient-to-t from-energy/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                   <img
                     src={lightsOutSchedule}
                     alt="Lights Out Schedule View"
-                    className="w-full h-auto rounded-2xl shadow-premium group-hover:scale-105 transition-transform duration-500"
+                    className="editorial-image w-full h-auto rounded-2xl shadow-premium group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                     decoding="async"
                   />
                 </div>
-                <div className="group relative overflow-hidden rounded-2xl">
+                <div className="group editorial-frame rounded-2xl">
                   <div className="absolute inset-0 bg-gradient-to-t from-accent/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                   <img
                     src={lightsOutMap}
                     alt="Lights Out Map View"
-                    className="w-full h-auto rounded-2xl shadow-premium group-hover:scale-105 transition-transform duration-500"
+                    className="editorial-image w-full h-auto rounded-2xl shadow-premium group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                     decoding="async"
                   />

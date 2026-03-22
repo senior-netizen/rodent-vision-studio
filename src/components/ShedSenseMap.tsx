@@ -80,11 +80,11 @@ const ShedSenseMap = ({ className }: ShedSenseMapProps) => {
         </div>
 
         <div className="grid lg:grid-cols-[2fr,1fr] gap-6 items-start">
-          <div className="relative h-[460px] rounded-2xl overflow-hidden border border-border/50 bg-gradient-to-br from-background/40 via-background/30 to-background/60">
+          <div className="editorial-frame relative h-[460px] rounded-2xl border border-border/50 bg-gradient-to-br from-background/40 via-background/30 to-background/60">
             <img
               src={lightsOutMap}
               alt="Regional power coverage map"
-              className="absolute inset-0 w-full h-full object-cover opacity-80"
+              className="editorial-image absolute inset-0 w-full h-full object-cover opacity-80"
               loading="lazy"
             />
             <div className="absolute inset-0 bg-gradient-to-br from-background/30 via-background/10 to-background/60" />
