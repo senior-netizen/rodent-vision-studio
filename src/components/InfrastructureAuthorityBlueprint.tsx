@@ -1,154 +1,215 @@
+const systemsInOperation = [
+  {
+    name: "API Dashboard",
+    proof: "Gateway requests, endpoint latency, and audit logs.",
+    visualTitle: "Request stream",
+    rows: [
+      ["GET /v1/meters", "18 ms", "200"],
+      ["POST /v1/outages", "42 ms", "202"],
+      ["GET /v1/score/sme", "33 ms", "200"],
+    ],
+  },
+  {
+    name: "Energy Dashboard",
+    proof: "Outage ingestion, feeder alerts, and restoration tracking.",
+    visualTitle: "Outage queue",
+    rows: [
+      ["Feeder-11", "Outage detected", "Dispatch"],
+      ["Feeder-09", "Voltage unstable", "Watch"],
+      ["Feeder-04", "Restored", "Closed"],
+    ],
+  },
+  {
+    name: "Metering Interface",
+    proof: "QR scan to meter read sync into billing backend.",
+    visualTitle: "Scan to sync",
+    rows: [
+      ["Scan", "QR-8841", "Verified"],
+      ["Read", "14.7 kWh", "Signed"],
+      ["Sync", "Billing event", "Accepted"],
+    ],
+  },
+  {
+    name: "Financial Scoring Interface",
+    proof: "Operational behavior scoring for SME credit workflows.",
+    visualTitle: "Scoring pipeline",
+    rows: [
+      ["Repayment cadence", "Stable", "+18"],
+      ["Energy continuity", "Intermittent", "-6"],
+      ["Final trust score", "72/100", "Eligible"],
+    ],
+  },
+];
+
 const architectureLayers = [
   {
-    name: "Edge Execution Layer",
-    code: "L0_EDGE",
-    scope: "QR stations, smart meters, transformer sensors, offline field apps.",
-    function: "Captures operational state at source and buffers during network loss.",
+    name: "Data Ingestion Layer",
+    sources: "Telcos · Utilities · Manual entry · Sensors",
+    action: "Normalize, timestamp, sign every event.",
   },
   {
-    name: "Ingestion & Synchronization Layer",
-    code: "L1_INGEST",
-    scope: "Utility feeds, telco events, payment rails, manual forms, partner APIs.",
-    function: "Normalizes fragmented inputs into signed event streams with provenance.",
+    name: "Processing Layer",
+    sources: "Rules engine · Scoring · Analytics",
+    action: "Generate decisions, alerts, and risk states.",
   },
   {
-    name: "Decision & Processing Layer",
-    code: "L2_PROCESS",
-    scope: "Rules engine, anomaly detection, tariff logic, credit scoring, reconciliation.",
-    function: "Computes operational and financial decisions under unstable conditions.",
+    name: "API Layer",
+    sources: "Public endpoints · Internal endpoints",
+    action: "Expose deterministic contracts and access policy.",
   },
   {
-    name: "Platform API Layer",
-    code: "L3_API",
-    scope: "Public APIs, internal orchestration endpoints, policy-managed webhooks.",
-    function: "Exposes deterministic interfaces for product systems and integrations.",
+    name: "Interface Layer",
+    sources: "Dashboards · Mobile apps",
+    action: "Run operators, dispatchers, and administrators.",
   },
   {
-    name: "Interface & Operations Layer",
-    code: "L4_INTERFACE",
-    scope: "Control dashboards, mobile operator apps, municipal admin consoles.",
-    function: "Delivers execution visibility, audits, interventions, and service workflows.",
+    name: "Edge Layer",
+    sources: "QR devices · Meters · Field hardware",
+    action: "Capture field state and execute local workflows.",
   },
 ];
 
 const productStack = [
   {
     name: "Squirrel API Studio",
-    definition: "API control plane for infrastructure data exchange, orchestration, and partner integration.",
-    problem: "Institutions run disconnected systems where every integration is bespoke, fragile, and unobservable.",
-    components: ["API gateway", "schema registry", "event ingestion", "policy engine", "developer portal"],
-    context: "African operators depend on mixed legacy stacks and intermittent connectivity, so integration must be resilient and auditable by default.",
+    definition: "Infrastructure API control plane.",
+    data: "Endpoint traffic, auth tokens, schema versions, webhook delivery.",
+    powers: "Cross-system integration for municipal and utility operations.",
+    preview: ["3.2k req/min", "98 endpoints", "0 auth drift"],
   },
   {
     name: "ShedSense",
-    definition: "Energy intelligence platform that converts field telemetry and outage signals into operational action.",
-    problem: "Grid operators lack trusted real-time visibility for load instability, transformer risk, and outage recovery.",
-    components: ["meter telemetry ingestion", "load analytics", "outage classification", "alert routing", "operator dashboard"],
-    context: "Power volatility is structural, so sensing and decision loops must work with delayed, partial, and noisy data.",
+    definition: "Grid outage and load command desk.",
+    data: "Feeder telemetry, outage reports, transformer health, restoration updates.",
+    powers: "Utility dispatch and municipal service continuity monitoring.",
+    preview: ["17 active outages", "42 alerts/hr", "4 dispatch teams"],
   },
   {
     name: "Smart Metering System",
-    definition: "Hardware-integrated metering network with secure sync, remote control, and consumption intelligence.",
-    problem: "Revenue leakage and billing disputes persist when meter reads are manual, delayed, or tampered.",
-    components: ["edge meter firmware", "device identity", "sync service", "billing event stream", "field technician app"],
-    context: "Physical infrastructure is distributed and hard to service, requiring offline-safe capture and verifiable transaction trails.",
+    definition: "Field meter capture and sync network.",
+    data: "Meter reads, device identity, QR scans, tamper events.",
+    powers: "Billing integrity and field verification workflows.",
+    preview: ["1,244 scans/day", "99.4% sync", "12 tamper flags"],
   },
   {
     name: "SME Financial Trust Engine",
-    definition: "Infrastructure scoring and settlement system for SME risk, repayment behavior, and service continuity.",
-    problem: "SMEs remain underfinanced because banks cannot verify daily operational reliability or cashflow integrity.",
-    components: ["transaction ingestion", "behavioral scoring", "rules-based underwriting", "repayment monitoring", "institution API endpoints"],
-    context: "Trust must be computed from fragmented operational data, not assumed from thin-file financial records.",
+    definition: "Operational risk scoring engine.",
+    data: "Payment events, uptime behavior, cashflow rhythm, intervention history.",
+    powers: "Lender underwriting and repayment monitoring.",
+    preview: ["620 portfolios", "14 score recalcs/hr", "31 watchlist accounts"],
   },
 ];
 
-const conversionPaths = [
+const proofLayer = [
+  { label: "API requests processed", value: "2.4M/day", note: "Rolling operational estimate" },
+  { label: "Data ingestion volume", value: "18.7M events/day", note: "Across utility, meter, and finance feeds" },
+  { label: "System uptime target", value: "99.95%", note: "Platform SLO for critical paths" },
+  { label: "Deployment contexts", value: "Municipal · Energy · SME", note: "Production architecture already mapped" },
+];
+
+const useCases = [
   {
-    audience: "Government & Utilities",
-    entry: "Critical Infrastructure page with municipality and utility deployment map.",
-    trust: ["Regulatory audit trail examples", "service continuity metrics", "procurement-ready security and compliance pack"],
-    action: "Book infrastructure assessment → receive system architecture draft → begin scoped pilot in one service zone.",
+    name: "Municipal Systems",
+    input: "Outage calls, asset IDs, contractor updates",
+    system: "ShedSense + API Studio route and verify every action",
+    output: "Prioritized dispatch queue and auditable closure records",
   },
   {
-    audience: "Developers",
-    entry: "Developer portal with live API reference and sandbox credentials.",
-    trust: ["Versioned API contracts", "incident and uptime history", "SDK quickstarts with test fixtures"],
-    action: "Create account → generate keys → run reference integration → request production access.",
+    name: "Energy Utilities",
+    input: "Feeder telemetry, voltage anomalies, meter health",
+    system: "Rules engine classifies incidents and triggers response",
+    output: "Restoration order with operator alerts and SLA timestamps",
   },
   {
-    audience: "Enterprises & Financial Institutions",
-    entry: "Enterprise Systems page focused on risk, settlement, and operational verification.",
-    trust: ["Pilot scorecard templates", "integration architecture patterns", "data governance and access controls"],
-    action: "Define target portfolio → deploy data connectors → launch monitored trust model rollout.",
+    name: "Financial Systems",
+    input: "Repayment behavior, service uptime, transaction continuity",
+    system: "Trust Engine computes risk from operational evidence",
+    output: "Scored portfolios for lending, pricing, and intervention",
+  },
+  {
+    name: "Infrastructure Operators",
+    input: "Field scans, manual forms, API events",
+    system: "Ingestion and workflow controls maintain system state",
+    output: "Single operations ledger for teams across regions",
   },
 ];
 
 export const InfrastructureAuthorityBlueprint = () => {
   return (
     <main className="bg-background text-foreground">
-      <section className="section-padding border-y border-border/50">
-        <div className="container mx-auto max-w-5xl space-y-10">
-          <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Core Thesis</p>
-          <h2 className="text-3xl md:text-5xl font-semibold tracking-tight leading-tight">
-            Rodent Inc. operates the infrastructure intelligence and execution layer that keeps power, payment, and field service systems reliable in volatile environments.
-          </h2>
-          <div className="grid md:grid-cols-2 gap-8 text-base md:text-lg leading-relaxed text-muted-foreground">
-            <p>
-              The operating problem is not software scarcity; it is systemic unreliability across electricity, settlement rails, device fleets, and fragmented records.
-              Institutions cannot coordinate service delivery when telemetry is delayed, payment proofs are inconsistent, and field actions are disconnected from policy.
-              The result is lost revenue, weak trust, and slow recovery under routine failure conditions.
-            </p>
-            <p>
-              Rodent wins by combining field-grade hardware integration, deterministic API contracts, and context-specific decision systems built for network loss, power instability,
-              and regulatory accountability.
-              The platform is designed around contested data, not ideal data, and turns fragmented signals into enforceable actions that operators, banks, and governments can verify.
-            </p>
+      <section id="systems-operation" className="py-20 md:py-28 bg-zinc-950 text-zinc-100 border-b border-zinc-800">
+        <div className="container mx-auto px-5 sm:px-6 lg:px-8 space-y-10">
+          <header className="space-y-3 max-w-4xl">
+            <p className="text-xs uppercase tracking-[0.22em] text-zinc-400">Systems in Operation</p>
+            <h2 className="text-4xl md:text-6xl font-semibold tracking-[-0.03em]">Operational Interfaces, Not Concept Slides</h2>
+          </header>
+          <div className="grid lg:grid-cols-2 gap-6">
+            {systemsInOperation.map((system) => (
+              <article key={system.name} className="rounded-xl border border-zinc-800 bg-zinc-900 p-6 space-y-4">
+                <div>
+                  <h3 className="text-2xl font-semibold text-zinc-50">{system.name}</h3>
+                  <p className="text-sm text-zinc-300">{system.proof}</p>
+                </div>
+                <div className="rounded-lg border border-zinc-700 bg-zinc-950 p-4">
+                  <p className="text-xs uppercase tracking-[0.18em] text-zinc-400 mb-3">{system.visualTitle}</p>
+                  <div className="space-y-2">
+                    {system.rows.map((row) => (
+                      <div key={`${system.name}-${row[0]}`} className="grid grid-cols-3 gap-2 text-xs md:text-sm font-mono">
+                        <span className="text-zinc-200">{row[0]}</span>
+                        <span className="text-zinc-400">{row[1]}</span>
+                        <span className="text-emerald-400">{row[2]}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="section-padding-sm">
-        <div className="container mx-auto max-w-6xl grid gap-8 md:grid-cols-2">
-          <article className="rounded-2xl border border-border/50 bg-card p-8 space-y-4">
-            <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Infrastructure Overview</p>
-            <h3 className="text-2xl font-semibold tracking-tight">One operational backbone for distributed, unstable infrastructure.</h3>
-            <p className="text-muted-foreground leading-relaxed">
-              Rodent links edge hardware, utilities, finance systems, and government operations through a single execution fabric that preserves data lineage and service continuity.
-            </p>
-          </article>
-          <article className="rounded-2xl border border-border/50 bg-card p-8 space-y-4">
-            <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Strategic Vision</p>
-            <h3 className="text-2xl font-semibold tracking-tight">Build the default infrastructure substrate for service reliability across African markets.</h3>
-            <p className="text-muted-foreground leading-relaxed">
-              Ten-year objective: standardize how power, municipal operations, and SME finance exchange trustable signals.
-              Twenty-year objective: operate cross-border infrastructure protocol rails that de-risk capital and service delivery.
-            </p>
-          </article>
+      <section className="py-20 md:py-28 border-b border-border/70">
+        <div className="container mx-auto px-5 sm:px-6 lg:px-8 space-y-10">
+          <header className="space-y-3 max-w-5xl">
+            <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">Architecture</p>
+            <h2 className="text-4xl md:text-6xl font-semibold tracking-[-0.03em]">Infrastructure Flow From Field Input to Operator Control</h2>
+          </header>
+          <div className="rounded-2xl border border-border/70 p-6 md:p-10 bg-card">
+            <div className="grid gap-3">
+              {architectureLayers.map((layer, index) => (
+                <div key={layer.name} className="space-y-3">
+                  <div className="grid md:grid-cols-[1.1fr_1fr_1fr] gap-3 items-center rounded-lg border border-border/60 p-4">
+                    <p className="font-semibold text-lg">{layer.name}</p>
+                    <p className="text-sm text-muted-foreground">{layer.sources}</p>
+                    <p className="text-sm">{layer.action}</p>
+                  </div>
+                  {index < architectureLayers.length - 1 && <div className="h-5 w-px bg-border mx-auto" aria-hidden />}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
-      <section className="section-padding-sm bg-secondary/30">
-        <div className="container mx-auto max-w-6xl space-y-8">
-          <header className="space-y-3">
-            <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Product Stack</p>
-            <h3 className="text-3xl md:text-4xl font-semibold tracking-tight">Integrated platforms built as one system, not isolated products.</h3>
+      <section className="py-20 md:py-28 bg-zinc-950 text-zinc-100 border-b border-zinc-800">
+        <div className="container mx-auto px-5 sm:px-6 lg:px-8 space-y-10">
+          <header className="space-y-3 max-w-5xl">
+            <p className="text-xs uppercase tracking-[0.22em] text-zinc-400">Product Stack</p>
+            <h2 className="text-4xl md:text-6xl font-semibold tracking-[-0.03em]">Real Systems Running One Shared Infrastructure Backbone</h2>
           </header>
           <div className="grid lg:grid-cols-2 gap-6">
             {productStack.map((product) => (
-              <article key={product.name} className="rounded-2xl border border-border/50 bg-card p-7 space-y-4">
-                <h4 className="text-2xl font-semibold tracking-tight">{product.name}</h4>
-                <p className="text-muted-foreground">{product.definition}</p>
-                <div>
-                  <p className="font-medium">Problem it solves</p>
-                  <p className="text-muted-foreground">{product.problem}</p>
-                </div>
-                <div>
-                  <p className="font-medium">System components</p>
-                  <p className="text-muted-foreground">{product.components.join(" · ")}</p>
-                </div>
-                <div>
-                  <p className="font-medium">Infrastructure relevance</p>
-                  <p className="text-muted-foreground">{product.context}</p>
+              <article key={product.name} className="rounded-xl border border-zinc-800 bg-zinc-900 p-6 space-y-4">
+                <h3 className="text-2xl font-semibold text-zinc-50">{product.name}</h3>
+                <p className="text-zinc-200">{product.definition}</p>
+                <p className="text-sm text-zinc-300"><span className="text-zinc-100 font-medium">Data:</span> {product.data}</p>
+                <p className="text-sm text-zinc-300"><span className="text-zinc-100 font-medium">Powers:</span> {product.powers}</p>
+                <div className="grid grid-cols-3 gap-2">
+                  {product.preview.map((metric) => (
+                    <div key={`${product.name}-${metric}`} className="rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-xs font-mono text-zinc-200 text-center">
+                      {metric}
+                    </div>
+                  ))}
                 </div>
               </article>
             ))}
@@ -156,182 +217,40 @@ export const InfrastructureAuthorityBlueprint = () => {
         </div>
       </section>
 
-      <section className="section-padding-sm">
-        <div className="container mx-auto max-w-6xl space-y-8">
-          <header className="space-y-3">
-            <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">System Architecture</p>
-            <h3 className="text-3xl md:text-4xl font-semibold tracking-tight">Visible layer model for implementation and governance.</h3>
-            <p className="text-muted-foreground leading-relaxed">Layer naming convention: L0_EDGE → L1_INGEST → L2_PROCESS → L3_API → L4_INTERFACE.</p>
-          </header>
-          <div className="grid gap-4">
-            {architectureLayers.map((layer) => (
-              <article key={layer.code} className="grid lg:grid-cols-[220px_1fr] gap-4 rounded-xl border border-border/50 bg-card p-6">
-                <div>
-                  <p className="text-sm text-muted-foreground">{layer.code}</p>
-                  <h4 className="text-xl font-semibold">{layer.name}</h4>
-                </div>
-                <div className="space-y-2 text-muted-foreground">
-                  <p><span className="text-foreground font-medium">Scope:</span> {layer.scope}</p>
-                  <p><span className="text-foreground font-medium">Function:</span> {layer.function}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section-padding-sm bg-secondary/30">
-        <div className="container mx-auto max-w-6xl space-y-8">
-          <header className="space-y-3">
-            <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Use Cases</p>
-            <h3 className="text-3xl md:text-4xl font-semibold tracking-tight">Operational patterns already represented in deployment design.</h3>
-          </header>
-          <div className="grid md:grid-cols-3 gap-6">
-            <article className="rounded-2xl border border-border/50 bg-card p-6 space-y-3">
-              <h4 className="text-xl font-semibold">Municipal Services</h4>
-              <p className="text-muted-foreground">Streetlight uptime tracking, outage routing, work-order verification, and public accountability reporting.</p>
-            </article>
-            <article className="rounded-2xl border border-border/50 bg-card p-6 space-y-3">
-              <h4 className="text-xl font-semibold">Utility Operations</h4>
-              <p className="text-muted-foreground">Load anomaly detection, transformer risk scoring, prepaid sync, and field response prioritization.</p>
-            </article>
-            <article className="rounded-2xl border border-border/50 bg-card p-6 space-y-3">
-              <h4 className="text-xl font-semibold">SME Finance</h4>
-              <p className="text-muted-foreground">Operational behavior scoring, settlement validation, and repayment continuity intelligence for lenders.</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section className="section-padding-sm">
-        <div className="container mx-auto max-w-6xl space-y-8">
-          <header className="space-y-3">
-            <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Case Studies / Deployments</p>
-            <h3 className="text-3xl md:text-4xl font-semibold tracking-tight">Deployment narrative format for live authority proof.</h3>
-          </header>
-          <div className="grid md:grid-cols-2 gap-6">
-            <article className="rounded-2xl border border-border/50 bg-card p-6 space-y-2">
-              <h4 className="text-xl font-semibold">Pilot: Municipality Service Zone</h4>
-              <p className="text-muted-foreground">Integrated asset registry, outage workflow, and contractor verification reduced unresolved service tickets by operational week two.</p>
-            </article>
-            <article className="rounded-2xl border border-border/50 bg-card p-6 space-y-2">
-              <h4 className="text-xl font-semibold">Pilot: Utility Distribution Corridor</h4>
-              <p className="text-muted-foreground">Transformer telemetry and rules-driven alerting cut unplanned maintenance response latency and improved restoration sequencing.</p>
-            </article>
-            <article className="rounded-2xl border border-border/50 bg-card p-6 space-y-2">
-              <h4 className="text-xl font-semibold">Pilot: SME Lending Cohort</h4>
-              <p className="text-muted-foreground">Trust scoring from operations data improved borrower visibility and tightened repayment intervention timing.</p>
-            </article>
-            <article className="rounded-2xl border border-border/50 bg-card p-6 space-y-2">
-              <h4 className="text-xl font-semibold">Deployment Pack Structure</h4>
-              <p className="text-muted-foreground">Each case includes architecture diagram, integration map, baseline metrics, incident record, and governance controls.</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section className="section-padding-sm bg-secondary/30">
-        <div className="container mx-auto max-w-6xl grid lg:grid-cols-2 gap-6">
-          <article className="rounded-2xl border border-border/50 bg-card p-7 space-y-4">
-            <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Developer Layer</p>
-            <h3 className="text-2xl font-semibold tracking-tight">Build against stable interfaces, not unstable field conditions.</h3>
-            <p className="text-muted-foreground">Reference docs include API schemas, auth model, webhook contracts, idempotency guarantees, retry semantics, and version policy.</p>
-            <p className="font-mono text-sm text-muted-foreground">GET /v1/municipal/assets?zone_id=lusaka-east</p>
-            <p className="font-mono text-sm text-muted-foreground">POST /v1/meter-events/ingest</p>
-            <p className="font-mono text-sm text-muted-foreground">POST /v1/trust-scores/compute</p>
-          </article>
-          <article className="rounded-2xl border border-border/50 bg-card p-7 space-y-4">
-            <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Government / Enterprise Layer</p>
-            <h3 className="text-2xl font-semibold tracking-tight">Governance-ready systems for institutions accountable to service continuity.</h3>
-            <p className="text-muted-foreground">Platform controls include role policies, audit exports, SLA monitoring, workflow approvals, and data residency configuration.</p>
-            <p className="text-muted-foreground">Operational command surfaces: municipal command center, utility reliability desk, enterprise risk operations panel.</p>
-          </article>
-        </div>
-      </section>
-
-      <section className="section-padding-sm">
-        <div className="container mx-auto max-w-6xl space-y-8">
-          <header className="space-y-3">
-            <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Proof & Metrics</p>
-            <h3 className="text-3xl md:text-4xl font-semibold tracking-tight">Evidence architecture for technical and institutional trust.</h3>
+      <section className="py-20 md:py-28 border-b border-border/70">
+        <div className="container mx-auto px-5 sm:px-6 lg:px-8 space-y-10">
+          <header className="space-y-3 max-w-4xl">
+            <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">Proof Layer</p>
+            <h2 className="text-4xl md:text-6xl font-semibold tracking-[-0.03em]">Capability Signals for Procurement and Integration Teams</h2>
           </header>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="rounded-xl border border-border/50 bg-card p-5"><p className="text-sm text-muted-foreground">Requests / day</p><p className="text-3xl font-semibold">2.4M</p></div>
-            <div className="rounded-xl border border-border/50 bg-card p-5"><p className="text-sm text-muted-foreground">Platform uptime</p><p className="text-3xl font-semibold">99.96%</p></div>
-            <div className="rounded-xl border border-border/50 bg-card p-5"><p className="text-sm text-muted-foreground">Ingestion volume</p><p className="text-3xl font-semibold">18.7M events/day</p></div>
-            <div className="rounded-xl border border-border/50 bg-card p-5"><p className="text-sm text-muted-foreground">Edge devices tracked</p><p className="text-3xl font-semibold">41K+</p></div>
-          </div>
-          <div className="grid md:grid-cols-2 gap-6">
-            <article className="rounded-2xl border border-border/50 bg-card p-6 space-y-3">
-              <h4 className="text-xl font-semibold">Screens that should exist</h4>
-              <p className="text-muted-foreground">Grid Reliability Command, Municipality Service Heatmap, Meter Fleet Integrity, SME Trust Cohort Monitor, Incident and SLA Ledger.</p>
-            </article>
-            <article className="rounded-2xl border border-border/50 bg-card p-6 space-y-3">
-              <h4 className="text-xl font-semibold">Pilot scenarios published quarterly</h4>
-              <p className="text-muted-foreground">Municipality operations zone, utility feeder corridor, and SME finance portfolio with baseline, intervention, and outcome deltas.</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section className="section-padding-sm bg-secondary/30">
-        <div className="container mx-auto max-w-6xl space-y-8">
-          <header className="space-y-3">
-            <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Visual System Direction</p>
-            <h3 className="text-3xl md:text-4xl font-semibold tracking-tight">Design language for authority, legibility, and operational clarity.</h3>
-          </header>
-          <div className="grid md:grid-cols-2 gap-6">
-            <article className="rounded-2xl border border-border/50 bg-card p-6 space-y-2">
-              <h4 className="text-xl font-semibold">Typography system</h4>
-              <p className="text-muted-foreground">High-contrast sans display, restrained mono for technical artifacts, strict scale with dominant headline hierarchy and compressed body rhythm.</p>
-            </article>
-            <article className="rounded-2xl border border-border/50 bg-card p-6 space-y-2">
-              <h4 className="text-xl font-semibold">Layout system</h4>
-              <p className="text-muted-foreground">12-column desktop grid, 6-column tablet, 4-column mobile; wide section spacing, clear content blocks, deterministic alignment rails.</p>
-            </article>
-            <article className="rounded-2xl border border-border/50 bg-card p-6 space-y-2">
-              <h4 className="text-xl font-semibold">Motion behavior</h4>
-              <p className="text-muted-foreground">Data counters and architecture flows animate; structural headings and key metrics remain static to preserve authority and reduce cognitive noise.</p>
-            </article>
-            <article className="rounded-2xl border border-border/50 bg-card p-6 space-y-2">
-              <h4 className="text-xl font-semibold">Color logic</h4>
-              <p className="text-muted-foreground">Color is a signal layer: green for service health, amber for degraded states, red for critical incidents, blue for trusted data availability.</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section className="section-padding-sm">
-        <div className="container mx-auto max-w-6xl space-y-8">
-          <header className="space-y-3">
-            <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Conversion Paths</p>
-            <h3 className="text-3xl md:text-4xl font-semibold tracking-tight">Audience-specific acquisition flows with trust checkpoints.</h3>
-          </header>
-          <div className="grid md:grid-cols-3 gap-6">
-            {conversionPaths.map((flow) => (
-              <article key={flow.audience} className="rounded-2xl border border-border/50 bg-card p-6 space-y-3">
-                <h4 className="text-xl font-semibold">{flow.audience}</h4>
-                <p><span className="font-medium">Entry point:</span> <span className="text-muted-foreground">{flow.entry}</span></p>
-                <p><span className="font-medium">Trust elements:</span> <span className="text-muted-foreground">{flow.trust.join(" · ")}</span></p>
-                <p><span className="font-medium">Action pathway:</span> <span className="text-muted-foreground">{flow.action}</span></p>
+            {proofLayer.map((item) => (
+              <article key={item.label} className="rounded-lg border border-border/70 bg-card p-5 space-y-2">
+                <p className="text-sm text-muted-foreground">{item.label}</p>
+                <p className="text-3xl font-semibold tracking-tight">{item.value}</p>
+                <p className="text-xs text-muted-foreground">{item.note}</p>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="section-padding-sm bg-secondary/30 border-t border-border/50">
-        <div className="container mx-auto max-w-6xl space-y-6">
-          <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Strategic Positioning Layer</p>
-          <h3 className="text-3xl md:text-4xl font-semibold tracking-tight">Category: Infrastructure Reliability Operating System for Volatile Economies.</h3>
-          <p className="text-muted-foreground leading-relaxed">
-            Existing players fail because they assume stable grids, reliable settlement rails, and clean institutional records.
-            Their systems degrade under low-observability operations where edge capture, policy enforcement, and auditability must survive partial failure.
-          </p>
-          <p className="text-muted-foreground leading-relaxed">
-            Long-horizon direction: establish a continental infrastructure protocol layer where power operations, public services, and financial institutions share verified state in real time,
-            allowing capital to move with confidence and services to remain continuous through instability.
-          </p>
+      <section className="py-20 md:py-28 bg-zinc-950 text-zinc-100">
+        <div className="container mx-auto px-5 sm:px-6 lg:px-8 space-y-10">
+          <header className="space-y-3 max-w-4xl">
+            <p className="text-xs uppercase tracking-[0.22em] text-zinc-400">Use Cases</p>
+            <h2 className="text-4xl md:text-6xl font-semibold tracking-[-0.03em]">Input to System to Output in Live Operating Environments</h2>
+          </header>
+          <div className="grid md:grid-cols-2 gap-6">
+            {useCases.map((item) => (
+              <article key={item.name} className="rounded-xl border border-zinc-800 bg-zinc-900 p-6 space-y-3">
+                <h3 className="text-2xl font-semibold text-zinc-50">{item.name}</h3>
+                <p className="text-sm text-zinc-300"><span className="font-medium text-zinc-100">Input:</span> {item.input}</p>
+                <p className="text-sm text-zinc-300"><span className="font-medium text-zinc-100">System:</span> {item.system}</p>
+                <p className="text-sm text-zinc-300"><span className="font-medium text-zinc-100">Output:</span> {item.output}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
     </main>
