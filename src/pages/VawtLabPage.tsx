@@ -1,428 +1,283 @@
-import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { Button } from "@/components/ui/button";
-import { Activity, Download, FileSpreadsheet, Leaf, ShieldCheck, Sun, Wind, Wrench } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Navigation } from "@/components/Navigation";
 import { usePageMetadata } from "@/hooks/usePageMetadata";
-import { downloadProjectAbstract } from "@/lib/projectAbstractDownload";
-import { exportAuditCsv } from "@/lib/analyticsAudit";
-import { Activity, Download, Leaf, ShieldCheck, Sun, Wind, Wrench } from "lucide-react";
-import { Link } from "react-router-dom";
-import { usePageMetadata } from "@/hooks/usePageMetadata";
-import { downloadProjectAbstract } from "@/lib/projectAbstractDownload";
 
-const featureGrid = [
+const systemFlow = [
+  { stage: "Wind", line: "Captures rooftop and corridor airflow at 2-12 m/s." },
+  { stage: "Turbine", line: "Converts rotational motion into shaft torque." },
+  { stage: "Sensors", line: "Measures RPM, vibration, output current, and frame heat." },
+  { stage: "Edge Controller", line: "Buffers, validates, and signs telemetry every 5 seconds." },
+  { stage: "API", line: "Publishes time-series payloads to infrastructure endpoints." },
+  { stage: "Dashboard", line: "Shows RPM, vibration, output curve, and fault state." },
+  { stage: "Alerts", line: "Triggers maintenance tasks on threshold or trend breach." },
+];
+
+const physicalComponents = [
   {
-    icon: Wind,
-    title: "Low-wind start torque",
-    description: "Biomimicry blades shaped from CFD data to start harvesting energy at <3 m/s, perfect for urban rooftops.",
+    name: "Rotor / Blade system",
+    does: "Maintains torque generation in multidirectional urban wind.",
+    handles: "Handles turbulence and low-start-speed operation.",
   },
   {
-    icon: Activity,
-    title: "IoT telemetry stack",
-    description: "Torque, vibration, weather, and inverter data streamed for predictive maintenance and energy optimisation.",
+    name: "Shaft + bearing system",
+    does: "Transfers rotor torque to generator coupling.",
+    handles: "Handles cyclic load and alignment drift.",
   },
   {
-    icon: Wrench,
-    title: "Modular servicing",
-    description: "Blades, gearbox, and generator cartridges swap in under 90 minutes with field-friendly fixtures.",
+    name: "Generator coupling",
+    does: "Converts shaft rotation into electrical output.",
+    handles: "Handles variable RPM without output collapse.",
   },
   {
-    icon: Sun,
-    title: "Hybrid solar coupling",
-    description: "Shared inverters and storage orchestration so rooftops can run VAWT + PV without duplicated hardware.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Predictive maintenance",
-    description: "Digital twins with anomaly detection to schedule service windows before failures cascade.",
-  },
-  {
-    icon: Leaf,
-    title: "Quiet, city-ready profile",
-    description: "Biomimicry aero keeps acoustic signatures low for commercial and residential deployments.",
+    name: "Mounting structure",
+    does: "Anchors assembly to rooftop or industrial base.",
+    handles: "Handles vibration transfer and structural fatigue.",
   },
 ];
 
-const roadmap = {
-  live: ["CFD models validated against Harare wind profiles", "First telemetry stack running on test rigs"],
-  building: [
-    "Urban microgrid pilot with hybrid solar coupling",
-    "Digital twin calibration from long-run vibration tests",
-  ],
-  coming: [
-    "Mini-farm deployment for industrial parks",
-    "New blade molds for recycled composite materials",
-  ],
-  future: [
-    "Edge AI for self-tuning pitch and damping",
-    "Grid services participation for frequency response",
-  ],
-};
-
-const audiences = [
+const telemetryLayer = [
   {
-    title: "Property portfolios",
-    benefit: "Rooftop micro-generation that offsets diesel and keeps tenants powered during extended outages.",
+    sensor: "RPM sensor",
+    measures: "Rotational velocity in revolutions per minute.",
+    matters: "Detects stall risk and irregular spin behavior.",
   },
   {
-    title: "Industrial parks",
-    benefit: "Predictable servicing windows and telemetry-integrated uptime for critical manufacturing loads.",
+    sensor: "Vibration sensor",
+    measures: "Axial and radial vibration signature.",
+    matters: "Detects imbalance, bearing wear, and looseness.",
   },
   {
-    title: "Energy developers",
-    benefit: "Modular hardware and APIs that plug into existing SCADA, battery, and solar infrastructure.",
+    sensor: "Voltage/current output",
+    measures: "Instant electrical output and load response.",
+    matters: "Detects conversion loss and coupling faults.",
+  },
+  {
+    sensor: "Temperature sensor",
+    measures: "Generator and controller temperature bands.",
+    matters: "Detects overheating before shutdown conditions.",
   },
 ];
 
-const solutionHighlights = [
+const predictiveMaintenance = [
   {
-    title: "Urban-tuned aerodynamics",
-    detail:
-      "CFD models trained on Harare and Lagos wind roses keep the turbine spinning in low, turbulent conditions other VAWTs ignore.",
+    name: "Vibration anomaly detection",
+    signal: "RMS vibration baseline vs rolling 24-hour deviation.",
+    trigger: "Create inspection task at +25% sustained deviation.",
   },
   {
-    title: "Telemetry-first hardware",
-    detail:
-      "Sensors across torque, vibration, weather, and power electronics feed dashboards and digital twins for predictive maintenance.",
+    name: "RPM irregularity detection",
+    signal: "RPM stability window at fixed wind intervals.",
+    trigger: "Raise drivetrain check on repeated RPM dropouts.",
   },
   {
-    title: "Hybrid energy stack",
-    detail:
-      "Shared inverters and storage orchestration allow solar + VAWT deployments without duplicating expensive infrastructure.",
+    name: "Output degradation tracking",
+    signal: "Power curve slope against wind-speed bins.",
+    trigger: "Flag coupling or generator maintenance when slope decays.",
   },
+];
+
+const useCases = [
+  {
+    title: "Rooftop deployment (urban Africa)",
+    line: "Input: turbulent low-speed wind → System: VAWT + telemetry loop → Output: monitored supplemental rooftop power.",
+  },
+  {
+    title: "Industrial supplemental power",
+    line: "Input: variable plant-edge wind → System: turbine + API + alerts → Output: tracked auxiliary energy for critical loads.",
+  },
+  {
+    title: "Off-grid monitoring systems",
+    line: "Input: remote wind + sensor stream → System: edge buffering + cloud sync → Output: uptime and maintenance visibility.",
+  },
+];
+
+const constraints = [
+  "Low wind speed conditions reduce torque windows.",
+  "Urban turbulence creates rapid directional shifts.",
+  "Blade assemblies accumulate structural fatigue.",
+  "Intermittent energy output requires buffering and alerting.",
 ];
 
 const VawtLabPage = () => {
-  const description =
-    "Rodent Labs is engineering vertical-axis wind hardware for dense African cities—low-wind start torque, IoT telemetry, hybrid solar coupling, and predictive maintenance.";
-
-  usePageMetadata("Rodent Labs — VAWT", description, {
-    url: "https://rodent-vision-studio.vercel.app/projects/rodent-labs-vawt",
-  });
-
-
-  const handleDownloadAbstract = () => {
-    const featureSummary = featureGrid.map((item) => `${item.title}: ${item.description}`).join(" ");
-    const roadmapSummary = [
-      `Live/Beta: ${roadmap.live.join("; ")}`,
-      `In Development: ${roadmap.building.join("; ")}`,
-      `Planned Next: ${roadmap.coming.join("; ")}`,
-      `Future Direction: ${roadmap.future.join("; ")}`,
-    ].join(" ");
-    const audienceSummary = audiences.map((item) => `${item.title}: ${item.benefit}`).join(" ");
-
-    downloadProjectAbstract({
-      title: "Rodent Labs — VAWT",
-      subtitle: "Vertical-axis wind hardware abstract for dense African cities",
-      filename: "rodent-labs-vawt-abstract",
-      generatedBy: "Rodent Labs",
-      projectSlug: "rodent-labs-vawt",
-      projectName: "Rodent Labs — VAWT",
-      source: "vawt_lab_page",
-      template: "premium",
-      sections: [
-        { heading: "Abstract", body: description },
-        { heading: "Technical highlights", body: featureSummary },
-        { heading: "Solution focus", body: solutionHighlights.map((item) => `${item.title}: ${item.detail}`).join(" ") },
-        { heading: "Roadmap snapshot", body: roadmapSummary },
-        { heading: "Deployment audiences", body: audienceSummary },
-      ],
-    });
-  };
-
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    name: "Rodent Labs VAWT",
-    description,
-    brand: {
-      "@type": "Organization",
-      name: "Rodent Inc.",
-    },
-    audience: [
-      { "@type": "Audience", audienceType: "Energy Developers" },
-      { "@type": "Audience", audienceType: "Facilities Managers" },
-    ],
-    offers: {
-      "@type": "Offer",
-      availability: "PreOrder",
-      price: "0",
-      priceCurrency: "USD",
-      url: "https://rodent-vision-studio.vercel.app/projects/rodent-labs-vawt",
-    },
-  };
+  usePageMetadata(
+    "Rodent Labs VAWT System",
+    "Urban wind system with telemetry, API integration, and operational dashboard outputs."
+  );
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-zinc-950 text-zinc-100">
       <Navigation />
-      <main>
-      <section className="pt-32 pb-24 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-energy/10 via-accent/10 to-background" aria-hidden />
-        <div className="container mx-auto px-6 lg:px-8 relative z-10">
-          <div className="max-w-5xl mx-auto text-center space-y-8 animate-fade-in">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-border/60">
-              <span className="text-sm font-semibold text-energy">Hardware + IoT R&D</span>
-            </div>
-            <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
-              Rodent Labs — Vertical-axis wind hardware for dense African cities
-            </h1>
-            <p className="text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              Biomimicry blades, IoT telemetry, and predictive maintenance to keep rooftops generating in low, turbulent wind.
-            </p>
-              <div className="flex flex-wrap justify-center gap-4">
-                <Button variant="hero" size="lg" asChild>
-                  <a href="#features">Explore Features</a>
-                </Button>
-                <Button variant="premium" size="lg" asChild>
-                  <Link to="/contact">Join the pilot program</Link>
-                </Button>
-                <Button variant="outline" size="lg" onClick={handleDownloadAbstract}>
-                  Download abstract
-                  <Download className="w-4 h-4 ml-2" />
-                </Button>
-                <Button variant="ghost" size="lg" onClick={() => exportAuditCsv("rodent-labs-vawt", "Rodent Labs — VAWT")}>
-                  Export audit CSV
-                  <FileSpreadsheet className="w-4 h-4 ml-2" />
-                </Button>
+      <main className="pt-28 pb-24">
+        <section className="container mx-auto px-6 lg:px-8 space-y-6">
+          <h1 className="text-5xl md:text-7xl font-semibold tracking-[-0.04em]">Urban wind infrastructure with live telemetry control</h1>
+          <p className="text-base md:text-lg text-zinc-300 max-w-4xl">
+            Deployment context: rooftops, industrial environments, and unstable grid regions.
+            <br />
+            Hardware, data, and alerting operate as one monitored system.
+          </p>
+          <div className="w-full rounded-xl border border-zinc-700 bg-zinc-900 p-6 md:p-10">
+            <p className="text-xs uppercase tracking-[0.18em] text-zinc-400 mb-4">Turbine Render</p>
+            <div className="grid md:grid-cols-[240px_1fr] gap-6 items-center">
+              <div className="h-64 rounded-lg border border-zinc-700 bg-zinc-950 relative">
+                <div className="absolute top-8 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full border-2 border-zinc-400" />
+                <div className="absolute top-[5.9rem] left-1/2 -translate-x-1/2 w-1 h-24 bg-zinc-400" />
+                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-24 h-3 rounded bg-zinc-500" />
+                <div className="absolute top-20 left-1/2 -translate-x-1/2 w-20 h-1 bg-emerald-400 rotate-45" />
+                <div className="absolute top-20 left-1/2 -translate-x-1/2 w-20 h-1 bg-emerald-400 -rotate-45" />
               </div>
-            </div>
-
-            <div className="mt-16 grid lg:grid-cols-2 gap-8">
-              <div
-                className="glass rounded-3xl p-8 border border-border/60 shadow-premium animate-fade-in"
-                role="img"
-                aria-label="Abstract render of a vertical-axis wind turbine with modular blades and sensor stack"
-              >
-                <div className="absolute -top-24 -left-16 w-64 h-64 bg-gradient-to-br from-energy/20 to-accent/20 blur-3xl" aria-hidden />
-                <div className="space-y-4 relative z-10">
-                  <div className="flex items-center justify-between">
-                    <p className="text-sm font-semibold">Low-wind aero profile</p>
-                    <span className="text-xs px-3 py-1 rounded-full bg-energy/10 text-energy">Labs Build</span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-3 text-sm">
-                    <div className="p-3 rounded-2xl bg-secondary/50 border border-border/60">
-                      <p className="font-semibold">Biomimicry blades</p>
-                      <p className="text-muted-foreground">Inspired by owl wings for quieter operation.</p>
-                    </div>
-                    <div className="p-3 rounded-2xl bg-secondary/50 border border-border/60">
-                      <p className="font-semibold">Exploded view</p>
-                      <p className="text-muted-foreground">Modular hub + drivetrain for rapid swaps.</p>
-                    </div>
-                    <div className="p-3 rounded-2xl bg-secondary/50 border border-border/60">
-                      <p className="font-semibold">Sensor stack</p>
-                      <p className="text-muted-foreground">Vibration, torque, temperature, weather data.</p>
-                    </div>
-                    <div className="p-3 rounded-2xl bg-secondary/50 border border-border/60">
-                      <p className="font-semibold">Hybrid bus</p>
-                      <p className="text-muted-foreground">Solar-coupled inverter and storage orchestration.</p>
-                    </div>
-                  </div>
-                  <div className="p-4 rounded-2xl bg-gradient-to-r from-energy/10 to-accent/10 border border-border/60">
-                    <p className="text-sm font-semibold">Service windows</p>
-                    <p className="text-sm text-muted-foreground">Predictive maintenance based on vibration + torque drift.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-4">
-                <StatsCard label="Wind start speed" value="<3 m/s" />
-                <StatsCard label="Servicing time" value="<90 mins" />
-                <StatsCard label="Noise profile" value="<45 dB at 10m" />
-                <StatsCard label="Hybrid ready" value="Solar + VAWT" />
+              <div className="space-y-2 text-sm text-zinc-300">
+                <p>Mount: rooftop frame / industrial base frame.</p>
+                <p>Controller bay: local edge compute and power electronics.</p>
+                <p>Telemetry path: sensor bus routed to edge controller.</p>
               </div>
             </div>
           </div>
         </section>
 
-      <section className="py-20" id="problem">
-        <div className="container mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-10 items-start">
-          <div className="space-y-4">
-            <h2 className="text-3xl lg:text-4xl font-bold">The problem</h2>
-            <p className="text-muted-foreground leading-relaxed text-lg">
-              African cities have turbulent, low-speed wind; conventional turbines stall or burn through maintenance budgets. Diesel remains a default, even as costs spike.
-            </p>
-            <ul className="space-y-2 text-muted-foreground">
-              <li className="flex gap-2 text-sm">
-                <span aria-hidden>•</span>
-                <span>Low rooftops and crowded skylines create chaotic airflows traditional turbines cannot capture.</span>
-              </li>
-              <li className="flex gap-2 text-sm">
-                <span aria-hidden>•</span>
-                <span>Importing spare parts and cranes inflates OPEX, making smaller installs financially risky.</span>
-              </li>
-              <li className="flex gap-2 text-sm">
-                <span aria-hidden>•</span>
-                <span>Diesel dependence drains budgets and increases noise and emissions near homes and hospitals.</span>
-              </li>
-            </ul>
-          </div>
-          <div className="space-y-4">
-            <h2 className="text-3xl lg:text-4xl font-bold">Our solution</h2>
-            <p className="text-muted-foreground leading-relaxed text-lg">
-              Rodent Labs combines biomimicry-inspired blades, an IoT telemetry stack, and digital twins. The result: turbines that start in gentle winds, stay quiet, and tell you when they need attention.
-            </p>
-            <p className="text-muted-foreground leading-relaxed text-lg">
-              Modular blades, cartridge generators, and shared solar coupling make servicing predictable and minimize downtime even in hard-to-reach rooftops.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 bg-secondary/30" id="solution">
-        <div className="container mx-auto px-6 lg:px-8 space-y-8">
-          <div className="space-y-3 text-center max-w-3xl mx-auto">
-            <p className="text-sm font-semibold text-energy uppercase tracking-[0.12em]">The solution</p>
-            <h2 className="text-3xl lg:text-4xl font-bold">Hardware, telemetry, and service in one loop</h2>
-            <p className="text-muted-foreground">
-              We design for rooftops that experience everything from Harmattan gusts to still mornings, keeping uptime high without expensive maintenance crews.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {solutionHighlights.map((item) => (
-              <div key={item.title} className="glass rounded-2xl p-6 space-y-3 border border-border/60">
-                <h3 className="text-xl font-semibold">{item.title}</h3>
-                <p className="text-muted-foreground leading-relaxed text-sm">{item.detail}</p>
-              </div>
+        <section className="container mx-auto px-6 lg:px-8 mt-16 space-y-4">
+          <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em]">Wind → Turbine → Sensors → Edge Controller → API → Dashboard → Alerts</h2>
+          <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
+            {systemFlow.map((item) => (
+              <article key={item.stage} className="rounded-lg border border-zinc-800 bg-zinc-900 p-4">
+                <p className="text-xs uppercase tracking-[0.18em] text-zinc-400">{item.stage}</p>
+                <p className="text-sm text-zinc-200 mt-2">{item.line}</p>
+              </article>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-        <section className="py-20 bg-gradient-to-b from-secondary/40 via-background to-background" id="features">
-          <div className="container mx-auto px-6 lg:px-8">
-            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-12">
-              <div className="space-y-3">
-                <p className="text-sm font-semibold text-energy uppercase tracking-[0.12em]">Capabilities</p>
-                <h2 className="text-3xl lg:text-4xl font-bold">Hardware + software in one loop</h2>
-                <p className="text-muted-foreground max-w-3xl">
-                  From blade geometry to telemetry dashboards, every component is designed to be serviceable, measurable, and grid-friendly.
-                </p>
-              </div>
-              <Button variant="premium" size="lg" asChild>
-                <Link to="/contact">Collaborate with Labs</Link>
-              </Button>
-            </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {featureGrid.map((feature, index) => {
-                const Icon = feature.icon;
-                return (
-                  <div
-                    key={feature.title}
-                    className="glass rounded-2xl p-6 space-y-3 hover-lift animate-fade-in"
-                    style={{ animationDelay: `${index * 0.05}s` }}
-                  >
-                    <div className="w-12 h-12 rounded-xl bg-energy/10 border border-energy/30 flex items-center justify-center">
-                      <Icon className="w-6 h-6 text-energy" aria-hidden />
-                    </div>
-                    <h3 className="text-xl font-semibold">{feature.title}</h3>
-                    <p className="text-muted-foreground leading-relaxed text-sm">{feature.description}</p>
-                  </div>
-                );
-              })}
-            </div>
+        <section className="container mx-auto px-6 lg:px-8 mt-16 space-y-4">
+          <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em]">Physical System</h2>
+          <div className="grid md:grid-cols-2 gap-4">
+            {physicalComponents.map((component) => (
+              <article key={component.name} className="rounded-lg border border-zinc-800 bg-zinc-900 p-5 space-y-2">
+                <h3 className="text-xl font-semibold">{component.name}</h3>
+                <p className="text-sm text-zinc-200">Function: {component.does}</p>
+                <p className="text-sm text-zinc-300">Constraint: {component.handles}</p>
+              </article>
+            ))}
           </div>
         </section>
 
-        <section className="py-20" id="roadmap">
-          <div className="container mx-auto px-6 lg:px-8 space-y-10">
-            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-              <div className="space-y-3">
-                <p className="text-sm font-semibold text-energy uppercase tracking-[0.12em]">Roadmap</p>
-                <h2 className="text-3xl lg:text-4xl font-bold">From lab rigs to rooftop fleets</h2>
-                <p className="text-muted-foreground max-w-2xl">
-                  Measured steps: validate aerodynamics, harden telemetry, then scale pilot fleets before marketplace rollouts.
-                </p>
-              </div>
-              <Button variant="ghost" size="lg" asChild>
-                <Link to="/contact">Book a lab tour</Link>
-              </Button>
-            </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-              <RoadmapCard title="✔ Live / Beta" items={roadmap.live} />
-              <RoadmapCard title="🧪 In Development" items={roadmap.building} />
-              <RoadmapCard title="🗓 Planned Next" items={roadmap.coming} />
-              <RoadmapCard title="🧭 Future Direction" items={roadmap.future} />
-            </div>
-          </div>
-        </section>
-
-        <section className="py-20 bg-secondary/40" id="audiences">
-          <div className="container mx-auto px-6 lg:px-8 grid lg:grid-cols-3 gap-10 items-start">
-            <div className="lg:col-span-1 space-y-4">
-              <p className="text-sm font-semibold text-energy uppercase tracking-[0.12em]">Who it’s for</p>
-              <h2 className="text-3xl lg:text-4xl font-bold">Urban energy leaders</h2>
-              <p className="text-muted-foreground">
-                Reliable micro-generation for properties, industrial parks, and developers who need clean power without noise or maintenance shock.
-              </p>
-            </div>
-            <div className="lg:col-span-2 grid md:grid-cols-2 gap-6">
-              {audiences.map((audience) => (
-                <div key={audience.title} className="glass rounded-2xl p-6 space-y-3 border border-border/60">
-                  <h3 className="text-xl font-semibold">{audience.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed text-sm">{audience.benefit}</p>
+        <section className="container mx-auto px-6 lg:px-8 mt-16 space-y-4">
+          <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em]">Sensor + Telemetry Layer</h2>
+          <div className="rounded-xl border border-zinc-700 bg-zinc-900 p-6">
+            <p className="text-xs uppercase tracking-[0.18em] text-zinc-400 mb-4">Sensor Layout Diagram</p>
+            <div className="grid md:grid-cols-4 gap-3 mb-6">
+              {telemetryLayer.map((item) => (
+                <div key={item.sensor} className="rounded-md border border-zinc-700 bg-zinc-950 p-3 text-xs text-zinc-200">
+                  {item.sensor}
                 </div>
+              ))}
+            </div>
+            <div className="grid md:grid-cols-2 gap-4">
+              {telemetryLayer.map((item) => (
+                <article key={`${item.sensor}-details`} className="rounded-md border border-zinc-800 p-4">
+                  <p className="font-semibold">{item.sensor}</p>
+                  <p className="text-sm text-zinc-200 mt-1">Measures: {item.measures}</p>
+                  <p className="text-sm text-zinc-300 mt-1">Why it matters: {item.matters}</p>
+                </article>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="py-20 bg-gradient-to-b from-background via-secondary/30 to-background" id="cta">
-          <div className="container mx-auto px-6 lg:px-8 text-center space-y-6">
-            <p className="text-sm font-semibold text-energy uppercase tracking-[0.12em]">Partner with Rodent Labs</p>
-            <h2 className="text-4xl font-bold">Pilot a VAWT cluster with us</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              We’re selecting rooftops and industrial parks for telemetry-rich pilots. Let’s design a configuration for your site.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Button variant="hero" size="lg" asChild>
-                <Link to="/contact">Start a pilot</Link>
-              </Button>
-              <Button variant="ghost" size="lg" asChild>
-                <a href="mailto:anesu@rodent.co.zw">Email the lab</a>
-              </Button>
-              <Button variant="outline" size="lg" onClick={handleDownloadAbstract}>
-                Download VAWT abstract
-                <Download className="w-4 h-4 ml-2" />
-              </Button>
-              <Button variant="ghost" size="lg" onClick={() => exportAuditCsv("rodent-labs-vawt", "Rodent Labs — VAWT")}>
-                Export audit CSV
-                <FileSpreadsheet className="w-4 h-4 ml-2" />
-              </Button>
+        <section className="container mx-auto px-6 lg:px-8 mt-16 space-y-4">
+          <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em]">Data Pipeline</h2>
+          <div className="rounded-xl border border-zinc-700 bg-zinc-900 p-6 space-y-4">
+            <p className="text-sm font-mono text-zinc-200">Sensor → Edge Device → API → Storage → Dashboard → Alert System</p>
+            <p className="text-sm text-zinc-300">Ingestion frequency: every 5 seconds per sensor channel.</p>
+            <p className="text-sm text-zinc-300">Data type: signed time-series payloads with UTC timestamps.</p>
+            <div className="rounded-md border border-zinc-800 bg-zinc-950 p-4">
+              <p className="text-xs uppercase tracking-[0.18em] text-zinc-400 mb-2">Pipeline Diagram</p>
+              <div className="grid md:grid-cols-6 gap-2 text-xs font-mono">
+                <span className="border border-zinc-700 rounded p-2">Sensor</span>
+                <span className="border border-zinc-700 rounded p-2">Edge</span>
+                <span className="border border-zinc-700 rounded p-2">API</span>
+                <span className="border border-zinc-700 rounded p-2">Storage</span>
+                <span className="border border-zinc-700 rounded p-2">Dashboard</span>
+                <span className="border border-zinc-700 rounded p-2">Alerts</span>
+              </div>
             </div>
           </div>
         </section>
+
+        <section className="container mx-auto px-6 lg:px-8 mt-16 space-y-4">
+          <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em]">Dashboard</h2>
+          <div className="rounded-xl border border-zinc-700 bg-zinc-900 p-6 space-y-4">
+            <p className="text-xs uppercase tracking-[0.18em] text-zinc-400">Dashboard UI Mock</p>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="rounded-md border border-zinc-800 bg-zinc-950 p-4">
+                <p className="text-sm text-zinc-300">RPM graph over time</p>
+                <div className="h-20 mt-3 rounded bg-zinc-900 border border-zinc-800" />
+              </div>
+              <div className="rounded-md border border-zinc-800 bg-zinc-950 p-4">
+                <p className="text-sm text-zinc-300">Vibration trend analysis</p>
+                <div className="h-20 mt-3 rounded bg-zinc-900 border border-zinc-800" />
+              </div>
+              <div className="rounded-md border border-zinc-800 bg-zinc-950 p-4">
+                <p className="text-sm text-zinc-300">Power output curve</p>
+                <div className="h-20 mt-3 rounded bg-zinc-900 border border-zinc-800" />
+              </div>
+              <div className="rounded-md border border-zinc-800 bg-zinc-950 p-4">
+                <p className="text-sm text-zinc-300">Fault alerts</p>
+                <ul className="mt-3 space-y-1 text-xs text-zinc-200 font-mono">
+                  <li>ALERT: vibration threshold breached</li>
+                  <li>ALERT: RPM instability detected</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="container mx-auto px-6 lg:px-8 mt-16 space-y-4">
+          <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em]">Predictive Maintenance</h2>
+          <div className="grid md:grid-cols-3 gap-4">
+            {predictiveMaintenance.map((rule) => (
+              <article key={rule.name} className="rounded-lg border border-zinc-800 bg-zinc-900 p-5 space-y-2">
+                <h3 className="text-lg font-semibold">{rule.name}</h3>
+                <p className="text-sm text-zinc-200">Signal: {rule.signal}</p>
+                <p className="text-sm text-zinc-300">Trigger: {rule.trigger}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="container mx-auto px-6 lg:px-8 mt-16 space-y-4">
+          <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em]">Use Cases</h2>
+          <div className="grid md:grid-cols-3 gap-4">
+            {useCases.map((useCase) => (
+              <article key={useCase.title} className="rounded-lg border border-zinc-800 bg-zinc-900 p-5 space-y-2">
+                <h3 className="text-lg font-semibold">{useCase.title}</h3>
+                <p className="text-sm text-zinc-300">{useCase.line}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="container mx-auto px-6 lg:px-8 mt-16 space-y-4">
+          <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em]">Engineering Constraints</h2>
+          <div className="grid md:grid-cols-2 gap-4">
+            {constraints.map((item) => (
+              <div key={item} className="rounded-lg border border-zinc-800 bg-zinc-900 p-4 text-sm text-zinc-200">
+                {item}
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="container mx-auto px-6 lg:px-8 mt-16">
+          <div className="rounded-xl border border-zinc-700 bg-zinc-900 p-6 space-y-3">
+            <h2 className="text-3xl md:text-5xl font-semibold tracking-[-0.03em]">Integration with Rodent Stack</h2>
+            <p className="text-sm text-zinc-200">API layer: telemetry events stream to infrastructure API contracts.</p>
+            <p className="text-sm text-zinc-200">ShedSense: turbine output and fault signals feed energy intelligence workflows.</p>
+            <p className="text-sm text-zinc-200">Infrastructure dashboards: municipal and utility operators view turbine fleet health with outage context.</p>
+          </div>
+        </section>
       </main>
-
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-      />
-
       <Footer />
     </div>
   );
 };
-
-const RoadmapCard = ({ title, items }: { title: string; items: string[] }) => (
-  <div className="glass rounded-2xl p-6 space-y-3 border border-border/60 animate-fade-in">
-    <p className="text-sm font-semibold">{title}</p>
-    <ul className="space-y-2 text-sm text-muted-foreground">
-      {items.map((item) => (
-        <li key={item} className="flex gap-2">
-          <span aria-hidden>•</span>
-          <span>{item}</span>
-        </li>
-      ))}
-    </ul>
-  </div>
-);
-
-const StatsCard = ({ label, value }: { label: string; value: string }) => (
-  <div className="glass rounded-2xl p-6 border border-border/60 shadow-card animate-fade-in">
-    <p className="text-sm text-muted-foreground">{label}</p>
-    <p className="text-3xl font-bold mt-2">{value}</p>
-  </div>
-);
 
 export default VawtLabPage;
