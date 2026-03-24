@@ -2,7 +2,7 @@ import { ArrowRight } from "lucide-react";
 
 const operationalLinks = [
   { label: "Live System Feed", href: "#systems-operation" },
-  { label: "API Access Request", href: "/contact#api-access" },
+  { label: "API Access", href: "/squirrel-api-studio" },
   { label: "Deployment Discussion", href: "/contact" },
 ];
 
