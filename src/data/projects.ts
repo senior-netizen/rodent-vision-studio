@@ -172,13 +172,13 @@ export const projects: Project[] = [
     slug: "meterflow",
     name: "MeterFlow",
     category: "Infrastructure",
-    headline: "Enforcement-grade municipal meter validation and billing integrity infrastructure",
+    headline: "Municipal meter data capture and billing integrity infrastructure",
     summary:
-      "Production municipal control system that enforces GPS-verified captures, immutable records, and billable ledger integrity.",
+      "Production municipal infrastructure that captures field meter readings with GPS, image evidence, and audit-grade billing records.",
     problem:
       "Manual route books and delayed posting create unverifiable readings, billing disputes, and municipal revenue leakage.",
     solution:
-      "MeterFlow enforces route-bound capture, rejects invalid submissions, and writes immutable records into billing pipelines.",
+      "MeterFlow enforces authenticated capture, validation rules, immutable logs, and direct billing-system delivery for each reading event.",
     features: [
       "Authenticated field capture with route-bound meter assignments",
       "Reading payload includes value, timestamp, GPS, and photo evidence",
