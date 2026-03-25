@@ -148,51 +148,55 @@ const ProjectDetail = () => {
                 </div>
               </div>
 
-              <div className="grid gap-8 lg:grid-cols-2">
-                <div className="space-y-4">
-                  <h2 className="text-xl font-semibold">Problem</h2>
-                  <p className="leading-relaxed text-muted-foreground">{project.problem}</p>
+              {!isMeterFlowProject && (
+                <div className="grid gap-8 lg:grid-cols-2">
+                  <div className="space-y-4">
+                    <h2 className="text-xl font-semibold">Problem</h2>
+                    <p className="leading-relaxed text-muted-foreground">{project.problem}</p>
+                  </div>
+                  <div className="space-y-4">
+                    <h2 className="text-xl font-semibold">Solution</h2>
+                    <p className="leading-relaxed text-muted-foreground">{project.solution}</p>
+                  </div>
                 </div>
-                <div className="space-y-4">
-                  <h2 className="text-xl font-semibold">Solution</h2>
-                  <p className="leading-relaxed text-muted-foreground">{project.solution}</p>
-                </div>
-              </div>
+              )}
 
               {isMeterFlowProject && <MeterFlowShowcase />}
 
-              <div className="grid gap-6 lg:grid-cols-3">
-                <div className="space-y-4 lg:col-span-2">
-                  <h3 className="text-lg font-semibold">What it does</h3>
-                  <div className="grid gap-3 md:grid-cols-2">
-                    {project.features.map((feature) => (
-                      <div key={feature} className="flex items-start gap-3 rounded-xl border border-border/60 bg-card p-3">
-                        <CheckCircle2 className="mt-0.5 h-5 w-5 text-accent" />
-                        <p className="text-sm leading-relaxed text-muted-foreground">{feature}</p>
-                      </div>
-                    ))}
+              {!isMeterFlowProject && (
+                <div className="grid gap-6 lg:grid-cols-3">
+                  <div className="space-y-4 lg:col-span-2">
+                    <h3 className="text-lg font-semibold">What it does</h3>
+                    <div className="grid gap-3 md:grid-cols-2">
+                      {project.features.map((feature) => (
+                        <div key={feature} className="flex items-start gap-3 rounded-xl border border-border/60 bg-card p-3">
+                          <CheckCircle2 className="mt-0.5 h-5 w-5 text-accent" />
+                          <p className="text-sm leading-relaxed text-muted-foreground">{feature}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-semibold">Tech stack</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {project.techStack.map((tech) => (
+                        <span key={tech} className="rounded-full border border-border/60 bg-card px-3 py-1 text-xs text-muted-foreground">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="space-y-2 rounded-2xl border border-border/60 bg-gradient-to-br from-accent/10 to-tech/10 p-4">
+                      <p className="text-sm font-semibold">Contact the team</p>
+                      <p className="text-sm text-muted-foreground">
+                        Request access, discuss integration, or start a pilot conversation.
+                      </p>
+                      <Button variant="premium" size="sm" asChild>
+                        <Link to="/contact">Talk to us</Link>
+                      </Button>
+                    </div>
                   </div>
                 </div>
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold">Tech stack</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {project.techStack.map((tech) => (
-                      <span key={tech} className="rounded-full border border-border/60 bg-card px-3 py-1 text-xs text-muted-foreground">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                  <div className="space-y-2 rounded-2xl border border-border/60 bg-gradient-to-br from-accent/10 to-tech/10 p-4">
-                    <p className="text-sm font-semibold">Contact the team</p>
-                    <p className="text-sm text-muted-foreground">
-                      Request access, discuss integration, or start a pilot conversation.
-                    </p>
-                    <Button variant="premium" size="sm" asChild>
-                      <Link to="/contact">Talk to us</Link>
-                    </Button>
-                  </div>
-                </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
