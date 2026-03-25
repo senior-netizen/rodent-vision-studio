@@ -1,6 +1,7 @@
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
 import { usePageMetadata } from "@/hooks/usePageMetadata";
+import turbineRender from "@/assets/vawt-turbine-render.svg";
 
 const systemFlow = [
   { stage: "Wind", line: "Captures rooftop and corridor airflow at 2-12 m/s." },
@@ -118,12 +119,13 @@ const VawtLabPage = () => {
           <div className="w-full rounded-xl border border-zinc-700 bg-zinc-900 p-6 md:p-10">
             <p className="text-xs uppercase tracking-[0.18em] text-zinc-400 mb-4">Turbine Render</p>
             <div className="grid md:grid-cols-[240px_1fr] gap-6 items-center">
-              <div className="h-64 rounded-lg border border-zinc-700 bg-zinc-950 relative">
-                <div className="absolute top-8 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full border-2 border-zinc-400" />
-                <div className="absolute top-[5.9rem] left-1/2 -translate-x-1/2 w-1 h-24 bg-zinc-400" />
-                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-24 h-3 rounded bg-zinc-500" />
-                <div className="absolute top-20 left-1/2 -translate-x-1/2 w-20 h-1 bg-emerald-400 rotate-45" />
-                <div className="absolute top-20 left-1/2 -translate-x-1/2 w-20 h-1 bg-emerald-400 -rotate-45" />
+              <div className="h-64 rounded-lg border border-zinc-700 bg-zinc-950 overflow-hidden">
+                <img
+                  src={turbineRender}
+                  alt="Vertical-axis wind turbine render with helical blades"
+                  className="h-full w-full object-contain"
+                  loading="lazy"
+                />
               </div>
               <div className="space-y-2 text-sm text-zinc-300">
                 <p>Mount: rooftop frame / industrial base frame.</p>

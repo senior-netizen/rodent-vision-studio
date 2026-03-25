@@ -172,19 +172,19 @@ export const projects: Project[] = [
     slug: "meterflow",
     name: "MeterFlow",
     category: "Infrastructure",
-    headline: "Digitized meter reading for water and sanitation field operations",
+    headline: "Enforcement-grade municipal meter validation and billing integrity infrastructure",
     summary:
-      "A mobile-first platform for water and sanitation teams that replaces manual meter books with verified digital captures, routing, and billing-ready exports.",
+      "Production municipal control system that enforces GPS-verified captures, immutable records, and billable ledger integrity.",
     problem:
-      "Water and sanitation teams still depend on manual meter reading, paper routes, and delayed reconciliations that create revenue leakage and slow customer service.",
+      "Manual route books and delayed posting create unverifiable readings, billing disputes, and municipal revenue leakage.",
     solution:
-      "MeterFlow digitizes the full reading cycle with mobile capture, photo evidence, exception workflows, and back-office exports for billing systems.",
+      "MeterFlow enforces route-bound capture, rejects invalid submissions, and writes immutable records into billing pipelines.",
     features: [
-      "Mobile meter reading with offline-first capture and timestamped photo evidence",
-      "Route planning, assignment, and supervisor approval workflows",
-      "Anomaly flags for unread meters, leaks, tamper events, and consumption spikes",
-      "Billing-ready exports and API hooks for finance and ERP systems",
-      "Dashboards for field productivity, coverage, and collection follow-up",
+      "Authenticated field capture with route-bound meter assignments",
+      "Reading payload includes value, timestamp, GPS, and photo evidence",
+      "Validation engine blocks duplicates and flags anomaly spikes",
+      "Per-reading API submission updates municipal billing records",
+      "Immutable audit logs support disputes and compliance review",
     ],
     techStack: ["React", "TypeScript", "Node.js", "PostgreSQL", "Flutter"],
     status: "Production",
