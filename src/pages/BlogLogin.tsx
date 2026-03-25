@@ -35,8 +35,8 @@ const BlogLogin = () => {
       <main className="pt-28 pb-20">
         <div className="container mx-auto px-6 lg:px-8 max-w-md">
           <div className="rounded-2xl border border-border/60 bg-card p-6 space-y-5">
-            <h1 className="text-2xl font-semibold">Blog Admin Login</h1>
-            <p className="text-sm text-muted-foreground">Login to create and publish blog posts.</p>
+            <h1 className="text-2xl font-semibold">Systems Journal Admin Login</h1>
+            <p className="text-sm text-muted-foreground">Login to publish system records.</p>
 
             <form className="space-y-4" onSubmit={handleLogin}>
               <Input
@@ -53,7 +53,7 @@ const BlogLogin = () => {
             </form>
 
             <Link to="/blog" className="text-sm text-accent">
-              Back to blog
+              Back to systems journal
             </Link>
           </div>
         </div>
