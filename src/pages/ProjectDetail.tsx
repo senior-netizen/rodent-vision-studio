@@ -108,7 +108,7 @@ const ProjectDetail = () => {
     <div className="min-h-screen">
       <Navigation />
       <div className="pt-28 pb-24">
-        <div className="container mx-auto space-y-12 px-6 lg:px-8">
+        <div className={`${isMeterFlowProject ? "mx-auto w-[min(1800px,98vw)] space-y-12 px-3 lg:px-4" : "container mx-auto space-y-12 px-6 lg:px-8"}`}>
           <div className="flex flex-col gap-6">
             <Link to="/projects" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-accent">
               <ArrowLeft className="h-4 w-4" /> Back to all projects
