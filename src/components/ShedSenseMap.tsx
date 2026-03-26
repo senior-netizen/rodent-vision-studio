@@ -1,4 +1,4 @@
-import lightsOutMap from "@/assets/lights-out-map.jpg";
+import lightsOutMap from "@/assets/minimal-outage-map.svg";
 import { AlertCircle, Zap, ZapOff } from "lucide-react";
 
 interface ShedSenseMapProps {

@@ -1,7 +1,7 @@
 import { Cpu, BatteryCharging, Shield, Globe2 } from "lucide-react";
-import heroDashboard from "@/assets/hero-dashboard.jpg";
-import lightsOutMap from "@/assets/lights-out-map.jpg";
-import lightsOutSchedule from "@/assets/lights-out-schedule.jpg";
+import heroDashboard from "@/assets/minimal-dashboard.svg";
+import lightsOutMap from "@/assets/minimal-outage-map.svg";
+import lightsOutSchedule from "@/assets/minimal-schedule-grid.svg";
 import rodentLogo from "@/assets/rodent-logo-transparent.png";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { cn } from "@/lib/utils";
