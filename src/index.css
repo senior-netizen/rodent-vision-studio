@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "DashDigital Sans";
-  src: url("/OctopusGame-RpWV3.ttf") format("truetype");
+  font-family: "Founders Grotesk";
+  src: local("Founders Grotesk Regular"), local("Founders Grotesk");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
