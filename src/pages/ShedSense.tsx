@@ -16,8 +16,8 @@ import {
 import { Link } from "react-router-dom";
 import ShedSenseMap from "@/components/ShedSenseMap";
 import ScheduleViewer from "@/components/ScheduleViewer";
-import lightsOutSchedule from "@/assets/lights-out-schedule.jpg";
-import lightsOutMap from "@/assets/lights-out-map.jpg";
+import lightsOutSchedule from "@/assets/minimal-schedule-grid.svg";
+import lightsOutMap from "@/assets/minimal-outage-map.svg";
 
 const ShedSense = () => {
   const features = [

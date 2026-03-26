@@ -1,6 +1,11 @@
+import heroNetworkNodes from "@/assets/hero-network-nodes.svg";
+
 export const Hero = () => {
   return (
     <section className="hero-block">
+      <div className="hero-block__media" aria-hidden>
+        <img src={heroNetworkNodes} alt="" loading="eager" decoding="async" />
+      </div>
       <div className="site-shell">
         <div className="hero-block__inner section-reveal">
           <p className="eyebrow">Infrastructure operator</p>
