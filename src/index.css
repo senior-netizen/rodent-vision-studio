@@ -11,16 +11,16 @@
 }
 
 @font-face {
-  font-family: "Founders Grotesk";
-  src: local("Founders Grotesk Light"), local("Founders Grotesk");
+  font-family: "DashDigital Sans";
+  src: url("/OctopusGame-RpWV3.ttf") format("truetype");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Editorial Neue";
-  src: local("Editorial Neue Italic"), local("Editorial New");
+  font-family: "DashDigital Serif";
+  src: url("/OctopusGameItalic-lgvnV.ttf") format("truetype");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -62,7 +62,7 @@
   body {
     @apply bg-background text-foreground;
     margin: 0;
-    font-family: "Founders Grotesk", "Inter", "Segoe UI", Arial, sans-serif;
+    font-family: "DashDigital Sans", "Inter", "Segoe UI", Arial, sans-serif;
     letter-spacing: -0.01em;
     line-height: 1.45;
   }
@@ -73,7 +73,7 @@
   h4,
   h5,
   h6 {
-    font-family: "Founders Grotesk", "Inter", "Segoe UI", Arial, sans-serif;
+    font-family: "DashDigital Sans", "Inter", "Segoe UI", Arial, sans-serif;
     letter-spacing: -0.03em;
     line-height: 0.95;
     margin: 0;
@@ -102,7 +102,7 @@
 
   em,
   i {
-    font-family: "Editorial Neue", Georgia, serif;
+    font-family: "DashDigital Serif", Georgia, serif;
     font-style: italic;
     letter-spacing: -0.04em;
   }
@@ -143,7 +143,7 @@
   }
 
   .dd-italic {
-    font-family: "Editorial Neue", Georgia, serif;
+    font-family: "DashDigital Serif", Georgia, serif;
     font-style: italic;
     letter-spacing: -0.06em;
   }
