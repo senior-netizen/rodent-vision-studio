@@ -142,11 +142,41 @@
   }
 
   .hero-block {
+    position: relative;
+    overflow: hidden;
     padding-block: clamp(5.5rem, 14vw, 11rem);
     border-bottom: 1px solid hsl(var(--border));
   }
 
+  .hero-block__media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .hero-block__media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      hsl(var(--background) / 0.72) 0%,
+      hsl(var(--background) / 0.46) 46%,
+      hsl(var(--background) / 0.92) 100%
+    );
+  }
+
+  .hero-block__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.92;
+  }
+
   .hero-block__inner {
+    position: relative;
+    z-index: 1;
     display: grid;
     gap: 2rem;
     max-width: 1000px;
