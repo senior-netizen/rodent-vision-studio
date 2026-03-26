@@ -1,9 +1,8 @@
-import { useState } from "react";
+import { useMemo, useState, type ComponentType, type FormEvent } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -12,41 +11,134 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Mail, Phone, MapPin, Send, MessageCircle } from "lucide-react";
+import { CheckCircle2, ServerCog, PlugZap, Building2, Database } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { usePageMetadata } from "@/hooks/usePageMetadata";
 
+type EntryPathId = "government" | "developers" | "enterprise" | "general";
+
+type EntryPath = {
+  id: EntryPathId;
+  title: string;
+  icon: ComponentType<{ className?: string }>;
+  intent: string;
+  actions: string[];
+  productLinkage: string;
+};
+
+const entryPaths: EntryPath[] = [
+  {
+    id: "government",
+    title: "GOVERNMENT / MUNICIPAL SYSTEMS",
+    icon: Building2,
+    intent: "Initiates pilot deployments, billing system upgrades, and infrastructure integration planning.",
+    actions: [
+      "Pilot deployment scope",
+      "MeterFlow billing system integration",
+      "Municipal infrastructure interoperability",
+    ],
+    productLinkage: "Connects to MeterFlow, ShedSense, Studio, and Labs deployment tracks.",
+  },
+  {
+    id: "developers",
+    title: "DEVELOPERS",
+    icon: PlugZap,
+    intent: "Initiates API access workflows, system integration sequencing, and technical documentation routing.",
+    actions: [
+      "API access request",
+      "System integration sequencing",
+      "Technical documentation routing",
+    ],
+    productLinkage: "Connects to Studio APIs, ShedSense integration endpoints, MeterFlow data APIs, and Labs references.",
+  },
+  {
+    id: "enterprise",
+    title: "ENTERPRISE / UTILITIES",
+    icon: ServerCog,
+    intent: "Initiates energy deployment reviews, ingestion pipeline design, and telemetry integration planning.",
+    actions: [
+      "Energy system deployment review",
+      "Data ingestion pipeline definition",
+      "Telemetry integration planning",
+    ],
+    productLinkage: "Connects to ShedSense operations, MeterFlow ingestion layers, Studio integration systems, and Labs prototypes.",
+  },
+  {
+    id: "general",
+    title: "GENERAL",
+    icon: Database,
+    intent: "Routes unmatched infrastructure inquiries into structured technical triage.",
+    actions: [
+      "Infrastructure inquiry triage",
+      "System fit classification",
+      "Technical pathway assignment",
+    ],
+    productLinkage: "Connects to MeterFlow, ShedSense, Studio, and Labs based on system classification.",
+  },
+];
+
+const organizationTypes = [
+  "Municipality / City Authority",
+  "Government Agency",
+  "Energy Utility",
+  "Enterprise Operator",
+  "Technology Team",
+  "Research Institution",
+];
+
+const systemInterests = ["MeterFlow", "ShedSense", "Studio", "Labs", "Multi-system integration"];
+
+const deploymentContexts = [
+  "Pilot deployment (single site)",
+  "Regional rollout (multi-site)",
+  "Existing system migration",
+  "New infrastructure implementation",
+  "Telemetry and API integration",
+];
+
+const followUpTypes = ["Technical call", "System demonstration", "Pilot discussion"];
+
 const Contact = () => {
   usePageMetadata(
-    "Contact",
-    "Contact Rodent Inc. about developer tooling, energy operations systems, fintech infrastructure, or hardware projects."
+    "Infrastructure Entry Gateway",
+    "Structured entry gateway for municipal systems, utilities, developers, and infrastructure deployment workflows."
   );
+
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [activePath, setActivePath] = useState<EntryPathId>("government");
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    company: "",
-    phone: "",
-    topic: "",
-    message: "",
+    entryPath: "government" as EntryPathId,
+    organizationType: "",
+    systemInterest: "",
+    deploymentContext: "",
+    followUpType: "",
+    timeline: "",
+    fullName: "",
+    roleTitle: "",
+    workEmail: "",
+    phoneNumber: "",
   });
 
-  const quickTopics = [
-    { value: "dev-tools", label: "Developer tools" },
-    { value: "energy", label: "Energy platform" },
-    { value: "fintech", label: "Fintech / insurance" },
-    { value: "partnerships", label: "Partnership" },
-  ];
+  const selectedPath = useMemo(
+    () => entryPaths.find((path) => path.id === activePath) ?? entryPaths[0],
+    [activePath]
+  );
 
   const isFormValid =
-    formData.name.trim().length > 1 &&
-    formData.email.trim().includes("@") &&
-    formData.topic.trim().length > 0 &&
-    formData.message.trim().length >= 20;
+    formData.entryPath.length > 0 &&
+    formData.organizationType.length > 0 &&
+    formData.systemInterest.length > 0 &&
+    formData.deploymentContext.length > 0 &&
+    formData.followUpType.length > 0 &&
+    formData.timeline.length > 1 &&
+    formData.fullName.length > 1 &&
+    formData.roleTitle.length > 1 &&
+    formData.workEmail.includes("@") &&
+    formData.phoneNumber.length > 6;
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
     setIsSubmitting(true);
 
     const endpoint =
@@ -55,9 +147,8 @@ const Contact = () => {
 
     if (!accessKey) {
       toast({
-        title: "Missing contact configuration",
-        description:
-          "Set VITE_CONTACT_ACCESS_KEY in your environment to enable message delivery.",
+        title: "Missing gateway configuration",
+        description: "Set VITE_CONTACT_ACCESS_KEY to enable infrastructure request delivery.",
         variant: "destructive",
       });
       setIsSubmitting(false);
@@ -67,47 +158,51 @@ const Contact = () => {
     try {
       const response = await fetch(endpoint, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           access_key: accessKey,
-          name: formData.name,
-          email: formData.email,
-          company: formData.company,
-          phone: formData.phone,
-          topic: formData.topic,
-          message: formData.message,
-          subject: `New contact from ${formData.name}`,
+          subject: `Infrastructure request: ${formData.entryPath} / ${formData.systemInterest}`,
+          entry_path: formData.entryPath,
+          organization_type: formData.organizationType,
+          system_interest: formData.systemInterest,
+          deployment_context: formData.deploymentContext,
+          follow_up_type: formData.followUpType,
+          deployment_timeline: formData.timeline,
+          full_name: formData.fullName,
+          role_title: formData.roleTitle,
+          work_email: formData.workEmail,
+          phone_number: formData.phoneNumber,
         }),
       });
 
       const result = await response.json();
 
       if (!response.ok || !result.success) {
-        throw new Error(result.message || "Failed to send message");
+        throw new Error(result.message || "Failed to submit infrastructure request");
       }
 
       toast({
-        title: "Message sent successfully!",
-        description: "We'll get back to you within 24 hours.",
+        title: "Infrastructure request submitted",
+        description: "Technical triage initiated with follow-up routing.",
       });
 
       setFormData({
-        name: "",
-        email: "",
-        company: "",
-        phone: "",
-        topic: "",
-        message: "",
+        entryPath: activePath,
+        organizationType: "",
+        systemInterest: "",
+        deploymentContext: "",
+        followUpType: "",
+        timeline: "",
+        fullName: "",
+        roleTitle: "",
+        workEmail: "",
+        phoneNumber: "",
       });
     } catch (error) {
       const message =
-        error instanceof Error
-          ? error.message
-          : "Something went wrong sending your message.";
+        error instanceof Error ? error.message : "Infrastructure request delivery failed.";
       toast({
-        title: "Unable to deliver message",
+        title: "Submission failed",
         description: message,
         variant: "destructive",
       });
@@ -116,275 +211,248 @@ const Contact = () => {
     }
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+  const setField = (field: keyof typeof formData, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const selectPath = (pathId: EntryPathId) => {
+    setActivePath(pathId);
+    setFormData((prev) => ({ ...prev, entryPath: pathId }));
   };
 
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      
+
       <main className="section-padding">
-        <div className="container mx-auto px-6 lg:px-8 max-w-6xl">
-          {/* Hero Section */}
-          <div className="text-center mb-20 space-y-6 animate-fade-in">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border/50 text-sm text-muted-foreground">
-              <MessageCircle className="w-4 h-4 text-accent" />
-              Contact
-            </div>
-            <h1 className="text-5xl lg:text-7xl font-semibold tracking-tight">
-              Talk to <span className="gradient-text">the Team</span>
+        <div className="container mx-auto px-6 lg:px-8 max-w-6xl space-y-8">
+          <section className="card-premium space-y-4">
+            <h1 className="text-4xl lg:text-5xl font-semibold tracking-tight">
+              Initiate infrastructure deployment and system integration
             </h1>
-            <p className="text-xl text-muted-foreground max-w-xl mx-auto leading-relaxed">
-              Share your project scope, timeline, and technical needs.
+            <p className="text-lg text-muted-foreground">
+              Municipal systems, energy infrastructure, API integration.
             </p>
-          </div>
+          </section>
 
-          <div className="grid lg:grid-cols-2 gap-12">
-            {/* Contact Info */}
-            <div className="space-y-6 animate-fade-in-up">
-              <div className="card-premium">
-                <h2 className="text-2xl font-semibold mb-4">Direct Contacts</h2>
-                <p className="text-muted-foreground mb-8">
-                  Email us directly or send details through the form. We respond with next steps and fit.
-                </p>
-
-                <div className="space-y-6">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center flex-shrink-0">
-                      <Mail className="w-5 h-5 text-tech" />
-                    </div>
-                    <div className="space-y-1">
-                      <div className="font-medium">Email</div>
-                      <a
-                        href="mailto:anesu@rodent.co.zw"
-                        className="text-muted-foreground hover:text-accent transition-colors"
-                      >
-                        anesu@rodent.co.zw
-                      </a>
-                      <div className="text-sm text-muted-foreground">Alternative contact</div>
-                      <a
-                        href="mailto:vulamachiri@rodent.co.zw"
-                        className="text-muted-foreground hover:text-accent transition-colors"
-                      >
-                        vulamachiri@rodent.co.zw
-                      </a>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center flex-shrink-0">
-                      <Phone className="w-5 h-5 text-energy" />
-                    </div>
-                    <div className="space-y-1">
-                      <div className="font-medium">Phone</div>
-                      <a
-                        href="tel:+263787008238"
-                        className="text-muted-foreground hover:text-accent transition-colors"
-                      >
-                        +263 78 700 8238
-                      </a>
-                      <div className="text-sm text-muted-foreground">Alternative</div>
-                      <a
-                        href="tel:+263711950555"
-                        className="text-muted-foreground hover:text-accent transition-colors"
-                      >
-                        +263 71 195 0555
-                      </a>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center flex-shrink-0">
-                      <MapPin className="w-5 h-5 text-accent" />
-                    </div>
-                    <div className="space-y-1">
-                      <div className="font-medium">Location</div>
-                      <div className="text-muted-foreground">
-                        Bulawayo, Zimbabwe
-                        <br />
-                        SADC Region
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="card-premium">
-                <h3 className="text-lg font-semibold mb-4">Common requests</h3>
-                <ul className="space-y-3">
-                  {[
-                    "API integration & developer tools",
-                    "Energy intelligence solutions",
-                    "Fintech & insurance platforms",
-                    "Custom software delivery",
-                    "Partnership opportunities",
-                    "Media & press inquiries",
-                  ].map((item) => (
-                    <li key={item} className="flex items-center gap-3 text-muted-foreground">
-                      <div className="w-1.5 h-1.5 rounded-full bg-accent" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            {/* Contact Form */}
-            <div className="card-premium animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="space-y-3">
-                  <Label>Quick start</Label>
-                  <div className="flex flex-wrap gap-2">
-                    {quickTopics.map((topic) => {
-                      const active = formData.topic === topic.value;
-                      return (
-                        <button
-                          key={topic.value}
-                          type="button"
-                          onClick={() => setFormData((prev) => ({ ...prev, topic: topic.value }))}
-                          className={`px-3 py-1.5 rounded-full text-sm border transition-colors ${
-                            active
-                              ? "bg-accent text-accent-foreground border-accent"
-                              : "bg-secondary text-muted-foreground border-border hover:text-foreground"
-                          }`}
-                        >
-                          {topic.label}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="name">Name *</Label>
-                  <Input
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="Your full name"
-                    required
-                    className="h-12"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email *</Label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="your.email@example.com"
-                    required
-                    className="h-12"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="company">Company</Label>
-                    <Input
-                      id="company"
-                      name="company"
-                      value={formData.company}
-                      onChange={handleChange}
-                      placeholder="Your company"
-                      className="h-12"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Phone</Label>
-                    <Input
-                      id="phone"
-                      name="phone"
-                      type="tel"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      placeholder="+263 ..."
-                      className="h-12"
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="topic">Topic *</Label>
-                  <Select
-                    value={formData.topic}
-                    onValueChange={(value) =>
-                      setFormData((prev) => ({ ...prev, topic: value }))
-                    }
-                    required
+          <section className="space-y-4">
+            <h2 className="text-2xl font-semibold">ENTRY PATH SEGMENTATION</h2>
+            <div className="grid lg:grid-cols-2 gap-4">
+              {entryPaths.map((path) => {
+                const active = path.id === activePath;
+                const Icon = path.icon;
+                return (
+                  <button
+                    type="button"
+                    key={path.id}
+                    onClick={() => selectPath(path.id)}
+                    className={`card-premium text-left space-y-3 border transition-colors ${
+                      active ? "border-accent" : "border-border"
+                    }`}
                   >
-                    <SelectTrigger className="h-12">
-                      <SelectValue placeholder="Select a topic" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="dev-tools">Developer Tools</SelectItem>
-                      <SelectItem value="energy">Energy Solutions</SelectItem>
-                      <SelectItem value="fintech">Fintech & Insurance</SelectItem>
-                      <SelectItem value="partnerships">Partnerships</SelectItem>
-                      <SelectItem value="media">Media & Press</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+                    <div className="flex items-center gap-2">
+                      <Icon className="w-5 h-5 text-accent" />
+                      <h3 className="text-lg font-semibold">{path.title}</h3>
+                    </div>
+                    <p className="text-muted-foreground">{path.intent}</p>
+                    <ul className="space-y-1 text-sm text-muted-foreground">
+                      {path.actions.map((action) => (
+                        <li key={action} className="flex items-center gap-2">
+                          <CheckCircle2 className="w-4 h-4 text-accent" />
+                          {action}
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="text-sm text-muted-foreground">{path.productLinkage}</p>
+                  </button>
+                );
+              })}
+            </div>
+          </section>
 
-                <div className="space-y-2">
-                  <Label htmlFor="message">Message *</Label>
-                  <Textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    placeholder="Describe your project, current system, and what you need next."
-                    rows={5}
-                    required
-                    className="resize-none"
-                  />
-                  <div className="flex items-center justify-between text-xs text-muted-foreground">
-                    <span>Include scope, timeline, and expected deployment date.</span>
-                    <span>{formData.message.length}/800</span>
+          <section className="grid lg:grid-cols-[1.2fr_0.8fr] gap-6">
+            <article className="card-premium space-y-4">
+              <h2 className="text-2xl font-semibold">Submit infrastructure integration request</h2>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>Entry path</Label>
+                    <Select
+                      value={formData.entryPath}
+                      onValueChange={(value) => selectPath(value as EntryPathId)}
+                    >
+                      <SelectTrigger className="h-11">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {entryPaths.map((path) => (
+                          <SelectItem key={path.id} value={path.id}>
+                            {path.title}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Organization type</Label>
+                    <Select value={formData.organizationType} onValueChange={(value) => setField("organizationType", value)}>
+                      <SelectTrigger className="h-11">
+                        <SelectValue placeholder="Select organization type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {organizationTypes.map((type) => (
+                          <SelectItem key={type} value={type}>
+                            {type}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
 
-                <Button
-                  type="submit"
-                  size="lg"
-                  className="w-full h-12 rounded-full"
-                  disabled={isSubmitting || !isFormValid}
-                >
-                  {isSubmitting ? (
-                    "Sending..."
-                  ) : (
-                    <>
-                      Send Message
-                      <Send className="w-4 h-4 ml-2" />
-                    </>
-                  )}
-                </Button>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>System of interest</Label>
+                    <Select value={formData.systemInterest} onValueChange={(value) => setField("systemInterest", value)}>
+                      <SelectTrigger className="h-11">
+                        <SelectValue placeholder="Select system" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {systemInterests.map((system) => (
+                          <SelectItem key={system} value={system}>
+                            {system}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
 
-                <p className="text-xs text-muted-foreground text-center">
-                  Need a direct line? Email{" "}
-                  <a href="mailto:anesu@rodent.co.zw" className="text-accent hover:underline">
-                    anesu@rodent.co.zw
-                  </a>{" "}
-                  for a response, usually within 24 hours.
-                </p>
+                  <div className="space-y-2">
+                    <Label>Deployment context</Label>
+                    <Select value={formData.deploymentContext} onValueChange={(value) => setField("deploymentContext", value)}>
+                      <SelectTrigger className="h-11">
+                        <SelectValue placeholder="Select context" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {deploymentContexts.map((context) => (
+                          <SelectItem key={context} value={context}>
+                            {context}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>Preferred follow-up</Label>
+                    <Select value={formData.followUpType} onValueChange={(value) => setField("followUpType", value)}>
+                      <SelectTrigger className="h-11">
+                        <SelectValue placeholder="Select follow-up" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {followUpTypes.map((type) => (
+                          <SelectItem key={type} value={type}>
+                            {type}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Deployment timeline</Label>
+                    <Input
+                      value={formData.timeline}
+                      onChange={(event) => setField("timeline", event.target.value)}
+                      placeholder="e.g., Pilot in Q3 2026"
+                      className="h-11"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>Full name</Label>
+                    <Input
+                      value={formData.fullName}
+                      onChange={(event) => setField("fullName", event.target.value)}
+                      className="h-11"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Role title</Label>
+                    <Input
+                      value={formData.roleTitle}
+                      onChange={(event) => setField("roleTitle", event.target.value)}
+                      className="h-11"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label>Work email</Label>
+                    <Input
+                      type="email"
+                      value={formData.workEmail}
+                      onChange={(event) => setField("workEmail", event.target.value)}
+                      className="h-11"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Phone number</Label>
+                    <Input
+                      type="tel"
+                      value={formData.phoneNumber}
+                      onChange={(event) => setField("phoneNumber", event.target.value)}
+                      className="h-11"
+                    />
+                  </div>
+                </div>
+
+                <Button type="submit" disabled={isSubmitting || !isFormValid} className="w-full h-11">
+                  {isSubmitting ? "Submitting request..." : "Request system deployment discussion"}
+                </Button>
               </form>
-            </div>
-          </div>
+            </article>
+
+            <article className="card-premium space-y-4">
+              <h2 className="text-xl font-semibold">Structured request scope</h2>
+              <p className="text-sm text-muted-foreground">Active path: {selectedPath.title}</p>
+              <div className="rounded-xl border border-border bg-secondary/30 p-4 space-y-3">
+                <p className="text-sm text-muted-foreground">{selectedPath.intent}</p>
+                <p className="text-sm text-muted-foreground">{selectedPath.productLinkage}</p>
+              </div>
+              <div className="rounded-xl border border-border bg-secondary/30 p-4 space-y-2">
+                <h3 className="font-semibold">System linkage</h3>
+                <p className="text-sm text-muted-foreground">MeterFlow → billing and municipal data execution.</p>
+                <p className="text-sm text-muted-foreground">ShedSense → energy telemetry and outage operations.</p>
+                <p className="text-sm text-muted-foreground">Studio → API and integration infrastructure.</p>
+                <p className="text-sm text-muted-foreground">Labs → prototype pathways for hardware and applied R&D.</p>
+              </div>
+            </article>
+          </section>
+
+          <section className="card-premium space-y-3">
+            <h2 className="text-2xl font-semibold">Response expectations</h2>
+            <p className="text-muted-foreground">
+              Initial technical triage response timeline: within 24 hours.
+            </p>
+            <p className="text-muted-foreground">
+              Follow-up options: technical call, system demonstration, or pilot discussion.
+            </p>
+            <p className="text-muted-foreground">
+              Requests are routed by entry path, deployment context, and system of interest.
+            </p>
+          </section>
         </div>
       </main>
-      
+
       <Footer />
     </div>
   );
