@@ -12,11 +12,11 @@ export const Navigation = () => {
   ];
 
   return (
-    <nav className="site-nav">
+    <nav className="site-nav" aria-label="Primary">
       <div className="site-shell">
         <div className="site-nav__row">
           <Link to="/" className="site-nav__brand">
-            Rodent
+            rodent®
           </Link>
 
           <div className="site-nav__links">
@@ -38,7 +38,7 @@ export const Navigation = () => {
           </div>
 
           <Link to="/opportunities" className="site-nav__action">
-            Build with us
+            Start a project
           </Link>
         </div>
       </div>
