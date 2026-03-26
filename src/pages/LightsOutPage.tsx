@@ -1,7 +1,22 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { Activity, Bell, CloudOff, Fuel, MapPin, Shield, Smartphone, Zap } from "lucide-react";
+import {
+  Activity,
+  Bell,
+  CloudOff,
+  Fuel,
+  MapPin,
+  Shield,
+  Smartphone,
+  Zap,
+  BatteryCharging,
+  Gauge,
+  Leaf,
+  Plug,
+  Radio,
+  TriangleAlert,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import { usePageMetadata } from "@/hooks/usePageMetadata";
 
@@ -95,6 +110,27 @@ const solutionHighlights = [
     detail:
       "Region-aware notifications link directly to vetted fuel, solar, and battery suppliers to reduce downtime and price gouging.",
   },
+];
+
+const dashboardKpis = [
+  { icon: Zap, title: "Total Power", value: "24.8 GW", trend: "+12.5% vs last hour", tone: "text-tech" },
+  { icon: Gauge, title: "Grid Frequency", value: "50.00 Hz", trend: "0.01 Hz stability", tone: "text-energy" },
+  { icon: Plug, title: "Active Devices", value: "1,247", trend: "+3.2% vs last hour", tone: "text-tech" },
+  { icon: Leaf, title: "Carbon Intensity", value: "92 gCO₂/kWh", trend: "-8.7% vs last hour", tone: "text-energy" },
+];
+
+const streamRows = [
+  { source: "Solar Farm A1", region: "South Hub", power: "2.4 GW", voltage: "33 kV", current: "73.2 A", status: "Online" },
+  { source: "Wind Turbine W7", region: "West Hub", power: "1.8 GW", voltage: "33 kV", current: "54.8 A", status: "Online" },
+  { source: "Hydro Plant H3", region: "North Hub", power: "2.1 GW", voltage: "66 kV", current: "32.1 A", status: "Online" },
+  { source: "Gas Plant G2", region: "East Hub", power: "0.9 GW", voltage: "11 kV", current: "89.1 A", status: "Online" },
+];
+
+const alertFeed = [
+  { message: "Load spike detected", hub: "West Hub", severity: "Info" },
+  { message: "Transformer T-14 maintenance", hub: "North Hub", severity: "Warning" },
+  { message: "Frequency deviation · 50.03 Hz", hub: "East Hub", severity: "Info" },
+  { message: "Solar input threshold exceeded", hub: "South Hub", severity: "Normal" },
 ];
 
 const LightsOutPage = () => {
@@ -249,6 +285,158 @@ const LightsOutPage = () => {
           </div>
         </div>
       </section>
+
+        <section className="py-20" id="dashboard">
+          <div className="container mx-auto px-6 lg:px-8 space-y-8">
+            <div className="space-y-3 max-w-3xl">
+              <p className="text-sm font-semibold text-tech uppercase tracking-[0.12em]">Operator dashboard</p>
+              <h2 className="text-3xl lg:text-4xl font-bold">Live energy command center</h2>
+              <p className="text-muted-foreground leading-relaxed">
+                We embedded the dashboard directly into the product narrative so utilities and large SMEs can evaluate
+                data density, alerting quality, and real-time stream observability before onboarding.
+              </p>
+            </div>
+
+            <div className="rounded-3xl border border-border/60 bg-[#050b16] p-5 md:p-8 shadow-premium">
+              <div className="grid xl:grid-cols-[minmax(0,2fr),360px] gap-6">
+                <div className="space-y-6">
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {dashboardKpis.map((kpi) => (
+                      <article key={kpi.title} className="rounded-2xl border border-border/50 bg-card/30 p-4 space-y-3">
+                        <div className="w-9 h-9 rounded-lg bg-secondary/60 flex items-center justify-center">
+                          <kpi.icon className="w-4 h-4 text-tech" />
+                        </div>
+                        <div>
+                          <p className="text-xs uppercase tracking-wide text-muted-foreground">{kpi.title}</p>
+                          <p className="text-2xl font-semibold mt-1">{kpi.value}</p>
+                        </div>
+                        <p className={`text-xs font-medium ${kpi.tone}`}>{kpi.trend}</p>
+                      </article>
+                    ))}
+                  </div>
+
+                  <div className="grid lg:grid-cols-[minmax(0,1.7fr),minmax(0,1fr)] gap-4">
+                    <div className="rounded-2xl border border-border/50 bg-card/30 p-5">
+                      <div className="flex items-center justify-between">
+                        <h3 className="font-semibold">Power generation</h3>
+                        <span className="inline-flex items-center gap-2 text-xs text-tech">
+                          <Radio className="w-3.5 h-3.5" />
+                          Live
+                        </span>
+                      </div>
+                      <div className="mt-5 h-48 rounded-xl bg-gradient-to-br from-tech/20 via-background to-background border border-border/40 relative overflow-hidden">
+                        <div className="absolute inset-0 opacity-30 bg-[linear-gradient(to_right,rgba(148,163,184,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.12)_1px,transparent_1px)] bg-[size:36px_36px]" />
+                        <div className="absolute inset-x-4 bottom-6 h-[2px] bg-tech/80 [clip-path:polygon(0%_80%,10%_78%,20%_75%,30%_68%,40%_60%,50%_45%,60%_35%,70%_26%,80%_20%,90%_27%,100%_33%)]" />
+                      </div>
+                    </div>
+
+                    <div className="rounded-2xl border border-border/50 bg-card/30 p-5 space-y-4">
+                      <h3 className="font-semibold">Energy mix</h3>
+                      {[
+                        ["Solar", "35%"],
+                        ["Wind", "28%"],
+                        ["Hydro", "22%"],
+                        ["Gas", "12%"],
+                        ["Battery", "3%"],
+                      ].map(([label, value]) => (
+                        <div key={label} className="flex items-center justify-between text-sm">
+                          <span className="text-muted-foreground">{label}</span>
+                          <span className="font-medium">{value}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="rounded-2xl border border-border/50 bg-card/30 p-5">
+                    <h3 className="font-semibold mb-4">Live data streams</h3>
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-sm">
+                        <thead>
+                          <tr className="text-muted-foreground border-b border-border/40">
+                            <th className="text-left py-2 font-medium">Source</th>
+                            <th className="text-left py-2 font-medium">Region</th>
+                            <th className="text-left py-2 font-medium">Power</th>
+                            <th className="text-left py-2 font-medium">Voltage</th>
+                            <th className="text-left py-2 font-medium">Current</th>
+                            <th className="text-left py-2 font-medium">Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {streamRows.map((row) => (
+                            <tr key={row.source} className="border-b border-border/30">
+                              <td className="py-3">{row.source}</td>
+                              <td className="py-3 text-muted-foreground">{row.region}</td>
+                              <td className="py-3">{row.power}</td>
+                              <td className="py-3">{row.voltage}</td>
+                              <td className="py-3">{row.current}</td>
+                              <td className="py-3">
+                                <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-energy/15 text-energy">
+                                  {row.status}
+                                </span>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+                <aside className="space-y-4">
+                  <div className="rounded-2xl border border-border/50 bg-card/30 p-5">
+                    <h3 className="font-semibold">Grid status</h3>
+                    <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-energy/15 text-energy px-3 py-1 text-sm">
+                      <span className="w-2 h-2 rounded-full bg-energy" />
+                      All systems normal
+                    </p>
+                    <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
+                      {["North Hub", "East Hub", "South Hub", "West Hub"].map((hub) => (
+                        <div key={hub} className="rounded-xl border border-border/40 p-3 bg-background/50">
+                          <p className="font-medium">{hub}</p>
+                          <p className="text-xs text-energy mt-1">Online</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="rounded-2xl border border-border/50 bg-card/30 p-5 space-y-3">
+                    <h3 className="font-semibold">Recent alerts</h3>
+                    {alertFeed.map((item) => (
+                      <div key={item.message} className="rounded-xl border border-border/40 p-3 bg-background/50">
+                        <p className="text-sm font-medium">{item.message}</p>
+                        <div className="mt-2 flex items-center justify-between text-xs text-muted-foreground">
+                          <span>{item.hub}</span>
+                          <span className="inline-flex items-center gap-1">
+                            <TriangleAlert className="w-3 h-3" />
+                            {item.severity}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="rounded-2xl border border-border/50 bg-card/30 p-5">
+                    <h3 className="font-semibold">Device health</h3>
+                    <div className="mt-4 flex items-center gap-4">
+                      <div className="w-24 h-24 rounded-full border-8 border-tech/70 border-r-tech/20 flex items-center justify-center text-lg font-semibold">
+                        98.5%
+                      </div>
+                      <div className="space-y-2 text-sm">
+                        <p>1,229 Online</p>
+                        <p className="text-muted-foreground">18 Offline</p>
+                        <p className="text-muted-foreground">0 Maintenance</p>
+                      </div>
+                    </div>
+                    <Button variant="outline" className="w-full mt-5">
+                      <BatteryCharging className="w-4 h-4 mr-2" />
+                      View all devices
+                    </Button>
+                  </div>
+                </aside>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <section className="py-20 bg-gradient-to-b from-secondary/40 via-background to-background" id="features">
           <div className="container mx-auto px-6 lg:px-8">
