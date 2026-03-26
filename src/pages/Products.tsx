@@ -63,24 +63,24 @@ const SystemsOperationPage = () => {
   );
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100">
+    <div className="min-h-screen bg-zinc-50 text-zinc-900">
       <Navigation />
       <main className="pt-28 pb-24">
         <section className="container mx-auto px-6 lg:px-8 space-y-5">
           <h1 className="text-5xl md:text-7xl font-semibold tracking-[-0.04em]">SYSTEMS IN OPERATION</h1>
-          <p className="text-base md:text-lg text-zinc-300 max-w-3xl">
+          <p className="text-base md:text-lg text-zinc-600 max-w-3xl">
             Systems designed for unstable environments. Built for deployment, not demonstration.
           </p>
         </section>
 
         <section className="container mx-auto px-6 lg:px-8 mt-14 grid grid-cols-1 xl:grid-cols-2 gap-12">
           {systems.map((system) => (
-            <article key={system.name} className="space-y-6 border border-zinc-800 bg-zinc-900 p-6 md:p-8 rounded-xl">
-              <div className="rounded-lg border border-zinc-700 bg-zinc-950 p-6 min-h-52 flex flex-col justify-between">
-                <p className="text-xs uppercase tracking-[0.18em] text-zinc-400">Interface Proof</p>
+            <article key={system.name} className="space-y-6 border border-zinc-200 bg-white p-6 md:p-8 rounded-xl shadow-sm">
+              <div className="rounded-lg border border-zinc-200 bg-zinc-100 p-6 min-h-52 flex flex-col justify-between">
+                <p className="text-xs uppercase tracking-[0.18em] text-zinc-500">Interface Proof</p>
                 <div className="space-y-2">
                   {system.interfaceProof.map((line) => (
-                    <div key={`${system.name}-${line}`} className="font-mono text-sm text-zinc-200 border border-zinc-800 rounded px-3 py-2">
+                    <div key={`${system.name}-${line}`} className="font-mono text-sm text-zinc-800 border border-zinc-300 bg-white rounded px-3 py-2">
                       {line}
                     </div>
                   ))}
@@ -89,33 +89,33 @@ const SystemsOperationPage = () => {
 
               <header className="space-y-2">
                 <h2 className="text-3xl md:text-4xl font-semibold tracking-[-0.03em]">{system.name}</h2>
-                <p className="text-zinc-300">{system.assertion}</p>
-                <p className="text-xs uppercase tracking-[0.18em] text-zinc-400">{system.category}</p>
+                <p className="text-zinc-700">{system.assertion}</p>
+                <p className="text-xs uppercase tracking-[0.18em] text-zinc-500">{system.category}</p>
               </header>
 
-              <details className="rounded-lg border border-zinc-800 bg-zinc-950 p-5">
-                <summary className="cursor-pointer text-sm uppercase tracking-[0.18em] text-zinc-300">System structure</summary>
+              <details className="rounded-lg border border-zinc-200 bg-zinc-100 p-5">
+                <summary className="cursor-pointer text-sm uppercase tracking-[0.18em] text-zinc-700">System structure</summary>
                 <div className="mt-5 space-y-5">
                   <div className="grid md:grid-cols-3 gap-4">
                     <div>
-                      <p className="text-xs uppercase tracking-[0.18em] text-zinc-400 mb-2">Input</p>
-                      <ul className="space-y-1 text-sm text-zinc-200">
+                      <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">Input</p>
+                      <ul className="space-y-1 text-sm text-zinc-700">
                         {system.input.map((item) => (
                           <li key={`${system.name}-input-${item}`}>• {item}</li>
                         ))}
                       </ul>
                     </div>
                     <div>
-                      <p className="text-xs uppercase tracking-[0.18em] text-zinc-400 mb-2">Processing</p>
-                      <ul className="space-y-1 text-sm text-zinc-200">
+                      <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">Processing</p>
+                      <ul className="space-y-1 text-sm text-zinc-700">
                         {system.processing.map((item) => (
                           <li key={`${system.name}-processing-${item}`}>• {item}</li>
                         ))}
                       </ul>
                     </div>
                     <div>
-                      <p className="text-xs uppercase tracking-[0.18em] text-zinc-400 mb-2">Output</p>
-                      <ul className="space-y-1 text-sm text-zinc-200">
+                      <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">Output</p>
+                      <ul className="space-y-1 text-sm text-zinc-700">
                         {system.output.map((item) => (
                           <li key={`${system.name}-output-${item}`}>• {item}</li>
                         ))}
@@ -123,12 +123,12 @@ const SystemsOperationPage = () => {
                     </div>
                   </div>
 
-                  <div className="rounded-md border border-zinc-800 p-3">
-                    <p className="text-xs uppercase tracking-[0.18em] text-zinc-400 mb-2">Architecture Snapshot</p>
-                    <p className="text-sm font-mono text-zinc-200">Input → Processing → API → Interface → Output</p>
+                  <div className="rounded-md border border-zinc-300 bg-white p-3">
+                    <p className="text-xs uppercase tracking-[0.18em] text-zinc-500 mb-2">Architecture Snapshot</p>
+                    <p className="text-sm font-mono text-zinc-800">Input → Processing → API → Interface → Output</p>
                   </div>
 
-                  <p className="text-sm text-zinc-300">{system.runsIn}</p>
+                  <p className="text-sm text-zinc-700">{system.runsIn}</p>
                 </div>
               </details>
             </article>
