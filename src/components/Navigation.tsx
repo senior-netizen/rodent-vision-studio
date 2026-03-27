@@ -13,7 +13,7 @@ export const Navigation = () => {
 
   return (
     <nav className="site-nav" aria-label="Primary">
-      <div className="site-shell">
+      <div className="container">
         <div className="site-nav__row">
           <Link to="/" className="site-nav__brand">
             rodent®

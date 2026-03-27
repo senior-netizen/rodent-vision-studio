@@ -46,11 +46,11 @@ export const InfrastructureAuthorityBlueprint = () => {
   return (
     <main>
       <section id="systems-operation" className="system-section section-reveal">
-        <div className="site-shell">
+        <div className="container">
           <header className="section-header">
-            <p className="eyebrow">System visuals</p>
+            <p className="eyebrow text-overline">System visuals</p>
             <h2>Control surfaces.</h2>
-            <p>Typography introduces. Interfaces prove.</p>
+            <p className="text-lead">Typography introduces. Interfaces prove.</p>
           </header>
 
           <div className="systems-grid">
@@ -74,11 +74,11 @@ export const InfrastructureAuthorityBlueprint = () => {
       </section>
 
       <section className="system-section section-reveal">
-        <div className="site-shell">
+        <div className="container">
           <header className="section-header">
-            <p className="eyebrow">Architecture</p>
+            <p className="eyebrow text-overline">Architecture</p>
             <h2>Signal chain.</h2>
-            <p>One path from field input to operator action.</p>
+            <p className="text-lead">One path from field input to operator action.</p>
           </header>
 
           <div className="architecture-list">
@@ -93,11 +93,11 @@ export const InfrastructureAuthorityBlueprint = () => {
       </section>
 
       <section className="system-section section-reveal">
-        <div className="site-shell">
+        <div className="container">
           <header className="section-header">
-            <p className="eyebrow">Proof layer</p>
+            <p className="eyebrow text-overline">Proof layer</p>
             <h2>Operational signals.</h2>
-            <p>Measured capacity for procurement and deployment teams.</p>
+            <p className="text-lead">Measured capacity for procurement and deployment teams.</p>
           </header>
 
           <div className="signal-grid">
