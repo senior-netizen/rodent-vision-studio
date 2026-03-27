@@ -17,31 +17,36 @@ export const FlagshipProjects = () => {
 
   return (
     <section id="flagships" className="section-padding-sm relative overflow-hidden" ref={ref}>
-      {/* Subtle background accents */}
-      <div className="absolute inset-0 bg-gradient-glow opacity-50" />
+      <div className="absolute inset-0 bg-gradient-glow opacity-40" />
 
       <div className="container mx-auto relative z-10">
-        {/* Header */}
+        {/* Editorial header */}
         <div className={cn(
-          "flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12 md:mb-16 transition-all duration-700",
+          "grid lg:grid-cols-8 gap-4 lg:gap-[2vw] mb-12 md:mb-16 transition-all duration-700",
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         )}>
-          <div className="max-w-2xl">
-            <h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-4">
-              Projects in Production and Pilot
-            </h2>
-            <p className="text-lg text-muted-foreground leading-relaxed">
+          <div className="lg:col-span-5">
+            <h2>Projects in Production and Pilot</h2>
+            <p className="text-lg text-muted-foreground leading-relaxed mt-4">
               Tools and infrastructure currently deployed, in pilot, or in private beta.
             </p>
           </div>
-          <Link
-            to="/projects"
-            className="inline-flex items-center gap-2 neumorphic-button text-sm"
-          >
-            See all projects
-            <ArrowUpRight className="w-4 h-4" />
-          </Link>
+          <div className="lg:col-span-3 lg:flex lg:items-end lg:justify-end">
+            <Link
+              to="/projects"
+              className="inline-flex items-center gap-2 neumorphic-button text-sm"
+            >
+              See all projects
+              <ArrowUpRight className="w-4 h-4" />
+            </Link>
+          </div>
         </div>
+
+        {/* Divider */}
+        <div className={cn(
+          "divider-solid mb-10 transition-all duration-1000",
+          isVisible ? "opacity-100" : "opacity-0"
+        )} />
 
         {/* Projects grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -50,44 +55,46 @@ export const FlagshipProjects = () => {
               key={project.slug}
               to={`/projects/${project.slug}`}
               className={cn(
-                "group glass-card p-8 space-y-5 hover:-translate-y-1",
+                "group glass-card p-7 space-y-5",
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               )}
               data-tilt-card
-              style={{ transitionDelay: isVisible ? `${index * 100}ms` : '0ms' }}
+              style={{
+                transitionDelay: isVisible ? `${index * 100}ms` : '0ms',
+                transitionDuration: '600ms',
+                transitionTimingFunction: 'cubic-bezier(0.165, 0.84, 0.44, 1)',
+              }}
             >
               {/* Category & status */}
               <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-accent uppercase tracking-wider">
+                <span className="text-xs uppercase tracking-[0.08em] font-medium text-accent">
                   {project.category}
                 </span>
-                <span className="w-2 h-2 rounded-full bg-accent/60" />
+                <span className="w-1.5 h-1.5 rounded-full bg-accent/60" />
               </div>
 
               {/* Title & description */}
               <div className="space-y-3">
-                <h3 className="text-2xl font-semibold group-hover:text-accent transition-colors duration-300">
+                <h3 className="text-xl font-medium group-hover:text-accent transition-colors duration-500">
                   {project.name}
                 </h3>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-sm text-muted-foreground leading-relaxed">
                   {project.summary}
                 </p>
               </div>
 
-              {/* Features */}
-              <div className="flex flex-wrap gap-2">
-                {project.features.slice(0, 3).map((feature) => (
-                  <span
-                    key={feature}
-                    className="px-3 py-1 rounded-full text-xs bg-secondary text-muted-foreground border border-border/50"
-                  >
+              {/* Features — dash-separated */}
+              <div className="flex flex-wrap items-center gap-x-1 gap-y-1 text-xs text-muted-foreground">
+                {project.features.slice(0, 3).map((feature, i) => (
+                  <span key={feature} className="flex items-center gap-1">
+                    {i > 0 && <span className="text-border">—</span>}
                     {feature}
                   </span>
                 ))}
               </div>
 
               {/* CTA */}
-              <div className="inline-flex items-center text-sm font-medium text-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="inline-flex items-center text-sm font-medium text-accent opacity-0 group-hover:opacity-100 transition-all duration-500">
                 Open project details
                 <ArrowUpRight className="w-4 h-4 ml-1" />
               </div>
