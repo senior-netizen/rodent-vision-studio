@@ -6,41 +6,32 @@ import { cn } from "@/lib/utils";
 const tracks = [
   {
     title: "For Developers",
-    description:
-      "Use our API products, CLI tools, and engineering workflows to ship and operate faster.",
+    description: "Use our API products, CLI tools, and engineering workflows to ship and operate faster.",
     cta: "View developer products",
     href: "/projects",
     icon: TerminalSquare,
-    accent: "tech" as const,
     bullets: ["API Studio", "CLI + SDKs", "AI Playbooks"],
+    num: "01",
   },
   {
     title: "For Partners",
-    description:
-      "Run pilots with us in energy, fintech, or infrastructure and move from design to rollout.",
+    description: "Run pilots with us in energy, fintech, or infrastructure and move from design to rollout.",
     cta: "Partner with us",
     href: "/opportunities",
     icon: HeartHandshake,
-    accent: "accent" as const,
     bullets: ["Joint ventures", "Pilots & rollouts", "Compliance ready"],
+    num: "02",
   },
   {
     title: "For Investors",
-    description:
-      "Review our studio model across software and hardware bets in African infrastructure.",
+    description: "Review our studio model across software and hardware bets in African infrastructure.",
     cta: "Investor brief",
     href: "/opportunities#investors",
     icon: Globe,
-    accent: "energy" as const,
     bullets: ["Studio portfolio", "Hardware IP", "SADC focus"],
+    num: "03",
   },
 ];
-
-const accentColors = {
-  tech: "bg-tech/10 border-tech/20 text-tech",
-  accent: "bg-accent/10 border-accent/20 text-accent",
-  energy: "bg-energy/10 border-energy/20 text-energy",
-};
 
 export const EngagementTracks = () => {
   const { ref, isVisible } = useScrollAnimation({ threshold: 0.1 });
@@ -48,20 +39,28 @@ export const EngagementTracks = () => {
   return (
     <section id="engagement" className="section-padding-sm" ref={ref}>
       <div className="container mx-auto">
-        {/* Header */}
+        {/* Editorial header */}
         <div className={cn(
-          "text-center mb-16 md:mb-20 max-w-3xl mx-auto transition-all duration-700",
+          "grid lg:grid-cols-8 gap-4 lg:gap-[2vw] mb-12 md:mb-16 transition-all duration-700",
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         )}>
-          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight mb-6">
-            Ways to Work With Rodent
-          </h2>
-          <p className="text-lg text-muted-foreground leading-relaxed">
-            Pick the path that matches your role: build, partner, or invest.
-          </p>
+          <div className="lg:col-span-5">
+            <h2>Ways to Work With Rodent</h2>
+          </div>
+          <div className="lg:col-span-3 lg:pt-2">
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              Pick the path that matches your role: build, partner, or invest.
+            </p>
+          </div>
         </div>
 
-        {/* Tracks grid */}
+        {/* Divider */}
+        <div className={cn(
+          "divider-solid mb-10 transition-all duration-1000",
+          isVisible ? "opacity-100" : "opacity-0"
+        )} />
+
+        {/* Tracks */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {tracks.map((track, index) => {
             const Icon = track.icon;
@@ -70,43 +69,44 @@ export const EngagementTracks = () => {
                 key={track.title}
                 to={track.href}
                 className={cn(
-                  "group rounded-2xl bg-card border border-border/50 p-8 space-y-6 transition-all duration-500 hover:border-border hover:shadow-lg hover:-translate-y-1",
+                  "group glass-card p-7 space-y-5 hover:-translate-y-2 transition-all",
                   isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                 )}
-                style={{ transitionDelay: isVisible ? `${index * 100}ms` : '0ms' }}
+                style={{
+                  transitionDelay: isVisible ? `${index * 100}ms` : '0ms',
+                  transitionDuration: '600ms',
+                  transitionTimingFunction: 'cubic-bezier(0.165, 0.84, 0.44, 1)',
+                }}
               >
-                {/* Header with icon */}
-                <div className="flex items-center justify-between">
+                {/* Number + Icon + Arrow */}
+                <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
-                    <span className={`w-11 h-11 rounded-xl border flex items-center justify-center ${accentColors[track.accent]}`}>
-                      <Icon className="w-5 h-5" />
-                    </span>
-                    <h3 className="text-xl font-semibold">{track.title}</h3>
+                    <span className="editorial-num">{track.num}</span>
+                    <Icon className="w-5 h-5 text-accent" />
                   </div>
-                  <ArrowRight className="w-5 h-5 text-muted-foreground opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" />
+                  <ArrowRight className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-500" />
                 </div>
 
-                {/* Description */}
-                <p className="text-muted-foreground leading-relaxed">
+                <h3 className="text-xl font-medium">{track.title}</h3>
+
+                <p className="text-sm text-muted-foreground leading-relaxed">
                   {track.description}
                 </p>
 
-                {/* Bullets */}
-                <div className="flex flex-wrap gap-2">
-                  {track.bullets.map((item) => (
-                    <span
-                      key={item}
-                      className="px-3 py-1 rounded-full text-xs bg-secondary text-muted-foreground border border-border/50"
-                    >
+                {/* Bullets — dash-separated */}
+                <div className="flex flex-wrap items-center gap-x-1 gap-y-1 text-xs text-muted-foreground">
+                  {track.bullets.map((item, i) => (
+                    <span key={item} className="flex items-center gap-1">
+                      {i > 0 && <span className="text-border">—</span>}
                       {item}
                     </span>
                   ))}
                 </div>
 
                 {/* CTA */}
-                <div className={`inline-flex items-center text-sm font-medium ${track.accent === 'tech' ? 'text-tech' : track.accent === 'energy' ? 'text-energy' : 'text-accent'}`}>
+                <div className="inline-flex items-center text-sm font-medium text-accent">
                   {track.cta}
-                  <ArrowRight className="w-4 h-4 ml-1" />
+                  <ArrowRight className="w-3.5 h-3.5 ml-1" />
                 </div>
               </Link>
             );

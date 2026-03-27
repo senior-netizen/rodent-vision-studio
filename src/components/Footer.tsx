@@ -32,35 +32,37 @@ const socialLinks = [
 
 export const Footer = () => {
   return (
-    <footer className="border-t border-border/50 bg-secondary/30">
+    <footer className="border-t border-border/30 bg-background">
       <div className="container mx-auto px-5 sm:px-6 lg:px-8 py-12 sm:py-14 lg:py-16">
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-10 lg:gap-8 mb-10 lg:mb-14">
-          {/* Brand column */}
-          <div className="col-span-2 lg:col-span-2 space-y-5 sm:space-y-6">
-            <Link to="/" className="inline-flex items-center gap-2.5 sm:gap-3 group">
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-card border border-border/50 shadow-sm overflow-hidden transition-transform duration-300 group-hover:scale-105">
+        {/* Editorial grid layout */}
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-8 gap-8 sm:gap-10 lg:gap-[2vw] mb-10 lg:mb-14">
+          {/* Brand column — spans 3 */}
+          <div className="col-span-2 lg:col-span-3 space-y-5">
+            <Link to="/" className="inline-flex items-center gap-2.5 group">
+              <div className="w-9 h-9 rounded-lg overflow-hidden border border-border/30 transition-transform duration-500 group-hover:scale-105" style={{ transitionTimingFunction: 'cubic-bezier(0.165, 0.84, 0.44, 1)' }}>
                 <img src={rodentLogo} alt="Rodent Inc. logo" className="w-full h-full object-cover" loading="lazy" />
               </div>
-              <span className="text-lg sm:text-xl font-semibold font-display text-foreground">Rodent Inc.</span>
+              <span className="text-lg font-medium font-display text-foreground">Rodent Inc.</span>
             </Link>
-            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-md">
+            <p className="text-sm text-muted-foreground leading-relaxed max-w-md">
               We build practical software and hardware systems for African operators, utilities, and engineering teams.
             </p>
-            
+
             {/* Social links */}
-            <div className="flex items-center gap-2.5 sm:gap-3">
+            <div className="flex items-center gap-3">
               {socialLinks.map((social) => {
                 const Icon = social.icon;
                 return (
                   <a
                     key={social.label}
                     href={social.href}
-                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-card border border-border/50 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-border transition-all duration-300"
+                    className="w-9 h-9 rounded-lg border border-border/30 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-border/60 transition-all duration-400"
+                    style={{ transitionTimingFunction: 'cubic-bezier(0.165, 0.84, 0.44, 1)' }}
                     aria-label={social.label}
                     target={social.href.startsWith("http") ? "_blank" : undefined}
                     rel={social.href.startsWith("http") ? "noreferrer" : undefined}
                   >
-                    <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <Icon className="w-4 h-4" />
                   </a>
                 );
               })}
@@ -69,14 +71,15 @@ export const Footer = () => {
 
           {/* Link columns */}
           {Object.entries(footerLinks).map(([category, links]) => (
-            <div key={category} className="space-y-3 sm:space-y-4">
-              <h3 className="text-xs sm:text-sm font-semibold font-display text-foreground uppercase tracking-wider">{category}</h3>
-              <ul className="space-y-2 sm:space-y-3">
+            <div key={category} className="space-y-3 lg:col-span-1 first:lg:col-start-5">
+              <h3 className="text-xs font-medium uppercase tracking-[0.08em] text-foreground">{category}</h3>
+              <ul className="space-y-2.5">
                 {links.map((link) => (
                   <li key={link.label}>
                     <Link
                       to={link.href}
-                      className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
+                      className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-400"
+                      style={{ transitionTimingFunction: 'cubic-bezier(0.165, 0.84, 0.44, 1)' }}
                     >
                       {link.label}
                     </Link>
@@ -88,20 +91,21 @@ export const Footer = () => {
         </div>
 
         {/* Bottom bar */}
-        <div className="pt-6 sm:pt-8 border-t border-border/50 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="text-center sm:text-left space-y-0.5 sm:space-y-1">
-            <p className="text-xs sm:text-sm text-muted-foreground">
+        <div className="divider-solid mb-6" />
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="text-center sm:text-left space-y-0.5">
+            <p className="text-xs text-muted-foreground">
               © {new Date().getFullYear()} Rodent Inc. All rights reserved.
             </p>
-            <p className="text-[11px] sm:text-xs text-muted-foreground">
+            <p className="text-[11px] text-muted-foreground/70">
               A trade name for SquirrelLab Technologies Pvt Ltd. | Reg. No: 72190A01122025
             </p>
           </div>
-          <div className="flex items-center gap-4 sm:gap-6 text-xs sm:text-sm text-muted-foreground">
-            <Link to="/privacy" className="hover:text-foreground transition-colors duration-200">
+          <div className="flex items-center gap-6 text-xs text-muted-foreground">
+            <Link to="/privacy" className="hover:text-foreground transition-colors duration-400">
               Privacy
             </Link>
-            <Link to="/terms" className="hover:text-foreground transition-colors duration-200">
+            <Link to="/terms" className="hover:text-foreground transition-colors duration-400">
               Terms
             </Link>
           </div>
