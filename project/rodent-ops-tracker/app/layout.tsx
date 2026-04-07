@@ -1,15 +1,15 @@
 import './globals.css';
-import type { ReactNode } from 'react';
+import type { Metadata } from 'next';
 
-export const metadata = {
-  title: 'Rodent Ops Tracker',
-  description: 'Track project revenue and operational expenses.'
+export const metadata: Metadata = {
+  title: 'Infrastructure Systems Builder',
+  description: 'Cinematic infrastructure portfolio demonstrating operational system capability.'
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="bg-background font-sans text-foreground antialiased">{children}</body>
     </html>
   );
 }
