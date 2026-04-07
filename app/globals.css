@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #050505;
+  color: #ffffff;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.section-shell {
+  padding: 120px 0;
+}
+
+.system-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.reveal-panel {
+  border: 1px solid rgba(156, 163, 175, 0.2);
+  transition: transform 280ms ease, opacity 280ms ease, border-color 280ms ease;
+}
+
+.reveal-panel:hover {
+  transform: scale(1.02);
+  opacity: 1;
+  border-color: rgba(0, 240, 255, 0.5);
+}

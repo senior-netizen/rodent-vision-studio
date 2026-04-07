@@ -1,0 +1,73 @@
+export type ProjectConfig = {
+  name: string;
+  slug: 'shedsense' | 'meterflow' | 'sheq' | 'kwiksend';
+  category: 'Grid Intelligence' | 'IoT Devices' | 'Dashboards' | 'Payment Rails';
+  role: string;
+  problem: string;
+  architecture: string[];
+  stack: string[];
+  dataFlow: string[];
+  decisions: string[];
+  visuals: {
+    screenshot: string;
+    diagram: string;
+  };
+  outcome: string;
+};
+
+export const projectConfigs: ProjectConfig[] = [
+  {
+    name: 'ShedSense',
+    slug: 'shedsense',
+    category: 'Grid Intelligence',
+    role: 'Grid Intelligence Layer',
+    problem: 'Energy variance across field assets created blind spots and delayed dispatch decisions.',
+    architecture: ['Telemetry Ingest', 'Anomaly Classifier', 'Dispatch Rules Engine', 'Ops Timeline UI'],
+    stack: ['Next.js 14', 'TypeScript', 'Three.js', 'Framer Motion', 'PostgreSQL'],
+    dataFlow: ['Edge Meter → MQTT Broker', 'Broker → Stream Processor', 'Processor → Rule Engine', 'Rule Engine → Dashboard'],
+    decisions: ['Prioritized eventual consistency for wide-area device bursts.', 'Used deterministic replay paths for incident reconstruction.'],
+    visuals: { screenshot: '/visuals/shedsense-ui.svg', diagram: '/visuals/shedsense-architecture.svg' },
+    outcome: 'Reduced event-to-action time by 41% with deterministic alert confidence routing.'
+  },
+  {
+    name: 'MeterFlow',
+    slug: 'meterflow',
+    category: 'IoT Devices',
+    role: 'IoT Device Fabric',
+    problem: 'Multi-vendor meter fleets lacked a stable protocol and observability baseline.',
+    architecture: ['Protocol Adapter Bus', 'Schema Normalizer', 'Device Twin Store', 'Control Surface'],
+    stack: ['Next.js 14', 'TypeScript', 'Node Workers', 'Redis Streams', 'Prometheus'],
+    dataFlow: ['Device Pollers → Adapter Bus', 'Adapter Bus → Normalizer', 'Normalizer → Twin Store', 'Twin Store → Operator Surface'],
+    decisions: ['Built idempotent ingest contracts for replay-safe data correction.', 'Separated command and telemetry channels for failure isolation.'],
+    visuals: { screenshot: '/visuals/meterflow-ui.svg', diagram: '/visuals/meterflow-architecture.svg' },
+    outcome: 'Stabilized ingestion reliability at 99.97% across heterogeneous device networks.'
+  },
+  {
+    name: 'SHEQ Dashboard',
+    slug: 'sheq',
+    category: 'Dashboards',
+    role: 'Operational Assurance Surface',
+    problem: 'Safety and quality indicators were spread across manual sheets and static reports.',
+    architecture: ['Compliance Event Bus', 'Risk Scoring Service', 'Audit Snapshot Engine', 'Executive Command View'],
+    stack: ['Next.js 14', 'TypeScript', 'Framer Motion', 'D3 SVG', 'ClickHouse'],
+    dataFlow: ['Field Reports → Event Bus', 'Event Bus → Risk Scoring', 'Scoring → Audit Snapshots', 'Snapshots → Command View'],
+    decisions: ['Introduced immutable snapshot windows for audit traceability.', 'Used sparse rendering for high-density operations timelines.'],
+    visuals: { screenshot: '/visuals/sheq-ui.svg', diagram: '/visuals/sheq-architecture.svg' },
+    outcome: 'Cut compliance reporting overhead by 58% and improved incident lead visibility.'
+  },
+  {
+    name: 'KwikSend',
+    slug: 'kwiksend',
+    category: 'Payment Rails',
+    role: 'Payment Orchestration Rail',
+    problem: 'Disjoint payment providers caused reconciliation drift and payout failures.',
+    architecture: ['Gateway Router', 'Ledger Core', 'Settlement Reconciler', 'Dispute Monitor'],
+    stack: ['Next.js 14', 'TypeScript', 'GSAP', 'Kafka', 'PostgreSQL'],
+    dataFlow: ['Client Intent → Router', 'Router → Ledger Core', 'Ledger → Settlement Reconciler', 'Reconciler → Monitoring Surface'],
+    decisions: ['Applied append-only ledger semantics for non-repudiation.', 'Enforced policy-based routing by corridor and fee profile.'],
+    visuals: { screenshot: '/visuals/kwiksend-ui.svg', diagram: '/visuals/kwiksend-architecture.svg' },
+    outcome: 'Improved settlement success rates to 99.92% while shrinking reconciliation lag to minutes.'
+  }
+];
+
+export const projectBySlug = Object.fromEntries(projectConfigs.map((project) => [project.slug, project])) as Record<ProjectConfig['slug'], ProjectConfig>;
