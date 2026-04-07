@@ -1,69 +1,295 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import type { ProjectConfig } from '@/data/projects';
-import { reveal } from '@/lib/animations/reveal';
+import { reveal, revealLeft, stagger, staggerChild } from '@/lib/animations/reveal';
 
 export function CaseStudyPage({ project }: { project: ProjectConfig }) {
   return (
     <main>
-      <section className="min-h-screen border-b border-secondary/20 px-6 py-24 lg:px-12">
-        <div className="mx-auto flex max-w-[1440px] flex-col justify-end gap-6">
-          <p className="font-mono text-sm uppercase tracking-[0.15em] text-accent">{project.category}</p>
-          <h1 className="text-[clamp(3.5rem,8vw,7rem)] uppercase leading-[0.92]">{project.name}</h1>
-          <p className="max-w-2xl text-lg text-secondary">{project.role}</p>
+      {/* Hero */}
+      <section className="relative flex min-h-[80vh] flex-col justify-end pb-16 pt-32 md:pb-24">
+        <div className="container-wide">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-6 flex items-center gap-4"
+          >
+            <Link
+              href="/"
+              className="text-caption transition-colors duration-300 hover:text-fg-muted"
+            >
+              ← Back
+            </Link>
+            <span className="h-px w-6 bg-border" />
+            <span className="text-label">{project.category}</span>
+          </motion.div>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="text-display text-[clamp(3.5rem,9vw,8rem)]"
+          >
+            {project.name}
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="text-body mt-6 max-w-2xl text-lg"
+          >
+            {project.role}
+          </motion.p>
+        </div>
+
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 1.2, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="absolute bottom-0 left-0 right-0 h-px origin-left bg-border"
+        />
+      </section>
+
+      {/* Problem */}
+      <section className="section-shell">
+        <div className="container-wide editorial-grid">
+          <motion.div
+            {...revealLeft}
+            viewport={{ once: true }}
+            className="col-span-12 md:col-span-1"
+          >
+            <span className="section-number">01</span>
+          </motion.div>
+          <motion.div
+            {...reveal}
+            viewport={{ once: true }}
+            className="col-span-12 md:col-span-4"
+          >
+            <h2 className="text-heading text-[clamp(2rem,3vw,3rem)]">Problem</h2>
+          </motion.div>
+          <motion.div
+            {...reveal}
+            viewport={{ once: true }}
+            className="col-span-12 md:col-span-7"
+          >
+            <p className="text-body text-lg leading-relaxed">{project.problem}</p>
+          </motion.div>
+        </div>
+        <div className="container-wide">
+          <div className="divider mt-16" />
         </div>
       </section>
 
-      <section className="section-shell border-b border-secondary/20 px-6 lg:px-12">
-        <motion.div {...reveal} viewport={{ once: true }} className="mx-auto max-w-[1440px]">
-          <h2 className="mb-4 text-[clamp(2rem,3.2vw,3rem)] uppercase">Problem</h2>
-          <p className="max-w-3xl text-secondary">{project.problem}</p>
-        </motion.div>
-      </section>
+      {/* Architecture */}
+      <section className="section-shell">
+        <div className="container-wide">
+          <div className="editorial-grid mb-12">
+            <motion.div
+              {...revealLeft}
+              viewport={{ once: true }}
+              className="col-span-12 md:col-span-1"
+            >
+              <span className="section-number">02</span>
+            </motion.div>
+            <motion.div
+              {...reveal}
+              viewport={{ once: true }}
+              className="col-span-12 md:col-span-11"
+            >
+              <h2 className="text-heading text-[clamp(2rem,3vw,3rem)]">Architecture</h2>
+            </motion.div>
+          </div>
 
-      <section className="section-shell border-b border-secondary/20 px-6 lg:px-12">
-        <motion.div {...reveal} viewport={{ once: true }} className="mx-auto max-w-[1440px] space-y-8">
-          <h2 className="text-[clamp(2rem,3.2vw,3rem)] uppercase">Architecture</h2>
-          <Image src={project.visuals.diagram} alt={`${project.name} architecture diagram`} width={1600} height={900} className="w-full border border-secondary/20" />
-          <ul className="grid gap-3 text-secondary lg:grid-cols-2">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            viewport={{ once: true }}
+            className="card-glass overflow-hidden p-1"
+          >
+            <Image
+              src={project.visuals.diagram}
+              alt={`${project.name} architecture diagram`}
+              width={1600}
+              height={900}
+              className="w-full"
+            />
+          </motion.div>
+
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            className="mt-8 grid gap-3 md:grid-cols-2 lg:grid-cols-4"
+          >
             {project.architecture.map((item) => (
-              <li key={item} className="border border-secondary/20 px-4 py-3">{item}</li>
+              <motion.div
+                key={item}
+                variants={staggerChild}
+                className="card-glass px-5 py-4"
+              >
+                <span className="text-body text-sm">{item}</span>
+              </motion.div>
             ))}
-          </ul>
-        </motion.div>
+          </motion.div>
+
+          <div className="divider mt-16" />
+        </div>
       </section>
 
-      <section className="section-shell border-b border-secondary/20 px-6 lg:px-12">
-        <motion.div {...reveal} viewport={{ once: true }} className="mx-auto grid max-w-[1440px] gap-8 lg:grid-cols-3">
-          <div>
-            <h3 className="mb-3 font-mono text-xs uppercase tracking-[0.14em] text-accent">Stack</h3>
-            <ul className="space-y-2 text-secondary">{project.stack.map((s) => <li key={s}>{s}</li>)}</ul>
+      {/* Stack / Data Flow / Decisions */}
+      <section className="section-shell">
+        <div className="container-wide">
+          <div className="editorial-grid mb-12">
+            <motion.div
+              {...revealLeft}
+              viewport={{ once: true }}
+              className="col-span-12 md:col-span-1"
+            >
+              <span className="section-number">03</span>
+            </motion.div>
+            <motion.div
+              {...reveal}
+              viewport={{ once: true }}
+              className="col-span-12 md:col-span-11"
+            >
+              <h2 className="text-heading text-[clamp(2rem,3vw,3rem)]">Details</h2>
+            </motion.div>
           </div>
-          <div>
-            <h3 className="mb-3 font-mono text-xs uppercase tracking-[0.14em] text-accent">Data flow</h3>
-            <ul className="space-y-2 text-secondary">{project.dataFlow.map((s) => <li key={s}>{s}</li>)}</ul>
-          </div>
-          <div>
-            <h3 className="mb-3 font-mono text-xs uppercase tracking-[0.14em] text-accent">System decisions</h3>
-            <ul className="space-y-2 text-secondary">{project.decisions.map((s) => <li key={s}>{s}</li>)}</ul>
-          </div>
-        </motion.div>
+
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            className="grid gap-8 md:grid-cols-3"
+          >
+            <motion.div variants={staggerChild} className="card-glass p-6">
+              <span className="text-label mb-4 block">Stack</span>
+              <ul className="space-y-3">
+                {project.stack.map((s) => (
+                  <li key={s} className="text-body text-sm">{s}</li>
+                ))}
+              </ul>
+            </motion.div>
+
+            <motion.div variants={staggerChild} className="card-glass p-6">
+              <span className="text-label mb-4 block">Data Flow</span>
+              <ul className="space-y-3">
+                {project.dataFlow.map((s) => (
+                  <li key={s} className="text-body text-sm">{s}</li>
+                ))}
+              </ul>
+            </motion.div>
+
+            <motion.div variants={staggerChild} className="card-glass p-6">
+              <span className="text-label mb-4 block">Decisions</span>
+              <ul className="space-y-3">
+                {project.decisions.map((s) => (
+                  <li key={s} className="text-body text-sm">{s}</li>
+                ))}
+              </ul>
+            </motion.div>
+          </motion.div>
+
+          <div className="divider mt-16" />
+        </div>
       </section>
 
-      <section className="section-shell border-b border-secondary/20 px-6 lg:px-12">
-        <motion.div {...reveal} viewport={{ once: true }} className="mx-auto max-w-[1440px] space-y-8">
-          <h2 className="text-[clamp(2rem,3.2vw,3rem)] uppercase">Interface</h2>
-          <Image src={project.visuals.screenshot} alt={`${project.name} operational interface`} width={1600} height={900} className="w-full border border-secondary/20" />
-        </motion.div>
+      {/* Interface */}
+      <section className="section-shell">
+        <div className="container-wide">
+          <div className="editorial-grid mb-12">
+            <motion.div
+              {...revealLeft}
+              viewport={{ once: true }}
+              className="col-span-12 md:col-span-1"
+            >
+              <span className="section-number">04</span>
+            </motion.div>
+            <motion.div
+              {...reveal}
+              viewport={{ once: true }}
+              className="col-span-12 md:col-span-11"
+            >
+              <h2 className="text-heading text-[clamp(2rem,3vw,3rem)]">Interface</h2>
+            </motion.div>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            viewport={{ once: true }}
+            className="card-glass overflow-hidden p-1"
+          >
+            <Image
+              src={project.visuals.screenshot}
+              alt={`${project.name} operational interface`}
+              width={1600}
+              height={900}
+              className="w-full"
+            />
+          </motion.div>
+
+          <div className="divider mt-16" />
+        </div>
       </section>
 
-      <section className="section-shell px-6 lg:px-12">
-        <motion.div {...reveal} viewport={{ once: true }} className="mx-auto max-w-[1440px]">
-          <h2 className="mb-4 text-[clamp(2rem,3.2vw,3rem)] uppercase">Outcome</h2>
-          <p className="max-w-3xl text-secondary">{project.outcome}</p>
-        </motion.div>
+      {/* Outcome */}
+      <section className="section-shell">
+        <div className="container-wide editorial-grid">
+          <motion.div
+            {...revealLeft}
+            viewport={{ once: true }}
+            className="col-span-12 md:col-span-1"
+          >
+            <span className="section-number">05</span>
+          </motion.div>
+          <motion.div
+            {...reveal}
+            viewport={{ once: true }}
+            className="col-span-12 md:col-span-4"
+          >
+            <h2 className="text-heading text-[clamp(2rem,3vw,3rem)]">Outcome</h2>
+          </motion.div>
+          <motion.div
+            {...reveal}
+            viewport={{ once: true }}
+            className="col-span-12 md:col-span-7"
+          >
+            <p className="text-body text-lg leading-relaxed">{project.outcome}</p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Back link */}
+      <section className="pb-20">
+        <div className="container-wide flex justify-center">
+          <Link
+            href="/"
+            className="group flex items-center gap-3 text-caption transition-colors duration-300 hover:text-fg-muted"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              className="transition-transform duration-300 group-hover:-translate-x-1"
+            >
+              <path d="M19 12H5M5 12L12 19M5 12L12 5" />
+            </svg>
+            <span>All Systems</span>
+          </Link>
+        </div>
       </section>
     </main>
   );
