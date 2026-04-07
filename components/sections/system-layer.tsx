@@ -1,18 +1,68 @@
+'use client';
+
+import { motion } from 'framer-motion';
 import { SystemMapCanvas } from '@/components/system-map/system-map-canvas';
+import { reveal } from '@/lib/animations/reveal';
 
 export function SystemLayerSection() {
   return (
-    <section className="section-shell border-b border-secondary/20">
-      <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
-        <div className="system-grid mb-10">
-          <h2 className="col-span-12 text-[clamp(2.5rem,4vw,4rem)] uppercase leading-none lg:col-span-7">System Layer</h2>
-          <p className="col-span-12 max-w-xl text-sm text-secondary lg:col-span-5 lg:pt-4">
-            Interactive infrastructure topology linking edge telemetry, API surfaces, payment rails, and command dashboards.
-          </p>
+    <section id="systems" className="section-shell relative">
+      <div className="container-wide">
+        {/* Section Header */}
+        <div className="editorial-grid mb-16">
+          <motion.div
+            {...reveal}
+            viewport={{ once: true, margin: '-100px' }}
+            className="col-span-12 md:col-span-1"
+          >
+            <span className="section-number">01</span>
+          </motion.div>
+
+          <motion.div
+            {...reveal}
+            viewport={{ once: true, margin: '-100px' }}
+            className="col-span-12 md:col-span-6"
+          >
+            <h2 className="text-heading text-[clamp(2.5rem,5vw,4.5rem)]">
+              System
+              <br />
+              <span className="text-fg-muted">Layer</span>
+            </h2>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            viewport={{ once: true, margin: '-100px' }}
+            className="col-span-12 flex items-end md:col-span-5"
+          >
+            <p className="text-body max-w-md text-sm">
+              Interactive infrastructure topology linking edge telemetry,
+              API surfaces, payment rails, and command dashboards.
+            </p>
+          </motion.div>
         </div>
-        <div className="h-[60vh] min-h-[520px] border border-secondary/25">
+
+        {/* Divider */}
+        <motion.div
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: true }}
+          className="divider-accent mb-12 origin-left"
+        />
+
+        {/* Canvas */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.96 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: true, margin: '-50px' }}
+          className="card-glass h-[65vh] min-h-[500px] overflow-hidden"
+        >
           <SystemMapCanvas mode="interactive" />
-        </div>
+        </motion.div>
       </div>
     </section>
   );
