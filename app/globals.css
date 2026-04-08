@@ -41,7 +41,25 @@
   --gutter: clamp(1.5rem, 4vw, 4rem);
 }
 
-/* ─── Base Reset ─── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+
+    --bg: 0 0% 2%;
+    --bg-elevated: 0 0% 5%;
+    --bg-card: 0 0% 7%;
+    --fg: 0 0% 96%;
+    --fg-muted: 0 0% 55%;
+    --fg-dim: 0 0% 35%;
+    --accent: 180 100% 50%;
+    --accent-muted: 180 60% 38%;
+    --border: 0 0% 14%;
+    --border-hover: 0 0% 22%;
+    --overlay: 0 0% 0%;
+  }
+}
+
+
 
 *,
 *::before,
