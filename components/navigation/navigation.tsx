@@ -28,7 +28,7 @@ export function Navigation() {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out-expo ${
           scrolled
-            ? 'bg-[hsl(0_0%_2%/0.85)] backdrop-blur-xl border-b border-border'
+            ? 'bg-[hsl(var(--bg)/0.85)] backdrop-blur-xl border-b border-border'
             : 'bg-transparent'
         }`}
       >
@@ -94,7 +94,7 @@ export function Navigation() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
-            className="fixed inset-0 z-40 flex flex-col items-center justify-center bg-[hsl(0_0%_2%/0.97)] backdrop-blur-2xl md:hidden"
+            className="fixed inset-0 z-40 flex flex-col items-center justify-center bg-[hsl(var(--bg)/0.97)] backdrop-blur-2xl md:hidden"
           >
             <nav className="flex flex-col items-center gap-10">
               {navLinks.map((link, i) => (
