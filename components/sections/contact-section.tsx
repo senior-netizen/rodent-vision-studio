@@ -14,7 +14,7 @@ export function ContactSection() {
             viewport={{ once: true, margin: '-100px' }}
             className="col-span-12 md:col-span-1"
           >
-            <span className="section-number">03</span>
+            <span className="section-number">05</span>
           </motion.div>
 
           <motion.div

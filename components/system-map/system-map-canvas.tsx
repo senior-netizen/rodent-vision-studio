@@ -126,13 +126,15 @@ export function SystemMapCanvas({ mode = 'interactive' }: { mode?: Mode }) {
     scene.add(pulse);
 
     const clock = new THREE.Clock();
+    const apiBaseY = points.api.position.y;
     let animation = 0;
 
     const renderFrame = () => {
       const elapsed = clock.getElapsedTime();
       pulse.scale.setScalar(1 + (Math.sin(elapsed * 1.5) + 1) * 0.2);
       pulse.rotation.z = elapsed * 0.2;
-      points.api.position.y += Math.sin(elapsed) * 0.0004;
+      // Keep movement deterministic to avoid cumulative drift over long sessions.
+      points.api.position.y = apiBaseY + Math.sin(elapsed) * 0.02;
       renderer.render(scene, camera);
       animation = requestAnimationFrame(renderFrame);
     };
@@ -156,7 +158,9 @@ export function SystemMapCanvas({ mode = 'interactive' }: { mode?: Mode }) {
       renderer.domElement.removeEventListener('click', onClick);
       pointGeometry.dispose();
       renderer.dispose();
-      root.removeChild(renderer.domElement);
+      if (root.contains(renderer.domElement)) {
+        root.removeChild(renderer.domElement);
+      }
     };
   }, [mode]);
 

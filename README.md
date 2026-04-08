@@ -1,106 +1,45 @@
-# Welcome to your Lovable project
+# Rodent Vision Studio
 
-## Project info
+Production-facing portfolio for infrastructure systems delivery, built with **Next.js 14**, **TypeScript**, **Tailwind CSS**, **Framer Motion**, and **Three.js**.
 
-**URL**: https://lovable.dev/projects/383f468d-a2e3-4112-926a-52c968dd67e2
+## Stack
 
-## How can I edit this code?
+- Next.js App Router (`app/*`)
+- Typed content models (`data/*`)
+- Reusable UI modules (`components/*`)
+- Design tokens + typography + motion styles (`app/globals.css`)
 
-There are several ways of editing your application.
+## Local development
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/383f468d-a2e3-4112-926a-52c968dd67e2) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+App runs at `http://localhost:8080`.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Commands
 
-**Use GitHub Codespaces**
+```bash
+npm run dev        # next dev --port 8080
+npm run build      # next build
+npm run start      # next start
+npm run lint       # next lint
+npm run typecheck  # tsc --noEmit
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Architecture map
 
-## What technologies are used for this project?
+- `app/layout.tsx` – root layout and global shells
+- `app/page.tsx` – homepage composition
+- `app/projects/[slug]/page.tsx` – project detail routing
+- `components/sections/*` – editorial section modules
+- `components/case-study/*` – case study renderer
+- `data/projects.ts` – project domain model + content
+- `data/clients.ts`, `data/metrics.ts` – trust and impact datasets
 
-This project is built with:
+## Security notes
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/383f468d-a2e3-4112-926a-52c968dd67e2) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
-
-## Blog admin setup (new)
-
-This project includes a built-in blog with admin login and post publishing routes:
-This project now includes a built-in blog with admin login and post publishing routes:
-- `/blog` (public list)
-- `/blog/:slug` (public post page)
-- `/blog/login` (admin login)
-- `/blog/new` (create post)
-
-Admin credentials currently configured in-app:
-- Email: `anesu@rodent.co.zw`
-- Password: `rodent@2526`
-
-Editorial formats built in: Engineering notes, Field reports, Build logs, Grid experiments, Post-mortems, Research drops.
-
-
-## Abstract export templates and audit trail
-
-Project abstract downloads now use a premium PDF template mode (default) with:
-- cover-style title hierarchy
-- accent dividers
-- footer page numbering
-- PDF metadata (title/author/subject)
-
-Each abstract download also records an audit event in browser local storage (`rodent_audit_events`) and can be exported as CSV from project pages.
-To enable admin login, set an environment variable before running the app:
-
-`VITE_BLOG_ADMIN_PASSWORD=your-strong-password`
-
-Without this variable, login is intentionally blocked so the blog cannot be edited accidentally.
-
-Editorial formats built in: Engineering notes, Field reports, Build logs, Grid experiments, Post-mortems, Research drops.
+- Never commit credentials to source control.
+- Keep admin secrets in deployment environment variables.
+- Rotate credentials immediately if exposure is suspected.
