@@ -55,6 +55,31 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
         />
       </section>
 
+      {/* Executive Summary */}
+      <section className="pb-6 md:pb-10">
+        <div className="container-wide">
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            animate="show"
+            className="grid gap-3 md:grid-cols-3"
+          >
+            <motion.div variants={staggerChild} className="card-glass p-6">
+              <span className="text-label">Scope</span>
+              <p className="text-body mt-3 text-sm">{project.summary.scope}</p>
+            </motion.div>
+            <motion.div variants={staggerChild} className="card-glass p-6">
+              <span className="text-label">Timeline</span>
+              <p className="text-body mt-3 text-sm">{project.summary.timeline}</p>
+            </motion.div>
+            <motion.div variants={staggerChild} className="card-glass p-6">
+              <span className="text-label">Primary KPI</span>
+              <p className="text-body mt-3 text-sm">{project.summary.primaryKpi}</p>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Problem */}
       <section className="section-shell">
         <div className="container-wide editorial-grid">

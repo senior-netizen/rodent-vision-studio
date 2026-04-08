@@ -13,6 +13,11 @@ export type ProjectConfig = {
     diagram: string;
   };
   outcome: string;
+  summary: {
+    scope: string;
+    timeline: string;
+    primaryKpi: string;
+  };
 };
 
 export const projectConfigs: ProjectConfig[] = [
@@ -27,7 +32,12 @@ export const projectConfigs: ProjectConfig[] = [
     dataFlow: ['Edge Meter → MQTT Broker', 'Broker → Stream Processor', 'Processor → Rule Engine', 'Rule Engine → Dashboard'],
     decisions: ['Prioritized eventual consistency for wide-area device bursts.', 'Used deterministic replay paths for incident reconstruction.'],
     visuals: { screenshot: '/visuals/shedsense-ui.svg', diagram: '/visuals/shedsense-architecture.svg' },
-    outcome: 'Reduced event-to-action time by 41% with deterministic alert confidence routing.'
+    outcome: 'Reduced event-to-action time by 41% with deterministic alert confidence routing.',
+    summary: {
+      scope: 'Telemetry and dispatch intelligence platform across distributed field assets.',
+      timeline: '16-week delivery across discovery, hardening and rollout.',
+      primaryKpi: '41% faster event-to-action response.',
+    }
   },
   {
     name: 'MeterFlow',
@@ -40,7 +50,12 @@ export const projectConfigs: ProjectConfig[] = [
     dataFlow: ['Device Pollers → Adapter Bus', 'Adapter Bus → Normalizer', 'Normalizer → Twin Store', 'Twin Store → Operator Surface'],
     decisions: ['Built idempotent ingest contracts for replay-safe data correction.', 'Separated command and telemetry channels for failure isolation.'],
     visuals: { screenshot: '/visuals/meterflow-ui.svg', diagram: '/visuals/meterflow-architecture.svg' },
-    outcome: 'Stabilized ingestion reliability at 99.97% across heterogeneous device networks.'
+    outcome: 'Stabilized ingestion reliability at 99.97% across heterogeneous device networks.',
+    summary: {
+      scope: 'Multi-vendor device fabric with protocol normalization and command isolation.',
+      timeline: '12-week implementation with phased fleet onboarding.',
+      primaryKpi: '99.97% ingestion reliability baseline.',
+    }
   },
   {
     name: 'SHEQ Dashboard',
@@ -53,7 +68,12 @@ export const projectConfigs: ProjectConfig[] = [
     dataFlow: ['Field Reports → Event Bus', 'Event Bus → Risk Scoring', 'Scoring → Audit Snapshots', 'Snapshots → Command View'],
     decisions: ['Introduced immutable snapshot windows for audit traceability.', 'Used sparse rendering for high-density operations timelines.'],
     visuals: { screenshot: '/visuals/sheq-ui.svg', diagram: '/visuals/sheq-architecture.svg' },
-    outcome: 'Cut compliance reporting overhead by 58% and improved incident lead visibility.'
+    outcome: 'Cut compliance reporting overhead by 58% and improved incident lead visibility.',
+    summary: {
+      scope: 'Operational assurance dashboard for SHEQ risk, audits and incident visibility.',
+      timeline: '10-week build with compliance stakeholder checkpoints.',
+      primaryKpi: '58% reduction in reporting overhead.',
+    }
   },
   {
     name: 'KwikSend',
@@ -66,7 +86,12 @@ export const projectConfigs: ProjectConfig[] = [
     dataFlow: ['Client Intent → Router', 'Router → Ledger Core', 'Ledger → Settlement Reconciler', 'Reconciler → Monitoring Surface'],
     decisions: ['Applied append-only ledger semantics for non-repudiation.', 'Enforced policy-based routing by corridor and fee profile.'],
     visuals: { screenshot: '/visuals/kwiksend-ui.svg', diagram: '/visuals/kwiksend-architecture.svg' },
-    outcome: 'Improved settlement success rates to 99.92% while shrinking reconciliation lag to minutes.'
+    outcome: 'Improved settlement success rates to 99.92% while shrinking reconciliation lag to minutes.',
+    summary: {
+      scope: 'Cross-provider payment orchestration and ledger-backed reconciliation.',
+      timeline: '14-week rollout across payment corridors.',
+      primaryKpi: '99.92% settlement success rate.',
+    }
   }
 ];
 
