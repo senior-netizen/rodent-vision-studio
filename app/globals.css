@@ -7,20 +7,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Sora:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
-  /* ─ Palette ─ */
-  --bg: 0 0% 2%;
-  --bg-elevated: 0 0% 5%;
-  --bg-card: 0 0% 7%;
-  --fg: 0 0% 96%;
-  --fg-muted: 0 0% 55%;
-  --fg-dim: 0 0% 35%;
-  --accent: 180 100% 50%;
-  --accent-muted: 180 60% 38%;
-  --border: 0 0% 14%;
-  --border-hover: 0 0% 22%;
-  --overlay: 0 0% 0%;
+  /* ─ Palette (Light) ─ */
+  --bg: 0 0% 98%;
+  --bg-elevated: 0 0% 95%;
+  --bg-card: 0 0% 100%;
+  --fg: 0 0% 8%;
+  --fg-muted: 0 0% 40%;
+  --fg-dim: 0 0% 60%;
+  --accent: 180 100% 32%;
+  --accent-muted: 180 50% 40%;
+  --border: 0 0% 88%;
+  --border-hover: 0 0% 78%;
+  --overlay: 0 0% 100%;
 
   /* ─ Typography ─ */
   --font-display: 'Sora', system-ui, sans-serif;
@@ -41,7 +41,25 @@
   --gutter: clamp(1.5rem, 4vw, 4rem);
 }
 
-/* ─── Base Reset ─── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+
+    --bg: 0 0% 2%;
+    --bg-elevated: 0 0% 5%;
+    --bg-card: 0 0% 7%;
+    --fg: 0 0% 96%;
+    --fg-muted: 0 0% 55%;
+    --fg-dim: 0 0% 35%;
+    --accent: 180 100% 50%;
+    --accent-muted: 180 60% 38%;
+    --border: 0 0% 14%;
+    --border-hover: 0 0% 22%;
+    --overlay: 0 0% 0%;
+  }
+}
+
+
 
 *,
 *::before,
