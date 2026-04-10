@@ -1,12 +1,26 @@
 'use client';
 
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { reveal } from '@/lib/animations/reveal';
 
 export function ContactSection() {
   return (
-    <section id="contact" className="section-shell relative">
-      <div className="container-wide">
+    <section id="contact" className="section-shell relative overflow-hidden">
+      {/* Background Image */}
+      <div className="absolute inset-0">
+        <Image
+          src="/visuals/contact-bg.jpg"
+          alt=""
+          fill
+          loading="lazy"
+          className="object-cover opacity-20"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[hsl(var(--bg))] via-[hsl(var(--bg)/0.8)] to-[hsl(var(--bg))]" />
+      </div>
+
+      <div className="container-wide relative z-10">
         {/* Section Header */}
         <div className="editorial-grid mb-16">
           <motion.div
