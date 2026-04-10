@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { projectConfigs } from '@/data/projects';
@@ -68,8 +69,18 @@ export function SelectedSystemsSection() {
                 href={`/projects/${project.slug}`}
                 className="group relative block overflow-hidden"
               >
-                {/* Hover background */}
-                <div className="absolute inset-0 bg-bg-elevated opacity-0 transition-opacity duration-500 ease-out-expo group-hover:opacity-100" />
+                {/* Hover background with preview image */}
+                <div className="absolute inset-0 opacity-0 transition-opacity duration-500 ease-out-expo group-hover:opacity-100">
+                  <Image
+                    src={project.visuals.preview}
+                    alt=""
+                    fill
+                    loading="lazy"
+                    className="object-cover"
+                    sizes="100vw"
+                  />
+                  <div className="absolute inset-0 bg-[hsl(var(--bg)/0.85)]" />
+                </div>
 
                 <div className="relative flex flex-col gap-4 border-b border-border py-8 transition-all duration-500 ease-out-expo group-hover:border-border-hover md:flex-row md:items-center md:py-10">
                   {/* Number */}
@@ -81,6 +92,20 @@ export function SelectedSystemsSection() {
                   <h3 className="text-heading text-2xl transition-transform duration-500 ease-out-expo group-hover:translate-x-2 md:flex-1 md:text-3xl lg:text-4xl">
                     {project.name}
                   </h3>
+
+                  {/* Preview thumbnail */}
+                  <div className="hidden md:block md:w-32 lg:w-40">
+                    <div className="overflow-hidden rounded-md opacity-0 transition-all duration-500 ease-out-expo group-hover:opacity-100 group-hover:scale-100 scale-95">
+                      <Image
+                        src={project.visuals.preview}
+                        alt={`${project.name} preview`}
+                        width={320}
+                        height={180}
+                        loading="lazy"
+                        className="w-full h-auto rounded-md"
+                      />
+                    </div>
+                  </div>
 
                   {/* Role */}
                   <p className="text-body text-sm md:w-52 lg:w-64">
