@@ -61,25 +61,31 @@ export function ContactSection() {
               </p>
             </div>
             <div className="col-span-12 flex flex-col items-start justify-end gap-6 md:col-span-5 md:items-end">
-              <a
-                href="mailto:contact@rodent.systems"
-                className="group flex items-center gap-3 transition-all duration-300"
-              >
-                <span className="text-label text-accent group-hover:tracking-[0.22em] transition-all duration-500">
-                  contact@rodent.systems
-                </span>
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  className="text-accent transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+              <div className="flex flex-col items-start gap-4 md:items-end">
+                <span className="text-label text-lg">Anesu Ndava</span>
+                <a
+                  href="mailto:ndabaprinco@gmail.com"
+                  className="group flex items-center gap-3 transition-all duration-300"
                 >
-                  <path d="M7 17L17 7M17 7H7M17 7V17" />
-                </svg>
-              </a>
+                  <span className="text-label text-accent group-hover:tracking-[0.22em] transition-all duration-500">
+                    ndabaprinco@gmail.com
+                  </span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-accent transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"><path d="M7 17L17 7M17 7H7M17 7V17" /></svg>
+                </a>
+                <a
+                  href="mailto:anesu@rodent.co.zw"
+                  className="group flex items-center gap-3 transition-all duration-300"
+                >
+                  <span className="text-label text-accent group-hover:tracking-[0.22em] transition-all duration-500">
+                    anesu@rodent.co.zw
+                  </span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-accent transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"><path d="M7 17L17 7M17 7H7M17 7V17" /></svg>
+                </a>
+                <div className="flex flex-col gap-1 md:items-end">
+                  <span className="text-caption">+263 78 700 8238</span>
+                  <span className="text-caption">+253 78 528 6530</span>
+                </div>
+              </div>
             </div>
           </div>
         </motion.div>

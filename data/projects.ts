@@ -32,7 +32,7 @@ export const projectConfigs: ProjectConfig[] = [
     stack: ['Next.js 14', 'TypeScript', 'Three.js', 'Framer Motion', 'PostgreSQL'],
     dataFlow: ['Edge Meter → MQTT Broker', 'Broker → Stream Processor', 'Processor → Rule Engine', 'Rule Engine → Dashboard'],
     decisions: ['Prioritized eventual consistency for wide-area device bursts.', 'Used deterministic replay paths for incident reconstruction.'],
-    visuals: { screenshot: '/visuals/shedsense-ui.svg', diagram: '/visuals/shedsense-architecture.svg', preview: '/visuals/shedsense-preview.jpg' },
+    visuals: { screenshot: '/visuals/shedsense-ui.jpg', diagram: '/visuals/shedsense-architecture.jpg', preview: '/visuals/shedsense-preview.jpg' },
     outcome: 'Reduced event-to-action time by 41% with deterministic alert confidence routing.',
     summary: {
       scope: 'Telemetry and dispatch intelligence platform across distributed field assets.',
@@ -50,7 +50,7 @@ export const projectConfigs: ProjectConfig[] = [
     stack: ['Next.js 14', 'TypeScript', 'Node Workers', 'Redis Streams', 'Prometheus'],
     dataFlow: ['Device Pollers → Adapter Bus', 'Adapter Bus → Normalizer', 'Normalizer → Twin Store', 'Twin Store → Operator Surface'],
     decisions: ['Built idempotent ingest contracts for replay-safe data correction.', 'Separated command and telemetry channels for failure isolation.'],
-    visuals: { screenshot: '/visuals/meterflow-ui.svg', diagram: '/visuals/meterflow-architecture.svg', preview: '/visuals/meterflow-preview.jpg' },
+    visuals: { screenshot: '/visuals/meterflow-ui.jpg', diagram: '/visuals/meterflow-architecture.jpg', preview: '/visuals/meterflow-preview.jpg' },
     outcome: 'Stabilized ingestion reliability at 99.97% across heterogeneous device networks.',
     summary: {
       scope: 'Multi-vendor device fabric with protocol normalization and command isolation.',
@@ -68,7 +68,7 @@ export const projectConfigs: ProjectConfig[] = [
     stack: ['Next.js 14', 'TypeScript', 'Framer Motion', 'D3 SVG', 'ClickHouse'],
     dataFlow: ['Field Reports → Event Bus', 'Event Bus → Risk Scoring', 'Scoring → Audit Snapshots', 'Snapshots → Command View'],
     decisions: ['Introduced immutable snapshot windows for audit traceability.', 'Used sparse rendering for high-density operations timelines.'],
-    visuals: { screenshot: '/visuals/sheq-ui.svg', diagram: '/visuals/sheq-architecture.svg', preview: '/visuals/sheq-preview.jpg' },
+    visuals: { screenshot: '/visuals/sheq-ui.jpg', diagram: '/visuals/sheq-architecture.jpg', preview: '/visuals/sheq-preview.jpg' },
     outcome: 'Cut compliance reporting overhead by 58% and improved incident lead visibility.',
     summary: {
       scope: 'Operational assurance dashboard for SHEQ risk, audits and incident visibility.',
@@ -86,7 +86,7 @@ export const projectConfigs: ProjectConfig[] = [
     stack: ['Next.js 14', 'TypeScript', 'GSAP', 'Kafka', 'PostgreSQL'],
     dataFlow: ['Client Intent → Router', 'Router → Ledger Core', 'Ledger → Settlement Reconciler', 'Reconciler → Monitoring Surface'],
     decisions: ['Applied append-only ledger semantics for non-repudiation.', 'Enforced policy-based routing by corridor and fee profile.'],
-    visuals: { screenshot: '/visuals/kwiksend-ui.svg', diagram: '/visuals/kwiksend-architecture.svg', preview: '/visuals/kwiksend-preview.jpg' },
+    visuals: { screenshot: '/visuals/kwiksend-ui.jpg', diagram: '/visuals/kwiksend-architecture.jpg', preview: '/visuals/kwiksend-preview.jpg' },
     outcome: 'Improved settlement success rates to 99.92% while shrinking reconciliation lag to minutes.',
     summary: {
       scope: 'Cross-provider payment orchestration and ledger-backed reconciliation.',
