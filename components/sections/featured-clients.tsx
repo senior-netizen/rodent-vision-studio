@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { featuredClients } from '@/data/clients';
 import { reveal, stagger, staggerChild } from '@/lib/animations/reveal';
@@ -14,9 +15,9 @@ export function FeaturedClientsSection() {
           </motion.div>
           <motion.div {...reveal} viewport={{ once: true }} className="col-span-12 md:col-span-6">
             <h2 className="text-heading text-[clamp(2rem,4vw,3.5rem)]">
-              Trusted by
+              Demonstrated to
               <br />
-              <span className="text-fg-muted">Operational Teams</span>
+              <span className="text-fg-muted">Industry Leaders</span>
             </h2>
           </motion.div>
           <motion.p
@@ -24,8 +25,8 @@ export function FeaturedClientsSection() {
             viewport={{ once: true }}
             className="col-span-12 md:col-span-5 text-body max-w-md text-sm"
           >
-            We partner with operators running real-world infrastructure where uptime,
-            traceability and failure isolation are non-negotiable.
+            We&apos;ve presented tailored demo systems to organisations operating
+            real-world infrastructure — showcasing what&apos;s possible with modern tooling.
           </motion.p>
         </div>
 
@@ -34,34 +35,25 @@ export function FeaturedClientsSection() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: '-50px' }}
-          className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3"
+          className="grid gap-3 sm:grid-cols-2 lg:grid-cols-2"
         >
-          {featuredClients.map((client) => {
-            const card = (
-              <div className="card-glass p-5">
-                <div className="font-display text-xl tracking-tight">{client.logoText}</div>
-                <p className="text-caption mt-2">{client.sector}</p>
+          {featuredClients.map((client) => (
+            <motion.div key={client.name} variants={staggerChild}>
+              <div className="card-glass p-5 flex items-center gap-4">
+                <Image
+                  src="/visuals/rodent-logo.png"
+                  alt="Rodent logo"
+                  width={40}
+                  height={40}
+                  className="rounded-full"
+                />
+                <div>
+                  <div className="font-display text-xl tracking-tight">{client.logoText}</div>
+                  <p className="text-caption mt-1">{client.sector}</p>
+                </div>
               </div>
-            );
-
-            return (
-              <motion.div key={client.name} variants={staggerChild}>
-                {client.website ? (
-                  <a
-                    href={client.website}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={`Visit ${client.name}`}
-                    className="block"
-                  >
-                    {card}
-                  </a>
-                ) : (
-                  card
-                )}
-              </motion.div>
-            );
-          })}
+            </motion.div>
+          ))}
         </motion.div>
       </div>
     </section>
