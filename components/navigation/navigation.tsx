@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const navLinks = [
@@ -37,12 +38,13 @@ export function Navigation() {
         <div className="container-wide flex h-16 items-center justify-between md:h-20">
           {/* Logo */}
           <Link href="/" className="group flex items-center gap-3">
-            <div className="relative h-8 w-8 overflow-hidden">
-              <div className="absolute inset-0 rounded-sm bg-accent/10 transition-colors duration-300 group-hover:bg-accent/20" />
-              <span className="absolute inset-0 flex items-center justify-center font-display text-sm font-bold text-accent">
-                R
-              </span>
-            </div>
+            <Image
+              src="/visuals/rodent-logo.png"
+              alt="Rodent logo"
+              width={32}
+              height={32}
+              className="rounded-full"
+            />
             <span className="hidden font-display text-sm font-medium tracking-wide sm:block">
               Rodent
               <span className="text-fg-dim">.systems</span>
