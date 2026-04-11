@@ -26,4 +26,14 @@ export const featuredClients: FeaturedClient[] = [
     logoText: 'Chiredzi Town Council',
     sector: 'Local Government',
   },
+  {
+    name: 'Rent a Ride',
+    logoText: 'Rent a Ride',
+    sector: 'Vehicle Rentals',
+  },
+  {
+    name: 'JeffM Auctioneers',
+    logoText: 'JeffM Auctioneers',
+    sector: 'Auctions & Trading',
+  },
 ];

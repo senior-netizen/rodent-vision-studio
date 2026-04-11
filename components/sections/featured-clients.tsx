@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { featuredClients } from '@/data/clients';
 import { reveal, stagger, staggerChild } from '@/lib/animations/reveal';
@@ -35,22 +34,13 @@ export function FeaturedClientsSection() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: '-50px' }}
-          className="grid gap-3 sm:grid-cols-2 lg:grid-cols-2"
+          className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3"
         >
           {featuredClients.map((client) => (
             <motion.div key={client.name} variants={staggerChild}>
-              <div className="card-glass p-5 flex items-center gap-4">
-                <Image
-                  src="/visuals/rodent-logo.png"
-                  alt="Rodent logo"
-                  width={40}
-                  height={40}
-                  className="rounded-full"
-                />
-                <div>
-                  <div className="font-display text-xl tracking-tight">{client.logoText}</div>
-                  <p className="text-caption mt-1">{client.sector}</p>
-                </div>
+              <div className="card-glass p-5">
+                <div className="font-display text-xl tracking-tight">{client.logoText}</div>
+                <p className="text-caption mt-2">{client.sector}</p>
               </div>
             </motion.div>
           ))}
