@@ -5,7 +5,7 @@ import { Navigation } from '@/components/navigation/navigation';
 import { CustomCursor } from '@/components/cursor/custom-cursor';
 
 export const metadata: Metadata = {
-  title: 'Rodent Vision Studio | Infrastructure Systems',
+  title: 'Rodent, Inc. | Infrastructure Systems',
   description: 'Cinematic systems portfolio built for real-world deployment.',
 };
 
