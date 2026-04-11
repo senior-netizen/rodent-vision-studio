@@ -7,39 +7,23 @@ export type FeaturedClient = {
 
 export const featuredClients: FeaturedClient[] = [
   {
-    name: 'EnerGrid Holdings',
-    logoText: 'EnerGrid',
-    website: 'https://example.com/energrid',
-    sector: 'Energy Infrastructure',
+    name: 'City Councils',
+    logoText: 'City Councils',
+    sector: 'Local Government',
   },
   {
-    name: 'Metro Utility Co',
-    logoText: 'Metro Utility',
-    website: 'https://example.com/metro-utility',
-    sector: 'Utilities',
+    name: 'Nemchem',
+    logoText: 'Nemchem',
+    sector: 'Chemical Manufacturing',
   },
   {
-    name: 'PulsePay Network',
-    logoText: 'PulsePay',
-    website: 'https://example.com/pulsepay',
-    sector: 'Fintech',
+    name: 'Mashonaland Tobacco Company',
+    logoText: 'Mashonaland Tobacco',
+    sector: 'Agriculture & Tobacco',
   },
   {
-    name: 'FieldOps Industrial',
-    logoText: 'FieldOps',
-    website: 'https://example.com/fieldops',
-    sector: 'Industrial Operations',
-  },
-  {
-    name: 'Astra Compliance Group',
-    logoText: 'Astra',
-    website: 'https://example.com/astra',
-    sector: 'Compliance',
-  },
-  {
-    name: 'Northline Logistics',
-    logoText: 'Northline',
-    website: 'https://example.com/northline',
-    sector: 'Logistics',
+    name: 'Chiredzi Town Council',
+    logoText: 'Chiredzi Town Council',
+    sector: 'Local Government',
   },
 ];
