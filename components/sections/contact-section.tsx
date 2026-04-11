@@ -93,7 +93,7 @@ export function ContactSection() {
         {/* Footer */}
         <div className="mt-20 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 md:flex-row">
           <span className="text-caption">
-            © {new Date().getFullYear()} Rodent Vision Studio
+            © {new Date().getFullYear()} Rodent, Inc.
           </span>
           <span className="text-caption">
             Designed & engineered with precision
