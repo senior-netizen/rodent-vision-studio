@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
-import { MarketplaceControls } from '@/components/home/marketplace-controls';
 import { StartProjectModal } from '@/components/contact/start-project-modal';
 import { projectConfigs } from '@/data/projects';
 import { labs } from '@/data/labs';
@@ -24,7 +23,10 @@ export default function HomePage() {
   const [activeSection, setActiveSection] = useState('about');
   const [projectModalOpen, setProjectModalOpen] = useState(false);
   const [serviceIndex, setServiceIndex] = useState(0);
+  const [mobileServiceIndex, setMobileServiceIndex] = useState(0);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const heroLines = useMemo(() => ['Engineering Digital', 'Infrastructure for Africa'], []);
+  const serviceVisuals = ['art-gradient-dots', 'art-gradient-rainbow', 'art-teal', 'art-gradient-purple'];
 
   const heroRef = useRef<HTMLDivElement | null>(null);
   const marketplaceRef = useRef<HTMLDivElement | null>(null);
@@ -67,6 +69,17 @@ export default function HomePage() {
   const goToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     trackEvent({ name: 'nav_click', metadata: { section: id } });
+  };
+
+  const nextMobileService = () => setMobileServiceIndex((prev) => (prev + 1) % services.length);
+  const prevMobileService = () => setMobileServiceIndex((prev) => (prev - 1 + services.length) % services.length);
+
+  const handleServiceTouchEnd = (endX: number) => {
+    if (touchStartX === null) return;
+    const delta = endX - touchStartX;
+    if (delta > 50) prevMobileService();
+    if (delta < -50) nextMobileService();
+    setTouchStartX(null);
   };
 
   return (
@@ -142,18 +155,40 @@ export default function HomePage() {
       <motion.div className="marketplace-wrap" {...revealMotion} id="services" ref={marketplaceRef}>
         <div className="marketplace-inner">
           <div className="marketplace-header">
-            <div className="mp-left"><div className="mp-label">SERVICES</div><h2>Engineering Pillars<br />for Deployment</h2><p className="mp-desc">Each service has a dedicated capability page and conversion flow.</p><div className="mp-nav"><MarketplaceControls /></div></div>
+            <div className="mp-left"><div className="mp-label">SERVICES</div><h2>Engineering Pillars<br />for Deployment</h2><p className="mp-desc">Each service has a dedicated capability page and conversion flow.</p></div>
             <motion.div className="mp-right" style={{ position: 'sticky', top: 96, y: stickyY, scale: stickyScale, opacity: stickyOpacity, willChange: 'transform, opacity' }}>
               <button className="view-all-btn" type="button" onClick={() => router.push('/projects')}>View Work</button>
             </motion.div>
           </div>
-          <div className="mp-grid">
-            {services.map((card) => (
-              <motion.button key={card.slug} className="mp-card" whileHover={{ scale: 1.03 }} transition={{ duration: 0.6, ease: easeCurve }} style={{ willChange: 'transform', border: 'none', textAlign: 'left', cursor: 'pointer' }} onClick={() => router.push(`/services/${card.slug}`)}>
-                <div className="art-gradient-dots" style={{ width: '100%', aspectRatio: '1' }} />
+
+          <div className="mp-grid mp-grid-desktop">
+            {services.map((card, index) => (
+              <motion.button key={card.slug} className="mp-card mp-card-large" whileHover={{ scale: 1.03 }} transition={{ duration: 0.6, ease: easeCurve }} style={{ willChange: 'transform', border: 'none', textAlign: 'left', cursor: 'pointer' }} onClick={() => router.push(`/services/${card.slug}`)}>
+                <div className={serviceVisuals[index]} style={{ width: '100%', aspectRatio: '1.15' }} />
                 <div className="mp-card-label">{card.name}</div>
               </motion.button>
             ))}
+          </div>
+
+          <div
+            className="mp-carousel"
+            onTouchStart={(event) => setTouchStartX(event.changedTouches[0]?.clientX ?? null)}
+            onTouchEnd={(event) => handleServiceTouchEnd(event.changedTouches[0]?.clientX ?? 0)}
+          >
+            <button className="mp-carousel-arrow mp-carousel-arrow-left" type="button" onClick={prevMobileService} aria-label="Previous service">←</button>
+            <motion.button
+              key={services[mobileServiceIndex].slug}
+              className="mp-card mp-card-large mp-card-mobile"
+              initial={{ opacity: 0.7, x: 24 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.35, ease: easeCurve }}
+              style={{ border: 'none', textAlign: 'left', cursor: 'pointer' }}
+              onClick={() => router.push(`/services/${services[mobileServiceIndex].slug}`)}
+            >
+              <div className={serviceVisuals[mobileServiceIndex]} style={{ width: '100%', aspectRatio: '1.2' }} />
+              <div className="mp-card-label">{services[mobileServiceIndex].name}</div>
+            </motion.button>
+            <button className="mp-carousel-arrow mp-carousel-arrow-right" type="button" onClick={nextMobileService} aria-label="Next service">→</button>
           </div>
         </div>
       </motion.div>
