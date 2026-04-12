@@ -39,7 +39,7 @@ export const projectConfigs: ProjectConfig[] = [
     stack: ['Next.js', 'TypeScript', 'React Query', 'PostgreSQL', 'Tailwind CSS'],
     dataFlow: ['User Query → Search Index', 'Search Index → Property Catalog', 'Catalog → Listing Detail', 'Listing Events → Agent Dashboard'],
     decisions: ['Kept property lookup paths index-first for responsive browsing.', 'Separated listing write access behind authenticated publisher flows.'],
-    visuals: { screenshot: '/visuals/fe.png', diagram: '/visuals/meterflow-architecture.jpg', preview: '/visuals/fe.png' },
+    visuals: { screenshot: '/visuals/meterflow-ui.jpg', diagram: '/visuals/meterflow-architecture.jpg', preview: '/visuals/meterflow-preview.jpg' },
     outcome: 'Delivered a single platform for discovering homes and publishing managed listings.',
     summary: {
       scope: 'End-to-end property search and listing platform.',
@@ -81,7 +81,7 @@ export const projectConfigs: ProjectConfig[] = [
     stack: ['Next.js', 'TypeScript', 'Framer Motion', 'WebGL', 'CSS Effects'],
     dataFlow: ['User Session → Experience Shell', 'Interaction Events → Animation Layer', 'Media Assets → Render Pipeline', 'CTA Actions → Source Destination'],
     decisions: ['Optimized animation sequencing to keep motion smooth across device classes.', 'Structured interactive elements to preserve accessibility while remaining immersive.'],
-    visuals: { screenshot: '/visuals/ar.png', diagram: '/visuals/sheq-architecture.jpg', preview: '/visuals/ar.png' },
+    visuals: { screenshot: '/visuals/sheq-ui.jpg', diagram: '/visuals/sheq-architecture.jpg', preview: '/visuals/sheq-preview.jpg' },
     outcome: 'Shipped an immersive AR-led product surface with strong visual identity and engagement.',
     summary: {
       scope: 'Interactive AR showcase and product landing experience.',
@@ -102,7 +102,7 @@ export const projectConfigs: ProjectConfig[] = [
     stack: ['Node.js', 'TypeScript', 'npm', 'GitHub Actions', 'Semantic Versioning'],
     dataFlow: ['Input Coordinates → Validation', 'Validated Data → Distance Engine', 'Distance Results → Consumer APIs', 'Package Releases → npm/GitHub'],
     decisions: ['Kept API contracts small and deterministic for broad downstream use.', 'Automated publish and verification checks to keep releases reliable.'],
-    visuals: { screenshot: '/visuals/pr.png', diagram: '/visuals/kwiksend-architecture.jpg', preview: '/visuals/pr.png' },
+    visuals: { screenshot: '/visuals/kwiksend-ui.jpg', diagram: '/visuals/kwiksend-architecture.jpg', preview: '/visuals/kwiksend-preview.jpg' },
     outcome: 'Provided a reusable geospatial toolkit for coordinate-driven applications.',
     summary: {
       scope: 'Open source Node.js package for precise location operations.',
