@@ -1,3 +1,5 @@
+import type { ProjectConfig } from './projects';
+
 export type ServiceSlug = 'web' | 'mobile' | 'iot' | 'robotics';
 
 export type Service = {
@@ -5,7 +7,7 @@ export type Service = {
   name: string;
   summary: string;
   capability: string;
-  relatedProjects: Array<'shedsense' | 'meterflow' | 'sheq' | 'kwiksend'>;
+  relatedProjects: ProjectConfig['slug'][];
   cta: string;
 };
 
@@ -16,7 +18,7 @@ export const services: Service[] = [
     summary: 'Custom platforms, dashboards, and APIs engineered for scale and operational reliability.',
     capability:
       'We build command surfaces, B2B portals, and operational dashboards with strict SLAs, strong auditability, and role-aware controls.',
-    relatedProjects: ['sheq', 'kwiksend'],
+    relatedProjects: ['feel-at-home', 'precise-locations'],
     cta: 'Need a web platform that operators can trust under load? Start a project with us.',
   },
   {
@@ -25,7 +27,7 @@ export const services: Service[] = [
     summary: 'Production-grade mobile systems designed for field reliability and resilient offline behavior.',
     capability:
       'Our mobile systems focus on deterministic sync, stable data capture, and secure operator workflows for constrained networks.',
-    relatedProjects: ['sheq', 'shedsense'],
+    relatedProjects: ['feel-at-home', 'ar-by-rodent'],
     cta: 'Need a mobile application for real operations, not demos? Start a project with us.',
   },
   {
@@ -34,7 +36,7 @@ export const services: Service[] = [
     summary: 'Connected infrastructure for monitoring, automation, and real-time telemetry processing.',
     capability:
       'We deliver sensor pipelines, telemetry backplanes, device twins, and rules engines for observability and control.',
-    relatedProjects: ['meterflow', 'shedsense'],
+    relatedProjects: ['shedsense', 'precise-locations'],
     cta: 'Need an IoT platform with reliable ingest and command isolation? Start a project with us.',
   },
   {
@@ -43,7 +45,7 @@ export const services: Service[] = [
     summary: 'Integrated hardware/software automation systems for physical operations and industrial workflows.',
     capability:
       'From machine orchestration to actuator feedback loops, we build robotics systems that prioritize safety, uptime, and deterministic execution.',
-    relatedProjects: ['meterflow', 'kwiksend'],
+    relatedProjects: ['ar-by-rodent', 'shedsense'],
     cta: 'Need robotics workflows integrated with your digital systems? Start a project with us.',
   },
 ];

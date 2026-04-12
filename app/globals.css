@@ -333,6 +333,9 @@ section { padding: 100px 2rem; max-width: 1200px; margin: 0 auto; }
 .gallery-wrap { padding: 100px 2rem; }
 .gallery-grid { display: grid; grid-template-columns: repeat(5, 1fr); grid-template-rows: auto auto auto; gap: 16px; max-width: 1100px; margin: 0 auto; }
 .g-card { border-radius: 14px; overflow: hidden; background: var(--light); aspect-ratio: 1; position: relative; cursor: pointer; }
+.g-card-media { position: absolute; inset: 0; }
+.g-card-media-mobile { inset: 0 0 36% 0; }
+.g-card-image { object-fit: cover; }
 .gallery-carousel { display: none; }
 .gallery-carousel-arrow {
   position: absolute;

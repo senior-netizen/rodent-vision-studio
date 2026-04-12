@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AnimatePresence, motion, useScroll, useSpring, useTransform } from 'framer-motion';
@@ -303,6 +304,15 @@ export default function HomePage() {
         <div className="gallery-grid gallery-grid-desktop">
           {projectConfigs.map((project) => (
             <motion.button key={project.slug} className="g-card" whileHover={{ scale: 1.03 }} transition={{ duration: 0.6, ease: easeCurve }} onClick={() => router.push(`/projects/${project.slug}`)} style={{ border: 'none' }}>
+              <div className="g-card-media">
+                <Image
+                  src={project.visuals.preview}
+                  alt={`${project.name} preview`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 25vw"
+                  className="g-card-image"
+                />
+              </div>
               <div className="featured-overlay"><span className="name">{project.name}</span><div className="source">{project.problem}</div></div>
             </motion.button>
           ))}
@@ -327,7 +337,15 @@ export default function HomePage() {
             onClick={() => router.push(`/projects/${projectConfigs[mobileProjectIndex].slug}`)}
             style={{ border: 'none', width: '100%' }}
           >
-            <div className="art-gradient-warm" style={{ width: '100%', height: '64%' }} />
+            <div className="g-card-media g-card-media-mobile">
+              <Image
+                src={projectConfigs[mobileProjectIndex].visuals.preview}
+                alt={`${projectConfigs[mobileProjectIndex].name} preview`}
+                fill
+                sizes="100vw"
+                className="g-card-image"
+              />
+            </div>
             <div className="featured-overlay">
               <span className="name">{projectConfigs[mobileProjectIndex].name}</span>
               <div className="source">{projectConfigs[mobileProjectIndex].problem}</div>
