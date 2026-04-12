@@ -25,6 +25,8 @@ export default function HomePage() {
   const [serviceIndex, setServiceIndex] = useState(0);
   const [mobileServiceIndex, setMobileServiceIndex] = useState(0);
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  const [mobileProjectIndex, setMobileProjectIndex] = useState(0);
+  const [projectTouchStartX, setProjectTouchStartX] = useState<number | null>(null);
   const heroLines = useMemo(() => ['Engineering Digital', 'Infrastructure for Africa'], []);
   const serviceVisuals = ['art-gradient-dots', 'art-gradient-rainbow', 'art-teal', 'art-gradient-purple'];
 
@@ -80,6 +82,17 @@ export default function HomePage() {
     if (delta > 50) prevMobileService();
     if (delta < -50) nextMobileService();
     setTouchStartX(null);
+  };
+
+  const nextMobileProject = () => setMobileProjectIndex((prev) => (prev + 1) % projectConfigs.length);
+  const prevMobileProject = () => setMobileProjectIndex((prev) => (prev - 1 + projectConfigs.length) % projectConfigs.length);
+
+  const handleProjectTouchEnd = (endX: number) => {
+    if (projectTouchStartX === null) return;
+    const delta = endX - projectTouchStartX;
+    if (delta > 50) prevMobileProject();
+    if (delta < -50) nextMobileProject();
+    setProjectTouchStartX(null);
   };
 
   return (
@@ -195,7 +208,7 @@ export default function HomePage() {
 
       <motion.div className="gallery-wrap" {...revealMotion} id="projects">
         <div style={{ textAlign: 'center', marginBottom: '3rem' }}><div style={{ fontSize: 12, fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', color: 'var(--teal)', marginBottom: '0.5rem' }}>PROJECTS</div><h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(32px,4vw,50px)', fontWeight: 800, letterSpacing: '-1.5px' }}>Our work is deployed in real environments.</h2></div>
-        <div className="gallery-grid">
+        <div className="gallery-grid gallery-grid-desktop">
           {projectConfigs.map((project) => (
             <motion.button key={project.slug} className="g-card" whileHover={{ scale: 1.03 }} transition={{ duration: 0.6, ease: easeCurve }} onClick={() => router.push(`/projects/${project.slug}`)} style={{ border: 'none' }}>
               <div className="featured-overlay"><span className="name">{project.name}</span><div className="source">{project.problem}</div></div>
@@ -205,6 +218,30 @@ export default function HomePage() {
             <button className="like-btn" type="button" onClick={() => router.push('/labs')}>LABS</button>
             <div className="featured-overlay"><span className="tag">Internal research and system development focused on IoT, robotics, and intelligent infrastructure.</span></div>
           </motion.div>
+        </div>
+
+        <div
+          className="gallery-carousel"
+          onTouchStart={(event) => setProjectTouchStartX(event.changedTouches[0]?.clientX ?? null)}
+          onTouchEnd={(event) => handleProjectTouchEnd(event.changedTouches[0]?.clientX ?? 0)}
+        >
+          <button className="gallery-carousel-arrow gallery-carousel-arrow-left" type="button" onClick={prevMobileProject} aria-label="Previous project">←</button>
+          <motion.button
+            key={projectConfigs[mobileProjectIndex].slug}
+            className="g-card g-card-mobile"
+            initial={{ opacity: 0.7, x: 24 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.35, ease: easeCurve }}
+            onClick={() => router.push(`/projects/${projectConfigs[mobileProjectIndex].slug}`)}
+            style={{ border: 'none', width: '100%' }}
+          >
+            <div className="art-gradient-warm" style={{ width: '100%', height: '64%' }} />
+            <div className="featured-overlay">
+              <span className="name">{projectConfigs[mobileProjectIndex].name}</span>
+              <div className="source">{projectConfigs[mobileProjectIndex].problem}</div>
+            </div>
+          </motion.button>
+          <button className="gallery-carousel-arrow gallery-carousel-arrow-right" type="button" onClick={nextMobileProject} aria-label="Next project">→</button>
         </div>
       </motion.div>
 
