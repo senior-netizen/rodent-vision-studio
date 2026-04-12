@@ -28,7 +28,17 @@ export default function HomePage() {
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const [mobileProjectIndex, setMobileProjectIndex] = useState(0);
   const [projectTouchStartX, setProjectTouchStartX] = useState<number | null>(null);
-  const heroLines = useMemo(() => ['Engineering Digital', 'Infrastructure for Africa'], []);
+  const heroFanCards = useMemo(
+    () => [
+      { className: 'card-1', emoji: '⚡', title: 'Energy Grid' },
+      { className: 'card-2', emoji: '💳', title: 'Fintech Rails' },
+      { className: 'card-3', emoji: '📡', title: 'IoT Mesh' },
+      { className: 'card-4', emoji: '🧠', title: 'AI Orchestration' },
+      { className: 'card-5', emoji: '🛰️', title: 'Telemetry Core' },
+      { className: 'card-6', emoji: '🛡️', title: 'Security Layer' },
+    ],
+    [],
+  );
   const serviceVisuals = ['art-gradient-dots', 'art-gradient-rainbow', 'art-teal', 'art-gradient-purple'];
 
   const heroRef = useRef<HTMLDivElement | null>(null);
@@ -57,6 +67,41 @@ export default function HomePage() {
     };
     window.addEventListener('resize', onResize, { passive: true });
     return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  useEffect(() => {
+    const cards = Array.from(document.querySelectorAll<HTMLElement>('.fan-card'));
+    if (!cards.length) return undefined;
+
+    const cleanups = cards.map((card) => {
+      const computedTransform = window.getComputedStyle(card).transform;
+      card.dataset.baseTransform = computedTransform === 'none' ? '' : computedTransform;
+
+      const handleMouseMove = (event: MouseEvent) => {
+        const rect = card.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width - 0.5;
+        const y = (event.clientY - rect.top) / rect.height - 0.5;
+        const base = card.dataset.baseTransform || '';
+
+        card.style.transform = `${base} rotateX(${y * -6}deg) rotateY(${x * 8}deg) translateY(-20px) scale(1.05)`;
+      };
+
+      const handleMouseLeave = () => {
+        card.style.transform = '';
+      };
+
+      card.addEventListener('mousemove', handleMouseMove);
+      card.addEventListener('mouseleave', handleMouseLeave);
+
+      return () => {
+        card.removeEventListener('mousemove', handleMouseMove);
+        card.removeEventListener('mouseleave', handleMouseLeave);
+      };
+    });
+
+    return () => {
+      cleanups.forEach((cleanup) => cleanup());
+    };
   }, []);
 
   useEffect(() => {
@@ -169,17 +214,26 @@ export default function HomePage() {
       </AnimatePresence>
 
       <motion.div className="hero" ref={heroRef} variants={heroContainer} initial="hidden" animate="show" id="about">
-        <h1>{heroLines.map((line, index) => (<span key={line} style={{ display: 'block', overflow: 'hidden' }}><motion.span style={{ display: 'block', willChange: 'transform, opacity' }} initial={{ y: '120%', opacity: 0 }} animate={{ y: '0%', opacity: 1 }} transition={{ duration: 0.9, ease: easeCurve, delay: 0.16 + index * 0.08 }}>{line}</motion.span></span>))}</h1>
-        <motion.p className="hero-sub" variants={heroItem}>We design and build production-grade systems across web, mobile, IoT, and robotics—focused on performance, reliability, and real-world deployment.</motion.p>
-        <motion.div className="hero-btns" variants={heroItem}>
-          <button type="button" className="btn-primary" onClick={() => goToSection('projects')}>View Work</button>
-          <button type="button" className="btn-ghost" onClick={() => setProjectModalOpen(true)}>Start a Project</button>
-        </motion.div>
+        <div className="hero-content">
+          <h1>Build insane systems that actually work ⚡</h1>
+          <p>From IoT grids to fintech rails — Rodent Inc turns wild ideas into deployed infrastructure.</p>
+        </div>
+
         <motion.div className="cards-fan" variants={heroItem} style={{ y: heroParallaxY, willChange: 'transform' }}>
-          <span className="bubble teal bubble-1">Web Systems</span>
-          <span className="bubble green bubble-2">Mobile Applications</span>
-          {[1, 2, 3, 4, 5, 6].map((card, index) => (
-            <motion.div key={card} className="fan-card" whileHover={{ scale: 1.03 }} transition={{ duration: 0.6, ease: easeCurve }} initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} style={{ willChange: 'transform, opacity' }} custom={index} />
+          {heroFanCards.map((card, index) => (
+            <motion.div
+              key={card.title}
+              className={`fan-card ${card.className}`}
+              initial={{ opacity: 0, y: 28 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, ease: easeCurve, delay: 0.2 + index * 0.07 }}
+              style={{ willChange: 'transform, opacity' }}
+            >
+              <div className="card-inner">
+                <span className="emoji">{card.emoji}</span>
+                <span className="title">{card.title}</span>
+              </div>
+            </motion.div>
           ))}
         </motion.div>
       </motion.div>
