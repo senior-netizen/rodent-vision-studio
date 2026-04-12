@@ -76,7 +76,7 @@ export default function HomePage() {
   const serviceVisuals: Record<string, { className: string; imageSrc?: string; imageAlt?: string }> = {
     web: { className: 'art-gradient-dots' },
     mobile: { className: 'art-gradient-rainbow', imageSrc: '/visuals/chiredzi.png', imageAlt: 'Chiredzi mobile preview' },
-    iot: { className: 'art-teal', imageSrc: '/visuals/shedsense-preview.jpg', imageAlt: 'IoT systems preview' },
+    iot: { className: 'art-teal', imageSrc: '/visuals/iot.png', imageAlt: 'IoT systems preview' },
     robotics: { className: 'art-gradient-purple' },
   };
 
