@@ -60,7 +60,7 @@ export const projectConfigs: ProjectConfig[] = [
     stack: ['Next.js 14', 'TypeScript', 'Three.js', 'Framer Motion', 'PostgreSQL'],
     dataFlow: ['Edge Meter → MQTT Broker', 'Broker → Stream Processor', 'Processor → Rule Engine', 'Rule Engine → Dashboard'],
     decisions: ['Prioritized eventual consistency for wide-area device bursts.', 'Used deterministic replay paths for incident reconstruction.'],
-    visuals: { screenshot: '/visuals/shedsense-ui.jpg', diagram: '/visuals/shedsense-architecture.jpg', preview: '/visuals/shedsense-preview.jpg' },
+    visuals: { screenshot: '/visuals/sh.png', diagram: '/visuals/shedsense-architecture.jpg', preview: '/visuals/sh.png' },
     outcome: 'Reduced event-to-action time by 41% with deterministic alert confidence routing.',
     summary: {
       scope: 'Telemetry and dispatch intelligence platform across distributed field assets.',
