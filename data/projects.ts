@@ -39,7 +39,7 @@ export const projectConfigs: ProjectConfig[] = [
     stack: ['Next.js', 'TypeScript', 'React Query', 'PostgreSQL', 'Tailwind CSS'],
     dataFlow: ['User Query → Search Index', 'Search Index → Property Catalog', 'Catalog → Listing Detail', 'Listing Events → Agent Dashboard'],
     decisions: ['Kept property lookup paths index-first for responsive browsing.', 'Separated listing write access behind authenticated publisher flows.'],
-    visuals: { screenshot: '/visuals/meterflow-ui.jpg', diagram: '/visuals/meterflow-architecture.jpg', preview: '/visuals/meterflow-preview.jpg' },
+    visuals: { screenshot: '/visuals/fe.png', diagram: '/visuals/meterflow-architecture.jpg', preview: '/visuals/fe.png' },
     outcome: 'Delivered a single platform for discovering homes and publishing managed listings.',
     summary: {
       scope: 'End-to-end property search and listing platform.',
