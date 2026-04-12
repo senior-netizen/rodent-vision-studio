@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AnimatePresence, motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { StartProjectModal } from '@/components/contact/start-project-modal';
@@ -29,17 +29,6 @@ export default function HomePage() {
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const [mobileProjectIndex, setMobileProjectIndex] = useState(0);
   const [projectTouchStartX, setProjectTouchStartX] = useState<number | null>(null);
-  const heroFanCards = useMemo(
-    () => [
-      { className: 'card-1', emoji: '⚡', title: 'Energy Grid' },
-      { className: 'card-2', emoji: '💳', title: 'Fintech Rails' },
-      { className: 'card-3', emoji: '📡', title: 'IoT Mesh' },
-      { className: 'card-4', emoji: '🧠', title: 'AI Orchestration' },
-      { className: 'card-5', emoji: '🛰️', title: 'Telemetry Core' },
-      { className: 'card-6', emoji: '🛡️', title: 'Security Layer' },
-    ],
-    [],
-  );
   const serviceVisuals = ['art-gradient-dots', 'art-gradient-rainbow', 'art-teal', 'art-gradient-purple'];
 
   const heroRef = useRef<HTMLDivElement | null>(null);
@@ -68,41 +57,6 @@ export default function HomePage() {
     };
     window.addEventListener('resize', onResize, { passive: true });
     return () => window.removeEventListener('resize', onResize);
-  }, []);
-
-  useEffect(() => {
-    const cards = Array.from(document.querySelectorAll<HTMLElement>('.fan-card'));
-    if (!cards.length) return undefined;
-
-    const cleanups = cards.map((card) => {
-      const computedTransform = window.getComputedStyle(card).transform;
-      card.dataset.baseTransform = computedTransform === 'none' ? '' : computedTransform;
-
-      const handleMouseMove = (event: MouseEvent) => {
-        const rect = card.getBoundingClientRect();
-        const x = (event.clientX - rect.left) / rect.width - 0.5;
-        const y = (event.clientY - rect.top) / rect.height - 0.5;
-        const base = card.dataset.baseTransform || '';
-
-        card.style.transform = `${base} rotateX(${y * -6}deg) rotateY(${x * 8}deg) translateY(-20px) scale(1.05)`;
-      };
-
-      const handleMouseLeave = () => {
-        card.style.transform = '';
-      };
-
-      card.addEventListener('mousemove', handleMouseMove);
-      card.addEventListener('mouseleave', handleMouseLeave);
-
-      return () => {
-        card.removeEventListener('mousemove', handleMouseMove);
-        card.removeEventListener('mouseleave', handleMouseLeave);
-      };
-    });
-
-    return () => {
-      cleanups.forEach((cleanup) => cleanup());
-    };
   }, []);
 
   useEffect(() => {
@@ -221,21 +175,71 @@ export default function HomePage() {
         </div>
 
         <motion.div className="cards-fan" variants={heroItem} style={{ y: heroParallaxY, willChange: 'transform' }}>
-          {heroFanCards.map((card, index) => (
-            <motion.div
-              key={card.title}
-              className={`fan-card ${card.className}`}
-              initial={{ opacity: 0, y: 28 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, ease: easeCurve, delay: 0.2 + index * 0.07 }}
-              style={{ willChange: 'transform, opacity' }}
-            >
+          <span className="floating-badge floating-badge-coplin">@coplin</span>
+          <span className="floating-badge floating-badge-andree">@andree</span>
+
+          <motion.div
+            className="fan-card card-1"
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, ease: easeCurve, delay: 0.2 }}
+            style={{ willChange: 'transform, opacity' }}
+          >
+            <div className="card-content">
+              <span className="card-badge">FEATURED</span>
               <div className="card-inner">
-                <span className="emoji">{card.emoji}</span>
-                <span className="title">{card.title}</span>
+                <div className="card-art">★</div>
               </div>
-            </motion.div>
-          ))}
+            </div>
+          </motion.div>
+
+          <motion.div className="fan-card card-2" initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, ease: easeCurve, delay: 0.27 }} style={{ willChange: 'transform, opacity' }}>
+            <div className="card-content">
+              <span className="card-badge">MANGA</span>
+              <div className="card-inner">
+                <div className="card-art-text">MANGA</div>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div className="fan-card card-3" initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, ease: easeCurve, delay: 0.34 }} style={{ willChange: 'transform, opacity' }}>
+            <div className="card-content">
+              <span className="card-badge">FRIO</span>
+              <div className="card-inner">
+                <div className="card-art-text">FRIO</div>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div className="fan-card card-4" initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, ease: easeCurve, delay: 0.41 }} style={{ willChange: 'transform, opacity' }}>
+            <div className="card-content">
+              <span className="card-badge">21 AUG</span>
+              <div className="card-inner">
+                <div className="card-date">
+                  <span className="date-num">21</span>
+                  <span className="date-month">AUG</span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div className="fan-card card-5" initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, ease: easeCurve, delay: 0.48 }} style={{ willChange: 'transform, opacity' }}>
+            <div className="card-content">
+              <span className="card-badge">INDEP.</span>
+              <div className="card-inner">
+                <div className="card-art-text">INDEP.<br />DAY</div>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div className="fan-card card-6" initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, ease: easeCurve, delay: 0.55 }} style={{ willChange: 'transform, opacity' }}>
+            <div className="card-content">
+              <span className="card-badge">♣</span>
+              <div className="card-inner">
+                <div className="card-art">♣</div>
+              </div>
+            </div>
+          </motion.div>
         </motion.div>
       </motion.div>
 
