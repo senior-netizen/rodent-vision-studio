@@ -1,19 +1,12 @@
 import type { Metadata } from 'next';
-import { DM_Sans, Syne } from 'next/font/google';
+import type { CSSProperties } from 'react';
 import './globals.css';
 import { SmoothScrollProvider } from '@/components/sections/smooth-scroll-provider';
 
-const syne = Syne({
-  subsets: ['latin'],
-  variable: '--font-syne',
-  weight: ['400', '500', '600', '700', '800'],
-});
-
-const dmSans = DM_Sans({
-  subsets: ['latin'],
-  variable: '--font-dm-sans',
-  weight: ['300', '400', '500'],
-});
+const fontVariables: CSSProperties = {
+  '--font-syne': '"Segoe UI", "Inter", "Helvetica Neue", Arial, sans-serif',
+  '--font-dm-sans': '"Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif',
+} as CSSProperties;
 
 export const metadata: Metadata = {
   title: 'Rodent, Inc. — Engineering Digital Infrastructure for Africa',
@@ -22,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${syne.variable} ${dmSans.variable}`}>
+    <html lang="en" style={fontVariables}>
       <body><SmoothScrollProvider>{children}</SmoothScrollProvider></body>
     </html>
   );
