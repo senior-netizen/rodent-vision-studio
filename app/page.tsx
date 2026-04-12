@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
+import { AnimatePresence, motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { StartProjectModal } from '@/components/contact/start-project-modal';
 import { projectConfigs } from '@/data/projects';
 import { labs } from '@/data/labs';
@@ -22,6 +22,7 @@ export default function HomePage() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('about');
   const [projectModalOpen, setProjectModalOpen] = useState(false);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [serviceIndex, setServiceIndex] = useState(0);
   const [mobileServiceIndex, setMobileServiceIndex] = useState(0);
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
@@ -49,6 +50,16 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth > 900) {
+        setMobileNavOpen(false);
+      }
+    };
+    window.addEventListener('resize', onResize, { passive: true });
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -71,6 +82,7 @@ export default function HomePage() {
   const goToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     trackEvent({ name: 'nav_click', metadata: { section: id } });
+    setMobileNavOpen(false);
   };
 
   const nextMobileService = () => setMobileServiceIndex((prev) => (prev + 1) % services.length);
@@ -112,23 +124,49 @@ export default function HomePage() {
           <span className="logo-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 8L12 3L20 8V16L12 21L4 16V8Z" fill="#1ac99e" opacity="0.2" /><path d="M4 8L12 3L20 8" stroke="#1ac99e" strokeWidth="2" strokeLinejoin="round" /><path d="M12 3V12M4 8L12 12L20 8" stroke="#1ac99e" strokeWidth="2" strokeLinejoin="round" /></svg></span>
           Rodent, Inc.
         </button>
-        <div className="nav-links">
-          {sectionIds.map((id) => (
-            <button
-              key={id}
-              type="button"
-              onClick={() => goToSection(id)}
-              style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: activeSection === id ? 'var(--dark)' : undefined }}
-            >
-              {id.charAt(0).toUpperCase() + id.slice(1)}
-            </button>
-          ))}
+        <div className="nav-desktop-group">
+          <div className="nav-links">
+            {sectionIds.map((id) => (
+              <button
+                key={id}
+                type="button"
+                onClick={() => goToSection(id)}
+                style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: activeSection === id ? 'var(--dark)' : undefined }}
+              >
+                {id.charAt(0).toUpperCase() + id.slice(1)}
+              </button>
+            ))}
+          </div>
+          <div className="nav-actions">
+            <button className="nav-icon" type="button" onClick={() => router.push('/blog')} aria-label="Go to blog">✎</button>
+            <button className="nav-icon" type="button" onClick={() => router.push('/contact')} aria-label="Go to contact">⚙</button>
+          </div>
         </div>
-        <div className="nav-actions">
-          <button className="nav-icon" type="button" onClick={() => router.push('/blog')} aria-label="Go to blog">✎</button>
-          <button className="nav-icon" type="button" onClick={() => router.push('/contact')} aria-label="Go to contact">⚙</button>
-        </div>
+        <button className="nav-mobile-toggle" type="button" onClick={() => setMobileNavOpen((prev) => !prev)} aria-label={mobileNavOpen ? 'Close menu' : 'Open menu'}>
+          {mobileNavOpen ? '✕' : '☰'}
+        </button>
       </motion.nav>
+      <AnimatePresence>
+        {mobileNavOpen && (
+          <motion.div
+            className="mobile-nav-panel"
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.25, ease: easeCurve }}
+          >
+            {sectionIds.map((id) => (
+              <button key={id} type="button" onClick={() => goToSection(id)}>
+                {id.charAt(0).toUpperCase() + id.slice(1)}
+              </button>
+            ))}
+            <div className="mobile-nav-actions">
+              <button type="button" onClick={() => { setMobileNavOpen(false); router.push('/blog'); }}>Blog</button>
+              <button type="button" onClick={() => { setMobileNavOpen(false); router.push('/contact'); }}>Contact</button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <motion.div className="hero" ref={heroRef} variants={heroContainer} initial="hidden" animate="show" id="about">
         <h1>{heroLines.map((line, index) => (<span key={line} style={{ display: 'block', overflow: 'hidden' }}><motion.span style={{ display: 'block', willChange: 'transform, opacity' }} initial={{ y: '120%', opacity: 0 }} animate={{ y: '0%', opacity: 1 }} transition={{ duration: 0.9, ease: easeCurve, delay: 0.16 + index * 0.08 }}>{line}</motion.span></span>))}</h1>
