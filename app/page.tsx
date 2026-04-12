@@ -1,17 +1,6 @@
-'use client';
+import { MarketplaceControls } from '@/components/home/marketplace-controls';
 
 export default function HomePage() {
-  const fadeMarketplaceGrid = () => {
-    const grid = document.querySelector<HTMLElement>('.mp-grid');
-    if (!grid) return;
-
-    grid.style.transition = 'opacity 0.3s';
-    grid.style.opacity = '0.4';
-    window.setTimeout(() => {
-      grid.style.opacity = '1';
-    }, 300);
-  };
-
   return (
     <>
       <nav>
@@ -135,8 +124,7 @@ export default function HomePage() {
               <h2>Marketplace<br />for Creativity</h2>
               <p className="mp-desc">In the realm of Artnesia, creativity knows no bounds, eternal marketplace celebrates the timeless nature of art.</p>
               <div className="mp-nav">
-                <button className="mp-nav-btn" onClick={fadeMarketplaceGrid}>←</button>
-                <button className="mp-nav-btn" onClick={fadeMarketplaceGrid}>→</button>
+                <MarketplaceControls />
               </div>
             </div>
             <div className="mp-right">
