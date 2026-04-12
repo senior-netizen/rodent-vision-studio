@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import type { CSSProperties } from 'react';
 import './globals.css';
 import { SmoothScrollProvider } from '@/components/sections/smooth-scroll-provider';
+import Script from 'next/script';
 
 const fontVariables: CSSProperties = {
   '--font-syne': '"Segoe UI", "Inter", "Helvetica Neue", Arial, sans-serif',
@@ -16,7 +17,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" style={fontVariables}>
-      <body><SmoothScrollProvider>{children}</SmoothScrollProvider></body>
+      <body>
+        <SmoothScrollProvider>{children}</SmoothScrollProvider>
+        <Script src="/awsmd-motion.js" strategy="afterInteractive" />
+      </body>
     </html>
   );
 }
