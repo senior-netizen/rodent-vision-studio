@@ -1,8 +1,12 @@
 export type ProjectConfig = {
   name: string;
-  slug: 'shedsense' | 'meterflow' | 'sheq' | 'kwiksend';
-  category: 'Grid Intelligence' | 'IoT Devices' | 'Dashboards' | 'Payment Rails';
+  slug: string;
+  category: string;
   role: string;
+  links: {
+    live?: string;
+    repo?: string;
+  };
   problem: string;
   architecture: string[];
   stack: string[];
@@ -23,10 +27,34 @@ export type ProjectConfig = {
 
 export const projectConfigs: ProjectConfig[] = [
   {
+    name: 'Feel At Home',
+    slug: 'feel-at-home',
+    category: 'PropTech Platform',
+    role: 'Full-Stack Product Engineering',
+    links: {
+      live: 'https://feelathome.vercel.app'
+    },
+    problem: 'Property discovery and listing management were fragmented for renters and agents.',
+    architecture: ['Listing Search API', 'Property Catalog', 'Auth + Session Guard', 'Publishing Workflow'],
+    stack: ['Next.js', 'TypeScript', 'React Query', 'PostgreSQL', 'Tailwind CSS'],
+    dataFlow: ['User Query → Search Index', 'Search Index → Property Catalog', 'Catalog → Listing Detail', 'Listing Events → Agent Dashboard'],
+    decisions: ['Kept property lookup paths index-first for responsive browsing.', 'Separated listing write access behind authenticated publisher flows.'],
+    visuals: { screenshot: '/visuals/meterflow-ui.jpg', diagram: '/visuals/meterflow-architecture.jpg', preview: '/visuals/meterflow-preview.jpg' },
+    outcome: 'Delivered a single platform for discovering homes and publishing managed listings.',
+    summary: {
+      scope: 'End-to-end property search and listing platform.',
+      timeline: 'Iterative delivery with continuous UX refinement.',
+      primaryKpi: 'Faster listing discovery and publication turnaround.',
+    }
+  },
+  {
     name: 'ShedSense',
     slug: 'shedsense',
     category: 'Grid Intelligence',
     role: 'Grid Intelligence Layer',
+    links: {
+      live: 'https://backend-nl4r.onrender.com'
+    },
     problem: 'Energy variance across field assets created blind spots and delayed dispatch decisions.',
     architecture: ['Telemetry Ingest', 'Anomaly Classifier', 'Dispatch Rules Engine', 'Ops Timeline UI'],
     stack: ['Next.js 14', 'TypeScript', 'Three.js', 'Framer Motion', 'PostgreSQL'],
@@ -41,57 +69,45 @@ export const projectConfigs: ProjectConfig[] = [
     }
   },
   {
-    name: 'MeterFlow',
-    slug: 'meterflow',
-    category: 'IoT Devices',
-    role: 'IoT Device Fabric',
-    problem: 'Multi-vendor meter fleets lacked a stable protocol and observability baseline.',
-    architecture: ['Protocol Adapter Bus', 'Schema Normalizer', 'Device Twin Store', 'Control Surface'],
-    stack: ['Next.js 14', 'TypeScript', 'Node Workers', 'Redis Streams', 'Prometheus'],
-    dataFlow: ['Device Pollers → Adapter Bus', 'Adapter Bus → Normalizer', 'Normalizer → Twin Store', 'Twin Store → Operator Surface'],
-    decisions: ['Built idempotent ingest contracts for replay-safe data correction.', 'Separated command and telemetry channels for failure isolation.'],
-    visuals: { screenshot: '/visuals/meterflow-ui.jpg', diagram: '/visuals/meterflow-architecture.jpg', preview: '/visuals/meterflow-preview.jpg' },
-    outcome: 'Stabilized ingestion reliability at 99.97% across heterogeneous device networks.',
-    summary: {
-      scope: 'Multi-vendor device fabric with protocol normalization and command isolation.',
-      timeline: '12-week implementation with phased fleet onboarding.',
-      primaryKpi: '99.97% ingestion reliability baseline.',
-    }
-  },
-  {
-    name: 'SHEQ Dashboard',
-    slug: 'sheq',
-    category: 'Dashboards',
-    role: 'Operational Assurance Surface',
-    problem: 'Safety and quality indicators were spread across manual sheets and static reports.',
-    architecture: ['Compliance Event Bus', 'Risk Scoring Service', 'Audit Snapshot Engine', 'Executive Command View'],
-    stack: ['Next.js 14', 'TypeScript', 'Framer Motion', 'D3 SVG', 'ClickHouse'],
-    dataFlow: ['Field Reports → Event Bus', 'Event Bus → Risk Scoring', 'Scoring → Audit Snapshots', 'Snapshots → Command View'],
-    decisions: ['Introduced immutable snapshot windows for audit traceability.', 'Used sparse rendering for high-density operations timelines.'],
+    name: 'AR by Rodent',
+    slug: 'ar-by-rodent',
+    category: 'AR Experience',
+    role: 'Interactive Front-End Engineering',
+    links: {
+      live: 'https://arbyrodent.vercel.app/'
+    },
+    problem: 'Brand storytelling needed a richer interactive medium than static landing pages.',
+    architecture: ['Experience Shell', 'Animation Orchestrator', 'Media Surface', 'CTA Interaction Layer'],
+    stack: ['Next.js', 'TypeScript', 'Framer Motion', 'WebGL', 'CSS Effects'],
+    dataFlow: ['User Session → Experience Shell', 'Interaction Events → Animation Layer', 'Media Assets → Render Pipeline', 'CTA Actions → Source Destination'],
+    decisions: ['Optimized animation sequencing to keep motion smooth across device classes.', 'Structured interactive elements to preserve accessibility while remaining immersive.'],
     visuals: { screenshot: '/visuals/sheq-ui.jpg', diagram: '/visuals/sheq-architecture.jpg', preview: '/visuals/sheq-preview.jpg' },
-    outcome: 'Cut compliance reporting overhead by 58% and improved incident lead visibility.',
+    outcome: 'Shipped an immersive AR-led product surface with strong visual identity and engagement.',
     summary: {
-      scope: 'Operational assurance dashboard for SHEQ risk, audits and incident visibility.',
-      timeline: '10-week build with compliance stakeholder checkpoints.',
-      primaryKpi: '58% reduction in reporting overhead.',
+      scope: 'Interactive AR showcase and product landing experience.',
+      timeline: 'Rapid delivery with design-led iterations.',
+      primaryKpi: 'Higher session engagement on interactive surfaces.',
     }
   },
   {
-    name: 'KwikSend',
-    slug: 'kwiksend',
-    category: 'Payment Rails',
-    role: 'Payment Orchestration Rail',
-    problem: 'Disjoint payment providers caused reconciliation drift and payout failures.',
-    architecture: ['Gateway Router', 'Ledger Core', 'Settlement Reconciler', 'Dispute Monitor'],
-    stack: ['Next.js 14', 'TypeScript', 'GSAP', 'Kafka', 'PostgreSQL'],
-    dataFlow: ['Client Intent → Router', 'Router → Ledger Core', 'Ledger → Settlement Reconciler', 'Reconciler → Monitoring Surface'],
-    decisions: ['Applied append-only ledger semantics for non-repudiation.', 'Enforced policy-based routing by corridor and fee profile.'],
+    name: 'Precise Locations',
+    slug: 'precise-locations',
+    category: 'Geospatial Package',
+    role: 'Library + Open Source Delivery',
+    links: {
+      repo: 'https://github.com/anesu398/precise-locations'
+    },
+    problem: 'Applications needed a reusable utility for managing coordinates and location-distance operations.',
+    architecture: ['Coordinate Validator', 'Distance Engine', 'Location Resolver', 'Package API Surface'],
+    stack: ['Node.js', 'TypeScript', 'npm', 'GitHub Actions', 'Semantic Versioning'],
+    dataFlow: ['Input Coordinates → Validation', 'Validated Data → Distance Engine', 'Distance Results → Consumer APIs', 'Package Releases → npm/GitHub'],
+    decisions: ['Kept API contracts small and deterministic for broad downstream use.', 'Automated publish and verification checks to keep releases reliable.'],
     visuals: { screenshot: '/visuals/kwiksend-ui.jpg', diagram: '/visuals/kwiksend-architecture.jpg', preview: '/visuals/kwiksend-preview.jpg' },
-    outcome: 'Improved settlement success rates to 99.92% while shrinking reconciliation lag to minutes.',
+    outcome: 'Provided a reusable geospatial toolkit for coordinate-driven applications.',
     summary: {
-      scope: 'Cross-provider payment orchestration and ledger-backed reconciliation.',
-      timeline: '14-week rollout across payment corridors.',
-      primaryKpi: '99.92% settlement success rate.',
+      scope: 'Open source Node.js package for precise location operations.',
+      timeline: 'Incremental releases with API stability focus.',
+      primaryKpi: 'Reusable location primitives for multiple products.',
     }
   }
 ];
