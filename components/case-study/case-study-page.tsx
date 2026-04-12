@@ -10,8 +10,24 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
   return (
     <main>
       {/* Hero */}
-      <section className="relative flex min-h-[80vh] flex-col justify-end pb-16 pt-32 md:pb-24">
+      <section className="relative pb-16 pt-28 md:pb-24 md:pt-32">
         <div className="container-wide">
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="card-glass mb-10 overflow-hidden p-1"
+          >
+            <Image
+              src={project.visuals.preview}
+              alt={`${project.name} project preview`}
+              width={1600}
+              height={900}
+              priority
+              className="h-auto w-full object-cover"
+            />
+          </motion.div>
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -45,6 +61,36 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
           >
             {project.role}
           </motion.p>
+
+          {(project.links.live || project.links.repo) && (
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.72, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-8 flex flex-wrap gap-3"
+            >
+              {project.links.live && (
+                <Link
+                  href={project.links.live}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rounded-md border border-border px-4 py-2 text-caption transition-colors duration-300 hover:border-border-hover hover:text-fg-muted"
+                >
+                  Visit live project
+                </Link>
+              )}
+              {project.links.repo && (
+                <Link
+                  href={project.links.repo}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rounded-md border border-border px-4 py-2 text-caption transition-colors duration-300 hover:border-border-hover hover:text-fg-muted"
+                >
+                  View source repository
+                </Link>
+              )}
+            </motion.div>
+          )}
         </div>
 
         <motion.div
