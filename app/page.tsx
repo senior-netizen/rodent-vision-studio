@@ -215,7 +215,7 @@ export default function HomePage() {
 
       <motion.div className="hero" ref={heroRef} variants={heroContainer} initial="hidden" animate="show" id="about">
         <div className="hero-content">
-          <h1>Build insane systems that actually work </h1>
+          <h1>Build insane systems that actually work ⚡</h1>
           <p>From IoT grids to fintech rails — Rodent Inc turns wild ideas into deployed infrastructure.</p>
         </div>
 

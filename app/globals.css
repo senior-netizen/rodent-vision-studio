@@ -111,15 +111,15 @@ nav {
 .cards-fan {
   position: relative;
   width: min(800px, 90vw);
-  height: 280px;
+  height: 320px;
   margin: 0 auto;
   perspective: 1100px;
   isolation: isolate;
 }
 .fan-card {
   position: absolute;
-  width: 180px;
-  height: 230px;
+  width: 210px;
+  height: 265px;
   border-radius: 18px;
   overflow: hidden;
   transform-origin: bottom center;
@@ -297,12 +297,12 @@ section { padding: 100px 2rem; max-width: 1200px; margin: 0 auto; }
 
   .cards-fan {
     width: min(760px, 96vw);
-    height: 250px;
+    height: 280px;
   }
 
   .fan-card {
-    width: 142px;
-    height: 190px;
+    width: 164px;
+    height: 214px;
   }
 
   .title {
