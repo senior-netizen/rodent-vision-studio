@@ -15,8 +15,8 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'Pallet Ross — A place to display your masterpiece',
-  description: 'Artists can display their masterpieces, and buyers can discover and purchase works that resonate with them.',
+  title: 'Rodent, Inc. — Engineering Digital Infrastructure for Africa',
+  description: 'We design and build production-grade systems across web, mobile, IoT, and robotics—focused on performance, reliability, and real-world deployment.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
