@@ -18,7 +18,7 @@ npm run dev
 
 App runs at `http://localhost:8080`.
 
-## Commands
+## Runtime commands (Next.js only)
 
 ```bash
 npm run dev        # next dev --port 8080
@@ -27,6 +27,10 @@ npm run start      # next start
 npm run lint       # next lint
 npm run typecheck  # tsc --noEmit
 ```
+
+## Architecture Note
+
+This repository is **Next.js App Router only**. The canonical entrypoints are `app/layout.tsx` and `app/page.tsx`; do not add a second frontend entrypoint (for example, Vite `index.html` + `src/main.tsx` mounting flow).
 
 ## Architecture map
 
