@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AnimatePresence, motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { StartProjectModal } from '@/components/contact/start-project-modal';
@@ -17,6 +17,50 @@ const sectionIds = ['about', 'services', 'projects', 'contact', 'labs', 'philoso
 const heroContainer = { hidden: {}, show: { transition: { staggerChildren: 0.08 } } };
 const heroItem = { hidden: { opacity: 0, y: 40 }, show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: easeCurve } } };
 const revealMotion = { initial: { opacity: 0, y: 60 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, margin: '-20%' }, transition: { duration: 0.8, ease: easeCurve } };
+const heroTechCards = [
+  {
+    className: 'card-1',
+    badge: 'MOBILE',
+    title: 'Flutter + NestJS + PostgreSQL',
+    details: ['Frontend: Flutter', 'Backend: NestJS', 'DB: PostgreSQL'],
+    useCase: 'Property mgmt, booking & remittance',
+  },
+  {
+    className: 'card-2',
+    badge: 'MVP',
+    title: 'Flutter + Firebase',
+    details: ['Auth + Firestore', 'Cloud Messaging', 'Real-time sync'],
+    useCase: 'Rapid prototypes, chat, notifications',
+  },
+  {
+    className: 'card-3',
+    badge: 'SAAS',
+    title: 'React + Node.js + MongoDB',
+    details: ['React frontend', 'Node APIs', 'MongoDB schema-flex'],
+    useCase: 'Dashboards, analytics, internal tools',
+  },
+  {
+    className: 'card-4',
+    badge: 'CMS',
+    title: 'Laravel + MySQL + Bootstrap',
+    details: ['Laravel MVC', 'MySQL data layer', 'Bootstrap UI'],
+    useCase: 'Corporate sites, CMS & admin portals',
+  },
+  {
+    className: 'card-5',
+    badge: 'IOT',
+    title: 'ESP32 + Node + WS + React',
+    details: ['ESP32 sensors', 'WebSocket streaming', 'React monitoring UI'],
+    useCase: 'SHEQ dashboards, smart meters, alerts',
+  },
+  {
+    className: 'card-6',
+    badge: 'ENTERPRISE',
+    title: 'ASP.NET + PostgreSQL + Cloudinary + Stripe',
+    details: ['Secure APIs', 'Media handling', 'Payment workflows'],
+    useCase: 'Fintech & property platforms at scale',
+  },
+] as const;
 
 export default function HomePage() {
   const router = useRouter();
@@ -29,17 +73,6 @@ export default function HomePage() {
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const [mobileProjectIndex, setMobileProjectIndex] = useState(0);
   const [projectTouchStartX, setProjectTouchStartX] = useState<number | null>(null);
-  const heroFanCards = useMemo(
-    () => [
-      { className: 'card-1', emoji: '⚡', title: 'Energy Grid' },
-      { className: 'card-2', emoji: '💳', title: 'Fintech Rails' },
-      { className: 'card-3', emoji: '📡', title: 'IoT Mesh' },
-      { className: 'card-4', emoji: '🧠', title: 'AI Orchestration' },
-      { className: 'card-5', emoji: '🛰️', title: 'Telemetry Core' },
-      { className: 'card-6', emoji: '🛡️', title: 'Security Layer' },
-    ],
-    [],
-  );
   const serviceVisuals = ['art-gradient-dots', 'art-gradient-rainbow', 'art-teal', 'art-gradient-purple'];
 
   const heroRef = useRef<HTMLDivElement | null>(null);
@@ -68,41 +101,6 @@ export default function HomePage() {
     };
     window.addEventListener('resize', onResize, { passive: true });
     return () => window.removeEventListener('resize', onResize);
-  }, []);
-
-  useEffect(() => {
-    const cards = Array.from(document.querySelectorAll<HTMLElement>('.fan-card'));
-    if (!cards.length) return undefined;
-
-    const cleanups = cards.map((card) => {
-      const computedTransform = window.getComputedStyle(card).transform;
-      card.dataset.baseTransform = computedTransform === 'none' ? '' : computedTransform;
-
-      const handleMouseMove = (event: MouseEvent) => {
-        const rect = card.getBoundingClientRect();
-        const x = (event.clientX - rect.left) / rect.width - 0.5;
-        const y = (event.clientY - rect.top) / rect.height - 0.5;
-        const base = card.dataset.baseTransform || '';
-
-        card.style.transform = `${base} rotateX(${y * -6}deg) rotateY(${x * 8}deg) translateY(-20px) scale(1.05)`;
-      };
-
-      const handleMouseLeave = () => {
-        card.style.transform = '';
-      };
-
-      card.addEventListener('mousemove', handleMouseMove);
-      card.addEventListener('mouseleave', handleMouseLeave);
-
-      return () => {
-        card.removeEventListener('mousemove', handleMouseMove);
-        card.removeEventListener('mouseleave', handleMouseLeave);
-      };
-    });
-
-    return () => {
-      cleanups.forEach((cleanup) => cleanup());
-    };
   }, []);
 
   useEffect(() => {
@@ -221,7 +219,10 @@ export default function HomePage() {
         </div>
 
         <motion.div className="cards-fan" variants={heroItem} style={{ y: heroParallaxY, willChange: 'transform' }}>
-          {heroFanCards.map((card, index) => (
+          <span className="floating-badge floating-badge-coplin">@KwikSend • Flutter/Nest</span>
+          <span className="floating-badge floating-badge-andree">@ShedSense • ESP32/WS</span>
+
+          {heroTechCards.map((card, index) => (
             <motion.div
               key={card.title}
               className={`fan-card ${card.className}`}
@@ -230,9 +231,17 @@ export default function HomePage() {
               transition={{ duration: 0.55, ease: easeCurve, delay: 0.2 + index * 0.07 }}
               style={{ willChange: 'transform, opacity' }}
             >
-              <div className="card-inner">
-                <span className="emoji">{card.emoji}</span>
-                <span className="title">{card.title}</span>
+              <div className="card-content">
+                <span className="card-badge">{card.badge}</span>
+                <div className="card-inner">
+                  <div className="card-art-text card-stack-title">{card.title}</div>
+                  <div className="card-stack-list">
+                    {card.details.map((item) => (
+                      <span key={item}>{item}</span>
+                    ))}
+                  </div>
+                  <p className="card-stack-use">{card.useCase}</p>
+                </div>
               </div>
             </motion.div>
           ))}

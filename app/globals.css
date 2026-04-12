@@ -110,86 +110,151 @@ nav {
 
 .cards-fan {
   position: relative;
-  width: min(800px, 90vw);
+  width: 100%;
+  max-width: 900px;
   height: 320px;
   margin: 0 auto;
-  perspective: 1100px;
-  isolation: isolate;
 }
 .fan-card {
   position: absolute;
-  width: 210px;
-  height: 265px;
-  border-radius: 18px;
+  width: 200px;
+  height: 260px;
+  border-radius: 20px;
   overflow: hidden;
-  transform-origin: bottom center;
-  transition: all 0.35s cubic-bezier(0.22,1,0.36,1);
-  box-shadow:
-    0 30px 80px rgba(0,0,0,0.45),
-    0 10px 30px rgba(0,0,0,0.25),
-    inset 0 0 0 1px rgba(255,255,255,0.08);
-  backface-visibility: hidden;
+  cursor: pointer;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  transform-origin: 50% 95%;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease;
 }
-.fan-card::before {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  border-radius: inherit;
-  background: inherit;
-  filter: blur(20px);
-  opacity: 0.6;
-  z-index: -1;
-}
-.fan-card::after {
-  content: "";
-  position: absolute;
-  inset: 1px;
-  border-radius: inherit;
-  border: 1px solid rgba(255,255,255,0.22);
-  pointer-events: none;
-}
-.fan-card:nth-child(1) { transform: rotate(-20deg); left: 2%; z-index: 1; }
-.fan-card:nth-child(2) { transform: rotate(-12deg); left: 14%; z-index: 2; }
-.fan-card:nth-child(3) { transform: rotate(-4deg) scale(1.02); left: 28%; z-index: 3; }
-.fan-card:nth-child(4) { transform: rotate(4deg) scale(1.02); left: 44%; z-index: 4; }
-.fan-card:nth-child(5) { transform: rotate(12deg); left: 58%; z-index: 5; }
-.fan-card:nth-child(6) { transform: rotate(20deg); left: 70%; z-index: 6; }
 .fan-card:hover {
-  transform: translateY(-20px) scale(1.05) !important;
+  --card-raise: -16px;
+  transform: translateY(var(--card-raise)) rotate(var(--card-rotation)) scale(1.02);
   z-index: 20;
-  box-shadow:
-    0 50px 120px rgba(0,0,0,0.6),
-    0 20px 60px rgba(0,0,0,0.35);
+  box-shadow: 0 30px 50px rgba(0, 0, 0, 0.22);
 }
 
-.card-1 { background: linear-gradient(135deg,#00E0FF,#7C3AED); }
-.card-2 { background: linear-gradient(135deg,#FF6B6B,#FFB800); }
-.card-3 { background: linear-gradient(135deg,#00FFA3,#00C2FF); }
-.card-4 { background: linear-gradient(135deg,#FF00CC,#3333FF); }
-.card-5 { background: linear-gradient(135deg,#FDE68A,#F97316); }
-.card-6 { background: linear-gradient(135deg,#22C55E,#06B6D4); }
+.card-1 { --card-rotation: -18deg; left: 0%; z-index: 1; transform: rotate(var(--card-rotation)); background: linear-gradient(145deg, #8a1f26 0%, #5f1318 45%, #2a0508 100%); }
+.card-2 { --card-rotation: -11deg; left: 12%; z-index: 2; transform: rotate(var(--card-rotation)); background: linear-gradient(145deg, #f1f1f0 0%, #dbdcdd 48%, #c4c6ca 100%); color: var(--dark); }
+.card-3 { --card-rotation: -4deg; left: 26%; z-index: 3; transform: rotate(var(--card-rotation)); background: linear-gradient(145deg, #ffcd61 0%, #f99a38 45%, #e66a22 100%); }
+.card-4 { --card-rotation: 3deg; left: 40%; z-index: 4; transform: rotate(var(--card-rotation)); background: linear-gradient(150deg, #c73c2f 0%, #ef8c43 65%, #f4bd67 100%); }
+.card-5 { --card-rotation: 10deg; left: 54%; z-index: 5; transform: rotate(var(--card-rotation)); background: radial-gradient(circle at 25% 20%, rgba(59, 130, 246, 0.92), transparent 45%), radial-gradient(circle at 80% 80%, rgba(239, 68, 68, 0.88), transparent 42%), linear-gradient(145deg, #15305d 0%, #351a3f 55%, #1d1237 100%); }
+.card-6 { --card-rotation: 17deg; left: 68%; z-index: 6; transform: rotate(var(--card-rotation)); background: linear-gradient(145deg, #4c8f47 0%, #2f6d3c 45%, #1f4129 100%); }
+
+.card-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.card-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.24);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  line-height: 1;
+  color: #fff;
+}
+
+.card-2 .card-badge { color: var(--dark); background: rgba(255, 255, 255, 0.48); border-color: rgba(0, 0, 0, 0.08); }
 
 .card-inner {
   position: relative;
   height: 100%;
-  padding: 16px;
+  padding: 38px 14px 14px;
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 8px;
   color: white;
   font-weight: 600;
-  text-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  text-align: left;
+  text-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
 }
 
-.emoji {
-  position: absolute;
-  top: 12px;
-  left: 14px;
+.card-art {
+  font-size: 110px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.card-art-text {
+  font-size: 20px;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  font-family: var(--font-syne), sans-serif;
+}
+
+.card-stack-title {
   font-size: 18px;
+  line-height: 1.05;
 }
 
-.title {
-  font-size: 14px;
+.card-stack-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 11px;
+  line-height: 1.2;
+  opacity: 0.95;
+}
+
+.card-stack-use {
+  margin: 2px 0 0;
+  font-size: 10px;
+  line-height: 1.25;
+  opacity: 0.92;
+}
+
+.card-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 0.92;
+}
+
+.date-num {
+  font-size: 100px;
+  letter-spacing: -0.06em;
+}
+
+.date-month {
+  margin-top: 2px;
+  font-size: 28px;
+  letter-spacing: 0.1em;
+  font-weight: 800;
+}
+
+.floating-badge {
+  position: absolute;
+  z-index: 30;
+  padding: 8px 14px;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
   letter-spacing: 0.02em;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.floating-badge-coplin {
+  top: -10px;
+  left: 5%;
+  background: #1ac99e;
+}
+
+.floating-badge-andree {
+  top: -30px;
+  right: 10%;
+  background: #22c55e;
 }
 
 .cards-fan::after {
@@ -305,9 +370,12 @@ section { padding: 100px 2rem; max-width: 1200px; margin: 0 auto; }
     height: 214px;
   }
 
-  .title {
-    font-size: 12px;
-  }
+  .card-art { font-size: 80px; }
+  .card-art-text { font-size: 16px; }
+  .card-stack-title { font-size: 14px; }
+  .card-stack-list { font-size: 10px; }
+  .date-num { font-size: 72px; }
+  .date-month { font-size: 22px; }
 
   .mp-grid-desktop { display: none; }
   .mp-carousel {
@@ -439,12 +507,20 @@ footer p { color: rgba(255,255,255,0.5); font-size: 14px; margin-bottom: 2rem; }
   .hero-btns button { width: 100%; max-width: 280px; }
   .cards-fan { height: 220px; width: min(520px, 95vw); }
   .fan-card { width: 120px; height: 170px; }
-  .fan-card:nth-child(1) { left: 1%; }
-  .fan-card:nth-child(2) { left: 11%; }
-  .fan-card:nth-child(3) { left: 27%; }
-  .fan-card:nth-child(4) { left: 43%; }
-  .fan-card:nth-child(5) { left: 59%; }
-  .fan-card:nth-child(6) { left: 74%; }
+  .card-1 { left: 1%; }
+  .card-2 { left: 11%; }
+  .card-3 { left: 27%; }
+  .card-4 { left: 43%; }
+  .card-5 { left: 59%; }
+  .card-6 { left: 74%; }
+  .card-art { font-size: 56px; }
+  .card-art-text { font-size: 13px; }
+  .card-stack-title { font-size: 12px; }
+  .card-stack-list { font-size: 9px; }
+  .card-stack-use { font-size: 8px; }
+  .date-num { font-size: 56px; }
+  .date-month { font-size: 16px; }
+  .floating-badge { font-size: 10px; padding: 6px 10px; }
   .bubble { font-size: 11px; padding: 5px 10px; }
   .bubble-1 { left: 3%; top: 6px; }
   .bubble-2 { right: 3%; top: 4px; }
@@ -471,13 +547,13 @@ footer p { color: rgba(255,255,255,0.5); font-size: 14px; margin-bottom: 2rem; }
 
 @media (max-width: 640px) {
   .cards-fan { height: 180px; }
-  .fan-card:nth-child(5),
-  .fan-card:nth-child(6),
-  .bubble-2 { display: none; }
-  .fan-card:nth-child(1) { left: 2%; transform: rotate(-14deg); }
-  .fan-card:nth-child(2) { left: 21%; transform: rotate(-4deg); }
-  .fan-card:nth-child(3) { left: 42%; transform: rotate(5deg); }
-  .fan-card:nth-child(4) { left: 62%; transform: rotate(13deg); }
+  .card-5,
+  .card-6,
+  .floating-badge-andree { display: none; }
+  .card-1 { left: 2%; --card-rotation: -14deg; }
+  .card-2 { left: 21%; --card-rotation: -4deg; }
+  .card-3 { left: 42%; --card-rotation: 5deg; }
+  .card-4 { left: 62%; --card-rotation: 13deg; }
 }
 
 .art-shape { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
