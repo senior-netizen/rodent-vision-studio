@@ -73,7 +73,12 @@ export default function HomePage() {
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const [mobileProjectIndex, setMobileProjectIndex] = useState(0);
   const [projectTouchStartX, setProjectTouchStartX] = useState<number | null>(null);
-  const serviceVisuals = ['art-gradient-dots', 'art-gradient-rainbow', 'art-teal', 'art-gradient-purple'];
+  const serviceVisuals: Record<string, { className: string; imageSrc?: string; imageAlt?: string }> = {
+    web: { className: 'art-gradient-dots' },
+    mobile: { className: 'art-gradient-rainbow', imageSrc: '/visuals/chiredzi.png', imageAlt: 'Chiredzi mobile preview' },
+    iot: { className: 'art-teal', imageSrc: '/visuals/shedsense-preview.jpg', imageAlt: 'IoT systems preview' },
+    robotics: { className: 'art-gradient-purple' },
+  };
 
   const heroRef = useRef<HTMLDivElement | null>(null);
   const marketplaceRef = useRef<HTMLDivElement | null>(null);
@@ -243,8 +248,8 @@ export default function HomePage() {
                   <p className="card-stack-use">{card.useCase}</p>
                 </div>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          ))}
 
           <motion.div className="fan-card card-2" initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, ease: easeCurve, delay: 0.27 }} style={{ willChange: 'transform, opacity' }}>
             <div className="card-content">
@@ -325,9 +330,24 @@ export default function HomePage() {
           </div>
 
           <div className="mp-grid mp-grid-desktop">
-            {services.map((card, index) => (
+            {services.map((card) => (
               <motion.button key={card.slug} className="mp-card mp-card-large" whileHover={{ scale: 1.03 }} transition={{ duration: 0.6, ease: easeCurve }} style={{ willChange: 'transform', border: 'none', textAlign: 'left', cursor: 'pointer' }} onClick={() => router.push(`/services/${card.slug}`)}>
-                <div className={serviceVisuals[index]} style={{ width: '100%', aspectRatio: '1.15' }} />
+                {(() => {
+                  const visual = serviceVisuals[card.slug];
+                  return (
+                    <div className={visual?.className} style={{ width: '100%', aspectRatio: '1.15', position: 'relative', overflow: 'hidden' }}>
+                      {visual?.imageSrc ? (
+                        <Image
+                          src={visual.imageSrc}
+                          alt={visual.imageAlt ?? `${card.name} preview`}
+                          fill
+                          sizes="(max-width: 1024px) 100vw, 25vw"
+                          style={{ objectFit: 'cover' }}
+                        />
+                      ) : null}
+                    </div>
+                  );
+                })()}
                 <div className="mp-card-label">{card.name}</div>
               </motion.button>
             ))}
@@ -348,7 +368,26 @@ export default function HomePage() {
               style={{ border: 'none', textAlign: 'left', cursor: 'pointer' }}
               onClick={() => router.push(`/services/${services[mobileServiceIndex].slug}`)}
             >
-              <div className={serviceVisuals[mobileServiceIndex]} style={{ width: '100%', aspectRatio: '1.2' }} />
+              {(() => {
+                const service = services[mobileServiceIndex];
+                const visual = serviceVisuals[service.slug];
+                return (
+                  <div
+                    className={visual?.className}
+                    style={{ width: '100%', aspectRatio: '1.2', position: 'relative', overflow: 'hidden' }}
+                  >
+                    {visual?.imageSrc ? (
+                      <Image
+                        src={visual.imageSrc}
+                        alt={visual.imageAlt ?? `${service.name} preview`}
+                        fill
+                        sizes="(max-width: 900px) 90vw, 50vw"
+                        style={{ objectFit: 'cover' }}
+                      />
+                    ) : null}
+                  </div>
+                );
+              })()}
               <div className="mp-card-label">{services[mobileServiceIndex].name}</div>
             </motion.button>
             <button className="mp-carousel-arrow mp-carousel-arrow-right" type="button" onClick={nextMobileService} aria-label="Next service">→</button>
