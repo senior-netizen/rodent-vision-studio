@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { DM_Sans, Syne } from 'next/font/google';
 import './globals.css';
+import { SmoothScrollProvider } from '@/components/sections/smooth-scroll-provider';
 
 const syne = Syne({
   subsets: ['latin'],
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${syne.variable} ${dmSans.variable}`}>
-      <body>{children}</body>
+      <body><SmoothScrollProvider>{children}</SmoothScrollProvider></body>
     </html>
   );
 }
