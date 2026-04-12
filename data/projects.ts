@@ -60,7 +60,7 @@ export const projectConfigs: ProjectConfig[] = [
     stack: ['Next.js 14', 'TypeScript', 'Three.js', 'Framer Motion', 'PostgreSQL'],
     dataFlow: ['Edge Meter → MQTT Broker', 'Broker → Stream Processor', 'Processor → Rule Engine', 'Rule Engine → Dashboard'],
     decisions: ['Prioritized eventual consistency for wide-area device bursts.', 'Used deterministic replay paths for incident reconstruction.'],
-    visuals: { screenshot: '/visuals/shedsense-ui.jpg', diagram: '/visuals/shedsense-architecture.jpg', preview: '/visuals/shedsense-preview.jpg' },
+    visuals: { screenshot: '/visuals/sh.png', diagram: '/visuals/shedsense-architecture.jpg', preview: '/visuals/sh.png' },
     outcome: 'Reduced event-to-action time by 41% with deterministic alert confidence routing.',
     summary: {
       scope: 'Telemetry and dispatch intelligence platform across distributed field assets.',
@@ -81,7 +81,7 @@ export const projectConfigs: ProjectConfig[] = [
     stack: ['Next.js', 'TypeScript', 'Framer Motion', 'WebGL', 'CSS Effects'],
     dataFlow: ['User Session → Experience Shell', 'Interaction Events → Animation Layer', 'Media Assets → Render Pipeline', 'CTA Actions → Source Destination'],
     decisions: ['Optimized animation sequencing to keep motion smooth across device classes.', 'Structured interactive elements to preserve accessibility while remaining immersive.'],
-    visuals: { screenshot: '/visuals/sheq-ui.jpg', diagram: '/visuals/sheq-architecture.jpg', preview: '/visuals/sheq-preview.jpg' },
+    visuals: { screenshot: '/visuals/ar.png', diagram: '/visuals/sheq-architecture.jpg', preview: '/visuals/ar.png' },
     outcome: 'Shipped an immersive AR-led product surface with strong visual identity and engagement.',
     summary: {
       scope: 'Interactive AR showcase and product landing experience.',
@@ -102,7 +102,7 @@ export const projectConfigs: ProjectConfig[] = [
     stack: ['Node.js', 'TypeScript', 'npm', 'GitHub Actions', 'Semantic Versioning'],
     dataFlow: ['Input Coordinates → Validation', 'Validated Data → Distance Engine', 'Distance Results → Consumer APIs', 'Package Releases → npm/GitHub'],
     decisions: ['Kept API contracts small and deterministic for broad downstream use.', 'Automated publish and verification checks to keep releases reliable.'],
-    visuals: { screenshot: '/visuals/kwiksend-ui.jpg', diagram: '/visuals/kwiksend-architecture.jpg', preview: '/visuals/kwiksend-preview.jpg' },
+    visuals: { screenshot: '/visuals/pr.png', diagram: '/visuals/kwiksend-architecture.jpg', preview: '/visuals/pr.png' },
     outcome: 'Provided a reusable geospatial toolkit for coordinate-driven applications.',
     summary: {
       scope: 'Open source Node.js package for precise location operations.',
