@@ -17,6 +17,50 @@ const sectionIds = ['about', 'services', 'projects', 'contact', 'labs', 'philoso
 const heroContainer = { hidden: {}, show: { transition: { staggerChildren: 0.08 } } };
 const heroItem = { hidden: { opacity: 0, y: 40 }, show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: easeCurve } } };
 const revealMotion = { initial: { opacity: 0, y: 60 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, margin: '-20%' }, transition: { duration: 0.8, ease: easeCurve } };
+const heroTechCards = [
+  {
+    className: 'card-1',
+    badge: 'MOBILE',
+    title: 'Flutter + NestJS + PostgreSQL',
+    details: ['Frontend: Flutter', 'Backend: NestJS', 'DB: PostgreSQL'],
+    useCase: 'Property mgmt, booking & remittance',
+  },
+  {
+    className: 'card-2',
+    badge: 'MVP',
+    title: 'Flutter + Firebase',
+    details: ['Auth + Firestore', 'Cloud Messaging', 'Real-time sync'],
+    useCase: 'Rapid prototypes, chat, notifications',
+  },
+  {
+    className: 'card-3',
+    badge: 'SAAS',
+    title: 'React + Node.js + MongoDB',
+    details: ['React frontend', 'Node APIs', 'MongoDB schema-flex'],
+    useCase: 'Dashboards, analytics, internal tools',
+  },
+  {
+    className: 'card-4',
+    badge: 'CMS',
+    title: 'Laravel + MySQL + Bootstrap',
+    details: ['Laravel MVC', 'MySQL data layer', 'Bootstrap UI'],
+    useCase: 'Corporate sites, CMS & admin portals',
+  },
+  {
+    className: 'card-5',
+    badge: 'IOT',
+    title: 'ESP32 + Node + WS + React',
+    details: ['ESP32 sensors', 'WebSocket streaming', 'React monitoring UI'],
+    useCase: 'SHEQ dashboards, smart meters, alerts',
+  },
+  {
+    className: 'card-6',
+    badge: 'ENTERPRISE',
+    title: 'ASP.NET + PostgreSQL + Cloudinary + Stripe',
+    details: ['Secure APIs', 'Media handling', 'Payment workflows'],
+    useCase: 'Fintech & property platforms at scale',
+  },
+] as const;
 
 export default function HomePage() {
   const router = useRouter();
@@ -175,20 +219,29 @@ export default function HomePage() {
         </div>
 
         <motion.div className="cards-fan" variants={heroItem} style={{ y: heroParallaxY, willChange: 'transform' }}>
-          <span className="floating-badge floating-badge-coplin">@coplin</span>
-          <span className="floating-badge floating-badge-andree">@andree</span>
+          <span className="floating-badge floating-badge-coplin">@KwikSend • Flutter/Nest</span>
+          <span className="floating-badge floating-badge-andree">@ShedSense • ESP32/WS</span>
 
-          <motion.div
-            className="fan-card card-1"
-            initial={{ opacity: 0, y: 28 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, ease: easeCurve, delay: 0.2 }}
-            style={{ willChange: 'transform, opacity' }}
-          >
-            <div className="card-content">
-              <span className="card-badge">FEATURED</span>
-              <div className="card-inner">
-                <div className="card-art">★</div>
+          {heroTechCards.map((card, index) => (
+            <motion.div
+              key={card.title}
+              className={`fan-card ${card.className}`}
+              initial={{ opacity: 0, y: 28 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, ease: easeCurve, delay: 0.2 + index * 0.07 }}
+              style={{ willChange: 'transform, opacity' }}
+            >
+              <div className="card-content">
+                <span className="card-badge">{card.badge}</span>
+                <div className="card-inner">
+                  <div className="card-art-text card-stack-title">{card.title}</div>
+                  <div className="card-stack-list">
+                    {card.details.map((item) => (
+                      <span key={item}>{item}</span>
+                    ))}
+                  </div>
+                  <p className="card-stack-use">{card.useCase}</p>
+                </div>
               </div>
             </div>
           </motion.div>
