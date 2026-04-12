@@ -128,23 +128,7 @@ export default function HomePage() {
           <span className="bubble teal bubble-1">Web Systems</span>
           <span className="bubble green bubble-2">Mobile Applications</span>
           {[1, 2, 3, 4, 5, 6].map((card, index) => (
-            <motion.div
-              key={card}
-              className="fan-card"
-              whileHover={{ scale: 1.03 }}
-              transition={{ duration: 0.6, ease: easeCurve }}
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              style={{ willChange: 'transform, opacity' }}
-              custom={index}
-            >
-              {card === 1 && <div className="art-1 art-shape"><div className="art-text" style={{ fontSize: 40, opacity: 0.3 }}>★</div></div>}
-              {card === 2 && <div className="art-2 art-shape"><div className="art-text" style={{ color: '#999', fontSize: 18 }}>IoT Systems</div></div>}
-              {card === 3 && <div className="art-3 art-shape"><div className="art-text">Robotics</div></div>}
-              {card === 4 && <div className="art-4 art-shape"><div className="art-text" style={{ fontSize: 20 }}>DEPLOY<br /><small style={{ fontSize: 12 }}>OPS</small></div></div>}
-              {card === 5 && <div className="art-5 art-shape"><div className="art-text" style={{ fontSize: 16 }}>REAL<br />LOAD</div></div>}
-              {card === 6 && <div className="art-6 art-shape"><div className="art-text" style={{ fontSize: 48 }}>♣</div></div>}
-            </motion.div>
+            <motion.div key={card} className="fan-card" whileHover={{ scale: 1.03 }} transition={{ duration: 0.6, ease: easeCurve }} initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} style={{ willChange: 'transform, opacity' }} custom={index} />
           ))}
         </motion.div>
       </motion.div>
