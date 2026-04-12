@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -17,7 +15,7 @@
 }
 
 html { scroll-behavior: smooth; }
-body { font-family: 'DM Sans', sans-serif; background: #fff; color: var(--dark); overflow-x: hidden; }
+body { font-family: var(--font-dm-sans), sans-serif; background: #fff; color: var(--dark); overflow-x: hidden; }
 
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
@@ -25,7 +23,7 @@ nav {
   background: rgba(255,255,255,0.92); backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
 }
-.nav-logo { display: flex; align-items: center; gap: 8px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 17px; color: var(--dark); text-decoration: none; }
+.nav-logo { display: flex; align-items: center; gap: 8px; font-family: var(--font-syne), sans-serif; font-weight: 700; font-size: 17px; color: var(--dark); text-decoration: none; }
 .logo-icon { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; }
 .logo-icon svg { width: 22px; height: 22px; }
 .nav-links { display: flex; align-items: center; gap: 2rem; margin-left: auto; font-size: 14px; color: var(--mid); }
@@ -42,7 +40,7 @@ nav {
   position: relative; overflow: hidden;
 }
 .hero h1 {
-  font-family: 'Syne', sans-serif; font-size: clamp(42px, 7vw, 80px);
+  font-family: var(--font-syne), sans-serif; font-size: clamp(42px, 7vw, 80px);
   font-weight: 800; line-height: 1.05; letter-spacing: -2px; max-width: 700px;
   margin-bottom: 1rem; position: relative; z-index: 2;
 }
@@ -95,12 +93,12 @@ section { padding: 100px 2rem; max-width: 1200px; margin: 0 auto; }
 .gateway-label { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--mid); padding: 2rem 2.5rem 0; }
 .gateway-inner { display: grid; grid-template-columns: 1fr 1.4fr; align-items: center; gap: 0; }
 .gateway-text { padding: 2.5rem; }
-.gateway-text h2 { font-family: 'Syne', sans-serif; font-size: clamp(36px, 5vw, 58px); font-weight: 800; line-height: 1.05; letter-spacing: -2px; margin-bottom: 2rem; }
+.gateway-text h2 { font-family: var(--font-syne), sans-serif; font-size: clamp(36px, 5vw, 58px); font-weight: 800; line-height: 1.05; letter-spacing: -2px; margin-bottom: 2rem; }
 .gateway-bubble { display: inline-block; background: var(--teal); color: #fff; border-radius: 100px; padding: 6px 16px; font-size: 13px; font-weight: 500; margin-bottom: 1.5rem; }
 .gateway-controls { display: flex; align-items: center; gap: 12px; }
 .ctrl-btn { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border); background: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; transition: background 0.2s; }
 .ctrl-btn:hover { background: var(--light); }
-.watch-btn { background: #fff; border: 1px solid var(--border); padding: 8px 20px; border-radius: 100px; font-size: 14px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.2s; }
+.watch-btn { background: #fff; border: 1px solid var(--border); padding: 8px 20px; border-radius: 100px; font-size: 14px; cursor: pointer; font-family: var(--font-dm-sans), sans-serif; transition: background 0.2s; }
 .watch-btn:hover { background: var(--light); }
 .gateway-img { position: relative; height: 400px; background: var(--orange); display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .gateway-img img { width: 100%; height: 100%; object-fit: cover; }
@@ -112,7 +110,7 @@ section { padding: 100px 2rem; max-width: 1200px; margin: 0 auto; }
 .dot-ind.active { background: #fff; }
 
 .community-wrap { background: #fff; padding: 100px 2rem; text-align: center; }
-.community-wrap h2 { font-family: 'Syne', sans-serif; font-size: clamp(36px, 5vw, 60px); font-weight: 800; letter-spacing: -2px; margin: 1.5rem 0 0.75rem; }
+.community-wrap h2 { font-family: var(--font-syne), sans-serif; font-size: clamp(36px, 5vw, 60px); font-weight: 800; letter-spacing: -2px; margin: 1.5rem 0 0.75rem; }
 .community-wrap p { color: var(--mid); font-size: 15px; max-width: 300px; margin: 0 auto; line-height: 1.7; }
 .community-icon { font-size: 28px; margin-bottom: 0.5rem; }
 .avatar-row { display: flex; gap: 12px; align-items: center; justify-content: center; overflow: hidden; padding: 2rem 0; flex-wrap: nowrap; }
@@ -129,11 +127,11 @@ section { padding: 100px 2rem; max-width: 1200px; margin: 0 auto; }
 .marketplace-wrap { padding: 100px 0; background: #fafaf8; }
 .marketplace-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
 .marketplace-header { display: flex; align-items: flex-start; gap: 3rem; margin-bottom: 3rem; }
-.mp-left h2 { font-family: 'Syne', sans-serif; font-size: clamp(32px, 4vw, 52px); font-weight: 800; letter-spacing: -1.5px; line-height: 1.05; }
+.mp-left h2 { font-family: var(--font-syne), sans-serif; font-size: clamp(32px, 4vw, 52px); font-weight: 800; letter-spacing: -1.5px; line-height: 1.05; }
 .mp-label { font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--teal); margin-bottom: 0.5rem; }
 .mp-desc { font-size: 14px; color: var(--mid); line-height: 1.7; max-width: 260px; margin-top: 1rem; }
 .mp-right { margin-left: auto; padding-top: 0.5rem; }
-.view-all-btn { background: var(--purple); color: #fff; padding: 10px 22px; border-radius: 100px; font-size: 14px; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+.view-all-btn { background: var(--purple); color: #fff; padding: 10px 22px; border-radius: 100px; font-size: 14px; border: none; cursor: pointer; font-family: var(--font-dm-sans), sans-serif; }
 .mp-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; align-items: end; }
 .mp-card { border-radius: 16px; overflow: hidden; background: var(--light); }
 .mp-card img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
@@ -156,12 +154,12 @@ section { padding: 100px 2rem; max-width: 1200px; margin: 0 auto; }
 .featured-overlay .tag { font-size: 12px; background: rgba(255,255,255,0.25); border-radius: 100px; padding: 3px 10px; display: inline-block; margin-bottom: 6px; }
 .featured-overlay .name { font-weight: 600; font-size: 14px; }
 .featured-overlay .source { font-size: 12px; opacity: 0.8; }
-.like-btn { position: absolute; top: 12px; right: 12px; background: #fff; border: none; border-radius: 100px; padding: 5px 12px; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 4px; font-family: 'DM Sans', sans-serif; }
+.like-btn { position: absolute; top: 12px; right: 12px; background: #fff; border: none; border-radius: 100px; padding: 5px 12px; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 4px; font-family: var(--font-dm-sans), sans-serif; }
 
 footer { background: var(--dark); color: #fff; padding: 4rem 2rem; text-align: center; }
-footer h2 { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800; margin-bottom: 1rem; }
+footer h2 { font-family: var(--font-syne), sans-serif; font-size: 32px; font-weight: 800; margin-bottom: 1rem; }
 footer p { color: rgba(255,255,255,0.5); font-size: 14px; margin-bottom: 2rem; }
-.footer-btn { background: #fff; color: var(--dark); padding: 12px 32px; border-radius: 100px; border: none; font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+.footer-btn { background: #fff; color: var(--dark); padding: 12px 32px; border-radius: 100px; border: none; font-size: 14px; font-weight: 500; cursor: pointer; font-family: var(--font-dm-sans), sans-serif; }
 .footer-links { display: flex; gap: 2rem; justify-content: center; margin-top: 3rem; font-size: 13px; color: rgba(255,255,255,0.4); }
 .footer-links a { color: inherit; text-decoration: none; }
 
@@ -191,4 +189,4 @@ footer p { color: rgba(255,255,255,0.5); font-size: 14px; margin-bottom: 2rem; }
 }
 
 .art-shape { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
-.art-text { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 28px; color: rgba(255,255,255,0.9); text-align: center; line-height: 1; }
+.art-text { font-family: var(--font-syne), sans-serif; font-weight: 800; font-size: 28px; color: rgba(255,255,255,0.9); text-align: center; line-height: 1; }
