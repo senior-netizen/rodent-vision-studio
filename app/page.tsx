@@ -73,6 +73,7 @@ export default function HomePage() {
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const [mobileProjectIndex, setMobileProjectIndex] = useState(0);
   const [projectTouchStartX, setProjectTouchStartX] = useState<number | null>(null);
+  const activeService = services[serviceIndex];
   const serviceVisuals: Record<string, { className: string; imageSrc?: string; imageAlt?: string }> = {
     web: { className: 'art-gradient-dots' },
     mobile: { className: 'art-gradient-rainbow', imageSrc: '/visuals/chiredzi.png', imageAlt: 'Chiredzi mobile preview' },
@@ -266,9 +267,24 @@ export default function HomePage() {
                 <button className="ctrl-btn" type="button" onClick={() => setServiceIndex((prev) => (prev - 1 + services.length) % services.length)}>←</button>
                 <button className="ctrl-btn" type="button" onClick={() => setServiceIndex((prev) => (prev + 1) % services.length)}>→</button>
               </div>
-              <p style={{ marginTop: '0.8rem', fontSize: 13, color: 'var(--mid)' }}>Current focus: {services[serviceIndex].name}</p>
+              <p style={{ marginTop: '0.8rem', fontSize: 13, color: 'var(--mid)' }}>Current focus: {activeService.name}</p>
             </div>
-            <motion.div className="gateway-img" whileHover={{ scale: 1.03 }} transition={{ duration: 0.6, ease: easeCurve }} />
+            <motion.div className="gateway-img" whileHover={{ scale: 1.03 }} transition={{ duration: 0.6, ease: easeCurve }}>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeService.slug}
+                  className="gateway-focus-content"
+                  initial={{ opacity: 0, y: 18 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -18 }}
+                  transition={{ duration: 0.28, ease: easeCurve }}
+                >
+                  <p className="gateway-focus-label">{activeService.name}</p>
+                  <p className="gateway-focus-summary">{activeService.summary}</p>
+                  <p className="gateway-focus-capability">{activeService.capability}</p>
+                </motion.div>
+              </AnimatePresence>
+            </motion.div>
           </div>
         </div>
       </motion.div>
