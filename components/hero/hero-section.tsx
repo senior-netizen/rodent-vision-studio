@@ -3,8 +3,23 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { SystemMapCanvas } from '@/components/system-map/system-map-canvas';
+import { projectConfigs } from '@/data/projects';
 
 const titleWords = ['Built', 'for', 'Real-World', 'Deployment'];
+
+const cardTransforms = [
+  { rotate: -12, x: -60, z: 1 },
+  { rotate: -4, x: -20, z: 2 },
+  { rotate: 3, x: 20, z: 3 },
+  { rotate: 10, x: 55, z: 2 },
+];
+
+const cardGradients = [
+  'from-emerald-500/80 to-emerald-700/90',
+  'from-rose-500/80 to-rose-700/90',
+  'from-zinc-400/80 to-zinc-600/90',
+  'from-amber-400/80 to-orange-500/90',
+];
 
 export function HeroSection() {
   return (
@@ -34,6 +49,59 @@ export function HeroSection() {
       {/* Content */}
       <div className="relative z-10 flex min-h-[100dvh] flex-col justify-end pb-16 md:pb-24">
         <div className="container-wide">
+          {/* Tilted Project Cards */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-12 flex items-center justify-center md:mb-16"
+          >
+            <div className="relative flex items-center justify-center h-[200px] md:h-[260px] w-full max-w-[500px]">
+              {projectConfigs.slice(0, 4).map((project, i) => {
+                const t = cardTransforms[i];
+                return (
+                  <motion.div
+                    key={project.slug}
+                    initial={{ opacity: 0, y: 40, rotate: 0 }}
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                      rotate: t.rotate,
+                      x: t.x,
+                    }}
+                    transition={{
+                      duration: 0.9,
+                      delay: 0.4 + i * 0.1,
+                      ease: [0.16, 1, 0.3, 1],
+                    }}
+                    className="absolute w-[120px] h-[170px] md:w-[150px] md:h-[210px] rounded-2xl shadow-2xl cursor-pointer group"
+                    style={{ zIndex: t.z }}
+                    whileHover={{ scale: 1.08, y: -10, zIndex: 10 }}
+                  >
+                    <div
+                      className={`relative w-full h-full rounded-2xl bg-gradient-to-br ${cardGradients[i]} p-4 flex flex-col justify-between overflow-hidden backdrop-blur-sm border border-white/10`}
+                    >
+                      {/* Category badge */}
+                      <span className="self-end rounded-full bg-emerald-500 px-2.5 py-0.5 text-[10px] font-semibold text-white shadow-md">
+                        {project.category.split(' ')[0]}
+                      </span>
+
+                      {/* Project name */}
+                      <div className="mt-auto">
+                        <p className="text-sm md:text-base font-bold text-white/90 leading-tight drop-shadow-md">
+                          {project.name}
+                        </p>
+                      </div>
+
+                      {/* Decorative glow */}
+                      <div className="absolute -bottom-6 -right-6 h-20 w-20 rounded-full bg-white/10 blur-2xl" />
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </motion.div>
+
           {/* Label */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
