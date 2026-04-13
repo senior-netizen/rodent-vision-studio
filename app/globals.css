@@ -111,34 +111,36 @@ nav {
 .cards-fan {
   position: relative;
   width: 100%;
-  max-width: 900px;
-  height: 320px;
+  max-width: 840px;
+  height: 380px;
   margin: 0 auto;
 }
 .fan-card {
+  --card-offset-y: 0px;
   position: absolute;
-  width: 200px;
-  height: 260px;
+  width: 228px;
+  height: 300px;
   border-radius: 20px;
   overflow: hidden;
   cursor: pointer;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
   transform-origin: 50% 95%;
+  transform: translateY(var(--card-offset-y)) rotate(var(--card-rotation));
   transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease;
 }
 .fan-card:hover {
   --card-raise: -16px;
-  transform: translateY(var(--card-raise)) rotate(var(--card-rotation)) scale(1.02);
+  transform: translateY(calc(var(--card-offset-y) + var(--card-raise))) rotate(var(--card-rotation)) scale(1.02);
   z-index: 20;
   box-shadow: 0 30px 50px rgba(0, 0, 0, 0.22);
 }
 
-.card-1 { --card-rotation: -18deg; left: 0%; z-index: 1; transform: rotate(var(--card-rotation)); background: linear-gradient(145deg, #8a1f26 0%, #5f1318 45%, #2a0508 100%); }
-.card-2 { --card-rotation: -11deg; left: 12%; z-index: 2; transform: rotate(var(--card-rotation)); background: linear-gradient(145deg, #f1f1f0 0%, #dbdcdd 48%, #c4c6ca 100%); color: var(--dark); }
-.card-3 { --card-rotation: -4deg; left: 26%; z-index: 3; transform: rotate(var(--card-rotation)); background: linear-gradient(145deg, #ffcd61 0%, #f99a38 45%, #e66a22 100%); }
-.card-4 { --card-rotation: 3deg; left: 40%; z-index: 4; transform: rotate(var(--card-rotation)); background: linear-gradient(150deg, #c73c2f 0%, #ef8c43 65%, #f4bd67 100%); }
-.card-5 { --card-rotation: 10deg; left: 54%; z-index: 5; transform: rotate(var(--card-rotation)); background: radial-gradient(circle at 25% 20%, rgba(59, 130, 246, 0.92), transparent 45%), radial-gradient(circle at 80% 80%, rgba(239, 68, 68, 0.88), transparent 42%), linear-gradient(145deg, #15305d 0%, #351a3f 55%, #1d1237 100%); }
-.card-6 { --card-rotation: 17deg; left: 68%; z-index: 6; transform: rotate(var(--card-rotation)); background: linear-gradient(145deg, #4c8f47 0%, #2f6d3c 45%, #1f4129 100%); }
+.card-1 { --card-rotation: -14deg; --card-offset-y: 6px; left: 2%; z-index: 1; background: linear-gradient(145deg, #8a1f26 0%, #5f1318 45%, #2a0508 100%); }
+.card-2 { --card-rotation: -8deg; --card-offset-y: 2px; left: 14%; z-index: 2; background: linear-gradient(145deg, #f1f1f0 0%, #dbdcdd 48%, #c4c6ca 100%); color: var(--dark); }
+.card-3 { --card-rotation: -3deg; --card-offset-y: -2px; left: 27%; z-index: 3; background: linear-gradient(145deg, #ffcd61 0%, #f99a38 45%, #e66a22 100%); }
+.card-4 { --card-rotation: 2deg; --card-offset-y: -2px; left: 40%; z-index: 4; background: linear-gradient(150deg, #c73c2f 0%, #ef8c43 65%, #f4bd67 100%); }
+.card-5 { --card-rotation: 8deg; --card-offset-y: 2px; left: 53%; z-index: 5; background: radial-gradient(circle at 25% 20%, rgba(59, 130, 246, 0.92), transparent 45%), radial-gradient(circle at 80% 80%, rgba(239, 68, 68, 0.88), transparent 42%), linear-gradient(145deg, #15305d 0%, #351a3f 55%, #1d1237 100%); }
+.card-6 { --card-rotation: 14deg; --card-offset-y: 6px; left: 66%; z-index: 6; background: linear-gradient(145deg, #4c8f47 0%, #2f6d3c 45%, #1f4129 100%); }
 
 .card-content {
   position: relative;
@@ -392,12 +394,12 @@ section { padding: 100px 2rem; max-width: 1200px; margin: 0 auto; }
 
   .cards-fan {
     width: min(760px, 96vw);
-    height: 280px;
+    height: 320px;
   }
 
   .fan-card {
-    width: 164px;
-    height: 214px;
+    width: 188px;
+    height: 248px;
   }
 
   .card-art { font-size: 80px; }
@@ -535,14 +537,14 @@ footer p { color: rgba(255,255,255,0.5); font-size: 14px; margin-bottom: 2rem; }
   .hero h1 { letter-spacing: -1px; }
   .hero-btns { flex-direction: column; width: 100%; margin-bottom: 2.5rem; }
   .hero-btns button { width: 100%; max-width: 280px; }
-  .cards-fan { height: 220px; width: min(520px, 95vw); }
-  .fan-card { width: 120px; height: 170px; }
+  .cards-fan { height: 250px; width: min(560px, 95vw); }
+  .fan-card { width: 136px; height: 190px; }
   .card-1 { left: 1%; }
-  .card-2 { left: 11%; }
-  .card-3 { left: 27%; }
-  .card-4 { left: 43%; }
-  .card-5 { left: 59%; }
-  .card-6 { left: 74%; }
+  .card-2 { left: 12%; }
+  .card-3 { left: 26%; }
+  .card-4 { left: 40%; }
+  .card-5 { left: 54%; }
+  .card-6 { left: 68%; }
   .card-art { font-size: 56px; }
   .card-art-text { font-size: 13px; }
   .card-stack-title { font-size: 12px; }
@@ -579,14 +581,15 @@ footer p { color: rgba(255,255,255,0.5); font-size: 14px; margin-bottom: 2rem; }
 }
 
 @media (max-width: 640px) {
-  .cards-fan { height: 180px; }
+  .cards-fan { height: 200px; }
   .card-5,
   .card-6,
   .floating-badge-andree { display: none; }
-  .card-1 { left: 2%; --card-rotation: -14deg; }
-  .card-2 { left: 21%; --card-rotation: -4deg; }
-  .card-3 { left: 42%; --card-rotation: 5deg; }
-  .card-4 { left: 62%; --card-rotation: 13deg; }
+  .fan-card { width: 126px; height: 176px; }
+  .card-1 { left: 2%; --card-rotation: -12deg; }
+  .card-2 { left: 20%; --card-rotation: -5deg; }
+  .card-3 { left: 39%; --card-rotation: 2deg; }
+  .card-4 { left: 58%; --card-rotation: 10deg; }
 }
 
 .art-shape { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
