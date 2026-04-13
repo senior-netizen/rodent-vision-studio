@@ -224,8 +224,8 @@ export default function HomePage() {
 
       <motion.div className="hero" ref={heroRef} variants={heroContainer} initial="hidden" animate="show" id="about">
         <div className="hero-content">
-          <h1>Build insane systems that actually work ⚡</h1>
-          <p>From IoT grids to fintech rails — Rodent Inc turns wild ideas into deployed infrastructure.</p>
+          <motion.h1 variants={heroItem}>Build insane systems that actually work ⚡</motion.h1>
+          <motion.p variants={heroItem}>From IoT grids to fintech rails — Rodent Inc turns wild ideas into deployed infrastructure.</motion.p>
         </div>
 
         <motion.div className="cards-fan" variants={heroItem} style={{ y: heroParallaxY, willChange: 'transform' }}>
@@ -236,9 +236,10 @@ export default function HomePage() {
             <motion.div
               key={card.title}
               className={`fan-card ${card.className}`}
-              initial={{ opacity: 0, y: 28 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, ease: easeCurve, delay: 0.2 + index * 0.07 }}
+              initial={{ opacity: 0, y: 40, rotate: -5 }}
+              animate={{ opacity: 1, y: 0, rotate: 0 }}
+              transition={{ duration: 0.7, ease: easeCurve, delay: 0.3 + index * 0.1 }}
+              whileHover={{ scale: 1.05, y: -8, transition: { duration: 0.3 } }}
               style={{ willChange: 'transform, opacity' }}
             >
               <div className="card-content">
@@ -304,7 +305,7 @@ export default function HomePage() {
 
           <div className="mp-grid mp-grid-desktop">
             {services.map((card) => (
-              <motion.button key={card.slug} className="mp-card mp-card-large" whileHover={{ scale: 1.03 }} transition={{ duration: 0.6, ease: easeCurve }} style={{ willChange: 'transform', border: 'none', textAlign: 'left', cursor: 'pointer' }} onClick={() => router.push(`/services/${card.slug}`)}>
+              <motion.button key={card.slug} className="mp-card mp-card-large" whileHover={{ scale: 1.04, y: -4 }} whileTap={{ scale: 0.98 }} transition={{ duration: 0.4, ease: easeCurve }} style={{ willChange: 'transform', border: 'none', textAlign: 'left', cursor: 'pointer' }} onClick={() => router.push(`/services/${card.slug}`)}>
                 {(() => {
                   const visual = serviceVisuals[card.slug];
                   return (
@@ -368,11 +369,11 @@ export default function HomePage() {
         </div>
       </motion.div>
 
-      <motion.div className="gallery-wrap" {...revealMotion} id="projects">
-        <div style={{ textAlign: 'center', marginBottom: '3rem' }}><div style={{ fontSize: 12, fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', color: 'var(--teal)', marginBottom: '0.5rem' }}>PROJECTS</div><h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(32px,4vw,50px)', fontWeight: 800, letterSpacing: '-1.5px' }}>Our work is deployed in real environments.</h2></div>
+      <motion.div className="gallery-wrap" {...scaleReveal} id="projects">
+        <motion.div style={{ textAlign: 'center', marginBottom: '3rem' }} {...slideInLeft}><div style={{ fontSize: 12, fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', color: 'var(--teal)', marginBottom: '0.5rem' }}>PROJECTS</div><h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(32px,4vw,50px)', fontWeight: 800, letterSpacing: '-1.5px' }}>Our work is deployed in real environments.</h2></motion.div>
         <div className="gallery-grid gallery-grid-desktop">
           {projectConfigs.map((project) => (
-            <motion.button key={project.slug} className="g-card" whileHover={{ scale: 1.03 }} transition={{ duration: 0.6, ease: easeCurve }} onClick={() => router.push(`/projects/${project.slug}`)} style={{ border: 'none' }}>
+            <motion.button key={project.slug} className="g-card" whileHover={{ scale: 1.04, y: -6 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.4, ease: easeCurve }} onClick={() => router.push(`/projects/${project.slug}`)} style={{ border: 'none' }}>
               <div className="g-card-media">
                 <Image
                   src={project.visuals.preview}
@@ -424,19 +425,27 @@ export default function HomePage() {
         </div>
       </motion.div>
 
-      <section id="labs" style={{ padding: '0 2rem 4rem', maxWidth: 1100, margin: '0 auto' }}>
-        <h2 style={{ fontFamily: 'var(--font-syne)', marginBottom: '1rem' }}>Labs</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: '1rem' }}>
+      <motion.section id="labs" style={{ padding: '0 2rem 4rem', maxWidth: 1100, margin: '0 auto' }} {...revealMotion}>
+        <motion.h2 style={{ fontFamily: 'var(--font-syne)', marginBottom: '1rem' }} {...slideInLeft}>Labs</motion.h2>
+        <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-10%' }} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: '1rem' }}>
           {labs.map((lab) => (
-            <Link key={lab.slug} href={`/labs/${lab.slug}`} style={{ border: '1px solid var(--border)', borderRadius: 12, padding: '1rem', textDecoration: 'none', color: 'inherit' }}>
-              <strong>{lab.title}</strong>
-              <p style={{ color: 'var(--mid)', fontSize: 14 }}>{lab.concept}</p>
-            </Link>
+            <motion.div key={lab.slug} variants={staggerItem}>
+              <Link href={`/labs/${lab.slug}`} style={{ border: '1px solid var(--border)', borderRadius: 12, padding: '1rem', textDecoration: 'none', color: 'inherit', display: 'block', transition: 'transform 0.3s ease, box-shadow 0.3s ease' }}>
+                <strong>{lab.title}</strong>
+                <p style={{ color: 'var(--mid)', fontSize: 14 }}>{lab.concept}</p>
+              </Link>
+            </motion.div>
           ))}
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
 
-      <motion.footer {...revealMotion} id="contact">
+      <motion.footer
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-10%' }}
+        transition={{ duration: 1, ease: easeCurve }}
+        id="contact"
+      >
         <h2>Build systems that operate at scale.</h2>
         <p>Rodent, Inc. delivers infrastructure that works.</p>
         <button className="footer-btn" type="button" onClick={() => setProjectModalOpen(true)}>Start a Project</button>
