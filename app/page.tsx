@@ -170,10 +170,10 @@ export default function HomePage() {
         }}
         transition={{ duration: 0.6, ease: easeCurve }}
       >
-        <button type="button" onClick={() => goToSection('about')} className="nav-logo" style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>
-          <Image src="/rodent-logo.png" alt="Rodent logo" width={28} height={28} style={{ borderRadius: '50%' }} />
+        <div role="button" tabIndex={0} onClick={() => goToSection('about')} onKeyDown={(e) => e.key === 'Enter' && goToSection('about')} className="nav-logo" style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>
+          <img src="/rodent-logo.png" alt="Rodent logo" width={28} height={28} style={{ borderRadius: '50%' }} />
           Rodent, Inc.
-        </button>
+        </div>
         <div className="nav-desktop-group">
           <div className="nav-links">
             {sectionIds.map((id) => (
