@@ -251,53 +251,6 @@ export default function HomePage() {
             </motion.div>
           ))}
 
-          <motion.div className="fan-card card-2" initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, ease: easeCurve, delay: 0.27 }} style={{ willChange: 'transform, opacity' }}>
-            <div className="card-content">
-              <span className="card-badge">MANGA</span>
-              <div className="card-inner">
-                <div className="card-art-text">MANGA</div>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div className="fan-card card-3" initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, ease: easeCurve, delay: 0.34 }} style={{ willChange: 'transform, opacity' }}>
-            <div className="card-content">
-              <span className="card-badge">FRIO</span>
-              <div className="card-inner">
-                <div className="card-art-text">FRIO</div>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div className="fan-card card-4" initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, ease: easeCurve, delay: 0.41 }} style={{ willChange: 'transform, opacity' }}>
-            <div className="card-content">
-              <span className="card-badge">21 AUG</span>
-              <div className="card-inner">
-                <div className="card-date">
-                  <span className="date-num">21</span>
-                  <span className="date-month">AUG</span>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div className="fan-card card-5" initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, ease: easeCurve, delay: 0.48 }} style={{ willChange: 'transform, opacity' }}>
-            <div className="card-content">
-              <span className="card-badge">INDEP.</span>
-              <div className="card-inner">
-                <div className="card-art-text">INDEP.<br />DAY</div>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div className="fan-card card-6" initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, ease: easeCurve, delay: 0.55 }} style={{ willChange: 'transform, opacity' }}>
-            <div className="card-content">
-              <span className="card-badge">♣</span>
-              <div className="card-inner">
-                <div className="card-art">♣</div>
-              </div>
-            </div>
-          </motion.div>
         </motion.div>
       </motion.div>
 
