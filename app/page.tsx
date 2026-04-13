@@ -171,7 +171,7 @@ export default function HomePage() {
         transition={{ duration: 0.6, ease: easeCurve }}
       >
         <button type="button" onClick={() => goToSection('about')} className="nav-logo" style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>
-          <span className="logo-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 8L12 3L20 8V16L12 21L4 16V8Z" fill="#1ac99e" opacity="0.2" /><path d="M4 8L12 3L20 8" stroke="#1ac99e" strokeWidth="2" strokeLinejoin="round" /><path d="M12 3V12M4 8L12 12L20 8" stroke="#1ac99e" strokeWidth="2" strokeLinejoin="round" /></svg></span>
+          <Image src="/rodent-logo.png" alt="Rodent logo" width={28} height={28} style={{ borderRadius: '50%' }} />
           Rodent, Inc.
         </button>
         <div className="nav-desktop-group">
