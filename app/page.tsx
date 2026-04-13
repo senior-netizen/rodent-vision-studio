@@ -11,12 +11,16 @@ import { labs } from '@/data/labs';
 import { services } from '@/data/services';
 import { trackEvent } from '@/lib/analytics/track';
 
-const easeCurve: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
+const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const sectionIds = ['about', 'services', 'projects', 'contact', 'labs', 'philosophy'];
 
-const heroContainer = { hidden: {}, show: { transition: { staggerChildren: 0.08 } } };
-const heroItem = { hidden: { opacity: 0, y: 40 }, show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: easeCurve } } };
-const revealMotion = { initial: { opacity: 0, y: 60 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, margin: '-20%' }, transition: { duration: 0.8, ease: easeCurve } };
+const heroContainer = { hidden: {}, show: { transition: { staggerChildren: 0.12, delayChildren: 0.2 } } };
+const heroItem = { hidden: { opacity: 0, y: 50, filter: 'blur(8px)' }, show: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 1, ease: easeCurve } } };
+const revealMotion = { initial: { opacity: 0, y: 60 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, margin: '-15%' }, transition: { duration: 0.9, ease: easeCurve } };
+const staggerContainer = { hidden: {}, show: { transition: { staggerChildren: 0.08, delayChildren: 0.15 } } };
+const staggerItem = { hidden: { opacity: 0, y: 30, scale: 0.96 }, show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.7, ease: easeCurve } } };
+const slideInLeft = { initial: { opacity: 0, x: -40 }, whileInView: { opacity: 1, x: 0 }, viewport: { once: true, margin: '-15%' }, transition: { duration: 0.8, ease: easeCurve } };
+const scaleReveal = { initial: { opacity: 0, scale: 0.92 }, whileInView: { opacity: 1, scale: 1 }, viewport: { once: true, margin: '-10%' }, transition: { duration: 1, ease: easeCurve } };
 const heroTechCards = [
   {
     className: 'card-1',
