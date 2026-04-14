@@ -192,8 +192,8 @@ export default function HomePage() {
             ))}
           </div>
           <div className="nav-actions">
-            <button className="nav-icon" type="button" onClick={() => router.push('/blog')} aria-label="Go to blog">✎</button>
-            <button className="nav-icon" type="button" onClick={() => router.push('/contact')} aria-label="Go to contact">⚙</button>
+            <button className="nav-icon" type="button" onClick={() => router.push('/blog')} aria-label="Go to blog" style={{ fontSize: 12, fontWeight: 600 }}>Blog</button>
+            <button className="nav-icon" type="button" onClick={() => router.push('/contact')} aria-label="Go to contact" style={{ fontSize: 12, fontWeight: 600, width: 'auto', padding: '0 12px' }}>Contact</button>
           </div>
         </div>
         <button className="nav-mobile-toggle" type="button" onClick={() => setMobileNavOpen((prev) => !prev)} aria-label={mobileNavOpen ? 'Close menu' : 'Open menu'}>
@@ -224,7 +224,7 @@ export default function HomePage() {
 
       <motion.div className="hero" ref={heroRef} variants={heroContainer} initial="hidden" animate="show" id="about">
         <div className="hero-content">
-          <motion.h1 variants={heroItem}>Build insane systems that actually work ⚡</motion.h1>
+          <motion.h1 variants={heroItem}>Build systems that actually work</motion.h1>
           <motion.p variants={heroItem}>From IoT grids to fintech rails — Rodent Inc turns wild ideas into deployed infrastructure.</motion.p>
         </div>
 
