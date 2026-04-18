@@ -97,8 +97,7 @@ const outcomes = [
 export default function JobOpportunitiesForEveryoneCaseStudyPage() {
   return (
     <main className="bg-neutral-50 text-neutral-950">
-      <Section className="relative overflow-hidden pb-20 pt-32 sm:pt-36">
-        <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_20%_10%,rgba(15,23,42,0.08),transparent_45%),radial-gradient(circle_at_80%_30%,rgba(59,130,246,0.08),transparent_40%),linear-gradient(to_bottom,#ffffff,#f5f5f4)]" />
+      <Section className="relative overflow-hidden bg-white pb-20 pt-32 sm:pt-36">
         <motion.div
           initial="hidden"
           animate="visible"
