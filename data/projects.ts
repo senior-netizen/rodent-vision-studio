@@ -26,6 +26,28 @@ export type ProjectConfig = {
 };
 
 export const projectConfigs: ProjectConfig[] = [
+
+  {
+    name: 'Job Opportunities For Everyone',
+    slug: 'job-opportunities-for-everyone-platform',
+    category: 'Employment Platform',
+    role: 'Product Design + Full-Stack Engineering',
+    links: {
+      live: '/projects/job-opportunities-for-everyone-platform'
+    },
+    problem: 'Job listings were fragmented across informal channels with no centralized, scalable data system.',
+    architecture: ['Next.js App Router (SSR)', 'Supabase Auth + PostgREST API', 'PostgreSQL data layer', 'Vercel deployment edge network'],
+    stack: ['Next.js (App Router)', 'Supabase', 'PostgreSQL', 'TailwindCSS', 'Vercel'],
+    dataFlow: ['Submission Form → Validation', 'Validation → Supabase API', 'Supabase API → PostgreSQL', 'PostgreSQL → SSR Job Pages'],
+    decisions: ['Prioritized mobile-first interaction patterns for accessibility.', 'Structured listings and submissions to support data ownership and scale.'],
+    visuals: { screenshot: '/visuals/sheq-ui.jpg', diagram: '/visuals/sheq-architecture.jpg', preview: '/visuals/sheq-preview.jpg' },
+    outcome: 'Established a centralized job platform with a scalable intake and publishing foundation.',
+    summary: {
+      scope: 'End-to-end architecture and case study execution for employment distribution platform.',
+      timeline: '6-week design and build cycle.',
+      primaryKpi: 'Centralized listing access with reduced channel fragmentation.',
+    }
+  },
   {
     name: 'Feel At Home',
     slug: 'feel-at-home',
