@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { SystemMapCanvas } from '@/components/system-map/system-map-canvas';
 import { projectConfigs } from '@/data/projects';
@@ -23,28 +22,11 @@ const cardGradients = [
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[100dvh] overflow-hidden">
-      {/* Background Image */}
-      <div className="absolute inset-0">
-        <Image
-          src="/visuals/hero-bg.jpg"
-          alt=""
-          fill
-          priority
-          className="object-cover"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-[hsl(var(--bg)/0.6)]" />
-      </div>
-
+    <section className="relative min-h-[100dvh] overflow-hidden bg-white">
       {/* Background System Map */}
       <div className="absolute inset-0 opacity-20">
         <SystemMapCanvas mode="ambient" />
       </div>
-
-      {/* Gradient overlays */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[hsl(var(--bg)/0.4)] via-transparent to-[hsl(var(--bg))]" />
-      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[hsl(var(--bg))] to-transparent" />
 
       {/* Content */}
       <div className="relative z-10 flex min-h-[100dvh] flex-col justify-end pb-16 md:pb-24">
