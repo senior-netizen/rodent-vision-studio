@@ -1,12 +1,14 @@
-import { createHash } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import { NextResponse } from 'next/server';
 import {
+  buildPendingPreviewState,
   composeProjectConfig,
   validateUpsertPayload,
   type UpsertProjectPayload,
 } from '@/lib/projects/contracts';
 import { getProjectHealthById } from '@/lib/projects/health';
 import {
+  enqueuePreviewJob,
   getIdempotentRecord,
   getProjectBySlug,
   listProjects,
@@ -14,11 +16,15 @@ import {
   upsertProject,
 } from '@/lib/projects/store';
 
-const inFlightOrchestrations = new Map<string, { requestHash: string; promise: Promise<ResponsePayload> }>();
+const inFlightMutations = new Map<string, { requestHash: string; promise: Promise<ResponsePayload> }>();
 
 type ResponsePayload = {
   ok: true;
   idempotencyKey: string;
+  preview: {
+    status: 'pending';
+    correlationId: string;
+  };
   project: Awaited<ReturnType<typeof upsertProject>>;
 };
 
@@ -29,6 +35,7 @@ function buildIdempotencyKey(request: Request, payload: UpsertProjectPayload): s
 function hashPayload(payload: unknown): string {
   return createHash('sha256').update(JSON.stringify(payload)).digest('hex');
 }
+
 
 function isAuthorized(request: Request): boolean {
   const adminToken = process.env.PROJECTS_ADMIN_TOKEN;
@@ -67,6 +74,22 @@ export async function POST(request: Request) {
   }
 
   const payload = validation.value;
+  const existingSlugForId = getProjectSlugById(payload.project.id);
+  if (existingSlugForId && existingSlugForId !== payload.project.slug) {
+    return NextResponse.json(
+      { error: `Project id "${payload.project.id}" is already bound to slug "${existingSlugForId}".` },
+      { status: 409 },
+    );
+  }
+
+  const existingProjectForSlug = getProjectBySlug(payload.project.slug);
+  if (existingProjectForSlug && existingProjectForSlug.id !== payload.project.id) {
+    return NextResponse.json(
+      { error: `Project slug "${payload.project.slug}" is already bound to id "${existingProjectForSlug.id}".` },
+      { status: 409 },
+    );
+  }
+
   const requestHash = hashPayload(payload);
   const idempotencyKey = buildIdempotencyKey(request, payload);
   const cached = getIdempotentRecord(idempotencyKey);
@@ -79,10 +102,10 @@ export async function POST(request: Request) {
   }
 
   if (cached) {
-    return NextResponse.json(cached.response);
+    return NextResponse.json(cached.response, { status: 202 });
   }
 
-  const inFlight = inFlightOrchestrations.get(idempotencyKey);
+  const inFlight = inFlightMutations.get(idempotencyKey);
   if (inFlight && inFlight.requestHash !== requestHash) {
     return NextResponse.json(
       { error: 'Idempotency key is currently processing a different payload.' },
@@ -92,11 +115,11 @@ export async function POST(request: Request) {
 
   if (inFlight) {
     const inFlightResult = await inFlight.promise;
-    return NextResponse.json(inFlightResult);
+    return NextResponse.json(inFlightResult, { status: 202 });
   }
 
   const orchestration = (async (): Promise<ResponsePayload> => {
-    const current = getProjectBySlug(payload.project.slug);
+    const current = existingProjectForSlug;
     const previewResponse = await fetch(new URL('/api/generate-preview', request.url), {
       method: 'POST',
       headers: {
@@ -109,45 +132,75 @@ export async function POST(request: Request) {
       }),
     });
 
-    if (!previewResponse.ok) {
-      const errorText = await previewResponse.text();
-      throw new Error(`Preview generation failed: ${errorText}`);
-    }
-
-    const previewResult = (await previewResponse.json()) as {
+    const previewBody = await previewResponse.json() as {
       previewUrl?: string;
       generatedAt?: string;
+      error?: string;
+      category?: string;
+      correlationId?: string;
     };
 
-    if (!previewResult.previewUrl || !previewResult.generatedAt) {
+    const fallbackPreviewUrl = current?.visuals.preview;
+    const fallbackGeneratedAt = current?.previewGeneratedAt ?? new Date().toISOString();
+
+    if (!previewResponse.ok) {
+      if (fallbackPreviewUrl) {
+        console.warn('Preview generation failed, using last known preview.', {
+          slug: payload.project.slug,
+          correlationId: previewBody.correlationId,
+          category: previewBody.category,
+          reason: previewBody.error,
+        });
+      } else {
+        const details = previewBody.error ?? 'Unknown preview generation error.';
+        throw new Error(`Preview generation failed: ${details}`);
+      }
+    }
+
+    const previewUrl = previewBody.previewUrl ?? fallbackPreviewUrl;
+    const previewGeneratedAt = previewBody.generatedAt ?? fallbackGeneratedAt;
+
+    if (!previewUrl) {
       throw new Error('Preview generation returned an invalid response.');
     }
 
     const project = composeProjectConfig({
       current,
       payload,
-      previewUrl: previewResult.previewUrl,
-      previewGeneratedAt: previewResult.generatedAt,
+      previewUrl,
+      previewGeneratedAt,
     });
 
     const saved = upsertProject(project);
+
+    enqueuePreviewJob({
+      dedupeKey: idempotencyKey,
+      projectSlug: payload.project.slug,
+      sourceUrl: payload.project.visuals.screenshot,
+      correlationId,
+    });
+
     return {
       ok: true,
       idempotencyKey,
+      preview: {
+        status: 'pending',
+        correlationId,
+      },
       project: saved,
     };
   })();
 
-  inFlightOrchestrations.set(idempotencyKey, { requestHash, promise: orchestration });
+  inFlightMutations.set(idempotencyKey, { requestHash, promise: mutation });
 
   try {
-    const response = await orchestration;
+    const response = await mutation;
     setIdempotentResponse(idempotencyKey, requestHash, response);
-    return NextResponse.json(response);
+    return NextResponse.json(response, { status: 202 });
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'Project orchestration failed.';
+    const message = error instanceof Error ? error.message : 'Project mutation failed.';
     return NextResponse.json({ error: message }, { status: 502 });
   } finally {
-    inFlightOrchestrations.delete(idempotencyKey);
+    inFlightMutations.delete(idempotencyKey);
   }
 }
