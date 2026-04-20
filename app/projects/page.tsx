@@ -1,22 +1,24 @@
-import { ProjectCard } from '@/components/projects/project-card';
-import { projectConfigs } from '@/data/projects';
+import Link from 'next/link';
+import { projects } from '@/data/projects';
+import { projectCaseStudiesById } from '@/data/project-case-studies';
 
 export default function ProjectsPage() {
   return (
-    <main className="mx-auto w-full max-w-7xl px-4 pb-10 pt-28 sm:px-6 lg:px-8">
-      <header className="mb-8 space-y-2">
-        <h1 className="text-heading text-4xl">Projects</h1>
-        <p className="max-w-2xl text-body text-sm">
-          Production systems designed and shipped across marketplace, geospatial,
-          AR, and grid-intelligence domains.
-        </p>
-      </header>
+    <main style={{ maxWidth: 1100, margin: '0 auto', padding: '6rem 1rem 2rem' }}>
+      <h1 style={{ fontFamily: 'var(--font-syne)', marginBottom: '1rem' }}>Projects</h1>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: '1rem' }}>
+        {projects.map((project) => {
+          const caseStudy = projectCaseStudiesById[project.caseStudy ?? project.id];
 
-      <section className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-        {projectConfigs.map((project) => (
-          <ProjectCard key={project.slug} project={project} />
-        ))}
-      </section>
+          return (
+            <Link key={project.id} href={`/projects/${project.id}`} style={{ border: '1px solid var(--border)', borderRadius: 12, padding: '1rem', textDecoration: 'none', color: 'inherit' }}>
+              <h2 style={{ fontFamily: 'var(--font-syne)', fontSize: 24 }}>{project.name}</h2>
+              <p style={{ color: 'var(--mid)', fontSize: 14 }}>{caseStudy?.problem ?? project.category}</p>
+              <p style={{ color: 'var(--mid)', fontSize: 12, marginTop: 8 }}>Live deployment available</p>
+            </Link>
+          );
+        })}
+      </div>
     </main>
   );
 }
