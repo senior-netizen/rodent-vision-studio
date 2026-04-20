@@ -3,6 +3,9 @@ import { projectConfigs, type ProjectConfig } from '@/data/projects';
 const projects = new Map<string, ProjectConfig>(
   projectConfigs.map((project) => [project.slug, structuredClone(project)]),
 );
+const slugByProjectId = new Map<string, string>(
+  projectConfigs.map((project) => [project.id, project.slug]),
+);
 
 type IdempotentRecord = { requestHash: string; response: unknown };
 
@@ -27,12 +30,28 @@ export function getProjectBySlug(slug: string): ProjectConfig | undefined {
 }
 
 export function upsertProject(project: ProjectConfig): ProjectConfig {
+  const slugCollision = slugByProjectId.get(project.id);
+  if (slugCollision && slugCollision !== project.slug) {
+    throw new Error(`Project id "${project.id}" is already assigned to slug "${slugCollision}".`);
+  }
+
+  const currentBySlug = projects.get(project.slug);
+  if (currentBySlug && currentBySlug.id !== project.id) {
+    throw new Error(`Project slug "${project.slug}" is already assigned to id "${currentBySlug.id}".`);
+  }
+
   const normalized: ProjectConfig = {
     ...project,
     deployments: [...(project.deployments ?? [])].sort((a, b) => b.createdAt.localeCompare(a.createdAt)),
   };
 
+  const previousSlug = slugByProjectId.get(project.id);
+  if (previousSlug && previousSlug !== project.slug) {
+    projects.delete(previousSlug);
+  }
+
   projects.set(project.slug, normalized);
+  slugByProjectId.set(project.id, project.slug);
   return structuredClone(normalized);
 }
 
@@ -75,4 +94,8 @@ export function getPreviewJobByDedupeKey(dedupeKey: string): PreviewJobRequest |
 
 export function getKnownProjectSlugs(): string[] {
   return [...projects.keys()];
+}
+
+export function getProjectSlugById(id: string): string | undefined {
+  return slugByProjectId.get(id);
 }
