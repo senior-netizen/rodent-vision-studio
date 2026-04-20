@@ -6,11 +6,12 @@ import {
   validateUpsertPayload,
   type UpsertProjectPayload,
 } from '@/lib/projects/contracts';
+import { getProjectHealthById } from '@/lib/projects/health';
 import {
   enqueuePreviewJob,
   getIdempotentRecord,
   getProjectBySlug,
-  getProjectSlugById,
+  listProjects,
   setIdempotentResponse,
   upsertProject,
 } from '@/lib/projects/store';
@@ -46,8 +47,18 @@ function isAuthorized(request: Request): boolean {
   return requestToken === adminToken;
 }
 
-function deriveCorrelationId(request: Request): string {
-  return request.headers.get('x-correlation-id')?.trim() || randomUUID();
+export async function GET() {
+  const [projects, healthById] = await Promise.all([
+    Promise.resolve(listProjects()),
+    getProjectHealthById(),
+  ]);
+
+  return NextResponse.json({
+    projects: projects.map((project) => ({
+      ...project,
+      health: healthById[project.id] ?? null,
+    })),
+  });
 }
 
 export async function POST(request: Request) {

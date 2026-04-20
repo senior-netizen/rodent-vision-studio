@@ -20,19 +20,20 @@ export type PreviewState = {
 };
 
 export type ProjectConfig = {
-  id?: string;
-  slug?: string;
+  id: string;
+  slug: string;
   name: string;
   category?: string;
   role?: string;
+  caseStudy?: string;
   links?: {
     live?: string;
     repo?: string;
   };
   problem?: string;
   architecture?: string[];
-  url?: string;
-  preview?: string;
+  url: string;
+  preview: string;
   stack: string[];
   dataFlow: string[];
   decisions: string[];
@@ -58,6 +59,8 @@ export const projectConfigs: ProjectConfig[] = [
     id: 'jofe-platform',
     name: 'Job Opportunities For Everyone',
     slug: 'job-opportunities-for-everyone-platform',
+    url: 'https://jofe-platform.vercel.app',
+    preview: '/visuals/sheq-preview.jpg',
     category: 'Employment Platform',
     role: 'Product Design + Full-Stack Engineering',
     links: {
@@ -84,6 +87,7 @@ export const projectConfigs: ProjectConfig[] = [
   {
     id: 'feel-home',
     name: 'Feel At Home',
+    slug: 'feel-at-home',
     url: 'https://feelathome.vercel.app',
     preview: '/visuals/meterflow-preview.jpg',
     stack: ['Next.js', 'TypeScript', 'React Query', 'PostgreSQL', 'Tailwind CSS'],
@@ -105,6 +109,7 @@ export const projectConfigs: ProjectConfig[] = [
   {
     id: 'shedsense-grid',
     name: 'ShedSense',
+    slug: 'shedsense-grid',
     url: 'https://backend-nl4r.onrender.com',
     preview: '/visuals/sh.png',
     stack: ['Next.js 14', 'TypeScript', 'Three.js', 'Framer Motion', 'PostgreSQL'],
@@ -126,6 +131,7 @@ export const projectConfigs: ProjectConfig[] = [
   {
     id: 'ar-experience',
     name: 'AR by Rodent',
+    slug: 'ar-by-rodent',
     url: 'https://arbyrodent.vercel.app',
     preview: '/visuals/sheq-preview.jpg',
     stack: ['Next.js', 'TypeScript', 'Framer Motion', 'WebGL', 'CSS Effects'],
@@ -147,6 +153,7 @@ export const projectConfigs: ProjectConfig[] = [
   {
     id: 'precise-locations-lib',
     name: 'Precise Locations',
+    slug: 'precise-locations',
     url: 'https://github.com/anesu398/precise-locations',
     preview: '/visuals/kwiksend-preview.jpg',
     stack: ['Node.js', 'TypeScript', 'npm', 'GitHub Actions', 'Semantic Versioning'],
