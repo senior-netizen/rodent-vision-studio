@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "validate:projects": "rm -rf .tmp-project-registry && tsc --module nodenext --moduleResolution nodenext --target ES2022 --outDir .tmp-project-registry scripts/validate-project-registry.ts && node .tmp-project-registry/scripts/validate-project-registry.js"
   },
   "dependencies": {
     "@types/three": "^0.183.1",

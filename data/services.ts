@@ -1,4 +1,4 @@
-import type { ProjectConfig } from './projects';
+import type { Project } from './projects';
 
 export type ServiceSlug = 'web' | 'mobile' | 'iot' | 'robotics';
 
@@ -7,7 +7,7 @@ export type Service = {
   name: string;
   summary: string;
   capability: string;
-  relatedProjects: ProjectConfig['slug'][];
+  relatedProjects: Project['id'][];
   cta: string;
 };
 
