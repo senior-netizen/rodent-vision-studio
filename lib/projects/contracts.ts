@@ -1,4 +1,4 @@
-import type { DeploymentStatus, ProjectConfig, ProjectDeployment } from '@/data/projects';
+import type { DeploymentStatus, PreviewState, ProjectConfig, ProjectDeployment } from '@/data/projects';
 
 export type UpsertProjectPayload = {
   project: {
@@ -168,25 +168,38 @@ export function validateUpsertPayload(payload: unknown): { value: UpsertProjectP
   };
 }
 
+export function buildPendingPreviewState(current?: PreviewState): PreviewState {
+  const now = new Date().toISOString();
+  return {
+    status: 'pending',
+    attemptCount: (current?.attemptCount ?? 0) + 1,
+    lastError: current?.lastError,
+    requestedAt: now,
+    generatedAt: current?.generatedAt,
+    failedAt: current?.failedAt,
+    updatedAt: now,
+  };
+}
+
 export function composeProjectConfig(input: {
   current: ProjectConfig | undefined;
   payload: UpsertProjectPayload;
-  previewUrl: string;
-  previewGeneratedAt: string;
+  previewState: PreviewState;
 }): ProjectConfig {
-  const { current, payload, previewUrl, previewGeneratedAt } = input;
+  const { current, payload, previewState } = input;
 
+  const fallbackCreatedAt = new Date().toISOString();
   const deploymentRecord: ProjectDeployment = payload.deployment
     ? {
       version: payload.deployment.version,
       url: payload.deployment.url,
-      createdAt: payload.deployment.createdAt ?? previewGeneratedAt,
+      createdAt: payload.deployment.createdAt ?? fallbackCreatedAt,
       status: payload.deployment.status ?? payload.status,
     }
     : {
       version: current?.deployments?.[0]?.version ?? '1.0.0',
-      url: current?.deployments?.[0]?.url ?? payload.project.links.live ?? previewUrl,
-      createdAt: previewGeneratedAt,
+      url: current?.deployments?.[0]?.url ?? payload.project.links.live ?? payload.project.visuals.preview ?? payload.project.visuals.screenshot,
+      createdAt: fallbackCreatedAt,
       status: payload.status,
     };
 
@@ -197,9 +210,10 @@ export function composeProjectConfig(input: {
     ...payload.project,
     visuals: {
       ...payload.project.visuals,
-      preview: previewUrl,
+      preview: current?.visuals.preview ?? payload.project.visuals.preview ?? payload.project.visuals.screenshot,
     },
-    previewGeneratedAt,
+    previewGeneratedAt: current?.previewGeneratedAt,
+    previewState,
     status: payload.status,
     deployments: dedupedDeployments,
   };
