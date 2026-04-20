@@ -17,6 +17,14 @@ export type ProjectConfig = {
     diagram: string;
     preview: string;
   };
+  previewGeneratedAt?: string;
+  status: 'live' | 'staging' | 'failed';
+  deployments: {
+    version: string;
+    url: string;
+    createdAt: string;
+    status: 'live' | 'staging' | 'failed';
+  }[];
   outcome: string;
   summary: {
     scope: string;
@@ -41,6 +49,11 @@ export const projectConfigs: ProjectConfig[] = [
     dataFlow: ['Submission Form → Validation', 'Validation → Supabase API', 'Supabase API → PostgreSQL', 'PostgreSQL → SSR Job Pages'],
     decisions: ['Prioritized mobile-first interaction patterns for accessibility.', 'Structured listings and submissions to support data ownership and scale.'],
     visuals: { screenshot: '/visuals/sheq-ui.jpg', diagram: '/visuals/sheq-architecture.jpg', preview: '/visuals/sheq-preview.jpg' },
+    previewGeneratedAt: '2026-04-20T00:00:00.000Z',
+    status: 'live',
+    deployments: [
+      { version: '1.0.0', url: '/projects/job-opportunities-for-everyone-platform', createdAt: '2026-04-20T00:00:00.000Z', status: 'live' },
+    ],
     outcome: 'Established a centralized job platform with a scalable intake and publishing foundation.',
     summary: {
       scope: 'End-to-end architecture and case study execution for employment distribution platform.',
@@ -62,6 +75,11 @@ export const projectConfigs: ProjectConfig[] = [
     dataFlow: ['User Query → Search Index', 'Search Index → Property Catalog', 'Catalog → Listing Detail', 'Listing Events → Agent Dashboard'],
     decisions: ['Kept property lookup paths index-first for responsive browsing.', 'Separated listing write access behind authenticated publisher flows.'],
     visuals: { screenshot: '/visuals/meterflow-ui.jpg', diagram: '/visuals/meterflow-architecture.jpg', preview: '/visuals/meterflow-preview.jpg' },
+    previewGeneratedAt: '2026-04-20T00:00:00.000Z',
+    status: 'staging',
+    deployments: [
+      { version: '0.9.0', url: 'https://feelathome.vercel.app', createdAt: '2026-04-20T00:00:00.000Z', status: 'staging' },
+    ],
     outcome: 'Delivered a single platform for discovering homes and publishing managed listings.',
     summary: {
       scope: 'End-to-end property search and listing platform.',
@@ -83,6 +101,11 @@ export const projectConfigs: ProjectConfig[] = [
     dataFlow: ['Edge Meter → MQTT Broker', 'Broker → Stream Processor', 'Processor → Rule Engine', 'Rule Engine → Dashboard'],
     decisions: ['Prioritized eventual consistency for wide-area device bursts.', 'Used deterministic replay paths for incident reconstruction.'],
     visuals: { screenshot: '/visuals/sh.png', diagram: '/visuals/shedsense-architecture.jpg', preview: '/visuals/sh.png' },
+    previewGeneratedAt: '2026-04-20T00:00:00.000Z',
+    status: 'live',
+    deployments: [
+      { version: '1.4.2', url: 'https://backend-nl4r.onrender.com', createdAt: '2026-04-20T00:00:00.000Z', status: 'live' },
+    ],
     outcome: 'Reduced event-to-action time by 41% with deterministic alert confidence routing.',
     summary: {
       scope: 'Telemetry and dispatch intelligence platform across distributed field assets.',
@@ -104,6 +127,11 @@ export const projectConfigs: ProjectConfig[] = [
     dataFlow: ['User Session → Experience Shell', 'Interaction Events → Animation Layer', 'Media Assets → Render Pipeline', 'CTA Actions → Source Destination'],
     decisions: ['Optimized animation sequencing to keep motion smooth across device classes.', 'Structured interactive elements to preserve accessibility while remaining immersive.'],
     visuals: { screenshot: '/visuals/sheq-ui.jpg', diagram: '/visuals/sheq-architecture.jpg', preview: '/visuals/sheq-preview.jpg' },
+    previewGeneratedAt: '2026-04-20T00:00:00.000Z',
+    status: 'live',
+    deployments: [
+      { version: '1.1.0', url: 'https://arbyrodent.vercel.app/', createdAt: '2026-04-20T00:00:00.000Z', status: 'live' },
+    ],
     outcome: 'Shipped an immersive AR-led product surface with strong visual identity and engagement.',
     summary: {
       scope: 'Interactive AR showcase and product landing experience.',
@@ -125,6 +153,11 @@ export const projectConfigs: ProjectConfig[] = [
     dataFlow: ['Input Coordinates → Validation', 'Validated Data → Distance Engine', 'Distance Results → Consumer APIs', 'Package Releases → npm/GitHub'],
     decisions: ['Kept API contracts small and deterministic for broad downstream use.', 'Automated publish and verification checks to keep releases reliable.'],
     visuals: { screenshot: '/visuals/kwiksend-ui.jpg', diagram: '/visuals/kwiksend-architecture.jpg', preview: '/visuals/kwiksend-preview.jpg' },
+    previewGeneratedAt: '2026-04-20T00:00:00.000Z',
+    status: 'live',
+    deployments: [
+      { version: '1.0.0', url: 'https://github.com/anesu398/precise-locations', createdAt: '2026-04-20T00:00:00.000Z', status: 'live' },
+    ],
     outcome: 'Provided a reusable geospatial toolkit for coordinate-driven applications.',
     summary: {
       scope: 'Open source Node.js package for precise location operations.',
