@@ -1,4 +1,18 @@
-import type { DeploymentStatus, LinkHealth, ProjectConfig, ProjectDeployment } from '@/data/projects';
+import type {
+  DeploymentStatus,
+  LinkHealth,
+  PreviewState,
+  ProjectConfig,
+  ProjectDeployment,
+} from '@/data/projects';
+
+export const APPROVED_DEPLOYMENT_SCHEMES = new Set(['https:', 'http:']);
+export const APPROVED_DEPLOYMENT_DOMAINS = [
+  'vercel.app',
+  'onrender.com',
+  'github.com',
+  'netlify.app',
+] as const;
 
 export type UpsertProjectPayload = {
   project: {
@@ -70,24 +84,17 @@ function toIsoDate(value: unknown): string | null {
   }
 
   const date = new Date(value);
-  if (Number.isNaN(date.valueOf())) {
-    return null;
-  }
-
-  return date.toISOString();
+  return Number.isNaN(date.valueOf()) ? null : date.toISOString();
 }
 
-function parseLinkHealth(value: unknown): LinkHealth | null {
-  if (!value) {
-    return null;
-  }
-
+function parseLinkHealth(value: unknown): LinkHealth | undefined {
   if (!isObject(value)) {
-    return null;
+    return undefined;
   }
 
   const recentChecksRaw = Array.isArray(value.recentChecks) ? value.recentChecks : [];
   const recentChecks: NonNullable<LinkHealth['recentChecks']> = [];
+
   for (const entry of recentChecksRaw) {
     if (!isObject(entry) || !hasNonEmptyText(entry.checkedAt) || typeof entry.ok !== 'boolean') {
       continue;
@@ -109,33 +116,6 @@ function parseLinkHealth(value: unknown): LinkHealth | null {
     lastCheckedAt: toIsoDate(value.lastCheckedAt) ?? undefined,
     lastSuccessfulCheckAt: toIsoDate(value.lastSuccessfulCheckAt) ?? undefined,
     recentChecks,
-  };
-}
-
-function buildDeployment(
-  input: UpsertProjectPayload['deployment'],
-  fallbackStatus: DeploymentStatus,
-): ProjectDeployment | null {
-  if (!input) {
-    return null;
-  }
-
-  if (!hasNonEmptyText(input.version) || !hasNonEmptyText(input.url)) {
-    return null;
-  }
-
-  const normalizedUrl = normalizeDeploymentUrl(input.url);
-  if (!normalizedUrl) {
-    return null;
-  }
-
-  const createdAt = toIsoDate(input.createdAt) ?? new Date().toISOString();
-
-  return {
-    version: input.version.trim(),
-    url: normalizedUrl,
-    createdAt,
-    status: input.status ?? fallbackStatus,
   };
 }
 
@@ -202,9 +182,29 @@ export function normalizeDeploymentUrl(url: string): string | null {
   return parsed.toString();
 }
 
+function buildDeployment(
+  input: UpsertProjectPayload['deployment'],
+  fallbackStatus: DeploymentStatus,
+): ProjectDeployment | undefined {
+  if (!input || !hasNonEmptyText(input.version) || !hasNonEmptyText(input.url)) {
+    return undefined;
+  }
+
+  const normalizedUrl = normalizeDeploymentUrl(input.url);
+  if (!normalizedUrl) {
+    return undefined;
+  }
+
+  return {
+    version: input.version.trim(),
+    url: normalizedUrl,
+    createdAt: toIsoDate(input.createdAt) ?? new Date().toISOString(),
+    status: input.status ?? fallbackStatus,
+  };
+}
+
 function toDeploymentIdentity(version: string, url: string): string {
-  const normalizedUrl = normalizeDeploymentUrl(url) ?? url.trim();
-  return `${version.trim()}::${normalizedUrl}`;
+  return `${version.trim()}::${normalizeDeploymentUrl(url) ?? url.trim()}`;
 }
 
 export function validateUpsertPayload(payload: unknown): { value: UpsertProjectPayload } | { error: string } {
@@ -276,7 +276,7 @@ export function validateUpsertPayload(payload: unknown): { value: UpsertProjectP
           preview: hasNonEmptyText(project.visuals.preview) ? project.visuals.preview.trim() : undefined,
         },
         outcome: project.outcome.trim(),
-        linkHealth: parseLinkHealth(project.linkHealth) ?? undefined,
+        linkHealth: parseLinkHealth(project.linkHealth),
         summary: {
           scope: project.summary.scope.trim(),
           timeline: project.summary.timeline.trim(),
@@ -284,7 +284,7 @@ export function validateUpsertPayload(payload: unknown): { value: UpsertProjectP
         },
       },
       status,
-      deployment: normalizedDeployment ?? undefined,
+      deployment: normalizedDeployment,
     },
   };
 }
@@ -305,9 +305,12 @@ export function buildPendingPreviewState(current?: PreviewState): PreviewState {
 export function composeProjectConfig(input: {
   current: ProjectConfig | undefined;
   payload: UpsertProjectPayload;
-  previewState: PreviewState;
+  previewUrl?: string;
+  previewGeneratedAt?: string;
+  previewAsset?: ProjectConfig['previewAsset'];
 }): ProjectConfig {
-  const { current, payload, previewState } = input;
+  const { current, payload, previewUrl, previewGeneratedAt, previewAsset } = input;
+  const resolvedPreviewUrl = previewUrl ?? payload.project.visuals.preview ?? current?.visuals.preview ?? payload.project.visuals.screenshot;
 
   const fallbackCreatedAt = new Date().toISOString();
   const deploymentRecord: ProjectDeployment = payload.deployment
@@ -319,7 +322,7 @@ export function composeProjectConfig(input: {
     }
     : {
       version: current?.deployments?.[0]?.version ?? '1.0.0',
-      url: current?.deployments?.[0]?.url ?? payload.project.links.live ?? payload.project.visuals.preview ?? payload.project.visuals.screenshot,
+      url: current?.deployments?.[0]?.url ?? payload.project.links.live ?? resolvedPreviewUrl,
       createdAt: fallbackCreatedAt,
       status: payload.status,
     };
@@ -332,18 +335,29 @@ export function composeProjectConfig(input: {
   ];
 
   return {
-    id: current?.id ?? payload.project.slug,
-    ...payload.project,
-    url: payload.project.links.live ?? current?.url ?? previewUrl,
-    preview: previewUrl,
+    id: payload.project.id,
+    slug: payload.project.slug,
+    name: payload.project.name,
+    category: payload.project.category,
+    role: payload.project.role,
+    url: payload.project.links.live ?? current?.url ?? resolvedPreviewUrl,
+    links: payload.project.links,
+    problem: payload.project.problem,
+    architecture: payload.project.architecture,
+    preview: resolvedPreviewUrl,
+    stack: payload.project.stack,
+    dataFlow: payload.project.dataFlow,
+    decisions: payload.project.decisions,
     visuals: {
       ...payload.project.visuals,
-      preview: current?.visuals.preview ?? payload.project.visuals.preview ?? payload.project.visuals.screenshot,
+      preview: resolvedPreviewUrl,
     },
-    previewGeneratedAt,
+    previewGeneratedAt: previewGeneratedAt ?? current?.previewGeneratedAt,
     previewAsset: previewAsset ?? current?.previewAsset,
     status: payload.status,
     deployments: dedupedDeployments,
     linkHealth: payload.project.linkHealth ?? current?.linkHealth,
+    outcome: payload.project.outcome,
+    summary: payload.project.summary,
   };
 }

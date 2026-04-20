@@ -373,7 +373,7 @@ export default function HomePage() {
       <motion.div className="gallery-wrap" {...scaleReveal} id="projects">
         <motion.div style={{ textAlign: 'center', marginBottom: '3rem' }} {...slideInLeft}><div style={{ fontSize: 12, fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', color: 'var(--teal)', marginBottom: '0.5rem' }}>PROJECTS</div><h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(32px,4vw,50px)', fontWeight: 800, letterSpacing: '-1.5px' }}>Our work is deployed in real environments.</h2></motion.div>
         <div className="gallery-grid gallery-grid-desktop">
-          {projectConfigs.map((project) => (
+          {projects.map((project) => (
             <motion.button key={project.id} className="g-card" whileHover={{ scale: 1.04, y: -6 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.4, ease: easeCurve }} onClick={() => router.push(`/projects/${project.id}`)} style={{ border: 'none' }}>
               <div className="g-card-media">
                 <Image
@@ -384,7 +384,7 @@ export default function HomePage() {
                   className="g-card-image"
                 />
               </div>
-              <div className="featured-overlay"><span className="name">{project.name}</span><div className="source">{projectCaseStudiesById[project.caseStudy ?? project.id]?.problem ?? project.category}</div></div>
+              <div className="featured-overlay"><span className="name">{project.name}</span><div className="source">{projectCaseStudiesById[project.id]?.problem ?? project.category}</div></div>
             </motion.button>
           ))}
           <motion.div className="g-card featured art-orange" whileHover={{ scale: 1.03 }} transition={{ duration: 0.6, ease: easeCurve }}>
@@ -400,12 +400,12 @@ export default function HomePage() {
         >
           <button className="gallery-carousel-arrow gallery-carousel-arrow-left" type="button" onClick={prevMobileProject} aria-label="Previous project">←</button>
           <motion.button
-            key={projectConfigs[mobileProjectIndex].id}
+            key={projects[mobileProjectIndex].id}
             className="g-card g-card-mobile"
             initial={{ opacity: 0.7, x: 24 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.35, ease: easeCurve }}
-            onClick={() => router.push(`/projects/${projectConfigs[mobileProjectIndex].id}`)}
+            onClick={() => router.push(`/projects/${projects[mobileProjectIndex].id}`)}
             style={{ border: 'none', width: '100%' }}
           >
             <div className="g-card-media g-card-media-mobile">
@@ -419,7 +419,7 @@ export default function HomePage() {
             </div>
             <div className="featured-overlay">
               <span className="name">{projects[mobileProjectIndex].name}</span>
-              <div className="source">{projectCaseStudiesById[projects[mobileProjectIndex].caseStudy ?? projects[mobileProjectIndex].id]?.problem ?? projects[mobileProjectIndex].category}</div>
+              <div className="source">{projectCaseStudiesById[projects[mobileProjectIndex].id]?.problem ?? projects[mobileProjectIndex].category}</div>
             </div>
           </motion.button>
           <button className="gallery-carousel-arrow gallery-carousel-arrow-right" type="button" onClick={nextMobileProject} aria-label="Next project">→</button>

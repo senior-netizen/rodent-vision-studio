@@ -74,19 +74,17 @@ export type ProjectConfig = {
 export const projectConfigs: ProjectConfig[] = [
   {
     id: 'jofe-platform',
-    url: '/projects/job-opportunities-for-everyone-platform',
-    preview: '/visuals/sheq-preview.jpg',
-    name: 'Job Opportunities For Everyone',
     slug: 'job-opportunities-for-everyone-platform',
-    url: 'https://jofe-platform.vercel.app',
-    preview: '/visuals/sheq-preview.jpg',
+    name: 'Job Opportunities For Everyone',
     category: 'Employment Platform',
     role: 'Product Design + Full-Stack Engineering',
+    url: 'https://jofe-platform.vercel.app',
     links: {
-      live: '/projects/jofe-platform'
+      live: '/projects/jofe-platform',
     },
     problem: 'Job listings were fragmented across informal channels with no centralized, scalable data system.',
     architecture: ['Next.js App Router (SSR)', 'Supabase Auth + PostgREST API', 'PostgreSQL data layer', 'Vercel deployment edge network'],
+    preview: '/visuals/sheq-preview.jpg',
     stack: ['Next.js (App Router)', 'Supabase', 'PostgreSQL', 'TailwindCSS', 'Vercel'],
     dataFlow: ['Submission Form → Validation', 'Validation → Supabase API', 'Supabase API → PostgreSQL', 'PostgreSQL → SSR Job Pages'],
     decisions: ['Prioritized mobile-first interaction patterns for accessibility.', 'Structured listings and submissions to support data ownership and scale.'],
@@ -101,7 +99,7 @@ export const projectConfigs: ProjectConfig[] = [
       scope: 'End-to-end architecture and case study execution for employment distribution platform.',
       timeline: '6-week design and build cycle.',
       primaryKpi: 'Centralized listing access with reduced channel fragmentation.',
-    }
+    },
   },
   {
     id: 'feel-home',
@@ -114,7 +112,6 @@ export const projectConfigs: ProjectConfig[] = [
     problem: 'Property discovery and publishing required a single reliable platform with fast indexing.',
     architecture: ['Next.js application layer', 'Typed API contracts', 'PostgreSQL persistence', 'Vercel deployment'],
     name: 'Feel At Home',
-    slug: 'feel-at-home',
     url: 'https://feelathome.vercel.app',
     preview: '/visuals/meterflow-preview.jpg',
     stack: ['Next.js', 'TypeScript', 'React Query', 'PostgreSQL', 'Tailwind CSS'],
@@ -131,7 +128,7 @@ export const projectConfigs: ProjectConfig[] = [
       scope: 'End-to-end property search and listing platform.',
       timeline: 'Iterative delivery with continuous UX refinement.',
       primaryKpi: 'Faster listing discovery and publication turnaround.',
-    }
+    },
   },
   {
     id: 'shedsense-grid',
@@ -144,7 +141,6 @@ export const projectConfigs: ProjectConfig[] = [
     problem: 'Field telemetry pipelines needed deterministic routing and resilient actioning.',
     architecture: ['Edge ingestion', 'Stream processing', 'Rule evaluation engine', 'Operational dashboard'],
     name: 'ShedSense',
-    slug: 'shedsense-grid',
     url: 'https://backend-nl4r.onrender.com',
     preview: '/visuals/sh.png',
     stack: ['Next.js 14', 'TypeScript', 'Three.js', 'Framer Motion', 'PostgreSQL'],
@@ -161,7 +157,7 @@ export const projectConfigs: ProjectConfig[] = [
       scope: 'Telemetry and dispatch intelligence platform across distributed field assets.',
       timeline: '16-week delivery across discovery, hardening and rollout.',
       primaryKpi: '41% faster event-to-action response.',
-    }
+    },
   },
   {
     id: 'ar-experience',
@@ -174,7 +170,6 @@ export const projectConfigs: ProjectConfig[] = [
     problem: 'The product needed a performant immersive presentation layer that remained accessible.',
     architecture: ['Next.js UI shell', 'WebGL render surface', 'Motion orchestration', 'CTA analytics hooks'],
     name: 'AR by Rodent',
-    slug: 'ar-by-rodent',
     url: 'https://arbyrodent.vercel.app',
     preview: '/visuals/sheq-preview.jpg',
     stack: ['Next.js', 'TypeScript', 'Framer Motion', 'WebGL', 'CSS Effects'],
@@ -191,11 +186,11 @@ export const projectConfigs: ProjectConfig[] = [
       scope: 'Interactive AR showcase and product landing experience.',
       timeline: 'Rapid delivery with design-led iterations.',
       primaryKpi: 'Higher session engagement on interactive surfaces.',
-    }
+    },
   },
   {
     id: 'precise-locations-lib',
-    slug: 'precise-locations-library',
+    slug: 'precise-locations',
     category: 'Developer Tooling',
     role: 'Library Architecture + Release Engineering',
     links: {
@@ -205,7 +200,6 @@ export const projectConfigs: ProjectConfig[] = [
     problem: 'Teams required deterministic geospatial primitives with stable package contracts.',
     architecture: ['Typed Node.js library core', 'Validation boundary', 'Automated release pipeline', 'GitHub/npm distribution'],
     name: 'Precise Locations',
-    slug: 'precise-locations',
     url: 'https://github.com/anesu398/precise-locations',
     preview: '/visuals/kwiksend-preview.jpg',
     stack: ['Node.js', 'TypeScript', 'npm', 'GitHub Actions', 'Semantic Versioning'],
@@ -222,14 +216,15 @@ export const projectConfigs: ProjectConfig[] = [
       scope: 'Open source Node.js package for precise location operations.',
       timeline: 'Incremental releases with API stability focus.',
       primaryKpi: 'Reusable location primitives for multiple products.',
-    }
-  }
+    },
+  },
 ];
 
-export const projectById = Object.fromEntries(projectConfigs.filter((project) => project.id).map((project) => [project.id, project])) as Record<string, ProjectConfig>;
-
-export const projectIdBySlug = Object.fromEntries(projectConfigs.filter((project) => project.slug && project.id).map((project) => [project.slug, project.id])) as Record<string, string>;
-
+export const projectById = Object.fromEntries(
+  projectConfigs
+    .filter((project) => project.id)
+    .map((project) => [project.id, project]),
+) as Record<string, ProjectConfig>;
 
 export const projectIdBySlug = Object.fromEntries(
   projectConfigs
