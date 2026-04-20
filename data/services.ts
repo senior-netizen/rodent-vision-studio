@@ -1,4 +1,4 @@
-import type { ProjectConfig } from './projects';
+import type { Project } from './projects';
 
 export type ServiceSlug = 'web' | 'mobile' | 'iot' | 'robotics';
 

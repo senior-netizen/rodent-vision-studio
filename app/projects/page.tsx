@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { projectConfigs } from '@/data/projects';
+import { projects } from '@/data/projects';
+import { projectCaseStudiesById } from '@/data/project-case-studies';
 
 export default function ProjectsPage() {
   return (

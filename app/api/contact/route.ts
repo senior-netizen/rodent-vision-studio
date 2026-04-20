@@ -1,27 +1,40 @@
 import { NextResponse } from 'next/server';
+import { z } from 'zod';
 
-type ContactPayload = {
-  name?: string;
-  email?: string;
-  projectType?: string;
-  message?: string;
-};
+import { getServerEnv } from '@/lib/env';
+
+const contactPayloadSchema = z.object({
+  name: z.string().trim().min(1, 'Name is required'),
+  email: z.string().trim().email('A valid email is required'),
+  projectType: z.string().trim().optional(),
+  message: z.string().trim().min(1, 'Message is required'),
+});
 
 export async function POST(request: Request) {
-  const body = (await request.json()) as ContactPayload;
+  const json = await request.json();
+  const parsedPayload = contactPayloadSchema.safeParse(json);
 
-  if (!body.name?.trim() || !body.email?.trim() || !body.message?.trim()) {
-    return NextResponse.json({ error: 'Name, email, and message are required.' }, { status: 400 });
+  if (!parsedPayload.success) {
+    return NextResponse.json(
+      {
+        error: 'Invalid payload',
+        details: parsedPayload.error.flatten(),
+      },
+      { status: 400 },
+    );
   }
 
-  const resendKey = process.env.RESEND_API_KEY;
-  const toEmail = process.env.CONTACT_TO_EMAIL ?? 'you@rodent.co.zw';
-  const fromEmail = process.env.CONTACT_FROM_EMAIL ?? 'onboarding@resend.dev';
+  const env = getServerEnv();
 
-  if (!resendKey) {
+  if (!env.features.contactForm) {
+    return NextResponse.json({ error: 'Contact form is disabled.' }, { status: 503 });
+  }
+
+  if (!env.resendApiKey) {
     return NextResponse.json({ error: 'Email service is not configured. Set RESEND_API_KEY.' }, { status: 500 });
   }
 
+  const body = parsedPayload.data;
   const emailBody = [
     `Name: ${body.name}`,
     `Email: ${body.email}`,
@@ -33,12 +46,12 @@ export async function POST(request: Request) {
   const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
-      Authorization: `Bearer ${resendKey}`,
+      Authorization: `Bearer ${env.resendApiKey}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      from: fromEmail,
-      to: [toEmail],
+      from: env.contactFromEmail,
+      to: [env.contactToEmail],
       subject: 'New Inquiry',
       text: emailBody,
     }),

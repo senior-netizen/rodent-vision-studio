@@ -6,7 +6,8 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AnimatePresence, motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { StartProjectModal } from '@/components/contact/start-project-modal';
-import { projectConfigs } from '@/data/projects';
+import { projects } from '@/data/projects';
+import { projectCaseStudiesById } from '@/data/project-case-studies';
 import { labs } from '@/data/labs';
 import { services } from '@/data/services';
 import { trackEvent } from '@/lib/analytics/track';
@@ -150,8 +151,8 @@ export default function HomePage() {
     setTouchStartX(null);
   };
 
-  const nextMobileProject = () => setMobileProjectIndex((prev) => (prev + 1) % projectConfigs.length);
-  const prevMobileProject = () => setMobileProjectIndex((prev) => (prev - 1 + projectConfigs.length) % projectConfigs.length);
+  const nextMobileProject = () => setMobileProjectIndex((prev) => (prev + 1) % projects.length);
+  const prevMobileProject = () => setMobileProjectIndex((prev) => (prev - 1 + projects.length) % projects.length);
 
   const handleProjectTouchEnd = (endX: number) => {
     if (projectTouchStartX === null) return;
@@ -376,14 +377,14 @@ export default function HomePage() {
             <motion.button key={project.id} className="g-card" whileHover={{ scale: 1.04, y: -6 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.4, ease: easeCurve }} onClick={() => router.push(`/projects/${project.id}`)} style={{ border: 'none' }}>
               <div className="g-card-media">
                 <Image
-                  src={project.visuals.preview}
+                  src={project.preview}
                   alt={`${project.name} preview`}
                   fill
                   sizes="(max-width: 768px) 100vw, 25vw"
                   className="g-card-image"
                 />
               </div>
-              <div className="featured-overlay"><span className="name">{project.name}</span><div className="source">{project.problem}</div></div>
+              <div className="featured-overlay"><span className="name">{project.name}</span><div className="source">{projectCaseStudiesById[project.caseStudy ?? project.id]?.problem ?? project.category}</div></div>
             </motion.button>
           ))}
           <motion.div className="g-card featured art-orange" whileHover={{ scale: 1.03 }} transition={{ duration: 0.6, ease: easeCurve }}>
@@ -409,16 +410,16 @@ export default function HomePage() {
           >
             <div className="g-card-media g-card-media-mobile">
               <Image
-                src={projectConfigs[mobileProjectIndex].visuals.preview}
-                alt={`${projectConfigs[mobileProjectIndex].name} preview`}
+                src={projects[mobileProjectIndex].preview}
+                alt={`${projects[mobileProjectIndex].name} preview`}
                 fill
                 sizes="100vw"
                 className="g-card-image"
               />
             </div>
             <div className="featured-overlay">
-              <span className="name">{projectConfigs[mobileProjectIndex].name}</span>
-              <div className="source">{projectConfigs[mobileProjectIndex].problem}</div>
+              <span className="name">{projects[mobileProjectIndex].name}</span>
+              <div className="source">{projectCaseStudiesById[projects[mobileProjectIndex].caseStudy ?? projects[mobileProjectIndex].id]?.problem ?? projects[mobileProjectIndex].category}</div>
             </div>
           </motion.button>
           <button className="gallery-carousel-arrow gallery-carousel-arrow-right" type="button" onClick={nextMobileProject} aria-label="Next project">→</button>
