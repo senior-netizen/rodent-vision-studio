@@ -8,6 +8,7 @@ import {
 import {
   getIdempotentRecord,
   getProjectBySlug,
+  listProjects,
   setIdempotentResponse,
   upsertProject,
 } from '@/lib/projects/store';
@@ -36,6 +37,25 @@ function isAuthorized(request: Request): boolean {
 
   const requestToken = request.headers.get('x-admin-token')?.trim();
   return requestToken === adminToken;
+}
+
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const slug = searchParams.get('slug')?.trim();
+
+  if (slug) {
+    const project = getProjectBySlug(slug);
+    if (!project) {
+      return NextResponse.json({ error: `Project not found for slug: ${slug}` }, { status: 404 });
+    }
+
+    return NextResponse.json({ ok: true, project });
+  }
+
+  return NextResponse.json({
+    ok: true,
+    projects: listProjects(),
+  });
 }
 
 export async function POST(request: Request) {
