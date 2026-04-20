@@ -28,6 +28,7 @@ function hashPayload(payload: unknown): string {
   return createHash('sha256').update(JSON.stringify(payload)).digest('hex');
 }
 
+
 function isAuthorized(request: Request): boolean {
   const adminToken = process.env.PROJECTS_ADMIN_TOKEN;
   if (!adminToken) {
@@ -93,25 +94,43 @@ export async function POST(request: Request) {
       }),
     });
 
-    if (!previewResponse.ok) {
-      const errorText = await previewResponse.text();
-      throw new Error(`Preview generation failed: ${errorText}`);
-    }
-
-    const previewResult = (await previewResponse.json()) as {
+    const previewBody = await previewResponse.json() as {
       previewUrl?: string;
       generatedAt?: string;
+      error?: string;
+      category?: string;
+      correlationId?: string;
     };
 
-    if (!previewResult.previewUrl || !previewResult.generatedAt) {
+    const fallbackPreviewUrl = current?.visuals.preview;
+    const fallbackGeneratedAt = current?.previewGeneratedAt ?? new Date().toISOString();
+
+    if (!previewResponse.ok) {
+      if (fallbackPreviewUrl) {
+        console.warn('Preview generation failed, using last known preview.', {
+          slug: payload.project.slug,
+          correlationId: previewBody.correlationId,
+          category: previewBody.category,
+          reason: previewBody.error,
+        });
+      } else {
+        const details = previewBody.error ?? 'Unknown preview generation error.';
+        throw new Error(`Preview generation failed: ${details}`);
+      }
+    }
+
+    const previewUrl = previewBody.previewUrl ?? fallbackPreviewUrl;
+    const previewGeneratedAt = previewBody.generatedAt ?? fallbackGeneratedAt;
+
+    if (!previewUrl) {
       throw new Error('Preview generation returned an invalid response.');
     }
 
     const project = composeProjectConfig({
       current,
       payload,
-      previewUrl: previewResult.previewUrl,
-      previewGeneratedAt: previewResult.generatedAt,
+      previewUrl,
+      previewGeneratedAt,
     });
 
     const saved = upsertProject(project);
