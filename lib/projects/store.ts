@@ -1,4 +1,5 @@
 import { projectConfigs, type ProjectConfig } from '@/data/projects';
+import { applyProjectFreshness, hydrateProjectsWithFreshness } from '@/lib/projects/scheduler';
 
 const projects = new Map<string, ProjectConfig>(
   projectConfigs.map((project) => [project.slug, structuredClone(project)]),
@@ -21,12 +22,14 @@ const idempotentResponses = new Map<string, IdempotentRecord>();
 const previewOutbox = new Map<string, PreviewJobRequest>();
 
 export function listProjects(): ProjectConfig[] {
-  return [...projects.values()].map((project) => structuredClone(project));
+  return hydrateProjectsWithFreshness(
+    [...projects.values()].map((project) => structuredClone(project)),
+  );
 }
 
 export function getProjectBySlug(slug: string): ProjectConfig | undefined {
   const project = projects.get(slug);
-  return project ? structuredClone(project) : undefined;
+  return project ? applyProjectFreshness(structuredClone(project)) : undefined;
 }
 
 export function upsertProject(project: ProjectConfig): ProjectConfig {
@@ -51,8 +54,7 @@ export function upsertProject(project: ProjectConfig): ProjectConfig {
   }
 
   projects.set(project.slug, normalized);
-  slugByProjectId.set(project.id, project.slug);
-  return structuredClone(normalized);
+  return applyProjectFreshness(structuredClone(normalized));
 }
 
 export function getIdempotentRecord(key: string): IdempotentRecord | null {

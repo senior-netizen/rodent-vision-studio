@@ -32,6 +32,25 @@ function hashPayload(payload: unknown): string {
   return createHash('sha256').update(JSON.stringify(payload)).digest('hex');
 }
 
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const slug = searchParams.get('slug')?.trim();
+
+  if (slug) {
+    const project = getProjectBySlug(slug);
+    if (!project) {
+      return NextResponse.json({ error: `Project not found for slug: ${slug}` }, { status: 404 });
+    }
+
+    return NextResponse.json({ ok: true, project });
+  }
+
+  return NextResponse.json({
+    ok: true,
+    projects: listProjects(),
+  });
+}
+
 export async function POST(request: Request) {
   const authorization = authorizeProjectsWrite(request);
   if (!authorization.ok) {

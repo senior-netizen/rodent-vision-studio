@@ -1,7 +1,4 @@
-import type { DeploymentStatus, PreviewState, ProjectConfig, ProjectDeployment } from '@/data/projects';
-
-const APPROVED_DEPLOYMENT_SCHEMES = new Set(['https:']);
-const APPROVED_DEPLOYMENT_DOMAINS = ['vercel.app', 'onrender.com', 'github.com'];
+import type { DeploymentStatus, LinkHealth, ProjectConfig, ProjectDeployment } from '@/data/projects';
 
 export type UpsertProjectPayload = {
   project: {
@@ -25,6 +22,15 @@ export type UpsertProjectPayload = {
       preview?: string;
     };
     outcome: string;
+    linkHealth?: {
+      lastCheckedAt?: string;
+      lastSuccessfulCheckAt?: string;
+      recentChecks?: Array<{
+        checkedAt: string;
+        ok: boolean;
+        statusCode?: number;
+      }>;
+    };
     summary: {
       scope: string;
       timeline: string;
@@ -69,6 +75,41 @@ function toIsoDate(value: unknown): string | null {
   }
 
   return date.toISOString();
+}
+
+function parseLinkHealth(value: unknown): LinkHealth | null {
+  if (!value) {
+    return null;
+  }
+
+  if (!isObject(value)) {
+    return null;
+  }
+
+  const recentChecksRaw = Array.isArray(value.recentChecks) ? value.recentChecks : [];
+  const recentChecks: NonNullable<LinkHealth['recentChecks']> = [];
+  for (const entry of recentChecksRaw) {
+    if (!isObject(entry) || !hasNonEmptyText(entry.checkedAt) || typeof entry.ok !== 'boolean') {
+      continue;
+    }
+
+    const checkedAt = toIsoDate(entry.checkedAt);
+    if (!checkedAt) {
+      continue;
+    }
+
+    recentChecks.push({
+      checkedAt,
+      ok: entry.ok,
+      statusCode: typeof entry.statusCode === 'number' ? entry.statusCode : undefined,
+    });
+  }
+
+  return {
+    lastCheckedAt: toIsoDate(value.lastCheckedAt) ?? undefined,
+    lastSuccessfulCheckAt: toIsoDate(value.lastSuccessfulCheckAt) ?? undefined,
+    recentChecks,
+  };
 }
 
 function buildDeployment(
@@ -235,6 +276,7 @@ export function validateUpsertPayload(payload: unknown): { value: UpsertProjectP
           preview: hasNonEmptyText(project.visuals.preview) ? project.visuals.preview.trim() : undefined,
         },
         outcome: project.outcome.trim(),
+        linkHealth: parseLinkHealth(project.linkHealth) ?? undefined,
         summary: {
           scope: project.summary.scope.trim(),
           timeline: project.summary.timeline.trim(),
@@ -290,7 +332,10 @@ export function composeProjectConfig(input: {
   ];
 
   return {
+    id: current?.id ?? payload.project.slug,
     ...payload.project,
+    url: payload.project.links.live ?? current?.url ?? previewUrl,
+    preview: previewUrl,
     visuals: {
       ...payload.project.visuals,
       preview: current?.visuals.preview ?? payload.project.visuals.preview ?? payload.project.visuals.screenshot,
@@ -299,5 +344,6 @@ export function composeProjectConfig(input: {
     previewState,
     status: payload.status,
     deployments: dedupedDeployments,
+    linkHealth: payload.project.linkHealth ?? current?.linkHealth,
   };
 }
