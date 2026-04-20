@@ -7,11 +7,32 @@ export type ProjectDeployment = {
   status: DeploymentStatus;
 };
 
+export type PreviewStatus = 'pending' | 'ready' | 'failed';
+
+export type PreviewState = {
+  status: PreviewStatus;
+  lastError?: string;
+  attemptCount: number;
+  requestedAt?: string;
+  generatedAt?: string;
+  failedAt?: string;
+  updatedAt: string;
+};
+
 export type ProjectConfig = {
-  id: string;
+  id?: string;
+  slug?: string;
   name: string;
-  url: string;
-  preview: string;
+  category?: string;
+  role?: string;
+  links?: {
+    live?: string;
+    repo?: string;
+  };
+  problem?: string;
+  architecture?: string[];
+  url?: string;
+  preview?: string;
   stack: string[];
   dataFlow: string[];
   decisions: string[];
@@ -21,6 +42,7 @@ export type ProjectConfig = {
     preview: string;
   };
   previewGeneratedAt?: string;
+  previewState?: PreviewState;
   status?: DeploymentStatus;
   deployments?: ProjectDeployment[];
   outcome: string;
@@ -145,6 +167,10 @@ export const projectConfigs: ProjectConfig[] = [
   }
 ];
 
-export const projectById = Object.fromEntries(projectConfigs.map((project) => [project.id, project])) as Record<ProjectConfig['id'], ProjectConfig>;
+export const projectById = Object.fromEntries(projectConfigs.filter((project) => project.id).map((project) => [project.id, project])) as Record<string, ProjectConfig>;
 
-export const projectIdBySlug = Object.fromEntries(projectConfigs.map((project) => [project.slug, project.id])) as Record<ProjectConfig['slug'], ProjectConfig['id']>;
+export const projectIdBySlug = Object.fromEntries(projectConfigs.filter((project) => project.slug && project.id).map((project) => [project.slug, project.id])) as Record<string, string>;
+
+
+export type Project = ProjectConfig;
+export const projects = projectConfigs;
