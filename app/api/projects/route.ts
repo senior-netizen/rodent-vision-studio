@@ -1,10 +1,8 @@
-import { createHash } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import { NextResponse } from 'next/server';
-import {
-  composeProjectConfig,
-  validateUpsertPayload,
-  type UpsertProjectPayload,
-} from '@/lib/projects/contracts';
+import { composeProjectConfig, validateUpsertPayload, type UpsertProjectPayload } from '@/lib/projects/contracts';
+import { logStructured, logStructuredError } from '@/lib/observability/logger';
+import { enqueuePreviewJob } from '@/lib/queue/preview-jobs';
 import {
   getIdempotentRecord,
   getProjectBySlug,
@@ -17,11 +15,17 @@ const inFlightOrchestrations = new Map<string, { requestHash: string; promise: P
 type ResponsePayload = {
   ok: true;
   idempotencyKey: string;
+  correlationId: string;
   project: Awaited<ReturnType<typeof upsertProject>>;
+  previewJobId: string;
 };
 
 function buildIdempotencyKey(request: Request, payload: UpsertProjectPayload): string {
   return request.headers.get('idempotency-key')?.trim() || `${payload.project.slug}:${payload.deployment?.version ?? 'base'}`;
+}
+
+function buildCorrelationId(request: Request): string {
+  return request.headers.get('x-correlation-id')?.trim() || randomUUID();
 }
 
 function hashPayload(payload: unknown): string {
@@ -38,7 +42,13 @@ function isAuthorized(request: Request): boolean {
   return requestToken === adminToken;
 }
 
+function getPreviewSourceUrl(payload: UpsertProjectPayload, existingPreviewUrl?: string): string {
+  return payload.project.visuals.screenshot || existingPreviewUrl || payload.project.links.live || `/api/previews/${payload.project.slug}`;
+}
+
 export async function POST(request: Request) {
+  const correlationId = buildCorrelationId(request);
+
   if (!isAuthorized(request)) {
     return NextResponse.json({ error: 'Unauthorized project write operation.' }, { status: 401 });
   }
@@ -81,44 +91,42 @@ export async function POST(request: Request) {
 
   const orchestration = (async (): Promise<ResponsePayload> => {
     const current = getProjectBySlug(payload.project.slug);
-    const previewResponse = await fetch(new URL('/api/generate-preview', request.url), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        slug: payload.project.slug,
-        screenshotUrl: payload.project.visuals.screenshot,
-        currentPreviewUrl: current?.visuals.preview,
-      }),
-    });
-
-    if (!previewResponse.ok) {
-      const errorText = await previewResponse.text();
-      throw new Error(`Preview generation failed: ${errorText}`);
-    }
-
-    const previewResult = (await previewResponse.json()) as {
-      previewUrl?: string;
-      generatedAt?: string;
-    };
-
-    if (!previewResult.previewUrl || !previewResult.generatedAt) {
-      throw new Error('Preview generation returned an invalid response.');
-    }
+    const initialPreviewUrl = payload.project.visuals.preview ?? current?.visuals.preview ?? payload.project.visuals.screenshot;
+    const generatedAt = new Date().toISOString();
 
     const project = composeProjectConfig({
       current,
       payload,
-      previewUrl: previewResult.previewUrl,
-      previewGeneratedAt: previewResult.generatedAt,
+      previewUrl: initialPreviewUrl,
+      previewGeneratedAt: generatedAt,
     });
 
     const saved = upsertProject(project);
+    const previewSourceUrl = getPreviewSourceUrl(payload, current?.visuals.preview);
+
+    const previewJobId = await enqueuePreviewJob({
+      projectSlug: payload.project.slug,
+      sourceUrl: previewSourceUrl,
+      idempotencyKey,
+      correlationId,
+      payload,
+    });
+
+    logStructured({
+      event: 'projects.preview.enqueued',
+      message: 'Preview generation job enqueued.',
+      correlationId,
+      idempotencyKey,
+      projectSlug: payload.project.slug,
+      previewJobId,
+    });
+
     return {
       ok: true,
       idempotencyKey,
+      correlationId,
       project: saved,
+      previewJobId,
     };
   })();
 
@@ -129,8 +137,17 @@ export async function POST(request: Request) {
     setIdempotentResponse(idempotencyKey, requestHash, response);
     return NextResponse.json(response);
   } catch (error) {
+    logStructuredError({
+      event: 'projects.preview.enqueue.failed',
+      message: 'Project persistence succeeded but queue enqueue failed.',
+      correlationId,
+      idempotencyKey,
+      projectSlug: payload.project.slug,
+      error,
+    });
+
     const message = error instanceof Error ? error.message : 'Project orchestration failed.';
-    return NextResponse.json({ error: message }, { status: 502 });
+    return NextResponse.json({ error: message, correlationId }, { status: 502 });
   } finally {
     inFlightOrchestrations.delete(idempotencyKey);
   }
