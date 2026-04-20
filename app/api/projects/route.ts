@@ -4,13 +4,15 @@ import { composeProjectConfig, validateUpsertPayload, type UpsertProjectPayload 
 import { logStructured, logStructuredError } from '@/lib/observability/logger';
 import { enqueuePreviewJob } from '@/lib/queue/preview-jobs';
 import {
+  enqueuePreviewJob,
   getIdempotentRecord,
   getProjectBySlug,
+  listProjects,
   setIdempotentResponse,
   upsertProject,
 } from '@/lib/projects/store';
 
-const inFlightOrchestrations = new Map<string, { requestHash: string; promise: Promise<ResponsePayload> }>();
+const inFlightMutations = new Map<string, { requestHash: string; promise: Promise<ResponsePayload> }>();
 
 type ResponsePayload = {
   ok: true;
@@ -31,6 +33,7 @@ function buildCorrelationId(request: Request): string {
 function hashPayload(payload: unknown): string {
   return createHash('sha256').update(JSON.stringify(payload)).digest('hex');
 }
+
 
 function isAuthorized(request: Request): boolean {
   const adminToken = process.env.PROJECTS_ADMIN_TOKEN;
@@ -61,6 +64,22 @@ export async function POST(request: Request) {
   }
 
   const payload = validation.value;
+  const existingSlugForId = getProjectSlugById(payload.project.id);
+  if (existingSlugForId && existingSlugForId !== payload.project.slug) {
+    return NextResponse.json(
+      { error: `Project id "${payload.project.id}" is already bound to slug "${existingSlugForId}".` },
+      { status: 409 },
+    );
+  }
+
+  const existingProjectForSlug = getProjectBySlug(payload.project.slug);
+  if (existingProjectForSlug && existingProjectForSlug.id !== payload.project.id) {
+    return NextResponse.json(
+      { error: `Project slug "${payload.project.slug}" is already bound to id "${existingProjectForSlug.id}".` },
+      { status: 409 },
+    );
+  }
+
   const requestHash = hashPayload(payload);
   const idempotencyKey = buildIdempotencyKey(request, payload);
   const cached = getIdempotentRecord(idempotencyKey);
@@ -73,10 +92,10 @@ export async function POST(request: Request) {
   }
 
   if (cached) {
-    return NextResponse.json(cached.response);
+    return NextResponse.json(cached.response, { status: 202 });
   }
 
-  const inFlight = inFlightOrchestrations.get(idempotencyKey);
+  const inFlight = inFlightMutations.get(idempotencyKey);
   if (inFlight && inFlight.requestHash !== requestHash) {
     return NextResponse.json(
       { error: 'Idempotency key is currently processing a different payload.' },
@@ -86,7 +105,7 @@ export async function POST(request: Request) {
 
   if (inFlight) {
     const inFlightResult = await inFlight.promise;
-    return NextResponse.json(inFlightResult);
+    return NextResponse.json(inFlightResult, { status: 202 });
   }
 
   const orchestration = (async (): Promise<ResponsePayload> => {
@@ -130,12 +149,12 @@ export async function POST(request: Request) {
     };
   })();
 
-  inFlightOrchestrations.set(idempotencyKey, { requestHash, promise: orchestration });
+  inFlightMutations.set(idempotencyKey, { requestHash, promise: mutation });
 
   try {
-    const response = await orchestration;
+    const response = await mutation;
     setIdempotentResponse(idempotencyKey, requestHash, response);
-    return NextResponse.json(response);
+    return NextResponse.json(response, { status: 202 });
   } catch (error) {
     logStructuredError({
       event: 'projects.preview.enqueue.failed',
@@ -149,6 +168,6 @@ export async function POST(request: Request) {
     const message = error instanceof Error ? error.message : 'Project orchestration failed.';
     return NextResponse.json({ error: message, correlationId }, { status: 502 });
   } finally {
-    inFlightOrchestrations.delete(idempotencyKey);
+    inFlightMutations.delete(idempotencyKey);
   }
 }

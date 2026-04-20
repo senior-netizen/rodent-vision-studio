@@ -1,3 +1,59 @@
 {
-  "projects": {}
+  "projects": {
+    "jofe-platform": {
+      "health": {
+        "statusCode": null,
+        "checkedAt": "2026-04-20T08:29:00.969Z",
+        "latencyMs": 115,
+        "errorClass": "network_error",
+        "consecutiveFailures": 4,
+        "lastSuccessAt": null
+      },
+      "updatedAt": "2026-04-20T08:29:00.968Z"
+    },
+    "feel-home": {
+      "health": {
+        "statusCode": null,
+        "checkedAt": "2026-04-20T08:29:01.084Z",
+        "latencyMs": 21,
+        "errorClass": "network_error",
+        "consecutiveFailures": 4,
+        "lastSuccessAt": null
+      },
+      "updatedAt": "2026-04-20T08:29:00.968Z"
+    },
+    "shedsense-grid": {
+      "health": {
+        "statusCode": null,
+        "checkedAt": "2026-04-20T08:29:01.105Z",
+        "latencyMs": 35,
+        "errorClass": "network_error",
+        "consecutiveFailures": 4,
+        "lastSuccessAt": null
+      },
+      "updatedAt": "2026-04-20T08:29:00.968Z"
+    },
+    "ar-experience": {
+      "health": {
+        "statusCode": null,
+        "checkedAt": "2026-04-20T08:29:01.140Z",
+        "latencyMs": 45,
+        "errorClass": "network_error",
+        "consecutiveFailures": 4,
+        "lastSuccessAt": null
+      },
+      "updatedAt": "2026-04-20T08:29:00.968Z"
+    },
+    "precise-locations-lib": {
+      "health": {
+        "statusCode": null,
+        "checkedAt": "2026-04-20T08:29:01.185Z",
+        "latencyMs": 7,
+        "errorClass": "network_error",
+        "consecutiveFailures": 4,
+        "lastSuccessAt": null
+      },
+      "updatedAt": "2026-04-20T08:29:00.968Z"
+    }
+  }
 }
