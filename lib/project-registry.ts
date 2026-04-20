@@ -226,6 +226,27 @@ export async function purgePreviewAlias(input: { projectId: string; aliasUrl: st
   }
 }
 
+
+async function readReconciliationQueue(): Promise<ReconciliationQueue> {
+  try {
+    const contents = await fs.readFile(reconciliationQueuePath, 'utf8');
+    const parsed = JSON.parse(contents) as Partial<ReconciliationQueue>;
+    return {
+      tasks: Array.isArray(parsed.tasks) ? parsed.tasks : [],
+    };
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
+      return { tasks: [] };
+    }
+
+    throw error;
+  }
+}
+
+async function writeReconciliationQueue(queue: ReconciliationQueue): Promise<void> {
+  await fs.mkdir(path.dirname(reconciliationQueuePath), { recursive: true });
+  await fs.writeFile(reconciliationQueuePath, JSON.stringify(queue, null, 2), 'utf8');
+}
 export async function appendUploadAttempt(event: UploadAttemptEvent) {
   await fs.mkdir(dataDirectoryPath, { recursive: true });
   await fs.appendFile(uploadAttemptsPath, `${JSON.stringify(event)}\n`, 'utf8');
@@ -252,4 +273,25 @@ export async function enqueuePreviewReconciliationTask(input: {
   await writeReconciliationQueue(queue);
 
   return task;
+}
+
+
+export async function updateProjectPreview(
+  projectId: string,
+  imageUrl: string,
+  metadata: {
+    publicId: string;
+    capturedAt: string;
+    sourceUrl: string;
+    correlationId: string;
+  },
+): Promise<{ aliasUrl: string; immutableUrl: string; assetHash: string; assetVersion: string; publishedAt: string }> {
+  return publishProjectPreview({
+    projectId,
+    imageUrl,
+    sourceUrl: metadata.sourceUrl,
+    capturedAt: metadata.capturedAt,
+    correlationId: metadata.correlationId,
+    publicId: metadata.publicId,
+  });
 }

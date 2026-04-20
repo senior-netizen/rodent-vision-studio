@@ -4,8 +4,7 @@ import { useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import type { ProjectCaseStudy } from '@/data/project-case-studies';
-import type { Project } from '@/data/projects';
+import type { ProjectConfig } from '@/data/projects';
 import { reveal, revealLeft, stagger, staggerChild } from '@/lib/animations/reveal';
 
 export function CaseStudyPage({ project }: { project: ProjectConfig }) {
@@ -75,7 +74,7 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
             transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="text-body mt-6 max-w-2xl text-lg"
           >
-            {caseStudy.role}
+            {project.role}
           </motion.p>
 
           <div className="mt-4 flex flex-wrap items-center gap-3">
@@ -129,15 +128,15 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
           >
             <motion.div variants={staggerChild} className="card-glass p-6">
               <span className="text-label">Scope</span>
-              <p className="text-body mt-3 text-sm">{caseStudy.summary.scope}</p>
+              <p className="text-body mt-3 text-sm">{project.summary.scope}</p>
             </motion.div>
             <motion.div variants={staggerChild} className="card-glass p-6">
               <span className="text-label">Timeline</span>
-              <p className="text-body mt-3 text-sm">{caseStudy.summary.timeline}</p>
+              <p className="text-body mt-3 text-sm">{project.summary.timeline}</p>
             </motion.div>
             <motion.div variants={staggerChild} className="card-glass p-6">
               <span className="text-label">Primary KPI</span>
-              <p className="text-body mt-3 text-sm">{caseStudy.summary.primaryKpi}</p>
+              <p className="text-body mt-3 text-sm">{project.summary.primaryKpi}</p>
             </motion.div>
           </motion.div>
         </div>
@@ -165,7 +164,7 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
             viewport={{ once: true }}
             className="col-span-12 md:col-span-7"
           >
-            <p className="text-body text-lg leading-relaxed">{caseStudy.problem}</p>
+            <p className="text-body text-lg leading-relaxed">{project.problem}</p>
           </motion.div>
         </div>
         <div className="container-wide">
@@ -201,7 +200,7 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
             className="card-glass overflow-hidden p-1"
           >
             <Image
-              src={caseStudy.visuals.diagram}
+              src={project.visuals.diagram}
               alt={`${project.name} architecture diagram`}
               width={1600}
               height={900}
@@ -216,7 +215,7 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
             viewport={{ once: true }}
             className="mt-8 grid gap-3 md:grid-cols-2 lg:grid-cols-4"
           >
-            {caseStudy.architecture.map((item) => (
+            {project.architecture.map((item) => (
               <motion.div
                 key={item}
                 variants={staggerChild}
@@ -270,7 +269,7 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
             <motion.div variants={staggerChild} className="card-glass p-6">
               <span className="text-label mb-4 block">Data Flow</span>
               <ul className="space-y-3">
-                {caseStudy.dataFlow.map((s) => (
+                {project.dataFlow.map((s) => (
                   <li key={s} className="text-body text-sm">{s}</li>
                 ))}
               </ul>
@@ -279,7 +278,7 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
             <motion.div variants={staggerChild} className="card-glass p-6">
               <span className="text-label mb-4 block">Decisions</span>
               <ul className="space-y-3">
-                {caseStudy.decisions.map((s) => (
+                {project.decisions.map((s) => (
                   <li key={s} className="text-body text-sm">{s}</li>
                 ))}
               </ul>
@@ -396,7 +395,7 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
             className="card-glass overflow-hidden p-1"
           >
             <Image
-              src={caseStudy.visuals.screenshot}
+              src={project.visuals.screenshot}
               alt={`${project.name} operational interface`}
               width={1600}
               height={900}
@@ -430,7 +429,7 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
             viewport={{ once: true }}
             className="col-span-12 md:col-span-7"
           >
-            <p className="text-body text-lg leading-relaxed">{caseStudy.outcome}</p>
+            <p className="text-body text-lg leading-relaxed">{project.outcome}</p>
           </motion.div>
         </div>
       </section>

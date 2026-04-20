@@ -7,7 +7,7 @@ export type Service = {
   name: string;
   summary: string;
   capability: string;
-  relatedProjects: ProjectConfig['id'][];
+  relatedProjects: Project['id'][];
   cta: string;
 };
 

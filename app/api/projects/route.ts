@@ -1,16 +1,17 @@
 import { createHash, randomUUID } from 'node:crypto';
 import { NextResponse } from 'next/server';
+import { logStructured, logStructuredError } from '@/lib/observability/logger';
 import { authorizeProjectsWrite } from '@/lib/projects/admin-auth';
+import { composeProjectConfig, validateUpsertPayload, type UpsertProjectPayload } from '@/lib/projects/contracts';
 import {
   enqueuePreviewJob,
   getIdempotentRecord,
   getProjectBySlug,
+  getProjectSlugById,
   listProjects,
   setIdempotentResponse,
   upsertProject,
 } from '@/lib/projects/store';
-
-const inFlightMutations = new Map<string, { requestHash: string; promise: Promise<ResponsePayload> }>();
 
 type ResponsePayload = {
   ok: true;
@@ -19,6 +20,8 @@ type ResponsePayload = {
   project: Awaited<ReturnType<typeof upsertProject>>;
   previewJobId: string;
 };
+
+const inFlightMutations = new Map<string, { requestHash: string; promise: Promise<ResponsePayload> }>();
 
 function buildIdempotencyKey(request: Request, payload: UpsertProjectPayload): string {
   return request.headers.get('idempotency-key')?.trim() || `${payload.project.slug}:${payload.deployment?.version ?? 'base'}`;
@@ -30,6 +33,10 @@ function buildCorrelationId(request: Request): string {
 
 function hashPayload(payload: unknown): string {
   return createHash('sha256').update(JSON.stringify(payload)).digest('hex');
+}
+
+function getPreviewSourceUrl(payload: UpsertProjectPayload, currentPreview?: string): string {
+  return payload.project.visuals.screenshot.trim() || payload.project.visuals.preview?.trim() || currentPreview || '';
 }
 
 export async function GET(request: Request) {
@@ -45,10 +52,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ ok: true, project });
   }
 
-  return NextResponse.json({
-    ok: true,
-    projects: listProjects(),
-  });
+  return NextResponse.json({ ok: true, projects: listProjects() });
 }
 
 export async function POST(request: Request) {
@@ -83,13 +87,11 @@ export async function POST(request: Request) {
 
   const requestHash = hashPayload(payload);
   const idempotencyKey = buildIdempotencyKey(request, payload);
-  const cached = getIdempotentRecord(idempotencyKey);
+  const correlationId = buildCorrelationId(request);
 
+  const cached = getIdempotentRecord(idempotencyKey);
   if (cached && cached.requestHash !== requestHash) {
-    return NextResponse.json(
-      { error: 'Idempotency key already used with a different payload.' },
-      { status: 409 },
-    );
+    return NextResponse.json({ error: 'Idempotency key already used with a different payload.' }, { status: 409 });
   }
 
   if (cached) {
@@ -98,47 +100,31 @@ export async function POST(request: Request) {
 
   const inFlight = inFlightMutations.get(idempotencyKey);
   if (inFlight && inFlight.requestHash !== requestHash) {
-    return NextResponse.json(
-      { error: 'Idempotency key is currently processing a different payload.' },
-      { status: 409 },
-    );
+    return NextResponse.json({ error: 'Idempotency key is currently processing a different payload.' }, { status: 409 });
   }
 
   if (inFlight) {
-    const inFlightResult = await inFlight.promise;
-    return NextResponse.json(inFlightResult, { status: 202 });
+    return NextResponse.json(await inFlight.promise, { status: 202 });
   }
 
-  const orchestration = (async (): Promise<ResponsePayload> => {
+  const mutation = (async (): Promise<ResponsePayload> => {
     const current = getProjectBySlug(payload.project.slug);
-    const initialPreviewUrl = payload.project.visuals.preview ?? current?.visuals.preview ?? payload.project.visuals.screenshot;
-    const generatedAt = new Date().toISOString();
-
     const project = composeProjectConfig({
       current,
       payload,
-      previewUrl: previewResult.previewUrl,
-      previewGeneratedAt: previewResult.generatedAt,
-      previewAsset: previewResult.previewMetadata?.assetHash
-        && previewResult.previewMetadata.assetVersion
-        && previewResult.previewMetadata.aliasUrl
-        ? {
-          hash: previewResult.previewMetadata.assetHash,
-          version: previewResult.previewMetadata.assetVersion,
-          aliasUrl: previewResult.previewMetadata.aliasUrl,
-        }
-        : current?.previewAsset,
+      previewUrl: current?.visuals.preview,
+      previewGeneratedAt: current?.previewGeneratedAt,
+      previewAsset: current?.previewAsset,
     });
 
     const saved = upsertProject(project);
-    const previewSourceUrl = getPreviewSourceUrl(payload, current?.visuals.preview);
 
-    const previewJobId = await enqueuePreviewJob({
+    const previewSourceUrl = getPreviewSourceUrl(payload, current?.visuals.preview);
+    const queued = enqueuePreviewJob({
+      dedupeKey: idempotencyKey,
       projectSlug: payload.project.slug,
       sourceUrl: previewSourceUrl,
-      idempotencyKey,
       correlationId,
-      payload,
     });
 
     logStructured({
@@ -147,7 +133,7 @@ export async function POST(request: Request) {
       correlationId,
       idempotencyKey,
       projectSlug: payload.project.slug,
-      previewJobId,
+      previewJobId: queued.dedupeKey,
     });
 
     return {
@@ -155,7 +141,7 @@ export async function POST(request: Request) {
       idempotencyKey,
       correlationId,
       project: saved,
-      previewJobId,
+      previewJobId: queued.dedupeKey,
     };
   })();
 

@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
 import { resolveProjectPreviewVersion } from '@/lib/project-registry';
 
@@ -7,8 +8,13 @@ function normalizeAssetHash(assetParam: string): string {
   return assetParam.endsWith('.png') ? assetParam.slice(0, -4) : assetParam;
 }
 
-export async function GET(_: Request, context: { params: Promise<{ slug: string; asset: string }> }) {
-  const { slug, asset } = await context.params;
+export async function GET(_: Request, context: { params?: { slug?: string; asset?: string } }) {
+  const slug = context.params?.slug;
+  const asset = context.params?.asset;
+
+  if (!slug || !asset) {
+    return new NextResponse('Preview slug/asset are required', { status: 400 });
+  }
   const assetHash = normalizeAssetHash(asset);
 
   const version = await resolveProjectPreviewVersion(slug, assetHash);
