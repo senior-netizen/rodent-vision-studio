@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
 import { NextResponse } from 'next/server';
+import { authorizeProjectsWrite } from '@/lib/projects/admin-auth';
 import {
   composeProjectConfig,
   validateUpsertPayload,
@@ -28,19 +29,10 @@ function hashPayload(payload: unknown): string {
   return createHash('sha256').update(JSON.stringify(payload)).digest('hex');
 }
 
-function isAuthorized(request: Request): boolean {
-  const adminToken = process.env.PROJECTS_ADMIN_TOKEN;
-  if (!adminToken) {
-    return true;
-  }
-
-  const requestToken = request.headers.get('x-admin-token')?.trim();
-  return requestToken === adminToken;
-}
-
 export async function POST(request: Request) {
-  if (!isAuthorized(request)) {
-    return NextResponse.json({ error: 'Unauthorized project write operation.' }, { status: 401 });
+  const authorization = authorizeProjectsWrite(request);
+  if (!authorization.ok) {
+    return NextResponse.json({ error: authorization.error }, { status: authorization.status });
   }
 
   const body = await request.json();
