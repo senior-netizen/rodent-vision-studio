@@ -101,6 +101,11 @@ export async function POST(request: Request) {
     const previewResult = (await previewResponse.json()) as {
       previewUrl?: string;
       generatedAt?: string;
+      previewMetadata?: {
+        assetHash?: string;
+        assetVersion?: string;
+        aliasUrl?: string;
+      };
     };
 
     if (!previewResult.previewUrl || !previewResult.generatedAt) {
@@ -112,6 +117,15 @@ export async function POST(request: Request) {
       payload,
       previewUrl: previewResult.previewUrl,
       previewGeneratedAt: previewResult.generatedAt,
+      previewAsset: previewResult.previewMetadata?.assetHash
+        && previewResult.previewMetadata.assetVersion
+        && previewResult.previewMetadata.aliasUrl
+        ? {
+          hash: previewResult.previewMetadata.assetHash,
+          version: previewResult.previewMetadata.assetVersion,
+          aliasUrl: previewResult.previewMetadata.aliasUrl,
+        }
+        : current?.previewAsset,
     });
 
     const saved = upsertProject(project);

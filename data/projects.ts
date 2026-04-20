@@ -21,6 +21,11 @@ export type ProjectConfig = {
     preview: string;
   };
   previewGeneratedAt?: string;
+  previewAsset?: {
+    hash: string;
+    version: string;
+    aliasUrl: string;
+  };
   status?: DeploymentStatus;
   deployments?: ProjectDeployment[];
   outcome: string;

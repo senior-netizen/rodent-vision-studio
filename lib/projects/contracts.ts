@@ -173,8 +173,13 @@ export function composeProjectConfig(input: {
   payload: UpsertProjectPayload;
   previewUrl: string;
   previewGeneratedAt: string;
+  previewAsset?: {
+    hash: string;
+    version: string;
+    aliasUrl: string;
+  };
 }): ProjectConfig {
-  const { current, payload, previewUrl, previewGeneratedAt } = input;
+  const { current, payload, previewUrl, previewGeneratedAt, previewAsset } = input;
 
   const deploymentRecord: ProjectDeployment = payload.deployment
     ? {
@@ -200,6 +205,7 @@ export function composeProjectConfig(input: {
       preview: previewUrl,
     },
     previewGeneratedAt,
+    previewAsset: previewAsset ?? current?.previewAsset,
     status: payload.status,
     deployments: dedupedDeployments,
   };
