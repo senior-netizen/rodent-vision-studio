@@ -1,12 +1,30 @@
 import { NextResponse } from 'next/server';
+import { z } from 'zod';
+
+import { getServerEnv } from '@/lib/env';
+
+const analyticsPayloadSchema = z.object({
+  name: z.string().trim().min(1).max(128),
+  timestamp: z.string().datetime().optional(),
+  path: z.string().trim().min(1).max(1024).optional(),
+});
 
 export async function POST(request: Request) {
-  try {
-    const payload = (await request.json()) as { name?: string; timestamp?: string; path?: string };
-    console.info('[analytics]', payload.name ?? 'unknown_event', payload.path ?? '', payload.timestamp ?? '');
-  } catch {
-    console.warn('[analytics] failed to parse payload');
+  const env = getServerEnv();
+
+  if (!env.features.analytics) {
+    return NextResponse.json({ ok: true, skipped: true });
   }
+
+  const json = await request.json().catch(() => null);
+  const parsedPayload = analyticsPayloadSchema.safeParse(json);
+
+  if (!parsedPayload.success) {
+    return NextResponse.json({ error: 'Invalid analytics payload' }, { status: 400 });
+  }
+
+  const payload = parsedPayload.data;
+  console.info('[analytics]', payload.name, payload.path ?? '', payload.timestamp ?? '');
 
   return NextResponse.json({ ok: true });
 }
