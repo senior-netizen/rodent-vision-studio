@@ -7,7 +7,9 @@ const projects = new Map<string, ProjectConfig>(
   projectConfigs.map((project) => [project.slug, structuredClone(project)]),
 );
 
-const idempotentResponses = new Map<string, { requestHash: string; response: unknown }>();
+type IdempotentRecord = { requestHash: string; response: unknown };
+
+const idempotentResponses = new Map<string, IdempotentRecord>();
 
 export function listProjects(): ProjectConfig[] {
   return [...projects.values()].map((project) => structuredClone(project));
@@ -28,13 +30,9 @@ export function upsertProject(project: ProjectConfig): ProjectConfig {
   return structuredClone(normalized);
 }
 
-export function getIdempotentResponse(key: string, requestHash: string): unknown | null {
+export function getIdempotentRecord(key: string): IdempotentRecord | null {
   const record = idempotentResponses.get(key);
-  if (!record || record.requestHash !== requestHash) {
-    return null;
-  }
-
-  return structuredClone(record.response);
+  return record ? structuredClone(record) : null;
 }
 
 export function setIdempotentResponse(key: string, requestHash: string, response: unknown) {
