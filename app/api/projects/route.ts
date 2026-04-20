@@ -1,8 +1,6 @@
 import { createHash, randomUUID } from 'node:crypto';
 import { NextResponse } from 'next/server';
-import { composeProjectConfig, validateUpsertPayload, type UpsertProjectPayload } from '@/lib/projects/contracts';
-import { logStructured, logStructuredError } from '@/lib/observability/logger';
-import { enqueuePreviewJob } from '@/lib/queue/preview-jobs';
+import { authorizeProjectsWrite } from '@/lib/projects/admin-auth';
 import {
   enqueuePreviewJob,
   getIdempotentRecord,
@@ -34,26 +32,10 @@ function hashPayload(payload: unknown): string {
   return createHash('sha256').update(JSON.stringify(payload)).digest('hex');
 }
 
-
-function isAuthorized(request: Request): boolean {
-  const adminToken = process.env.PROJECTS_ADMIN_TOKEN;
-  if (!adminToken) {
-    return true;
-  }
-
-  const requestToken = request.headers.get('x-admin-token')?.trim();
-  return requestToken === adminToken;
-}
-
-function getPreviewSourceUrl(payload: UpsertProjectPayload, existingPreviewUrl?: string): string {
-  return payload.project.visuals.screenshot || existingPreviewUrl || payload.project.links.live || `/api/previews/${payload.project.slug}`;
-}
-
 export async function POST(request: Request) {
-  const correlationId = buildCorrelationId(request);
-
-  if (!isAuthorized(request)) {
-    return NextResponse.json({ error: 'Unauthorized project write operation.' }, { status: 401 });
+  const authorization = authorizeProjectsWrite(request);
+  if (!authorization.ok) {
+    return NextResponse.json({ error: authorization.error }, { status: authorization.status });
   }
 
   const body = await request.json();
