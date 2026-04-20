@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { SystemMapCanvas } from '@/components/system-map/system-map-canvas';
-import { projectConfigs } from '@/data/projects';
+import { projects } from '@/data/projects';
 
 const titleWords = ['Built', 'for', 'Real-World', 'Deployment'];
 
@@ -39,11 +39,11 @@ export function HeroSection() {
             className="mb-12 flex items-center justify-center md:mb-16"
           >
             <div className="relative flex items-center justify-center h-[200px] md:h-[260px] w-full max-w-[500px]">
-              {projectConfigs.slice(0, 4).map((project, i) => {
+              {projects.slice(0, 4).map((project, i) => {
                 const t = cardTransforms[i];
                 return (
                   <motion.div
-                    key={project.slug}
+                    key={project.id}
                     initial={{ opacity: 0, y: 40, rotate: 0 }}
                     animate={{
                       opacity: 1,

@@ -3,7 +3,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { projectConfigs } from '@/data/projects';
+import { projects } from '@/data/projects';
+import { projectCaseStudiesById } from '@/data/project-case-studies';
 import { reveal, stagger, staggerChild } from '@/lib/animations/reveal';
 
 export function SelectedSystemsSection() {
@@ -64,15 +65,15 @@ export function SelectedSystemsSection() {
           className="space-y-1"
         >
           {projectConfigs.map((project, index) => (
-            <motion.div key={project.slug} variants={staggerChild}>
+            <motion.div key={project.id} variants={staggerChild}>
               <Link
-                href={`/projects/${project.slug}`}
+                href={`/projects/${project.id}`}
                 className="group relative block overflow-hidden"
               >
                 {/* Hover background with preview image */}
                 <div className="absolute inset-0 opacity-0 transition-opacity duration-500 ease-out-expo group-hover:opacity-100">
                   <Image
-                    src={project.visuals.preview}
+                    src={project.preview}
                     alt=""
                     fill
                     loading="lazy"
@@ -97,7 +98,7 @@ export function SelectedSystemsSection() {
                   <div className="hidden md:block md:w-32 lg:w-40">
                     <div className="overflow-hidden rounded-md opacity-0 transition-all duration-500 ease-out-expo group-hover:opacity-100 group-hover:scale-100 scale-95">
                       <Image
-                        src={project.visuals.preview}
+                        src={project.preview}
                         alt={`${project.name} preview`}
                         width={320}
                         height={180}
@@ -109,7 +110,7 @@ export function SelectedSystemsSection() {
 
                   {/* Role */}
                   <p className="text-body text-sm md:w-52 lg:w-64">
-                    {project.role}
+                    {projectCaseStudiesById[project.caseStudy ?? project.id]?.role ?? project.category}
                   </p>
 
                   {/* Category */}

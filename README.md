@@ -28,6 +28,28 @@ npm run lint       # next lint
 npm run typecheck  # tsc --noEmit
 ```
 
+
+## Environment variables
+
+Create a local `.env` from `.env.example` and configure the following variables:
+
+| Variable | Required | Description |
+| --- | --- | --- |
+| `NODE_ENV` | No (defaults to `development`) | Runtime mode (`development`, `test`, or `production`). |
+| `RESEND_API_KEY` | Yes in production | API key for outbound contact email delivery. |
+| `CONTACT_TO_EMAIL` | No | Destination mailbox for contact requests. |
+| `CONTACT_FROM_EMAIL` | No | Sender address used for contact requests. |
+| `CLOUDINARY_CLOUD_NAME` | Yes in production | Cloudinary cloud account identifier. |
+| `CLOUDINARY_API_KEY` | Yes in production | Cloudinary API key. |
+| `CLOUDINARY_API_SECRET` | Yes in production | Cloudinary API secret. |
+| `FEATURE_ANALYTICS` | No | Enables/disables analytics ingestion route (`true/false` or `1/0`). |
+| `FEATURE_CONTACT_FORM` | No | Enables/disables contact form route (`true/false` or `1/0`). |
+| `FEATURE_AUTOMATION` | No | Toggle reserved for automation workflows (`true/false` or `1/0`). |
+
+### Boot-time validation
+
+Server runtime env is validated in `lib/env.ts`. In `production`, the app fails fast during boot if required secrets are missing.
+
 ## Architecture Note
 
 This repository is **Next.js App Router only**. The canonical entrypoints are `app/layout.tsx` and `app/page.tsx`; do not add a second frontend entrypoint (for example, Vite `index.html` + `src/main.tsx` mounting flow).

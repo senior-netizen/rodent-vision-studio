@@ -8,17 +8,21 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "validate:projects": "rm -rf .tmp-project-registry && tsc --module nodenext --moduleResolution nodenext --target ES2022 --outDir .tmp-project-registry scripts/validate-project-registry.ts && node .tmp-project-registry/scripts/validate-project-registry.js"
   },
   "dependencies": {
     "@types/three": "^0.183.1",
+    "cloudinary": "^2.7.0",
     "framer-motion": "^11.3.19",
     "gsap": "^3.12.5",
     "lenis": "^1.1.14",
     "next": "^14.2.5",
+    "puppeteer": "^24.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "three": "^0.170.0"
+    "three": "^0.170.0",
+    "puppeteer": "^24.7.1"
   },
   "devDependencies": {
     "@types/node": "^22.16.5",

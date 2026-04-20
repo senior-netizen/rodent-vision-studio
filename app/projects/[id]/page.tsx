@@ -1,22 +1,22 @@
 import { notFound } from 'next/navigation';
 import { CaseStudyPage } from '@/components/case-study/case-study-page';
-import { projectBySlug, projectConfigs } from '@/data/projects';
+import { projectById, projectConfigs } from '@/data/projects';
 
 type RouteParams = {
   params: {
-    slug: string;
+    id: string;
   };
 };
 
 export function generateStaticParams() {
-  return projectConfigs.map((project) => ({ slug: project.slug }));
+  return projectConfigs.map((project) => ({ id: project.id }));
 }
 
 export default function ProjectRoute({ params }: RouteParams) {
-  if (!(params.slug in projectBySlug)) {
+  if (!(params.id in projectById)) {
     notFound();
   }
 
-  const project = projectBySlug[params.slug as keyof typeof projectBySlug];
+  const project = projectById[params.id as keyof typeof projectById];
   return <CaseStudyPage project={project} />;
 }

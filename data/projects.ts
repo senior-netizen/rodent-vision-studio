@@ -8,16 +8,10 @@ export type ProjectDeployment = {
 };
 
 export type ProjectConfig = {
+  id: string;
   name: string;
-  slug: string;
-  category: string;
-  role: string;
-  links: {
-    live?: string;
-    repo?: string;
-  };
-  problem: string;
-  architecture: string[];
+  url: string;
+  preview: string;
   stack: string[];
   dataFlow: string[];
   decisions: string[];
@@ -38,14 +32,14 @@ export type ProjectConfig = {
 };
 
 export const projectConfigs: ProjectConfig[] = [
-
   {
+    id: 'jofe-platform',
     name: 'Job Opportunities For Everyone',
     slug: 'job-opportunities-for-everyone-platform',
     category: 'Employment Platform',
     role: 'Product Design + Full-Stack Engineering',
     links: {
-      live: '/projects/job-opportunities-for-everyone-platform'
+      live: '/projects/jofe-platform'
     },
     problem: 'Job listings were fragmented across informal channels with no centralized, scalable data system.',
     architecture: ['Next.js App Router (SSR)', 'Supabase Auth + PostgREST API', 'PostgreSQL data layer', 'Vercel deployment edge network'],
@@ -66,15 +60,10 @@ export const projectConfigs: ProjectConfig[] = [
     }
   },
   {
+    id: 'feel-home',
     name: 'Feel At Home',
-    slug: 'feel-at-home',
-    category: 'PropTech Platform',
-    role: 'Full-Stack Product Engineering',
-    links: {
-      live: 'https://feelathome.vercel.app'
-    },
-    problem: 'Property discovery and listing management were fragmented for renters and agents.',
-    architecture: ['Listing Search API', 'Property Catalog', 'Auth + Session Guard', 'Publishing Workflow'],
+    url: 'https://feelathome.vercel.app',
+    preview: '/visuals/meterflow-preview.jpg',
     stack: ['Next.js', 'TypeScript', 'React Query', 'PostgreSQL', 'Tailwind CSS'],
     dataFlow: ['User Query → Search Index', 'Search Index → Property Catalog', 'Catalog → Listing Detail', 'Listing Events → Agent Dashboard'],
     decisions: ['Kept property lookup paths index-first for responsive browsing.', 'Separated listing write access behind authenticated publisher flows.'],
@@ -92,15 +81,10 @@ export const projectConfigs: ProjectConfig[] = [
     }
   },
   {
+    id: 'shedsense-grid',
     name: 'ShedSense',
-    slug: 'shedsense',
-    category: 'Grid Intelligence',
-    role: 'Grid Intelligence Layer',
-    links: {
-      live: 'https://backend-nl4r.onrender.com'
-    },
-    problem: 'Energy variance across field assets created blind spots and delayed dispatch decisions.',
-    architecture: ['Telemetry Ingest', 'Anomaly Classifier', 'Dispatch Rules Engine', 'Ops Timeline UI'],
+    url: 'https://backend-nl4r.onrender.com',
+    preview: '/visuals/sh.png',
     stack: ['Next.js 14', 'TypeScript', 'Three.js', 'Framer Motion', 'PostgreSQL'],
     dataFlow: ['Edge Meter → MQTT Broker', 'Broker → Stream Processor', 'Processor → Rule Engine', 'Rule Engine → Dashboard'],
     decisions: ['Prioritized eventual consistency for wide-area device bursts.', 'Used deterministic replay paths for incident reconstruction.'],
@@ -118,15 +102,10 @@ export const projectConfigs: ProjectConfig[] = [
     }
   },
   {
+    id: 'ar-experience',
     name: 'AR by Rodent',
-    slug: 'ar-by-rodent',
-    category: 'AR Experience',
-    role: 'Interactive Front-End Engineering',
-    links: {
-      live: 'https://arbyrodent.vercel.app/'
-    },
-    problem: 'Brand storytelling needed a richer interactive medium than static landing pages.',
-    architecture: ['Experience Shell', 'Animation Orchestrator', 'Media Surface', 'CTA Interaction Layer'],
+    url: 'https://arbyrodent.vercel.app',
+    preview: '/visuals/sheq-preview.jpg',
     stack: ['Next.js', 'TypeScript', 'Framer Motion', 'WebGL', 'CSS Effects'],
     dataFlow: ['User Session → Experience Shell', 'Interaction Events → Animation Layer', 'Media Assets → Render Pipeline', 'CTA Actions → Source Destination'],
     decisions: ['Optimized animation sequencing to keep motion smooth across device classes.', 'Structured interactive elements to preserve accessibility while remaining immersive.'],
@@ -144,15 +123,10 @@ export const projectConfigs: ProjectConfig[] = [
     }
   },
   {
+    id: 'precise-locations-lib',
     name: 'Precise Locations',
-    slug: 'precise-locations',
-    category: 'Geospatial Package',
-    role: 'Library + Open Source Delivery',
-    links: {
-      repo: 'https://github.com/anesu398/precise-locations'
-    },
-    problem: 'Applications needed a reusable utility for managing coordinates and location-distance operations.',
-    architecture: ['Coordinate Validator', 'Distance Engine', 'Location Resolver', 'Package API Surface'],
+    url: 'https://github.com/anesu398/precise-locations',
+    preview: '/visuals/kwiksend-preview.jpg',
     stack: ['Node.js', 'TypeScript', 'npm', 'GitHub Actions', 'Semantic Versioning'],
     dataFlow: ['Input Coordinates → Validation', 'Validated Data → Distance Engine', 'Distance Results → Consumer APIs', 'Package Releases → npm/GitHub'],
     decisions: ['Kept API contracts small and deterministic for broad downstream use.', 'Automated publish and verification checks to keep releases reliable.'],
@@ -171,4 +145,6 @@ export const projectConfigs: ProjectConfig[] = [
   }
 ];
 
-export const projectBySlug = Object.fromEntries(projectConfigs.map((project) => [project.slug, project])) as Record<ProjectConfig['slug'], ProjectConfig>;
+export const projectById = Object.fromEntries(projectConfigs.map((project) => [project.id, project])) as Record<ProjectConfig['id'], ProjectConfig>;
+
+export const projectIdBySlug = Object.fromEntries(projectConfigs.map((project) => [project.slug, project.id])) as Record<ProjectConfig['slug'], ProjectConfig['id']>;
