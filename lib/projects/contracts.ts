@@ -2,6 +2,7 @@ import type { DeploymentStatus, LinkHealth, ProjectConfig, ProjectDeployment } f
 
 export type UpsertProjectPayload = {
   project: {
+    id: string;
     slug: string;
     name: string;
     category: string;
@@ -123,14 +124,87 @@ function buildDeployment(
     return null;
   }
 
+  const normalizedUrl = normalizeDeploymentUrl(input.url);
+  if (!normalizedUrl) {
+    return null;
+  }
+
   const createdAt = toIsoDate(input.createdAt) ?? new Date().toISOString();
 
   return {
     version: input.version.trim(),
-    url: input.url.trim(),
+    url: normalizedUrl,
     createdAt,
     status: input.status ?? fallbackStatus,
   };
+}
+
+function isPrivateIpv4Address(hostname: string): boolean {
+  const parts = hostname.split('.').map((segment) => Number(segment));
+  if (parts.length !== 4 || parts.some((part) => Number.isNaN(part) || part < 0 || part > 255)) {
+    return false;
+  }
+
+  return (
+    parts[0] === 10
+    || parts[0] === 127
+    || (parts[0] === 172 && parts[1] >= 16 && parts[1] <= 31)
+    || (parts[0] === 192 && parts[1] === 168)
+    || (parts[0] === 169 && parts[1] === 254)
+  );
+}
+
+function isLocalOrInternalHost(hostname: string): boolean {
+  const lowered = hostname.toLowerCase();
+  return (
+    lowered === 'localhost'
+    || lowered === '::1'
+    || lowered.endsWith('.local')
+    || lowered.endsWith('.internal')
+    || isPrivateIpv4Address(lowered)
+  );
+}
+
+function hasApprovedDomain(hostname: string): boolean {
+  const lowered = hostname.toLowerCase();
+  return APPROVED_DEPLOYMENT_DOMAINS.some((domain) => lowered === domain || lowered.endsWith(`.${domain}`));
+}
+
+export function normalizeDeploymentUrl(url: string): string | null {
+  if (!hasNonEmptyText(url)) {
+    return null;
+  }
+
+  let parsed: URL;
+  try {
+    parsed = new URL(url.trim());
+  } catch {
+    return null;
+  }
+
+  if (!APPROVED_DEPLOYMENT_SCHEMES.has(parsed.protocol)) {
+    return null;
+  }
+
+  if (isLocalOrInternalHost(parsed.hostname) || !hasApprovedDomain(parsed.hostname)) {
+    return null;
+  }
+
+  parsed.hash = '';
+
+  if ((parsed.protocol === 'https:' && parsed.port === '443') || (parsed.protocol === 'http:' && parsed.port === '80')) {
+    parsed.port = '';
+  }
+
+  const trimmedPath = parsed.pathname.replace(/\/+$/, '');
+  parsed.pathname = trimmedPath || '/';
+
+  return parsed.toString();
+}
+
+function toDeploymentIdentity(version: string, url: string): string {
+  const normalizedUrl = normalizeDeploymentUrl(url) ?? url.trim();
+  return `${version.trim()}::${normalizedUrl}`;
 }
 
 export function validateUpsertPayload(payload: unknown): { value: UpsertProjectPayload } | { error: string } {
@@ -145,7 +219,8 @@ export function validateUpsertPayload(payload: unknown): { value: UpsertProjectP
   }
 
   if (
-    !hasNonEmptyText(project.slug)
+    !hasNonEmptyText(project.id)
+    || !hasNonEmptyText(project.slug)
     || !hasNonEmptyText(project.name)
     || !hasNonEmptyText(project.category)
     || !hasNonEmptyText(project.role)
@@ -175,12 +250,13 @@ export function validateUpsertPayload(payload: unknown): { value: UpsertProjectP
 
   const normalizedDeployment = buildDeployment(deployment as UpsertProjectPayload['deployment'], status);
   if (deployment && !normalizedDeployment) {
-    return { error: 'Invalid deployment payload: version and url are required.' };
+    return { error: 'Invalid deployment payload: deployment URL is malformed, local/internal, or not approved.' };
   }
 
   return {
     value: {
       project: {
+        id: project.id.trim(),
         slug: project.slug.trim(),
         name: project.name.trim(),
         category: project.category.trim(),
@@ -213,30 +289,47 @@ export function validateUpsertPayload(payload: unknown): { value: UpsertProjectP
   };
 }
 
+export function buildPendingPreviewState(current?: PreviewState): PreviewState {
+  const now = new Date().toISOString();
+  return {
+    status: 'pending',
+    attemptCount: (current?.attemptCount ?? 0) + 1,
+    lastError: current?.lastError,
+    requestedAt: now,
+    generatedAt: current?.generatedAt,
+    failedAt: current?.failedAt,
+    updatedAt: now,
+  };
+}
+
 export function composeProjectConfig(input: {
   current: ProjectConfig | undefined;
   payload: UpsertProjectPayload;
-  previewUrl: string;
-  previewGeneratedAt: string;
+  previewState: PreviewState;
 }): ProjectConfig {
-  const { current, payload, previewUrl, previewGeneratedAt } = input;
+  const { current, payload, previewState } = input;
 
+  const fallbackCreatedAt = new Date().toISOString();
   const deploymentRecord: ProjectDeployment = payload.deployment
     ? {
       version: payload.deployment.version,
       url: payload.deployment.url,
-      createdAt: payload.deployment.createdAt ?? previewGeneratedAt,
+      createdAt: payload.deployment.createdAt ?? fallbackCreatedAt,
       status: payload.deployment.status ?? payload.status,
     }
     : {
       version: current?.deployments?.[0]?.version ?? '1.0.0',
-      url: current?.deployments?.[0]?.url ?? payload.project.links.live ?? previewUrl,
-      createdAt: previewGeneratedAt,
+      url: current?.deployments?.[0]?.url ?? payload.project.links.live ?? payload.project.visuals.preview ?? payload.project.visuals.screenshot,
+      createdAt: fallbackCreatedAt,
       status: payload.status,
     };
 
   const existingDeployments = current?.deployments ?? [];
-  const dedupedDeployments = [deploymentRecord, ...existingDeployments.filter((entry) => entry.version !== deploymentRecord.version)];
+  const deploymentIdentity = toDeploymentIdentity(deploymentRecord.version, deploymentRecord.url);
+  const dedupedDeployments = [
+    deploymentRecord,
+    ...existingDeployments.filter((entry) => toDeploymentIdentity(entry.version, entry.url) !== deploymentIdentity),
+  ];
 
   return {
     id: current?.id ?? payload.project.slug,
@@ -245,9 +338,10 @@ export function composeProjectConfig(input: {
     preview: previewUrl,
     visuals: {
       ...payload.project.visuals,
-      preview: previewUrl,
+      preview: current?.visuals.preview ?? payload.project.visuals.preview ?? payload.project.visuals.screenshot,
     },
-    previewGeneratedAt,
+    previewGeneratedAt: current?.previewGeneratedAt,
+    previewState,
     status: payload.status,
     deployments: dedupedDeployments,
     linkHealth: payload.project.linkHealth ?? current?.linkHealth,

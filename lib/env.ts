@@ -10,6 +10,12 @@ const serverEnvSchema = z.object({
   CLOUDINARY_CLOUD_NAME: z.string().min(1),
   CLOUDINARY_API_KEY: z.string().min(1),
   CLOUDINARY_API_SECRET: z.string().min(1),
+  PREVIEW_QUEUE_SQS_URL: z.string().url().optional(),
+  PREVIEW_QUEUE_SQS_DLQ_URL: z.string().url().optional(),
+  AWS_REGION: z.string().min(1).optional(),
+  AWS_ACCESS_KEY_ID: z.string().min(1).optional(),
+  AWS_SECRET_ACCESS_KEY: z.string().min(1).optional(),
+  AWS_SESSION_TOKEN: z.string().min(1).optional(),
   FEATURE_ANALYTICS: featureFlagSchema,
   FEATURE_CONTACT_FORM: featureFlagSchema,
   FEATURE_AUTOMATION: featureFlagSchema,
@@ -24,6 +30,11 @@ export type ServerEnv = {
     cloudName: string;
     apiKey: string;
     apiSecret: string;
+  };
+  previewQueue?: {
+    sqsUrl: string;
+    dlqUrl?: string;
+    awsRegion: string;
   };
   features: {
     analytics: boolean;
@@ -63,6 +74,14 @@ function buildServerEnv(): ServerEnv {
       apiKey: env.CLOUDINARY_API_KEY,
       apiSecret: env.CLOUDINARY_API_SECRET,
     },
+    previewQueue:
+      env.PREVIEW_QUEUE_SQS_URL && env.AWS_REGION
+        ? {
+          sqsUrl: env.PREVIEW_QUEUE_SQS_URL,
+          dlqUrl: env.PREVIEW_QUEUE_SQS_DLQ_URL,
+          awsRegion: env.AWS_REGION,
+        }
+        : undefined,
     features: {
       analytics: parseFeatureFlag(env.FEATURE_ANALYTICS, true),
       contactForm: parseFeatureFlag(env.FEATURE_CONTACT_FORM, true),
