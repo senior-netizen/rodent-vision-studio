@@ -1,3 +1,12 @@
+export type DeploymentStatus = 'live' | 'staging' | 'failed';
+
+export type ProjectDeployment = {
+  version: string;
+  url: string;
+  createdAt: string;
+  status: DeploymentStatus;
+};
+
 export type ProjectConfig = {
   name: string;
   slug: string;
@@ -18,13 +27,8 @@ export type ProjectConfig = {
     preview: string;
   };
   previewGeneratedAt?: string;
-  status: 'live' | 'staging' | 'failed';
-  deployments: {
-    version: string;
-    url: string;
-    createdAt: string;
-    status: 'live' | 'staging' | 'failed';
-  }[];
+  status: DeploymentStatus;
+  deployments: ProjectDeployment[];
   outcome: string;
   summary: {
     scope: string;

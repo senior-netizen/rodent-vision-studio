@@ -1,5 +1,4 @@
-import type { ProjectConfig } from '@/data/projects';
-import type { DeploymentStatus, ProjectDeployment } from '@/lib/projects/store';
+import type { DeploymentStatus, ProjectConfig, ProjectDeployment } from '@/data/projects';
 
 export type UpsertProjectPayload = {
   project: {

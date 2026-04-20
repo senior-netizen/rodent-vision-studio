@@ -1,8 +1,5 @@
 import { projectConfigs, type ProjectConfig } from '@/data/projects';
 
-export type DeploymentStatus = ProjectConfig['status'];
-export type ProjectDeployment = ProjectConfig['deployments'][number];
-
 const projects = new Map<string, ProjectConfig>(
   projectConfigs.map((project) => [project.slug, structuredClone(project)]),
 );

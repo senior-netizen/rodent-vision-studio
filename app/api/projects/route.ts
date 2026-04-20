@@ -12,7 +12,7 @@ import {
   upsertProject,
 } from '@/lib/projects/store';
 
-const inFlightOrchestrations = new Map<string, Promise<ResponsePayload>>();
+const inFlightOrchestrations = new Map<string, { requestHash: string; promise: Promise<ResponsePayload> }>();
 
 type ResponsePayload = {
   ok: true;
@@ -28,7 +28,21 @@ function hashPayload(payload: unknown): string {
   return createHash('sha256').update(JSON.stringify(payload)).digest('hex');
 }
 
+function isAuthorized(request: Request): boolean {
+  const adminToken = process.env.PROJECTS_ADMIN_TOKEN;
+  if (!adminToken) {
+    return true;
+  }
+
+  const requestToken = request.headers.get('x-admin-token')?.trim();
+  return requestToken === adminToken;
+}
+
 export async function POST(request: Request) {
+  if (!isAuthorized(request)) {
+    return NextResponse.json({ error: 'Unauthorized project write operation.' }, { status: 401 });
+  }
+
   const body = await request.json();
   const validation = validateUpsertPayload(body);
 
@@ -52,8 +66,16 @@ export async function POST(request: Request) {
     return NextResponse.json(cached.response);
   }
 
-  if (inFlightOrchestrations.has(idempotencyKey)) {
-    const inFlightResult = await inFlightOrchestrations.get(idempotencyKey);
+  const inFlight = inFlightOrchestrations.get(idempotencyKey);
+  if (inFlight && inFlight.requestHash !== requestHash) {
+    return NextResponse.json(
+      { error: 'Idempotency key is currently processing a different payload.' },
+      { status: 409 },
+    );
+  }
+
+  if (inFlight) {
+    const inFlightResult = await inFlight.promise;
     return NextResponse.json(inFlightResult);
   }
 
@@ -100,7 +122,7 @@ export async function POST(request: Request) {
     };
   })();
 
-  inFlightOrchestrations.set(idempotencyKey, orchestration);
+  inFlightOrchestrations.set(idempotencyKey, { requestHash, promise: orchestration });
 
   try {
     const response = await orchestration;
