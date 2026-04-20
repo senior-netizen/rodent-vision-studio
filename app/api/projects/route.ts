@@ -1,12 +1,8 @@
 import { createHash, randomUUID } from 'node:crypto';
 import { NextResponse } from 'next/server';
-import {
-  buildPendingPreviewState,
-  composeProjectConfig,
-  validateUpsertPayload,
-  type UpsertProjectPayload,
-} from '@/lib/projects/contracts';
-import { getProjectHealthById } from '@/lib/projects/health';
+import { composeProjectConfig, validateUpsertPayload, type UpsertProjectPayload } from '@/lib/projects/contracts';
+import { logStructured, logStructuredError } from '@/lib/observability/logger';
+import { enqueuePreviewJob } from '@/lib/queue/preview-jobs';
 import {
   enqueuePreviewJob,
   getIdempotentRecord,
@@ -21,15 +17,17 @@ const inFlightMutations = new Map<string, { requestHash: string; promise: Promis
 type ResponsePayload = {
   ok: true;
   idempotencyKey: string;
-  preview: {
-    status: 'pending';
-    correlationId: string;
-  };
+  correlationId: string;
   project: Awaited<ReturnType<typeof upsertProject>>;
+  previewJobId: string;
 };
 
 function buildIdempotencyKey(request: Request, payload: UpsertProjectPayload): string {
   return request.headers.get('idempotency-key')?.trim() || `${payload.project.slug}:${payload.deployment?.version ?? 'base'}`;
+}
+
+function buildCorrelationId(request: Request): string {
+  return request.headers.get('x-correlation-id')?.trim() || randomUUID();
 }
 
 function hashPayload(payload: unknown): string {
@@ -47,21 +45,13 @@ function isAuthorized(request: Request): boolean {
   return requestToken === adminToken;
 }
 
-export async function GET() {
-  const [projects, healthById] = await Promise.all([
-    Promise.resolve(listProjects()),
-    getProjectHealthById(),
-  ]);
-
-  return NextResponse.json({
-    projects: projects.map((project) => ({
-      ...project,
-      health: healthById[project.id] ?? null,
-    })),
-  });
+function getPreviewSourceUrl(payload: UpsertProjectPayload, existingPreviewUrl?: string): string {
+  return payload.project.visuals.screenshot || existingPreviewUrl || payload.project.links.live || `/api/previews/${payload.project.slug}`;
 }
 
 export async function POST(request: Request) {
+  const correlationId = buildCorrelationId(request);
+
   if (!isAuthorized(request)) {
     return NextResponse.json({ error: 'Unauthorized project write operation.' }, { status: 401 });
   }
@@ -119,75 +109,43 @@ export async function POST(request: Request) {
   }
 
   const orchestration = (async (): Promise<ResponsePayload> => {
-    const current = existingProjectForSlug;
-    const previewResponse = await fetch(new URL('/api/generate-preview', request.url), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        slug: payload.project.slug,
-        screenshotUrl: payload.project.visuals.screenshot,
-        currentPreviewUrl: current?.visuals.preview,
-      }),
-    });
-
-    const previewBody = await previewResponse.json() as {
-      previewUrl?: string;
-      generatedAt?: string;
-      error?: string;
-      category?: string;
-      correlationId?: string;
-    };
-
-    const fallbackPreviewUrl = current?.visuals.preview;
-    const fallbackGeneratedAt = current?.previewGeneratedAt ?? new Date().toISOString();
-
-    if (!previewResponse.ok) {
-      if (fallbackPreviewUrl) {
-        console.warn('Preview generation failed, using last known preview.', {
-          slug: payload.project.slug,
-          correlationId: previewBody.correlationId,
-          category: previewBody.category,
-          reason: previewBody.error,
-        });
-      } else {
-        const details = previewBody.error ?? 'Unknown preview generation error.';
-        throw new Error(`Preview generation failed: ${details}`);
-      }
-    }
-
-    const previewUrl = previewBody.previewUrl ?? fallbackPreviewUrl;
-    const previewGeneratedAt = previewBody.generatedAt ?? fallbackGeneratedAt;
-
-    if (!previewUrl) {
-      throw new Error('Preview generation returned an invalid response.');
-    }
+    const current = getProjectBySlug(payload.project.slug);
+    const initialPreviewUrl = payload.project.visuals.preview ?? current?.visuals.preview ?? payload.project.visuals.screenshot;
+    const generatedAt = new Date().toISOString();
 
     const project = composeProjectConfig({
       current,
       payload,
-      previewUrl,
-      previewGeneratedAt,
+      previewUrl: initialPreviewUrl,
+      previewGeneratedAt: generatedAt,
     });
 
     const saved = upsertProject(project);
+    const previewSourceUrl = getPreviewSourceUrl(payload, current?.visuals.preview);
 
-    enqueuePreviewJob({
-      dedupeKey: idempotencyKey,
+    const previewJobId = await enqueuePreviewJob({
       projectSlug: payload.project.slug,
-      sourceUrl: payload.project.visuals.screenshot,
+      sourceUrl: previewSourceUrl,
+      idempotencyKey,
       correlationId,
+      payload,
+    });
+
+    logStructured({
+      event: 'projects.preview.enqueued',
+      message: 'Preview generation job enqueued.',
+      correlationId,
+      idempotencyKey,
+      projectSlug: payload.project.slug,
+      previewJobId,
     });
 
     return {
       ok: true,
       idempotencyKey,
-      preview: {
-        status: 'pending',
-        correlationId,
-      },
+      correlationId,
       project: saved,
+      previewJobId,
     };
   })();
 
@@ -198,8 +156,17 @@ export async function POST(request: Request) {
     setIdempotentResponse(idempotencyKey, requestHash, response);
     return NextResponse.json(response, { status: 202 });
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'Project mutation failed.';
-    return NextResponse.json({ error: message }, { status: 502 });
+    logStructuredError({
+      event: 'projects.preview.enqueue.failed',
+      message: 'Project persistence succeeded but queue enqueue failed.',
+      correlationId,
+      idempotencyKey,
+      projectSlug: payload.project.slug,
+      error,
+    });
+
+    const message = error instanceof Error ? error.message : 'Project orchestration failed.';
+    return NextResponse.json({ error: message, correlationId }, { status: 502 });
   } finally {
     inFlightMutations.delete(idempotencyKey);
   }
