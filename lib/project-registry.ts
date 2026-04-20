@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 
@@ -6,11 +7,20 @@ export type ProjectPreviewMetadata = {
   capturedAt: string;
   sourceUrl: string;
   correlationId: string;
+  assetHash: string;
+  assetVersion: string;
+};
+
+type ProjectPreviewVersionRecord = {
+  imageUrl: string;
+  metadata: ProjectPreviewMetadata;
+  publishedAt: string;
 };
 
 type ProjectPreviewRecord = {
-  imageUrl?: string;
-  metadata: ProjectPreviewMetadata;
+  currentHash: string;
+  aliasUrl: string;
+  versions: Record<string, ProjectPreviewVersionRecord>;
   updatedAt: string;
   health?: {
     statusCode: number | null;
@@ -57,7 +67,32 @@ const registryPath = path.join(dataDirectoryPath, 'project-registry.json');
 const uploadAttemptsPath = path.join(dataDirectoryPath, 'upload-attempts.jsonl');
 const reconciliationQueuePath = path.join(dataDirectoryPath, 'preview-reconciliation-queue.json');
 
-async function readRegistry(): Promise<ProjectRegistry> {
+function buildAliasUrl(projectId: string): string {
+  return `/api/previews/${projectId}.png`;
+}
+
+export function buildImmutablePreviewUrl(projectId: string, assetHash: string): string {
+  return `/api/previews/${projectId}/${assetHash}.png`;
+}
+
+export function createPreviewAssetHash(input: { projectId: string; sourceUrl: string; capturedAt: string; correlationId: string }): string {
+  const fingerprint = `${input.projectId}|${input.sourceUrl}|${input.capturedAt}|${input.correlationId}`;
+  return createHash('sha256').update(fingerprint).digest('hex').slice(0, 20);
+}
+
+async function atomicWriteRegistry(registry: ProjectRegistry) {
+  await fs.mkdir(path.dirname(registryPath), { recursive: true });
+
+  const tempPath = path.join(
+    path.dirname(registryPath),
+    `${path.basename(registryPath)}.${process.pid}.${Date.now()}.${Math.random().toString(36).slice(2)}.tmp`,
+  );
+
+  await fs.writeFile(tempPath, JSON.stringify(registry, null, 2), 'utf8');
+  await fs.rename(tempPath, registryPath);
+}
+
+export async function readRegistry(): Promise<ProjectRegistry> {
   try {
     const contents = await fs.readFile(registryPath, 'utf8');
     const parsed = JSON.parse(contents) as Partial<ProjectRegistry>;
@@ -74,43 +109,121 @@ async function readRegistry(): Promise<ProjectRegistry> {
   }
 }
 
-async function writeRegistry(registry: ProjectRegistry) {
-  await fs.mkdir(path.dirname(registryPath), { recursive: true });
-  await fs.writeFile(registryPath, JSON.stringify(registry, null, 2), 'utf8');
-}
-
-async function readReconciliationQueue(): Promise<ReconciliationQueue> {
-  try {
-    const contents = await fs.readFile(reconciliationQueuePath, 'utf8');
-    const parsed = JSON.parse(contents) as Partial<ReconciliationQueue>;
-
-    return {
-      tasks: parsed.tasks ?? [],
-    };
-  } catch (error) {
-    if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
-      return { tasks: [] };
-    }
-
-    throw error;
-  }
-}
-
-async function writeReconciliationQueue(queue: ReconciliationQueue) {
-  await fs.mkdir(path.dirname(reconciliationQueuePath), { recursive: true });
-  await fs.writeFile(reconciliationQueuePath, JSON.stringify(queue, null, 2), 'utf8');
-}
-
-export async function updateProjectPreview(projectId: string, imageUrl: string, metadata: ProjectPreviewMetadata) {
+export async function publishProjectPreview(input: {
+  projectId: string;
+  imageUrl: string;
+  sourceUrl: string;
+  capturedAt: string;
+  correlationId: string;
+  publicId?: string;
+}): Promise<{ aliasUrl: string; immutableUrl: string; assetHash: string; assetVersion: string; publishedAt: string }> {
   const registry = await readRegistry();
+  const existingRecord = registry.projects[input.projectId];
+  const assetHash = createPreviewAssetHash({
+    projectId: input.projectId,
+    sourceUrl: input.sourceUrl,
+    capturedAt: input.capturedAt,
+    correlationId: input.correlationId,
+  });
 
-  registry.projects[projectId] = {
-    imageUrl,
-    metadata,
-    updatedAt: new Date().toISOString(),
+  const nextVersion = ((existingRecord?.versions ? Object.keys(existingRecord.versions).length : 0) + 1).toString();
+  const publishedAt = new Date().toISOString();
+
+  // Step 1: Write the new immutable asset record.
+  const nextVersions = {
+    ...(existingRecord?.versions ?? {}),
+    [assetHash]: {
+      imageUrl: input.imageUrl,
+      metadata: {
+        publicId: input.publicId ?? `preview-${assetHash}`,
+        capturedAt: input.capturedAt,
+        sourceUrl: input.sourceUrl,
+        correlationId: input.correlationId,
+        assetHash,
+        assetVersion: nextVersion,
+      },
+      publishedAt,
+    },
   };
 
-  await writeRegistry(registry);
+  // Step 2: Atomically move the mutable pointer to the new immutable asset.
+  registry.projects[input.projectId] = {
+    currentHash: assetHash,
+    aliasUrl: buildAliasUrl(input.projectId),
+    versions: nextVersions,
+    updatedAt: publishedAt,
+  };
+
+  await atomicWriteRegistry(registry);
+
+  return {
+    aliasUrl: buildAliasUrl(input.projectId),
+    immutableUrl: buildImmutablePreviewUrl(input.projectId, assetHash),
+    assetHash,
+    assetVersion: nextVersion,
+    publishedAt,
+  };
+}
+
+export async function resolveProjectPreview(projectId: string): Promise<{
+  aliasUrl: string;
+  currentHash: string;
+  immutableUrl: string;
+  imageUrl: string;
+  metadata: ProjectPreviewMetadata;
+} | null> {
+  const registry = await readRegistry();
+  const record = registry.projects[projectId];
+
+  if (!record) {
+    return null;
+  }
+
+  const version = record.versions[record.currentHash];
+  if (!version) {
+    return null;
+  }
+
+  return {
+    aliasUrl: record.aliasUrl,
+    currentHash: record.currentHash,
+    immutableUrl: buildImmutablePreviewUrl(projectId, record.currentHash),
+    imageUrl: version.imageUrl,
+    metadata: version.metadata,
+  };
+}
+
+export async function resolveProjectPreviewVersion(projectId: string, assetHash: string): Promise<ProjectPreviewVersionRecord | null> {
+  const registry = await readRegistry();
+  const record = registry.projects[projectId];
+  if (!record) {
+    return null;
+  }
+
+  return record.versions[assetHash] ?? null;
+}
+
+export async function purgePreviewAlias(input: { projectId: string; aliasUrl: string }): Promise<void> {
+  const purgeEndpoint = process.env.PREVIEW_CDN_PURGE_URL;
+  if (!purgeEndpoint) {
+    return;
+  }
+
+  const response = await fetch(purgeEndpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      projectId: input.projectId,
+      paths: [input.aliasUrl],
+    }),
+  });
+
+  if (!response.ok) {
+    const details = await response.text();
+    throw new Error(`CDN purge failed for alias ${input.aliasUrl}: ${response.status} ${details}`);
+  }
 }
 
 export async function appendUploadAttempt(event: UploadAttemptEvent) {

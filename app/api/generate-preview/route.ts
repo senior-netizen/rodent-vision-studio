@@ -1,16 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { NextResponse } from 'next/server';
-import { CloudinaryUploadError, uploadPreviewBuffer } from '@/lib/cloudinary';
-import {
-  appendUploadAttempt,
-  enqueuePreviewReconciliationTask,
-  updateProjectPreview,
-} from '@/lib/project-registry';
-
-import {
-  INVALID_PREVIEW_SOURCE_URL,
-  validatePreviewSourceUrl,
-} from '@/lib/security/url-policy';
+import { publishProjectPreview, purgePreviewAlias } from '@/lib/project-registry';
 
 type GeneratePreviewPayload = {
   slug?: string;
@@ -82,67 +72,37 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'slug is required.' }, { status: 400 });
   }
 
-  if (!body.screenshotUrl?.trim()) {
-    const fallbackPreviewUrl = body.currentPreviewUrl ?? `/api/previews/${slug}?generated=${Date.now()}`;
-    return NextResponse.json({
-      previewUrl: fallbackPreviewUrl,
-      generatedAt: new Date().toISOString(),
-      correlationId: randomUUID(),
-    } as GeneratePreviewSuccess);
+  const slug = body.slug.trim();
+  const sourceUrl = body.screenshotUrl?.trim() || body.currentPreviewUrl?.trim();
+
+  if (!sourceUrl) {
+    return NextResponse.json({ error: 'screenshotUrl or currentPreviewUrl is required.' }, { status: 400 });
   }
 
-  const correlationId = randomUUID();
   const capturedAt = new Date().toISOString();
+  const correlationId = randomUUID();
 
-  try {
-    const screenshotBuffer = await fetchScreenshotBuffer(body.screenshotUrl);
-    const uploaded = await uploadPreviewBuffer({
-      projectId: slug,
-      buffer: screenshotBuffer,
-      correlationId,
-      capturedAt,
-      recordAttempt: appendUploadAttempt,
-    });
+  // Rollback-safe publish flow: publish immutable record, atomically move alias pointer, then purge alias.
+  const published = await publishProjectPreview({
+    projectId: slug,
+    imageUrl: sourceUrl,
+    sourceUrl,
+    capturedAt,
+    correlationId,
+  });
 
-    const metadata = {
-      publicId: uploaded.publicId,
-      capturedAt,
-      sourceUrl: body.screenshotUrl,
-      correlationId,
-    };
+  await purgePreviewAlias({
+    projectId: slug,
+    aliasUrl: published.aliasUrl,
+  });
 
-    try {
-      await updateProjectPreview(slug, uploaded.imageUrl, metadata);
-
-      return NextResponse.json({
-        previewUrl: uploaded.imageUrl,
-        generatedAt: capturedAt,
-        correlationId,
-      } satisfies GeneratePreviewSuccess);
-    } catch (registryError) {
-      await enqueuePreviewReconciliationTask({
-        projectId: slug,
-        imageUrl: uploaded.imageUrl,
-        metadata,
-        reason: registryError instanceof Error ? registryError.message : 'registry update failed after upload success',
-      });
-
-      return NextResponse.json({
-        previewUrl: uploaded.imageUrl,
-        generatedAt: capturedAt,
-        correlationId,
-        reconciledAsync: true,
-      } satisfies GeneratePreviewSuccess);
-    }
-  } catch (error) {
-    const status = classifyPreviewErrorStatus(error);
-    const message = error instanceof Error ? error.message : 'Preview generation failed.';
-    const category = error instanceof CloudinaryUploadError ? error.category : 'permanent';
-
-    return NextResponse.json({
-      error: message,
-      category,
-      correlationId,
-    }, { status });
-  }
+  return NextResponse.json({
+    previewUrl: published.immutableUrl,
+    generatedAt: published.publishedAt,
+    previewMetadata: {
+      aliasUrl: published.aliasUrl,
+      assetHash: published.assetHash,
+      assetVersion: published.assetVersion,
+    },
+  });
 }

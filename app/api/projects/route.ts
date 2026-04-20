@@ -117,8 +117,17 @@ export async function POST(request: Request) {
     const project = composeProjectConfig({
       current,
       payload,
-      previewUrl: initialPreviewUrl,
-      previewGeneratedAt: generatedAt,
+      previewUrl: previewResult.previewUrl,
+      previewGeneratedAt: previewResult.generatedAt,
+      previewAsset: previewResult.previewMetadata?.assetHash
+        && previewResult.previewMetadata.assetVersion
+        && previewResult.previewMetadata.aliasUrl
+        ? {
+          hash: previewResult.previewMetadata.assetHash,
+          version: previewResult.previewMetadata.assetVersion,
+          aliasUrl: previewResult.previewMetadata.aliasUrl,
+        }
+        : current?.previewAsset,
     });
 
     const saved = upsertProject(project);
