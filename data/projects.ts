@@ -27,8 +27,8 @@ export type ProjectConfig = {
     preview: string;
   };
   previewGeneratedAt?: string;
-  status: DeploymentStatus;
-  deployments: ProjectDeployment[];
+  status?: DeploymentStatus;
+  deployments?: ProjectDeployment[];
   outcome: string;
   summary: {
     scope: string;

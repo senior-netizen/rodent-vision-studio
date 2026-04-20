@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation';
 import { CaseStudyPage } from '@/components/case-study/case-study-page';
-import { projectConfigs } from '@/data/projects';
-import { getProjectBySlug } from '@/lib/projects/store';
+import { projectBySlug, projectConfigs } from '@/data/projects';
 
 type RouteParams = {
   params: {
@@ -13,14 +12,11 @@ export function generateStaticParams() {
   return projectConfigs.map((project) => ({ slug: project.slug }));
 }
 
-export const dynamic = 'force-dynamic';
-
 export default function ProjectRoute({ params }: RouteParams) {
-  const project = getProjectBySlug(params.slug);
-
-  if (!project) {
+  if (!(params.slug in projectBySlug)) {
     notFound();
   }
 
+  const project = projectBySlug[params.slug as keyof typeof projectBySlug];
   return <CaseStudyPage project={project} />;
 }

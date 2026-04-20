@@ -184,8 +184,8 @@ export function composeProjectConfig(input: {
       status: payload.deployment.status ?? payload.status,
     }
     : {
-      version: current?.deployments[0]?.version ?? '1.0.0',
-      url: current?.deployments[0]?.url ?? payload.project.links.live ?? previewUrl,
+      version: current?.deployments?.[0]?.version ?? '1.0.0',
+      url: current?.deployments?.[0]?.url ?? payload.project.links.live ?? previewUrl,
       createdAt: previewGeneratedAt,
       status: payload.status,
     };

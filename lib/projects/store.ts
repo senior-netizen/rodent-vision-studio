@@ -20,7 +20,7 @@ export function getProjectBySlug(slug: string): ProjectConfig | undefined {
 export function upsertProject(project: ProjectConfig): ProjectConfig {
   const normalized: ProjectConfig = {
     ...project,
-    deployments: [...project.deployments].sort((a, b) => b.createdAt.localeCompare(a.createdAt)),
+    deployments: [...(project.deployments ?? [])].sort((a, b) => b.createdAt.localeCompare(a.createdAt)),
   };
 
   projects.set(project.slug, normalized);

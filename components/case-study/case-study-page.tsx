@@ -8,10 +8,12 @@ import type { ProjectConfig } from '@/data/projects';
 import { reveal, revealLeft, stagger, staggerChild } from '@/lib/animations/reveal';
 
 export function CaseStudyPage({ project }: { project: ProjectConfig }) {
-  const [selectedVersion, setSelectedVersion] = useState(project.deployments[0]?.version ?? '');
+  const deployments = project.deployments ?? [];
+  const projectStatus = project.status ?? 'staging';
+  const [selectedVersion, setSelectedVersion] = useState(deployments[0]?.version ?? '');
   const selectedDeployment = useMemo(
-    () => project.deployments.find((deployment) => deployment.version === selectedVersion) ?? project.deployments[0],
-    [project.deployments, selectedVersion],
+    () => deployments.find((deployment) => deployment.version === selectedVersion) ?? deployments[0],
+    [deployments, selectedVersion],
   );
 
   const statusTone = {
@@ -76,8 +78,8 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
           </motion.p>
 
           <div className="mt-4 flex flex-wrap items-center gap-3">
-            <span className={`rounded-full border px-3 py-1 text-xs uppercase tracking-[0.14em] ${statusTone[project.status]}`}>
-              {project.status}
+            <span className={`rounded-full border px-3 py-1 text-xs uppercase tracking-[0.14em] ${statusTone[projectStatus]}`}>
+              {projectStatus}
             </span>
             {project.previewGeneratedAt && (
               <span className="text-body text-xs">
@@ -313,7 +315,7 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
             </motion.div>
           </div>
 
-          {project.deployments.length > 1 && (
+          {deployments.length > 1 && (
             <label className="text-label mb-4 block">
               Version
               <select
@@ -321,7 +323,7 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
                 onChange={(event) => setSelectedVersion(event.target.value)}
                 className="mt-2 w-full max-w-sm rounded-md border border-border bg-transparent px-3 py-2 text-sm text-fg"
               >
-                {project.deployments.map((deployment) => (
+                {deployments.map((deployment) => (
                   <option key={deployment.version} value={deployment.version} className="bg-[#0d0d10]">
                     {deployment.version}
                   </option>
@@ -353,7 +355,7 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
           )}
 
           <ul className="space-y-3">
-            {project.deployments.map((deployment) => (
+            {deployments.map((deployment) => (
               <li key={`${deployment.version}-${deployment.createdAt}`} className="card-glass flex flex-wrap items-center justify-between gap-3 px-5 py-4">
                 <div>
                   <p className="text-label">{deployment.version}</p>
