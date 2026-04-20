@@ -1,19 +1,4 @@
-export type ProjectStatus = 'live' | 'maintenance' | 'sunset' | 'beta';
-
-export type DeploymentVersion = {
-  label: string;
-  releasedAt: string;
-  notes?: string;
-};
-
-export type ProjectDeployment = {
-  environment: 'production' | 'staging' | 'preview';
-  url: string;
-  provider?: string;
-  region?: string;
-};
-
-export type Project = {
+export type ProjectConfig = {
   id: string;
   name: string;
   url: string;
@@ -26,29 +11,18 @@ export type Project = {
   caseStudy?: string;
 };
 
-const ensureExternalAbsoluteUrl = (value: string, field: string) => {
-  let parsed: URL;
-
-  try {
-    parsed = new URL(value);
-  } catch {
-    throw new Error(`[project-registry] ${field} must be an absolute URL. Received: ${value}`);
-  }
-
-  const isHttp = parsed.protocol === 'http:' || parsed.protocol === 'https:';
-  const hasHost = Boolean(parsed.hostname);
-
-  if (!isHttp || !hasHost) {
-    throw new Error(`[project-registry] ${field} must be an external http(s) URL. Received: ${value}`);
-  }
-};
-
-export const projects: Project[] = [
+export const projectConfigs: ProjectConfig[] = [
   {
-    id: 'job-opportunities-for-everyone',
+    id: 'jofe-platform',
     name: 'Job Opportunities For Everyone',
-    url: 'https://jobsforeveryone.vercel.app',
-    preview: '/visuals/sheq-preview.jpg',
+    slug: 'job-opportunities-for-everyone-platform',
+    category: 'Employment Platform',
+    role: 'Product Design + Full-Stack Engineering',
+    links: {
+      live: '/projects/jofe-platform'
+    },
+    problem: 'Job listings were fragmented across informal channels with no centralized, scalable data system.',
+    architecture: ['Next.js App Router (SSR)', 'Supabase Auth + PostgREST API', 'PostgreSQL data layer', 'Vercel deployment edge network'],
     stack: ['Next.js (App Router)', 'Supabase', 'PostgreSQL', 'TailwindCSS', 'Vercel'],
     category: 'Employment Platform',
     status: 'live',
@@ -56,7 +30,7 @@ export const projects: Project[] = [
     caseStudy: 'job-opportunities-for-everyone',
   },
   {
-    id: 'feel-at-home',
+    id: 'feel-home',
     name: 'Feel At Home',
     url: 'https://feelathome.vercel.app',
     preview: '/visuals/meterflow-preview.jpg',
@@ -67,7 +41,7 @@ export const projects: Project[] = [
     caseStudy: 'feel-at-home',
   },
   {
-    id: 'shedsense',
+    id: 'shedsense-grid',
     name: 'ShedSense',
     url: 'https://backend-nl4r.onrender.com',
     preview: '/visuals/sh.png',
@@ -78,7 +52,7 @@ export const projects: Project[] = [
     caseStudy: 'shedsense',
   },
   {
-    id: 'ar-by-rodent',
+    id: 'ar-experience',
     name: 'AR by Rodent',
     url: 'https://arbyrodent.vercel.app',
     preview: '/visuals/sheq-preview.jpg',
@@ -89,7 +63,7 @@ export const projects: Project[] = [
     caseStudy: 'ar-by-rodent',
   },
   {
-    id: 'precise-locations',
+    id: 'precise-locations-lib',
     name: 'Precise Locations',
     url: 'https://github.com/anesu398/precise-locations',
     preview: '/visuals/kwiksend-preview.jpg',
@@ -102,12 +76,6 @@ export const projects: Project[] = [
   },
 ];
 
-for (const project of projects) {
-  ensureExternalAbsoluteUrl(project.url, `${project.id}.url`);
+export const projectById = Object.fromEntries(projectConfigs.map((project) => [project.id, project])) as Record<ProjectConfig['id'], ProjectConfig>;
 
-  for (const [index, deployment] of (project.deployments ?? []).entries()) {
-    ensureExternalAbsoluteUrl(deployment.url, `${project.id}.deployments[${index}].url`);
-  }
-}
-
-export const projectById = Object.fromEntries(projects.map((project) => [project.id, project])) as Record<string, Project>;
+export const projectIdBySlug = Object.fromEntries(projectConfigs.map((project) => [project.slug, project.id])) as Record<ProjectConfig['slug'], ProjectConfig['id']>;

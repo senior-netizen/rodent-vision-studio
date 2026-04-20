@@ -18,9 +18,9 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
       <p style={{ color: 'var(--mid)', marginBottom: '1rem' }}>{service.capability}</p>
       <h2 style={{ marginBottom: '0.5rem' }}>Related Projects</h2>
       <ul style={{ marginBottom: '1rem', paddingLeft: '1rem' }}>
-        {service.relatedProjects.map((projectId) => (
-          <li key={projectId}>
-            <Link href={`/projects/${projectId}`}>{projectById[projectId].name}</Link>
+        {service.relatedProjects.map((id) => (
+          <li key={id}>
+            <Link href={`/projects/${id}`}>{projectById[id].name}</Link>
           </li>
         ))}
       </ul>

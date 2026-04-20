@@ -64,7 +64,7 @@ export function SelectedSystemsSection() {
           viewport={{ once: true, margin: '-50px' }}
           className="space-y-1"
         >
-          {projects.map((project, index) => (
+          {projectConfigs.map((project, index) => (
             <motion.div key={project.id} variants={staggerChild}>
               <Link
                 href={`/projects/${project.id}`}
