@@ -64,9 +64,9 @@ export function SelectedSystemsSection() {
           className="space-y-1"
         >
           {projectConfigs.map((project, index) => (
-            <motion.div key={project.slug} variants={staggerChild}>
+            <motion.div key={project.id} variants={staggerChild}>
               <Link
-                href={`/projects/${project.slug}`}
+                href={`/projects/${project.id}`}
                 className="group relative block overflow-hidden"
               >
                 {/* Hover background with preview image */}

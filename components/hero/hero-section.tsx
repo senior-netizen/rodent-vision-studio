@@ -43,7 +43,7 @@ export function HeroSection() {
                 const t = cardTransforms[i];
                 return (
                   <motion.div
-                    key={project.slug}
+                    key={project.id}
                     initial={{ opacity: 0, y: 40, rotate: 0 }}
                     animate={{
                       opacity: 1,

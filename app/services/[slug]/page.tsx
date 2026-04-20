@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { projectBySlug } from '@/data/projects';
+import { projectById } from '@/data/projects';
 import { serviceBySlug, services } from '@/data/services';
 
 export function generateStaticParams() {
@@ -18,9 +18,9 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
       <p style={{ color: 'var(--mid)', marginBottom: '1rem' }}>{service.capability}</p>
       <h2 style={{ marginBottom: '0.5rem' }}>Related Projects</h2>
       <ul style={{ marginBottom: '1rem', paddingLeft: '1rem' }}>
-        {service.relatedProjects.map((slug) => (
-          <li key={slug}>
-            <Link href={`/projects/${slug}`}>{projectBySlug[slug].name}</Link>
+        {service.relatedProjects.map((id) => (
+          <li key={id}>
+            <Link href={`/projects/${id}`}>{projectById[id].name}</Link>
           </li>
         ))}
       </ul>

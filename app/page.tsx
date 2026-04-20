@@ -373,7 +373,7 @@ export default function HomePage() {
         <motion.div style={{ textAlign: 'center', marginBottom: '3rem' }} {...slideInLeft}><div style={{ fontSize: 12, fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', color: 'var(--teal)', marginBottom: '0.5rem' }}>PROJECTS</div><h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(32px,4vw,50px)', fontWeight: 800, letterSpacing: '-1.5px' }}>Our work is deployed in real environments.</h2></motion.div>
         <div className="gallery-grid gallery-grid-desktop">
           {projectConfigs.map((project) => (
-            <motion.button key={project.slug} className="g-card" whileHover={{ scale: 1.04, y: -6 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.4, ease: easeCurve }} onClick={() => router.push(`/projects/${project.slug}`)} style={{ border: 'none' }}>
+            <motion.button key={project.id} className="g-card" whileHover={{ scale: 1.04, y: -6 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.4, ease: easeCurve }} onClick={() => router.push(`/projects/${project.id}`)} style={{ border: 'none' }}>
               <div className="g-card-media">
                 <Image
                   src={project.visuals.preview}
@@ -399,12 +399,12 @@ export default function HomePage() {
         >
           <button className="gallery-carousel-arrow gallery-carousel-arrow-left" type="button" onClick={prevMobileProject} aria-label="Previous project">←</button>
           <motion.button
-            key={projectConfigs[mobileProjectIndex].slug}
+            key={projectConfigs[mobileProjectIndex].id}
             className="g-card g-card-mobile"
             initial={{ opacity: 0.7, x: 24 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.35, ease: easeCurve }}
-            onClick={() => router.push(`/projects/${projectConfigs[mobileProjectIndex].slug}`)}
+            onClick={() => router.push(`/projects/${projectConfigs[mobileProjectIndex].id}`)}
             style={{ border: 'none', width: '100%' }}
           >
             <div className="g-card-media g-card-media-mobile">
@@ -453,7 +453,7 @@ export default function HomePage() {
           <Link href="/privacy">Privacy</Link>
           <Link href="/terms">Terms</Link>
           <Link href="/contact">Contact</Link>
-          <Link href="/projects/shedsense">Projects</Link>
+          <Link href="/projects/shedsense-grid">Projects</Link>
           <Link href="/blog">Blog</Link>
         </div>
         <div style={{ marginTop: '2rem', fontSize: 12, color: 'rgba(255,255,255,0.2)' }}>© 2026 Rodent, Inc. All rights reserved.</div>

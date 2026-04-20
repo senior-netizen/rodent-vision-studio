@@ -1,4 +1,5 @@
 export type ProjectConfig = {
+  id: string;
   name: string;
   slug: string;
   category: string;
@@ -26,14 +27,14 @@ export type ProjectConfig = {
 };
 
 export const projectConfigs: ProjectConfig[] = [
-
   {
+    id: 'jofe-platform',
     name: 'Job Opportunities For Everyone',
     slug: 'job-opportunities-for-everyone-platform',
     category: 'Employment Platform',
     role: 'Product Design + Full-Stack Engineering',
     links: {
-      live: '/projects/job-opportunities-for-everyone-platform'
+      live: '/projects/jofe-platform'
     },
     problem: 'Job listings were fragmented across informal channels with no centralized, scalable data system.',
     architecture: ['Next.js App Router (SSR)', 'Supabase Auth + PostgREST API', 'PostgreSQL data layer', 'Vercel deployment edge network'],
@@ -49,6 +50,7 @@ export const projectConfigs: ProjectConfig[] = [
     }
   },
   {
+    id: 'feel-home',
     name: 'Feel At Home',
     slug: 'feel-at-home',
     category: 'PropTech Platform',
@@ -70,6 +72,7 @@ export const projectConfigs: ProjectConfig[] = [
     }
   },
   {
+    id: 'shedsense-grid',
     name: 'ShedSense',
     slug: 'shedsense',
     category: 'Grid Intelligence',
@@ -91,6 +94,7 @@ export const projectConfigs: ProjectConfig[] = [
     }
   },
   {
+    id: 'ar-experience',
     name: 'AR by Rodent',
     slug: 'ar-by-rodent',
     category: 'AR Experience',
@@ -112,6 +116,7 @@ export const projectConfigs: ProjectConfig[] = [
     }
   },
   {
+    id: 'precise-locations-lib',
     name: 'Precise Locations',
     slug: 'precise-locations',
     category: 'Geospatial Package',
@@ -134,4 +139,6 @@ export const projectConfigs: ProjectConfig[] = [
   }
 ];
 
-export const projectBySlug = Object.fromEntries(projectConfigs.map((project) => [project.slug, project])) as Record<ProjectConfig['slug'], ProjectConfig>;
+export const projectById = Object.fromEntries(projectConfigs.map((project) => [project.id, project])) as Record<ProjectConfig['id'], ProjectConfig>;
+
+export const projectIdBySlug = Object.fromEntries(projectConfigs.map((project) => [project.slug, project.id])) as Record<ProjectConfig['slug'], ProjectConfig['id']>;
