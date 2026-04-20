@@ -1,5 +1,17 @@
 export type DeploymentStatus = 'live' | 'staging' | 'failed';
 
+export type LinkHealthCheck = {
+  checkedAt: string;
+  ok: boolean;
+  statusCode?: number;
+};
+
+export type LinkHealth = {
+  lastCheckedAt?: string;
+  lastSuccessfulCheckAt?: string;
+  recentChecks?: LinkHealthCheck[];
+};
+
 export type ProjectDeployment = {
   version: string;
   url: string;
@@ -7,10 +19,31 @@ export type ProjectDeployment = {
   status: DeploymentStatus;
 };
 
+export type PreviewStatus = 'pending' | 'ready' | 'failed';
+
+export type PreviewState = {
+  status: PreviewStatus;
+  lastError?: string;
+  attemptCount: number;
+  requestedAt?: string;
+  generatedAt?: string;
+  failedAt?: string;
+  updatedAt: string;
+};
+
 export type ProjectConfig = {
   id: string;
+  slug: string;
   name: string;
+  category: string;
+  role: string;
   url: string;
+  links: {
+    live?: string;
+    repo?: string;
+  };
+  problem: string;
+  architecture: string[];
   preview: string;
   stack: string[];
   dataFlow: string[];
@@ -28,6 +61,8 @@ export type ProjectConfig = {
   };
   status?: DeploymentStatus;
   deployments?: ProjectDeployment[];
+  linkHealth?: LinkHealth;
+  stale?: boolean;
   outcome: string;
   summary: {
     scope: string;
@@ -39,8 +74,12 @@ export type ProjectConfig = {
 export const projectConfigs: ProjectConfig[] = [
   {
     id: 'jofe-platform',
+    url: '/projects/job-opportunities-for-everyone-platform',
+    preview: '/visuals/sheq-preview.jpg',
     name: 'Job Opportunities For Everyone',
     slug: 'job-opportunities-for-everyone-platform',
+    url: 'https://jofe-platform.vercel.app',
+    preview: '/visuals/sheq-preview.jpg',
     category: 'Employment Platform',
     role: 'Product Design + Full-Stack Engineering',
     links: {
@@ -66,7 +105,16 @@ export const projectConfigs: ProjectConfig[] = [
   },
   {
     id: 'feel-home',
+    slug: 'feel-at-home',
+    category: 'Property Platform',
+    role: 'Platform Engineering',
+    links: {
+      live: 'https://feelathome.vercel.app',
+    },
+    problem: 'Property discovery and publishing required a single reliable platform with fast indexing.',
+    architecture: ['Next.js application layer', 'Typed API contracts', 'PostgreSQL persistence', 'Vercel deployment'],
     name: 'Feel At Home',
+    slug: 'feel-at-home',
     url: 'https://feelathome.vercel.app',
     preview: '/visuals/meterflow-preview.jpg',
     stack: ['Next.js', 'TypeScript', 'React Query', 'PostgreSQL', 'Tailwind CSS'],
@@ -87,7 +135,16 @@ export const projectConfigs: ProjectConfig[] = [
   },
   {
     id: 'shedsense-grid',
+    slug: 'shedsense-grid',
+    category: 'Telemetry Platform',
+    role: 'Distributed Systems Engineering',
+    links: {
+      live: 'https://backend-nl4r.onrender.com',
+    },
+    problem: 'Field telemetry pipelines needed deterministic routing and resilient actioning.',
+    architecture: ['Edge ingestion', 'Stream processing', 'Rule evaluation engine', 'Operational dashboard'],
     name: 'ShedSense',
+    slug: 'shedsense-grid',
     url: 'https://backend-nl4r.onrender.com',
     preview: '/visuals/sh.png',
     stack: ['Next.js 14', 'TypeScript', 'Three.js', 'Framer Motion', 'PostgreSQL'],
@@ -108,7 +165,16 @@ export const projectConfigs: ProjectConfig[] = [
   },
   {
     id: 'ar-experience',
+    slug: 'ar-by-rodent',
+    category: 'AR Experience',
+    role: 'Interactive Product Engineering',
+    links: {
+      live: 'https://arbyrodent.vercel.app',
+    },
+    problem: 'The product needed a performant immersive presentation layer that remained accessible.',
+    architecture: ['Next.js UI shell', 'WebGL render surface', 'Motion orchestration', 'CTA analytics hooks'],
     name: 'AR by Rodent',
+    slug: 'ar-by-rodent',
     url: 'https://arbyrodent.vercel.app',
     preview: '/visuals/sheq-preview.jpg',
     stack: ['Next.js', 'TypeScript', 'Framer Motion', 'WebGL', 'CSS Effects'],
@@ -129,7 +195,17 @@ export const projectConfigs: ProjectConfig[] = [
   },
   {
     id: 'precise-locations-lib',
+    slug: 'precise-locations-library',
+    category: 'Developer Tooling',
+    role: 'Library Architecture + Release Engineering',
+    links: {
+      live: 'https://github.com/anesu398/precise-locations',
+      repo: 'https://github.com/anesu398/precise-locations',
+    },
+    problem: 'Teams required deterministic geospatial primitives with stable package contracts.',
+    architecture: ['Typed Node.js library core', 'Validation boundary', 'Automated release pipeline', 'GitHub/npm distribution'],
     name: 'Precise Locations',
+    slug: 'precise-locations',
     url: 'https://github.com/anesu398/precise-locations',
     preview: '/visuals/kwiksend-preview.jpg',
     stack: ['Node.js', 'TypeScript', 'npm', 'GitHub Actions', 'Semantic Versioning'],
@@ -150,6 +226,16 @@ export const projectConfigs: ProjectConfig[] = [
   }
 ];
 
-export const projectById = Object.fromEntries(projectConfigs.map((project) => [project.id, project])) as Record<ProjectConfig['id'], ProjectConfig>;
+export const projectById = Object.fromEntries(projectConfigs.filter((project) => project.id).map((project) => [project.id, project])) as Record<string, ProjectConfig>;
 
-export const projectIdBySlug = Object.fromEntries(projectConfigs.map((project) => [project.slug, project.id])) as Record<ProjectConfig['slug'], ProjectConfig['id']>;
+export const projectIdBySlug = Object.fromEntries(projectConfigs.filter((project) => project.slug && project.id).map((project) => [project.slug, project.id])) as Record<string, string>;
+
+
+export const projectIdBySlug = Object.fromEntries(
+  projectConfigs
+    .filter((project): project is ProjectConfig & { slug: string } => Boolean(project.slug))
+    .map((project) => [project.slug, project.id]),
+) as Record<string, ProjectConfig['id']>;
+
+export type Project = ProjectConfig;
+export const projects = projectConfigs;

@@ -19,6 +19,10 @@ export function ProjectCard({ project }: ProjectCardProps) {
     ? project.links.live
     : undefined;
   const stackLabel = project.stack.join(' • ');
+  const lastSuccessfulCheckAt = project.linkHealth?.lastSuccessfulCheckAt;
+  const staleContextLabel = lastSuccessfulCheckAt
+    ? `Last successful check: ${new Date(lastSuccessfulCheckAt).toLocaleString()}`
+    : 'No successful deployment health check recorded yet.';
 
   const handleCardClick = useCallback(() => {
     if (!externalLiveHref) return;
@@ -64,9 +68,24 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
       <div className="flex flex-1 flex-col gap-4 p-5">
         <div className="space-y-2">
-          <h2 className="text-xl font-semibold text-fg">{project.name}</h2>
+          <div className="flex flex-wrap items-center gap-2">
+            <h2 className="text-xl font-semibold text-fg">{project.name}</h2>
+            {project.stale && (
+              <span
+                className="rounded-full border border-amber-400/40 bg-amber-500/10 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-amber-300"
+                title={staleContextLabel}
+              >
+                Stale
+              </span>
+            )}
+          </div>
           <p className="text-sm text-fg-muted">{stackLabel}</p>
           <p className="text-xs uppercase tracking-wider text-fg-dim">{project.category}</p>
+          {project.stale && (
+            <p className="text-xs text-amber-300/90" title={staleContextLabel}>
+              {staleContextLabel}
+            </p>
+          )}
         </div>
 
         <div className="mt-auto flex gap-3 pt-3">

@@ -22,13 +22,50 @@ type ProjectPreviewRecord = {
   aliasUrl: string;
   versions: Record<string, ProjectPreviewVersionRecord>;
   updatedAt: string;
+  health?: {
+    statusCode: number | null;
+    checkedAt: string;
+    latencyMs: number;
+    errorClass: string | null;
+    consecutiveFailures: number;
+    lastSuccessAt: string | null;
+  };
 };
 
 type ProjectRegistry = {
   projects: Record<string, ProjectPreviewRecord>;
 };
 
-const registryPath = path.join(process.cwd(), 'data', 'project-registry.json');
+export type UploadAttemptEvent = {
+  correlationId: string;
+  projectId: string;
+  attempt: number;
+  startedAt: string;
+  finishedAt: string;
+  category: 'retryable' | 'permanent' | 'auth' | 'rate_limited' | 'success';
+  terminalReason: string;
+  statusCode?: number;
+  retryScheduledMs?: number;
+};
+
+export type ReconciliationTask = {
+  taskId: string;
+  projectId: string;
+  imageUrl: string;
+  metadata: ProjectPreviewMetadata;
+  reason: string;
+  createdAt: string;
+  status: 'pending';
+};
+
+type ReconciliationQueue = {
+  tasks: ReconciliationTask[];
+};
+
+const dataDirectoryPath = path.join(process.cwd(), 'data');
+const registryPath = path.join(dataDirectoryPath, 'project-registry.json');
+const uploadAttemptsPath = path.join(dataDirectoryPath, 'upload-attempts.jsonl');
+const reconciliationQueuePath = path.join(dataDirectoryPath, 'preview-reconciliation-queue.json');
 
 function buildAliasUrl(projectId: string): string {
   return `/api/previews/${projectId}.png`;
@@ -187,4 +224,32 @@ export async function purgePreviewAlias(input: { projectId: string; aliasUrl: st
     const details = await response.text();
     throw new Error(`CDN purge failed for alias ${input.aliasUrl}: ${response.status} ${details}`);
   }
+}
+
+export async function appendUploadAttempt(event: UploadAttemptEvent) {
+  await fs.mkdir(dataDirectoryPath, { recursive: true });
+  await fs.appendFile(uploadAttemptsPath, `${JSON.stringify(event)}\n`, 'utf8');
+}
+
+export async function enqueuePreviewReconciliationTask(input: {
+  projectId: string;
+  imageUrl: string;
+  metadata: ProjectPreviewMetadata;
+  reason: string;
+}) {
+  const queue = await readReconciliationQueue();
+  const task: ReconciliationTask = {
+    taskId: `${input.projectId}:${input.metadata.correlationId}:${Date.now()}`,
+    projectId: input.projectId,
+    imageUrl: input.imageUrl,
+    metadata: input.metadata,
+    reason: input.reason,
+    createdAt: new Date().toISOString(),
+    status: 'pending',
+  };
+
+  queue.tasks.unshift(task);
+  await writeReconciliationQueue(queue);
+
+  return task;
 }
