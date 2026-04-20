@@ -8,6 +8,7 @@ import {
 import {
   getIdempotentRecord,
   getProjectBySlug,
+  getProjectSlugById,
   setIdempotentResponse,
   upsertProject,
 } from '@/lib/projects/store';
@@ -51,6 +52,22 @@ export async function POST(request: Request) {
   }
 
   const payload = validation.value;
+  const existingSlugForId = getProjectSlugById(payload.project.id);
+  if (existingSlugForId && existingSlugForId !== payload.project.slug) {
+    return NextResponse.json(
+      { error: `Project id "${payload.project.id}" is already bound to slug "${existingSlugForId}".` },
+      { status: 409 },
+    );
+  }
+
+  const existingProjectForSlug = getProjectBySlug(payload.project.slug);
+  if (existingProjectForSlug && existingProjectForSlug.id !== payload.project.id) {
+    return NextResponse.json(
+      { error: `Project slug "${payload.project.slug}" is already bound to id "${existingProjectForSlug.id}".` },
+      { status: 409 },
+    );
+  }
+
   const requestHash = hashPayload(payload);
   const idempotencyKey = buildIdempotencyKey(request, payload);
   const cached = getIdempotentRecord(idempotencyKey);
@@ -80,7 +97,7 @@ export async function POST(request: Request) {
   }
 
   const orchestration = (async (): Promise<ResponsePayload> => {
-    const current = getProjectBySlug(payload.project.slug);
+    const current = existingProjectForSlug;
     const previewResponse = await fetch(new URL('/api/generate-preview', request.url), {
       method: 'POST',
       headers: {
