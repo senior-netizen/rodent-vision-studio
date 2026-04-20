@@ -5,9 +5,11 @@ import {
   validateUpsertPayload,
   type UpsertProjectPayload,
 } from '@/lib/projects/contracts';
+import { getProjectHealthById } from '@/lib/projects/health';
 import {
   getIdempotentRecord,
   getProjectBySlug,
+  listProjects,
   setIdempotentResponse,
   upsertProject,
 } from '@/lib/projects/store';
@@ -36,6 +38,20 @@ function isAuthorized(request: Request): boolean {
 
   const requestToken = request.headers.get('x-admin-token')?.trim();
   return requestToken === adminToken;
+}
+
+export async function GET() {
+  const [projects, healthById] = await Promise.all([
+    Promise.resolve(listProjects()),
+    getProjectHealthById(),
+  ]);
+
+  return NextResponse.json({
+    projects: projects.map((project) => ({
+      ...project,
+      health: healthById[project.id] ?? null,
+    })),
+  });
 }
 
 export async function POST(request: Request) {

@@ -9,9 +9,17 @@ export type ProjectPreviewMetadata = {
 };
 
 type ProjectPreviewRecord = {
-  imageUrl: string;
+  imageUrl?: string;
   metadata: ProjectPreviewMetadata;
   updatedAt: string;
+  health?: {
+    statusCode: number | null;
+    checkedAt: string;
+    latencyMs: number;
+    errorClass: string | null;
+    consecutiveFailures: number;
+    lastSuccessAt: string | null;
+  };
 };
 
 type ProjectRegistry = {
