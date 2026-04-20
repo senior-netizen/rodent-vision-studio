@@ -7,6 +7,11 @@ import {
   updateProjectPreview,
 } from '@/lib/project-registry';
 
+import {
+  INVALID_PREVIEW_SOURCE_URL,
+  validatePreviewSourceUrl,
+} from '@/lib/security/url-policy';
+
 type GeneratePreviewPayload = {
   slug?: string;
   screenshotUrl?: string;

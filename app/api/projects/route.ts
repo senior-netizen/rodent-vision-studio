@@ -1,22 +1,28 @@
-import { createHash } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import { NextResponse } from 'next/server';
 import {
+  buildPendingPreviewState,
   composeProjectConfig,
   validateUpsertPayload,
   type UpsertProjectPayload,
 } from '@/lib/projects/contracts';
 import {
+  enqueuePreviewJob,
   getIdempotentRecord,
   getProjectBySlug,
   setIdempotentResponse,
   upsertProject,
 } from '@/lib/projects/store';
 
-const inFlightOrchestrations = new Map<string, { requestHash: string; promise: Promise<ResponsePayload> }>();
+const inFlightMutations = new Map<string, { requestHash: string; promise: Promise<ResponsePayload> }>();
 
 type ResponsePayload = {
   ok: true;
   idempotencyKey: string;
+  preview: {
+    status: 'pending';
+    correlationId: string;
+  };
   project: Awaited<ReturnType<typeof upsertProject>>;
 };
 
@@ -37,6 +43,10 @@ function isAuthorized(request: Request): boolean {
 
   const requestToken = request.headers.get('x-admin-token')?.trim();
   return requestToken === adminToken;
+}
+
+function deriveCorrelationId(request: Request): string {
+  return request.headers.get('x-correlation-id')?.trim() || randomUUID();
 }
 
 export async function POST(request: Request) {
@@ -64,10 +74,10 @@ export async function POST(request: Request) {
   }
 
   if (cached) {
-    return NextResponse.json(cached.response);
+    return NextResponse.json(cached.response, { status: 202 });
   }
 
-  const inFlight = inFlightOrchestrations.get(idempotencyKey);
+  const inFlight = inFlightMutations.get(idempotencyKey);
   if (inFlight && inFlight.requestHash !== requestHash) {
     return NextResponse.json(
       { error: 'Idempotency key is currently processing a different payload.' },
@@ -77,10 +87,10 @@ export async function POST(request: Request) {
 
   if (inFlight) {
     const inFlightResult = await inFlight.promise;
-    return NextResponse.json(inFlightResult);
+    return NextResponse.json(inFlightResult, { status: 202 });
   }
 
-  const orchestration = (async (): Promise<ResponsePayload> => {
+  const mutation = (async (): Promise<ResponsePayload> => {
     const current = getProjectBySlug(payload.project.slug);
     const previewResponse = await fetch(new URL('/api/generate-preview', request.url), {
       method: 'POST',
@@ -134,23 +144,35 @@ export async function POST(request: Request) {
     });
 
     const saved = upsertProject(project);
+
+    enqueuePreviewJob({
+      dedupeKey: idempotencyKey,
+      projectSlug: payload.project.slug,
+      sourceUrl: payload.project.visuals.screenshot,
+      correlationId,
+    });
+
     return {
       ok: true,
       idempotencyKey,
+      preview: {
+        status: 'pending',
+        correlationId,
+      },
       project: saved,
     };
   })();
 
-  inFlightOrchestrations.set(idempotencyKey, { requestHash, promise: orchestration });
+  inFlightMutations.set(idempotencyKey, { requestHash, promise: mutation });
 
   try {
-    const response = await orchestration;
+    const response = await mutation;
     setIdempotentResponse(idempotencyKey, requestHash, response);
-    return NextResponse.json(response);
+    return NextResponse.json(response, { status: 202 });
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'Project orchestration failed.';
+    const message = error instanceof Error ? error.message : 'Project mutation failed.';
     return NextResponse.json({ error: message }, { status: 502 });
   } finally {
-    inFlightOrchestrations.delete(idempotencyKey);
+    inFlightMutations.delete(idempotencyKey);
   }
 }
