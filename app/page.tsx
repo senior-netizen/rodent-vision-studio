@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AnimatePresence, motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { StartProjectModal } from '@/components/contact/start-project-modal';
+import { ContactForm } from '@/components/contact/contact-form';
 import { projects } from '@/data/projects';
 import { projectCaseStudiesById } from '@/data/project-case-studies';
 import { labs } from '@/data/labs';
@@ -225,8 +226,24 @@ export default function HomePage() {
 
       <motion.div className="hero" ref={heroRef} variants={heroContainer} initial="hidden" animate="show" id="about">
         <div className="hero-content">
-          <motion.h1 variants={heroItem}>Build systems that actually work</motion.h1>
-          <motion.p variants={heroItem}>From IoT grids to fintech rails — Rodent Inc turns wild ideas into deployed infrastructure.</motion.p>
+          <motion.h1 variants={heroItem}>We build infrastructure that deploys.</motion.h1>
+          <motion.p variants={heroItem}>
+            From fintech rails to IoT sensor grids — Rodent, Inc. engineers production-ready systems for African enterprises,
+            property platforms, and emerging-market operators.
+          </motion.p>
+          <motion.div variants={heroItem} style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap', justifyContent: 'center', marginTop: '0.4rem' }}>
+            <button className="btn-primary" type="button" onClick={() => setProjectModalOpen(true)}>
+              Start a Project
+            </button>
+            <button
+              className="btn-ghost"
+              type="button"
+              onClick={() => goToSection('projects')}
+              style={{ border: '1px solid var(--border)', borderRadius: 100, padding: '12px 28px', background: '#fff' }}
+            >
+              View Our Work
+            </button>
+          </motion.div>
         </div>
 
         <motion.div className="cards-fan" variants={heroItem} style={{ y: heroParallaxY, willChange: 'transform' }}>
