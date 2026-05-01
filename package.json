@@ -13,6 +13,7 @@
     "ops:project-health": "rm -rf .tmp-project-registry && tsc --module nodenext --moduleResolution nodenext --target ES2022 --outDir .tmp-project-registry scripts/schedule-project-registry-validation.ts lib/projects/health.ts && node .tmp-project-registry/scripts/schedule-project-registry-validation.js"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.105.1",
     "@types/three": "^0.183.1",
     "cloudinary": "^2.7.0",
     "framer-motion": "^11.3.19",
