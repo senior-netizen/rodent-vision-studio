@@ -4,10 +4,15 @@ import { z } from 'zod';
 import { getServerEnv } from '@/lib/env';
 
 const contactPayloadSchema = z.object({
-  name: z.string().trim().min(1, 'Name is required'),
-  email: z.string().trim().email('A valid email is required'),
-  projectType: z.string().trim().optional(),
-  message: z.string().trim().min(1, 'Message is required'),
+  name: z.string().trim().min(1, 'Name is required').max(100),
+  company: z.string().trim().max(120).optional(),
+  email: z.string().trim().email('A valid email is required').max(255),
+  phone: z.string().trim().max(40).optional(),
+  projectType: z.string().trim().max(60).optional(),
+  budget: z.string().trim().max(40).optional(),
+  timeline: z.string().trim().max(40).optional(),
+  source: z.string().trim().max(60).optional(),
+  message: z.string().trim().min(1, 'Message is required').max(2000),
 });
 
 export async function POST(request: Request) {
@@ -37,11 +42,18 @@ export async function POST(request: Request) {
   const body = parsedPayload.data;
   const emailBody = [
     `Name: ${body.name}`,
+    body.company ? `Company: ${body.company}` : null,
     `Email: ${body.email}`,
+    body.phone ? `Phone: ${body.phone}` : null,
     `Project Type: ${body.projectType ?? 'General Inquiry'}`,
+    body.budget ? `Budget: ${body.budget}` : null,
+    body.timeline ? `Timeline: ${body.timeline}` : null,
+    body.source ? `Source: ${body.source}` : null,
     '',
     body.message,
-  ].join('\n');
+  ]
+    .filter(Boolean)
+    .join('\n');
 
   const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',

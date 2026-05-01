@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AnimatePresence, motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { StartProjectModal } from '@/components/contact/start-project-modal';
+import { ContactForm } from '@/components/contact/contact-form';
 import { projects } from '@/data/projects';
 import { projectCaseStudiesById } from '@/data/project-case-studies';
 import { labs } from '@/data/labs';
@@ -225,8 +226,24 @@ export default function HomePage() {
 
       <motion.div className="hero" ref={heroRef} variants={heroContainer} initial="hidden" animate="show" id="about">
         <div className="hero-content">
-          <motion.h1 variants={heroItem}>Build systems that actually work</motion.h1>
-          <motion.p variants={heroItem}>From IoT grids to fintech rails — Rodent Inc turns wild ideas into deployed infrastructure.</motion.p>
+          <motion.h1 variants={heroItem}>We build infrastructure that deploys.</motion.h1>
+          <motion.p variants={heroItem}>
+            From fintech rails to IoT sensor grids — Rodent, Inc. engineers production-ready systems for African enterprises,
+            property platforms, and emerging-market operators.
+          </motion.p>
+          <motion.div variants={heroItem} style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap', justifyContent: 'center', marginTop: '0.4rem' }}>
+            <button className="btn-primary" type="button" onClick={() => setProjectModalOpen(true)}>
+              Start a Project
+            </button>
+            <button
+              className="btn-ghost"
+              type="button"
+              onClick={() => goToSection('projects')}
+              style={{ border: '1px solid var(--border)', borderRadius: 100, padding: '12px 28px', background: '#fff' }}
+            >
+              View Our Work
+            </button>
+          </motion.div>
         </div>
 
         <motion.div className="cards-fan" variants={heroItem} style={{ y: heroParallaxY, willChange: 'transform' }}>
@@ -440,12 +457,46 @@ export default function HomePage() {
         </motion.div>
       </motion.section>
 
+      <motion.section
+        id="contact"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-10%' }}
+        transition={{ duration: 0.9, ease: easeCurve }}
+        style={{
+          background: 'linear-gradient(160deg, #0e0e10 0%, #17161c 60%, #1c1a26 100%)',
+          color: '#fff',
+          padding: '7rem 1.25rem',
+        }}
+      >
+        <div className="contact-grid" style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1.2fr)', gap: '3.5rem', alignItems: 'start' }}>
+          <div>
+            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: 2.4, textTransform: 'uppercase', color: 'var(--teal)', marginBottom: '0.8rem' }}>
+              06 — Start a Project
+            </p>
+            <h2 style={{ fontFamily: 'var(--font-syne)', fontSize: 'clamp(34px,4.6vw,54px)', lineHeight: 1.04, letterSpacing: '-1.5px', marginBottom: '1.1rem' }}>
+              Tell us what you&apos;re building.
+            </h2>
+            <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: 16, lineHeight: 1.65, maxWidth: 440, marginBottom: '2rem' }}>
+              Share scope, budget, and timeline. We respond within one business day with an implementation path.
+            </p>
+            <ul style={{ listStyle: 'none', padding: 0, display: 'grid', gap: '0.65rem', fontSize: 14, color: 'rgba(255,255,255,0.75)' }}>
+              <li>✉ <a href="mailto:anesu@rodent.co.zw" style={{ color: 'inherit' }}>anesu@rodent.co.zw</a></li>
+              <li>WhatsApp · <a href="https://wa.me/263787008238" target="_blank" rel="noreferrer noopener" style={{ color: 'inherit' }}>+263 78 700 8238</a></li>
+              <li>Call · <a href="tel:+253785286530" style={{ color: 'inherit' }}>+253 785 286 530</a></li>
+            </ul>
+          </div>
+          <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 22, padding: '2rem' }}>
+            <ContactForm fullInquiry variant="dark" source="homepage_inquiry" />
+          </div>
+        </div>
+      </motion.section>
+
       <motion.footer
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-10%' }}
         transition={{ duration: 1, ease: easeCurve }}
-        id="contact"
       >
         <h2>Build systems that operate at scale.</h2>
         <p>Rodent, Inc. delivers infrastructure that works.</p>
