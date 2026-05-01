@@ -457,12 +457,46 @@ export default function HomePage() {
         </motion.div>
       </motion.section>
 
+      <motion.section
+        id="contact"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-10%' }}
+        transition={{ duration: 0.9, ease: easeCurve }}
+        style={{
+          background: 'linear-gradient(160deg, #0e0e10 0%, #17161c 60%, #1c1a26 100%)',
+          color: '#fff',
+          padding: '7rem 1.25rem',
+        }}
+      >
+        <div className="contact-grid" style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1.2fr)', gap: '3.5rem', alignItems: 'start' }}>
+          <div>
+            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: 2.4, textTransform: 'uppercase', color: 'var(--teal)', marginBottom: '0.8rem' }}>
+              06 — Start a Project
+            </p>
+            <h2 style={{ fontFamily: 'var(--font-syne)', fontSize: 'clamp(34px,4.6vw,54px)', lineHeight: 1.04, letterSpacing: '-1.5px', marginBottom: '1.1rem' }}>
+              Tell us what you&apos;re building.
+            </h2>
+            <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: 16, lineHeight: 1.65, maxWidth: 440, marginBottom: '2rem' }}>
+              Share scope, budget, and timeline. We respond within one business day with an implementation path.
+            </p>
+            <ul style={{ listStyle: 'none', padding: 0, display: 'grid', gap: '0.65rem', fontSize: 14, color: 'rgba(255,255,255,0.75)' }}>
+              <li>✉ <a href="mailto:anesu@rodent.co.zw" style={{ color: 'inherit' }}>anesu@rodent.co.zw</a></li>
+              <li>WhatsApp · <a href="https://wa.me/263787008238" target="_blank" rel="noreferrer noopener" style={{ color: 'inherit' }}>+263 78 700 8238</a></li>
+              <li>Call · <a href="tel:+253785286530" style={{ color: 'inherit' }}>+253 785 286 530</a></li>
+            </ul>
+          </div>
+          <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 22, padding: '2rem' }}>
+            <ContactForm fullInquiry variant="dark" source="homepage_inquiry" />
+          </div>
+        </div>
+      </motion.section>
+
       <motion.footer
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-10%' }}
         transition={{ duration: 1, ease: easeCurve }}
-        id="contact"
       >
         <h2>Build systems that operate at scale.</h2>
         <p>Rodent, Inc. delivers infrastructure that works.</p>
