@@ -1,6 +1,20 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { projectConfigs } from '@/data/projects';
 import { getProjectHealthById } from '@/lib/projects/health';
+
+export const metadata: Metadata = {
+  title: 'Projects — Selected Systems by Rodent, Inc.',
+  description:
+    'Selected production systems built by Rodent, Inc. across web, mobile, IoT, and robotics — each shipped with measurable outcomes.',
+  alternates: { canonical: '/projects' },
+  openGraph: {
+    title: 'Projects | Rodent, Inc.',
+    description: 'Selected production systems built across web, mobile, IoT, and robotics.',
+    type: 'website',
+    url: '/projects',
+  },
+};
 
 export default async function ProjectsPage() {
   const healthById = await getProjectHealthById();
