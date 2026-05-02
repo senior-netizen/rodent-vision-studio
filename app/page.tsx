@@ -505,6 +505,8 @@ export default function HomePage() {
           <Link href="/privacy">Privacy</Link>
           <Link href="/terms">Terms</Link>
           <Link href="/contact">Contact</Link>
+          <Link href="/about">About</Link>
+          <Link href="/pricing">Pricing</Link>
           <Link href="/projects/shedsense-grid">Projects</Link>
           <Link href="/blog">Blog</Link>
         </div>
