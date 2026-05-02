@@ -43,6 +43,10 @@ export type ProjectConfig = {
     repo?: string;
   };
   problem: string;
+  solution?: string;
+  result?: string;
+  metrics?: { label: string; value: string }[];
+  tagline?: string;
   architecture: string[];
   preview: string;
   stack: string[];
@@ -83,6 +87,14 @@ export const projectConfigs: ProjectConfig[] = [
       live: '/projects/jofe-platform',
     },
     problem: 'Job listings were fragmented across informal channels with no centralized, scalable data system.',
+    solution: 'Built a Next.js + Supabase platform with structured submission, validation, and SSR-rendered job pages on a unified PostgreSQL data layer.',
+    result: 'Centralized listing intake with a publishing pipeline that scales beyond informal channels.',
+    metrics: [
+      { label: 'Channels consolidated', value: '5+' },
+      { label: 'Build cycle', value: '6 weeks' },
+      { label: 'Time-to-publish', value: '< 1 min' },
+    ],
+    tagline: 'Fragmented listings → one structured intake and publishing pipeline.',
     architecture: ['Next.js App Router (SSR)', 'Supabase Auth + PostgREST API', 'PostgreSQL data layer', 'Vercel deployment edge network'],
     preview: '/visuals/sheq-preview.jpg',
     stack: ['Next.js (App Router)', 'Supabase', 'PostgreSQL', 'TailwindCSS', 'Vercel'],
@@ -110,6 +122,14 @@ export const projectConfigs: ProjectConfig[] = [
       live: 'https://feelathome.vercel.app',
     },
     problem: 'Property discovery and publishing required a single reliable platform with fast indexing.',
+    solution: 'Index-first search architecture with typed API contracts and authenticated publisher flows for managed listings.',
+    result: 'A unified discovery and publishing experience that shortens listing turnaround for renters and agents alike.',
+    metrics: [
+      { label: 'Listing surfaces', value: '1 unified' },
+      { label: 'Publisher access', value: 'Auth-gated' },
+      { label: 'Search latency', value: 'Index-first' },
+    ],
+    tagline: 'Fragmented property search → one index-first discovery + publishing platform.',
     architecture: ['Next.js application layer', 'Typed API contracts', 'PostgreSQL persistence', 'Vercel deployment'],
     name: 'Feel At Home',
     url: 'https://feelathome.vercel.app',
@@ -139,6 +159,14 @@ export const projectConfigs: ProjectConfig[] = [
       live: 'https://backend-nl4r.onrender.com',
     },
     problem: 'Field telemetry pipelines needed deterministic routing and resilient actioning.',
+    solution: 'Edge ingestion over MQTT into a stream processor and rule engine that routes alerts with deterministic confidence to an ops dashboard.',
+    result: 'Reduced event-to-action time by 41% with replayable incident reconstruction.',
+    metrics: [
+      { label: 'Event-to-action', value: '−41%' },
+      { label: 'Pipeline', value: 'MQTT → Rules → UI' },
+      { label: 'Rollout', value: '16 weeks' },
+    ],
+    tagline: 'Noisy field telemetry → deterministic alerts, 41% faster response.',
     architecture: ['Edge ingestion', 'Stream processing', 'Rule evaluation engine', 'Operational dashboard'],
     name: 'ShedSense',
     url: 'https://backend-nl4r.onrender.com',
@@ -168,6 +196,14 @@ export const projectConfigs: ProjectConfig[] = [
       live: 'https://arbyrodent.vercel.app',
     },
     problem: 'The product needed a performant immersive presentation layer that remained accessible.',
+    solution: 'Next.js shell with a WebGL render surface and Framer Motion orchestration tuned for smooth motion across device classes.',
+    result: 'An immersive AR-led product surface with strong identity and accessible interaction.',
+    metrics: [
+      { label: 'Render surface', value: 'WebGL' },
+      { label: 'Target devices', value: 'Mobile + desktop' },
+      { label: 'Accessibility', value: 'Preserved' },
+    ],
+    tagline: 'Static landing → immersive, accessible AR-led product surface.',
     architecture: ['Next.js UI shell', 'WebGL render surface', 'Motion orchestration', 'CTA analytics hooks'],
     name: 'AR by Rodent',
     url: 'https://arbyrodent.vercel.app',
@@ -198,6 +234,14 @@ export const projectConfigs: ProjectConfig[] = [
       repo: 'https://github.com/anesu398/precise-locations',
     },
     problem: 'Teams required deterministic geospatial primitives with stable package contracts.',
+    solution: 'Typed Node.js library with a strict validation boundary, semver-driven releases, and automated GitHub Actions publishing.',
+    result: 'A reusable geospatial toolkit consumed across multiple downstream products.',
+    metrics: [
+      { label: 'Distribution', value: 'npm + GitHub' },
+      { label: 'Release pipeline', value: 'Automated' },
+      { label: 'API surface', value: 'Stable' },
+    ],
+    tagline: 'Ad-hoc geo math → deterministic, versioned location primitives.',
     architecture: ['Typed Node.js library core', 'Validation boundary', 'Automated release pipeline', 'GitHub/npm distribution'],
     name: 'Precise Locations',
     url: 'https://github.com/anesu398/precise-locations',

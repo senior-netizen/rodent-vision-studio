@@ -81,6 +81,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
           </div>
           <p className="text-sm text-fg-muted">{stackLabel}</p>
           <p className="text-xs uppercase tracking-wider text-fg-dim">{project.category}</p>
+          {project.tagline && (
+            <p className="pt-2 text-sm leading-relaxed text-fg/80">{project.tagline}</p>
+          )}
           {project.stale && (
             <p className="text-xs text-amber-300/90" title={staleContextLabel}>
               {staleContextLabel}

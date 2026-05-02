@@ -172,6 +172,64 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
         </div>
       </section>
 
+      {/* Solution */}
+      {project.solution && (
+        <section className="section-shell">
+          <div className="container-wide editorial-grid">
+            <motion.div {...revealLeft} viewport={{ once: true }} className="col-span-12 md:col-span-1">
+              <span className="section-number">01b</span>
+            </motion.div>
+            <motion.div {...reveal} viewport={{ once: true }} className="col-span-12 md:col-span-4">
+              <h2 className="text-heading text-[clamp(2rem,3vw,3rem)]">Solution</h2>
+            </motion.div>
+            <motion.div {...reveal} viewport={{ once: true }} className="col-span-12 md:col-span-7">
+              <p className="text-body text-lg leading-relaxed">{project.solution}</p>
+            </motion.div>
+          </div>
+          <div className="container-wide">
+            <div className="divider mt-16" />
+          </div>
+        </section>
+      )}
+
+      {/* Result + Metrics */}
+      {(project.result || (project.metrics && project.metrics.length > 0)) && (
+        <section className="section-shell">
+          <div className="container-wide editorial-grid">
+            <motion.div {...revealLeft} viewport={{ once: true }} className="col-span-12 md:col-span-1">
+              <span className="section-number">01c</span>
+            </motion.div>
+            <motion.div {...reveal} viewport={{ once: true }} className="col-span-12 md:col-span-4">
+              <h2 className="text-heading text-[clamp(2rem,3vw,3rem)]">Result</h2>
+            </motion.div>
+            <motion.div {...reveal} viewport={{ once: true }} className="col-span-12 md:col-span-7">
+              {project.result && (
+                <p className="text-body mb-8 text-lg leading-relaxed">{project.result}</p>
+              )}
+              {project.metrics && project.metrics.length > 0 && (
+                <motion.div
+                  variants={stagger}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true }}
+                  className="grid gap-3 sm:grid-cols-3"
+                >
+                  {project.metrics.map((metric) => (
+                    <motion.div key={metric.label} variants={staggerChild} className="card-glass p-5">
+                      <span className="text-label">{metric.label}</span>
+                      <p className="text-heading mt-2 text-2xl">{metric.value}</p>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              )}
+            </motion.div>
+          </div>
+          <div className="container-wide">
+            <div className="divider mt-16" />
+          </div>
+        </section>
+      )}
+
       {/* Architecture */}
       <section className="section-shell">
         <div className="container-wide">
