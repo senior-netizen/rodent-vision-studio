@@ -9,6 +9,22 @@ const fontVariables: CSSProperties = {
   '--font-dm-sans': '"Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif',
 } as CSSProperties;
 
+
+function resolveMetadataBase(): URL {
+  const explicitSiteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+
+  if (explicitSiteUrl) {
+    return new URL(explicitSiteUrl);
+  }
+
+  const vercelUrl = process.env.VERCEL_URL;
+  if (vercelUrl) {
+    return new URL(`https://${vercelUrl}`);
+  }
+
+  return new URL('http://localhost:3000');
+}
+
 export const metadata: Metadata = {
   title: {
     default: 'Rodent, Inc. — Engineering Digital Infrastructure for Africa',
@@ -16,6 +32,7 @@ export const metadata: Metadata = {
   },
   description:
     'We design and build production-grade systems across web, mobile, IoT, and robotics—focused on performance, reliability, and real-world deployment.',
+  metadataBase: resolveMetadataBase(),
   applicationName: 'Rodent, Inc.',
   authors: [{ name: 'Rodent, Inc.' }],
   keywords: ['Rodent Inc', 'web systems', 'mobile applications', 'IoT', 'robotics', 'Africa', 'product engineering'],
