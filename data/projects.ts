@@ -43,6 +43,10 @@ export type ProjectConfig = {
     repo?: string;
   };
   problem: string;
+  solution?: string;
+  result?: string;
+  metrics?: { label: string; value: string }[];
+  tagline?: string;
   architecture: string[];
   preview: string;
   stack: string[];
