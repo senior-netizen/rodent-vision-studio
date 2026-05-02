@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { CaseStudyPage } from '@/components/case-study/case-study-page';
 import { projectById, projectConfigs } from '@/data/projects';
@@ -11,6 +12,24 @@ type RouteParams = {
 
 export function generateStaticParams() {
   return projectConfigs.map((project) => ({ id: project.id }));
+}
+
+export function generateMetadata({ params }: RouteParams): Metadata {
+  if (!(params.id in projectById)) return {};
+  const project = projectById[params.id as keyof typeof projectById];
+  const description = project.tagline || project.outcome || project.problem;
+  return {
+    title: `${project.name} — ${project.category} | Rodent, Inc.`,
+    description,
+    alternates: { canonical: `/projects/${project.id}` },
+    openGraph: {
+      title: `${project.name} — Case Study`,
+      description,
+      type: 'article',
+      url: `/projects/${project.id}`,
+      images: project.visuals?.preview ? [{ url: project.visuals.preview }] : undefined,
+    },
+  };
 }
 
 export default function ProjectRoute({ params }: RouteParams) {

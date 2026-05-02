@@ -10,8 +10,30 @@ const fontVariables: CSSProperties = {
 } as CSSProperties;
 
 export const metadata: Metadata = {
-  title: 'Rodent, Inc. — Engineering Digital Infrastructure for Africa',
-  description: 'We design and build production-grade systems across web, mobile, IoT, and robotics—focused on performance, reliability, and real-world deployment.',
+  title: {
+    default: 'Rodent, Inc. — Engineering Digital Infrastructure for Africa',
+    template: '%s | Rodent, Inc.',
+  },
+  description:
+    'We design and build production-grade systems across web, mobile, IoT, and robotics—focused on performance, reliability, and real-world deployment.',
+  applicationName: 'Rodent, Inc.',
+  authors: [{ name: 'Rodent, Inc.' }],
+  keywords: ['Rodent Inc', 'web systems', 'mobile applications', 'IoT', 'robotics', 'Africa', 'product engineering'],
+  alternates: { canonical: '/' },
+  openGraph: {
+    title: 'Rodent, Inc. — Engineering Digital Infrastructure for Africa',
+    description:
+      'Production-grade web, mobile, IoT, and robotics systems engineered for performance, reliability, and real-world deployment.',
+    type: 'website',
+    siteName: 'Rodent, Inc.',
+    url: '/',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Rodent, Inc.',
+    description: 'Engineering digital infrastructure for Africa.',
+  },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
