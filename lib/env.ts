@@ -102,11 +102,14 @@ export function assertProductionEnv(): void {
   if (env.nodeEnv !== 'production') return;
 
   const requiredInProduction: Array<[key: string, value: string | undefined]> = [
-    ['RESEND_API_KEY', env.resendApiKey],
     ['CLOUDINARY_CLOUD_NAME', env.cloudinary.cloudName],
     ['CLOUDINARY_API_KEY', env.cloudinary.apiKey],
     ['CLOUDINARY_API_SECRET', env.cloudinary.apiSecret],
   ];
+
+  if (env.features.contactForm) {
+    requiredInProduction.push(['RESEND_API_KEY', env.resendApiKey]);
+  }
 
   const missing = requiredInProduction.filter(([, value]) => !value).map(([key]) => key);
 
