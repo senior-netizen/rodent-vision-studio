@@ -262,6 +262,45 @@ export const projectConfigs: ProjectConfig[] = [
       primaryKpi: 'Reusable location primitives for multiple products.',
     },
   },
+  {
+    id: 'express-energy',
+    slug: 'express-energy',
+    name: 'Express Energy Service Station',
+    category: 'Fuel Retail Platform',
+    role: 'Brand + Web Engineering',
+    url: 'https://expressenergy.co.zw',
+    links: { live: 'https://expressenergy.co.zw' },
+    problem: 'A 24hr Masvingo fuel station needed an authoritative web presence with live pricing and station info.',
+    solution: 'Built a brand-led marketing site with a daily fuel-price module, station finder, and trust signals (24hr service, direct from Feruka).',
+    result: 'A clear, mobile-first hub that surfaces today\'s prices and drives visits to the station.',
+    metrics: [
+      { label: 'Service window', value: '24/7' },
+      { label: 'Location', value: 'Masvingo' },
+      { label: 'Sourcing', value: 'Direct from Feruka' },
+    ],
+    tagline: 'Static fuel branding → live pricing + station discovery on web.',
+    architecture: ['Next.js marketing site', 'Daily price module', 'Station locator', 'CMS-backed content'],
+    preview: '/visuals/express-energy-preview.jpg',
+    stack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Vercel'],
+    dataFlow: ['Price update → CMS', 'CMS → Today\'s Prices module', 'User location → Station finder', 'CTA → Directions'],
+    decisions: ['Mobile-first hero with strong brand identity.', 'Surfaced 24hr availability and Feruka sourcing as primary trust signals.'],
+    visuals: {
+      screenshot: '/visuals/express-energy-preview.jpg',
+      diagram: '/visuals/meterflow-architecture.jpg',
+      preview: '/visuals/express-energy-preview.jpg',
+    },
+    previewGeneratedAt: '2026-05-03T00:00:00.000Z',
+    status: 'live',
+    deployments: [
+      { version: '1.0.0', url: 'https://expressenergy.co.zw', createdAt: '2026-05-03T00:00:00.000Z', status: 'live' },
+    ],
+    outcome: 'Launched a branded fuel-retail web presence with live pricing and station discovery.',
+    summary: {
+      scope: 'Marketing site, pricing module, and station finder for a 24hr fuel retailer.',
+      timeline: 'Rapid brand-aligned build and launch.',
+      primaryKpi: 'Daily-updated fuel prices visible to drivers in Masvingo.',
+    },
+  },
 ];
 
 export const projectById = Object.fromEntries(
