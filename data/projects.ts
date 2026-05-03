@@ -82,9 +82,9 @@ export const projectConfigs: ProjectConfig[] = [
     name: 'Job Opportunities For Everyone',
     category: 'Employment Platform',
     role: 'Product Design + Full-Stack Engineering',
-    url: 'https://jofe-platform.vercel.app',
+    url: 'https://jobopportunities.co.zw',
     links: {
-      live: '/projects/jofe-platform',
+      live: 'https://jobopportunities.co.zw',
     },
     problem: 'Job listings were fragmented across informal channels with no centralized, scalable data system.',
     solution: 'Built a Next.js + Supabase platform with structured submission, validation, and SSR-rendered job pages on a unified PostgreSQL data layer.',
