@@ -96,15 +96,15 @@ export const projectConfigs: ProjectConfig[] = [
     ],
     tagline: 'Fragmented listings → one structured intake and publishing pipeline.',
     architecture: ['Next.js App Router (SSR)', 'Supabase Auth + PostgREST API', 'PostgreSQL data layer', 'Vercel deployment edge network'],
-    preview: '/visuals/sheq-preview.jpg',
+    preview: '/visuals/jofe-preview.jpg',
     stack: ['Next.js (App Router)', 'Supabase', 'PostgreSQL', 'TailwindCSS', 'Vercel'],
     dataFlow: ['Submission Form → Validation', 'Validation → Supabase API', 'Supabase API → PostgreSQL', 'PostgreSQL → SSR Job Pages'],
     decisions: ['Prioritized mobile-first interaction patterns for accessibility.', 'Structured listings and submissions to support data ownership and scale.'],
-    visuals: { screenshot: '/visuals/sheq-ui.jpg', diagram: '/visuals/sheq-architecture.jpg', preview: '/visuals/sheq-preview.jpg' },
+    visuals: { screenshot: '/visuals/jofe-preview.jpg', diagram: '/visuals/sheq-architecture.jpg', preview: '/visuals/jofe-preview.jpg' },
     previewGeneratedAt: '2026-04-20T00:00:00.000Z',
     status: 'live',
     deployments: [
-      { version: '1.0.0', url: '/projects/job-opportunities-for-everyone-platform', createdAt: '2026-04-20T00:00:00.000Z', status: 'live' },
+      { version: '1.0.0', url: 'https://jobopportunities.co.zw', createdAt: '2026-04-20T00:00:00.000Z', status: 'live' },
     ],
     outcome: 'Established a centralized job platform with a scalable intake and publishing foundation.',
     summary: {
