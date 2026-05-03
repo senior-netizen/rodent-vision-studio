@@ -7,9 +7,9 @@ const serverEnvSchema = z.object({
   RESEND_API_KEY: z.string().min(1).optional(),
   CONTACT_TO_EMAIL: z.string().email().optional(),
   CONTACT_FROM_EMAIL: z.string().email().optional(),
-  CLOUDINARY_CLOUD_NAME: z.string().min(1),
-  CLOUDINARY_API_KEY: z.string().min(1),
-  CLOUDINARY_API_SECRET: z.string().min(1),
+  CLOUDINARY_CLOUD_NAME: z.string().min(1).optional(),
+  CLOUDINARY_API_KEY: z.string().min(1).optional(),
+  CLOUDINARY_API_SECRET: z.string().min(1).optional(),
   PREVIEW_QUEUE_SQS_URL: z.string().url().optional(),
   PREVIEW_QUEUE_SQS_DLQ_URL: z.string().url().optional(),
   AWS_REGION: z.string().min(1).optional(),
@@ -27,9 +27,9 @@ export type ServerEnv = {
   contactToEmail: string;
   contactFromEmail: string;
   cloudinary: {
-    cloudName: string;
-    apiKey: string;
-    apiSecret: string;
+    cloudName?: string;
+    apiKey?: string;
+    apiSecret?: string;
   };
   previewQueue?: {
     sqsUrl: string;
@@ -101,14 +101,26 @@ export function assertProductionEnv(): void {
 
   if (env.nodeEnv !== 'production') return;
 
-  const requiredInProduction: Array<[key: string, value: string | undefined]> = [
+  const requiredInProduction: Array<[key: string, value: string | undefined]> = [];
+
+  if (env.features.contactForm) {
+    requiredInProduction.push(['RESEND_API_KEY', env.resendApiKey]);
+  }
+
+  const cloudinaryVars: Array<[key: string, value: string | undefined]> = [
     ['CLOUDINARY_CLOUD_NAME', env.cloudinary.cloudName],
     ['CLOUDINARY_API_KEY', env.cloudinary.apiKey],
     ['CLOUDINARY_API_SECRET', env.cloudinary.apiSecret],
   ];
 
-  if (env.features.contactForm) {
-    requiredInProduction.push(['RESEND_API_KEY', env.resendApiKey]);
+  const hasAnyCloudinaryVar = cloudinaryVars.some(([, value]) => Boolean(value));
+  if (hasAnyCloudinaryVar) {
+    requiredInProduction.push(...cloudinaryVars);
+  }
+
+  if (env.previewQueue) {
+    requiredInProduction.push(['PREVIEW_QUEUE_SQS_URL', env.previewQueue.sqsUrl]);
+    requiredInProduction.push(['AWS_REGION', env.previewQueue.awsRegion]);
   }
 
   const missing = requiredInProduction.filter(([, value]) => !value).map(([key]) => key);

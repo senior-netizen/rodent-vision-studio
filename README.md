@@ -36,25 +36,24 @@ Create a local `.env` from `.env.example` and configure the following variables:
 | Variable | Required | Description |
 | --- | --- | --- |
 | `NODE_ENV` | No (defaults to `development`) | Runtime mode (`development`, `test`, or `production`). |
-| `RESEND_API_KEY` | Yes in production when `FEATURE_CONTACT_FORM` is enabled | API key for outbound contact email delivery. |
+| `FEATURE_ANALYTICS` | No | Enables/disables analytics ingestion route (`true/false` or `1/0`). |
+| `FEATURE_CONTACT_FORM` | No (defaults to enabled) | Enables/disables contact form route (`true/false` or `1/0`). |
+| `FEATURE_AUTOMATION` | No | Toggle reserved for automation workflows (`true/false` or `1/0`). |
+| `RESEND_API_KEY` | Required when `FEATURE_CONTACT_FORM=true` in production | API key for outbound contact email delivery. |
 | `CONTACT_TO_EMAIL` | No | Destination mailbox for contact requests. |
 | `CONTACT_FROM_EMAIL` | No | Sender address used for contact requests. |
-| `CLOUDINARY_CLOUD_NAME` | Yes in production | Cloudinary cloud account identifier. |
-| `CLOUDINARY_API_KEY` | Yes in production | Cloudinary API key. |
-| `CLOUDINARY_API_SECRET` | Yes in production | Cloudinary API secret. |
-| `PREVIEW_QUEUE_SQS_URL` | No (required when SQS preview queue backend is enabled) | SQS URL for preview job messages. |
-| `PREVIEW_QUEUE_SQS_DLQ_URL` | No | SQS dead-letter queue URL for preview jobs. |
-| `AWS_REGION` | No (required with SQS preview queue backend) | AWS region for SQS access. |
-| `AWS_ACCESS_KEY_ID` | No (required with SQS preview queue backend) | IAM access key for queue operations. |
-| `AWS_SECRET_ACCESS_KEY` | No (required with SQS preview queue backend) | IAM secret key for queue operations. |
-| `AWS_SESSION_TOKEN` | No | Optional session token for temporary AWS credentials. |
-| `FEATURE_ANALYTICS` | No | Enables/disables analytics ingestion route (`true/false` or `1/0`). |
-| `FEATURE_CONTACT_FORM` | No | Enables/disables contact form route (`true/false` or `1/0`). |
-| `FEATURE_AUTOMATION` | No | Toggle reserved for automation workflows (`true/false` or `1/0`). |
+| `CLOUDINARY_CLOUD_NAME` | Conditionally required in production* | Cloudinary cloud account identifier. |
+| `CLOUDINARY_API_KEY` | Conditionally required in production* | Cloudinary API key. |
+| `CLOUDINARY_API_SECRET` | Conditionally required in production* | Cloudinary API secret. |
+| `PREVIEW_QUEUE_SQS_URL` | Optional | SQS queue URL for preview jobs. |
+| `PREVIEW_QUEUE_SQS_DLQ_URL` | Optional | Dead-letter queue URL for preview jobs. |
+| `AWS_REGION` | Required when `PREVIEW_QUEUE_SQS_URL` is set | AWS region for preview queue access. |
+
+\* Cloudinary credentials are validated as an all-or-nothing set in production when any one of them is provided.
 
 ### Boot-time validation
 
-Server runtime env is validated in `lib/env.ts`. In `production`, the app fails fast during boot if critical secrets are missing (Cloudinary always, and `RESEND_API_KEY` only when contact form is enabled).
+Server runtime env is validated in `lib/env.ts`. In `production`, the app fails fast during boot if required secrets for enabled/used features are missing.
 
 ## Architecture Note
 
