@@ -7,6 +7,15 @@ import { motion } from 'framer-motion';
 import type { ProjectConfig } from '@/data/projects';
 import { reveal, revealLeft, stagger, staggerChild } from '@/lib/animations/reveal';
 
+
+function formatDateTime(value: string): string {
+  return new Intl.DateTimeFormat('en-US', {
+    dateStyle: 'short',
+    timeStyle: 'medium',
+    timeZone: 'UTC',
+  }).format(new Date(value));
+}
+
 export function CaseStudyPage({ project }: { project: ProjectConfig }) {
   const deployments = project.deployments ?? [];
   const projectStatus = project.status ?? 'staging';
@@ -83,7 +92,7 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
             </span>
             {project.previewGeneratedAt && (
               <span className="text-body text-xs">
-                Preview generated {new Date(project.previewGeneratedAt).toLocaleString()}
+                Preview generated {formatDateTime(project.previewGeneratedAt)}
               </span>
             )}
           </div>
@@ -407,7 +416,7 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
               <li key={`${deployment.version}-${deployment.createdAt}`} className="card-glass flex flex-wrap items-center justify-between gap-3 px-5 py-4">
                 <div>
                   <p className="text-label">{deployment.version}</p>
-                  <p className="text-body mt-1 text-xs">{new Date(deployment.createdAt).toLocaleString()}</p>
+                  <p className="text-body mt-1 text-xs">{formatDateTime(deployment.createdAt)}</p>
                 </div>
                 <div className="flex items-center gap-3">
                   <span className={`rounded-full border px-3 py-1 text-xs uppercase tracking-[0.12em] ${statusTone[deployment.status]}`}>
