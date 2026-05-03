@@ -82,8 +82,8 @@ export default function HomePage() {
   const activeService = services[serviceIndex];
   const serviceVisuals: Record<string, { className: string; imageSrc?: string; imageAlt?: string }> = {
     web: { className: 'art-gradient-dots' },
-    mobile: { className: 'art-gradient-rainbow', imageSrc: '/visuals/chiredzi.png', imageAlt: 'Chiredzi mobile preview' },
-    iot: { className: 'art-teal', imageSrc: '/visuals/iot.png', imageAlt: 'IoT systems preview' },
+    mobile: { className: 'art-gradient-rainbow' },
+    iot: { className: 'art-teal' },
     robotics: { className: 'art-gradient-purple' },
   };
 
