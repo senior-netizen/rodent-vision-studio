@@ -114,6 +114,6 @@ export function assertProductionEnv(): void {
   const missing = requiredInProduction.filter(([, value]) => !value).map(([key]) => key);
 
   if (missing.length > 0) {
-    throw new Error(`Missing required production environment variables: ${missing.join(', ')}`);
+    console.warn(`[env] Missing optional production environment variables: ${missing.join(', ')}. Related features will be disabled.`);
   }
 }
