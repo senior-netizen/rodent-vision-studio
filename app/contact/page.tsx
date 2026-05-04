@@ -1,10 +1,21 @@
 import Link from 'next/link';
 import { ContactForm } from '@/components/contact/contact-form';
 
-export const metadata = {
-  title: 'Start a Project — Rodent, Inc.',
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Contact Rodent, Inc. — Start Your Project',
   description:
     'Tell us about your web, mobile, IoT, robotics, or enterprise project. Rodent, Inc. responds within one business day.',
+  alternates: { canonical: '/contact' },
+  openGraph: {
+    title: 'Contact Rodent, Inc. — Start Your Project',
+    description:
+      'Tell us about your web, mobile, IoT, robotics, or enterprise project. Rodent, Inc. responds within one business day.',
+    type: 'website',
+    url: '/contact',
+    images: [{ url: '/rodent-logo.png', alt: 'Rodent, Inc. logo' }],
+  },
 };
 
 export default function ContactPage() {
