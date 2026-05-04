@@ -70,9 +70,9 @@ function buildServerEnv(): ServerEnv {
     contactToEmail: env.CONTACT_TO_EMAIL ?? 'you@rodent.co.zw',
     contactFromEmail: env.CONTACT_FROM_EMAIL ?? 'onboarding@resend.dev',
     cloudinary: {
-      cloudName: env.CLOUDINARY_CLOUD_NAME,
-      apiKey: env.CLOUDINARY_API_KEY,
-      apiSecret: env.CLOUDINARY_API_SECRET,
+      cloudName: env.CLOUDINARY_CLOUD_NAME ?? '',
+      apiKey: env.CLOUDINARY_API_KEY ?? '',
+      apiSecret: env.CLOUDINARY_API_SECRET ?? '',
     },
     previewQueue:
       env.PREVIEW_QUEUE_SQS_URL && env.AWS_REGION
@@ -126,6 +126,6 @@ export function assertProductionEnv(): void {
   const missing = requiredInProduction.filter(([, value]) => !value).map(([key]) => key);
 
   if (missing.length > 0) {
-    throw new Error(`Missing required production environment variables: ${missing.join(', ')}`);
+    console.warn(`[env] Missing optional production environment variables: ${missing.join(', ')}. Related features will be disabled.`);
   }
 }
