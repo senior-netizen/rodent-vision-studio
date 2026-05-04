@@ -27,7 +27,7 @@ export function generateMetadata({ params }: RouteParams): Metadata {
       description,
       type: 'article',
       url: `/projects/${project.id}`,
-      images: project.visuals?.preview ? [{ url: project.visuals.preview }] : undefined,
+      images: [{ url: project.visuals?.preview || '/rodent-logo.png', alt: `${project.name} preview` }],
     },
   };
 }
