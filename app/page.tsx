@@ -81,10 +81,10 @@ export default function HomePage() {
   const [projectTouchStartX, setProjectTouchStartX] = useState<number | null>(null);
   const activeService = services[serviceIndex];
   const serviceVisuals: Record<string, { className: string; imageSrc?: string; imageAlt?: string }> = {
-    web: { className: 'art-gradient-dots' },
-    mobile: { className: 'art-gradient-rainbow' },
-    iot: { className: 'art-teal' },
-    robotics: { className: 'art-gradient-purple' },
+    web: { className: 'art-gradient-dots', imageSrc: '/visuals/service-web.jpg', imageAlt: 'Web systems dashboard preview' },
+    mobile: { className: 'art-gradient-rainbow', imageSrc: '/visuals/service-mobile.jpg', imageAlt: 'Mobile application preview' },
+    iot: { className: 'art-teal', imageSrc: '/visuals/service-iot.jpg', imageAlt: 'IoT sensor device' },
+    robotics: { className: 'art-gradient-purple', imageSrc: '/visuals/service-robotics.jpg', imageAlt: 'Robotics arm in lab' },
   };
 
   const heroRef = useRef<HTMLDivElement | null>(null);
