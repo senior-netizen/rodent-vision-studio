@@ -226,7 +226,10 @@ export default function HomePage() {
 
       <motion.div className="hero" ref={heroRef} variants={heroContainer} initial="hidden" animate="show" id="about">
         <div className="hero-content">
-          <motion.h1 variants={heroItem}>We build infrastructure that deploys.</motion.h1>
+          <motion.h1 variants={heroItem} className="hero-headline">
+            <span className="hero-typewriter">We build infrastructure that deploys.</span>
+            <span className="hero-cursor" aria-hidden="true">|</span>
+          </motion.h1>
           <motion.p variants={heroItem}>
             From fintech rails to IoT sensor grids — Rodent, Inc. engineers production-ready systems for African enterprises,
             property platforms, and emerging-market operators.

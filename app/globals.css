@@ -598,3 +598,63 @@ footer p { color: rgba(255,255,255,0.5); font-size: 14px; margin-bottom: 2rem; }
 @media (max-width: 900px) {
   .contact-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
 }
+
+/* Hero typewriter animation */
+.hero-headline {
+  min-height: calc(1.02em * 2);
+}
+
+.hero-typewriter {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 0;
+  animation: typewriter 2.8s steps(38, end) 0.35s forwards;
+}
+
+.hero-cursor {
+  display: inline-block;
+  margin-left: 0.08em;
+  animation: blink 0.7s step-end 3.15s infinite;
+}
+
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@media (max-width: 768px) {
+  .hero-typewriter {
+    width: auto;
+    white-space: normal;
+    animation: heroFadeIn 0.7s ease-out 0.25s both;
+  }
+
+  .hero-cursor {
+    display: none;
+    animation: none;
+  }
+}
+
+@keyframes heroFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-typewriter {
+    width: auto;
+    white-space: normal;
+    animation: none;
+  }
+
+  .hero-cursor {
+    display: none;
+    animation: none;
+  }
+}
