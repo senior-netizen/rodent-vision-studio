@@ -20,6 +20,7 @@ export type UpsertProjectPayload = {
     slug: string;
     name: string;
     category: string;
+    color: string;
     role: string;
     links: {
       live?: string;
@@ -223,6 +224,7 @@ export function validateUpsertPayload(payload: unknown): { value: UpsertProjectP
     || !hasNonEmptyText(project.slug)
     || !hasNonEmptyText(project.name)
     || !hasNonEmptyText(project.category)
+    || !hasNonEmptyText(project.color)
     || !hasNonEmptyText(project.role)
     || !hasNonEmptyText(project.problem)
     || !hasNonEmptyText(project.outcome)
@@ -260,6 +262,7 @@ export function validateUpsertPayload(payload: unknown): { value: UpsertProjectP
         slug: project.slug.trim(),
         name: project.name.trim(),
         category: project.category.trim(),
+        color: project.color.trim(),
         role: project.role.trim(),
         links: {
           live: hasNonEmptyText(project.links.live) ? project.links.live.trim() : undefined,
@@ -339,6 +342,7 @@ export function composeProjectConfig(input: {
     slug: payload.project.slug,
     name: payload.project.name,
     category: payload.project.category,
+    color: payload.project.color,
     role: payload.project.role,
     url: payload.project.links.live ?? current?.url ?? resolvedPreviewUrl,
     links: payload.project.links,

@@ -13,12 +13,6 @@ const cardTransforms = [
   { rotate: 10, x: 55, z: 2 },
 ];
 
-const cardGradients = [
-  'from-emerald-500/80 to-emerald-700/90',
-  'from-rose-500/80 to-rose-700/90',
-  'from-zinc-400/80 to-zinc-600/90',
-  'from-amber-400/80 to-orange-500/90',
-];
 
 export function HeroSection() {
   return (
@@ -43,7 +37,7 @@ export function HeroSection() {
                 const t = cardTransforms[i];
                 return (
                   <motion.div
-                    key={project.id}
+                    key={project.slug}
                     initial={{ opacity: 0, y: 40, rotate: 0 }}
                     animate={{
                       opacity: 1,
@@ -61,7 +55,8 @@ export function HeroSection() {
                     whileHover={{ scale: 1.08, y: -10, zIndex: 10 }}
                   >
                     <div
-                      className={`relative w-full h-full rounded-2xl bg-gradient-to-br ${cardGradients[i]} p-4 flex flex-col justify-between overflow-hidden backdrop-blur-sm border border-white/10`}
+                      className="relative w-full h-full rounded-2xl p-4 flex flex-col justify-between overflow-hidden backdrop-blur-sm border border-white/10"
+                      style={{ background: `linear-gradient(135deg, ${project.color}, #111827)` }}
                     >
                       {/* Category badge */}
                       <span className="self-end rounded-full bg-emerald-500 px-2.5 py-0.5 text-[10px] font-semibold text-white shadow-md">
