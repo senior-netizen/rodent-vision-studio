@@ -5,16 +5,17 @@ import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { useRouter } from 'next/navigation';
-import { AnimatePresence, motion, useScroll, useSpring, useTransform } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { StartProjectModal } from '@/components/contact/start-project-modal';
-import { ContactForm } from '@/components/contact/contact-form';
-import { projects } from '@/data/projects';
-import { projectCaseStudiesById } from '@/data/project-case-studies';
-import { labs } from '@/data/labs';
-import { services } from '@/data/services';
 import { trackEvent } from '@/lib/analytics/track';
+import { easeCurve } from '@/components/home/sections/home-section-motion';
+import { HomeHeroSection } from '@/components/home/sections/hero-section-home';
+import { ProofBarSection } from '@/components/home/sections/proof-bar-section';
+import { ServicesListSection } from '@/components/home/sections/services-list-section';
+import { ProjectsCaseStudiesSection } from '@/components/home/sections/projects-case-studies-section';
+import { LabsSensorGridSection } from '@/components/home/sections/labs-sensor-grid-section';
+import { ContactFormSection } from '@/components/home/sections/contact-form-section';
 
-const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const sectionIds = ['about', 'services', 'projects', 'contact', 'labs', 'philosophy'];
 
 const heroContainer = { hidden: {}, show: { transition: { staggerChildren: 0.12, delayChildren: 0.2 } } };
@@ -70,29 +71,6 @@ export default function HomePage() {
   const [activeSection, setActiveSection] = useState('about');
   const [projectModalOpen, setProjectModalOpen] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
-  const [serviceIndex, setServiceIndex] = useState(0);
-  const [mobileServiceIndex, setMobileServiceIndex] = useState(0);
-  const [touchStartX, setTouchStartX] = useState<number | null>(null);
-  const [mobileProjectIndex, setMobileProjectIndex] = useState(0);
-  const [projectTouchStartX, setProjectTouchStartX] = useState<number | null>(null);
-  const activeService = services[serviceIndex];
-  const serviceVisuals: Record<string, { className: string; imageSrc?: string; imageAlt?: string }> = {
-    web: { className: 'art-gradient-dots', imageSrc: '/visuals/service-web.jpg', imageAlt: 'Web systems dashboard preview' },
-    mobile: { className: 'art-gradient-rainbow', imageSrc: '/visuals/service-mobile.jpg', imageAlt: 'Mobile application preview' },
-    iot: { className: 'art-teal', imageSrc: '/visuals/service-iot.jpg', imageAlt: 'IoT sensor device' },
-    robotics: { className: 'art-gradient-purple', imageSrc: '/visuals/service-robotics.jpg', imageAlt: 'Robotics arm in lab' },
-  };
-
-  const heroRef = useRef<HTMLDivElement | null>(null);
-  const marketplaceRef = useRef<HTMLDivElement | null>(null);
-
-  const { scrollY } = useScroll();
-  const heroParallaxY = useTransform(scrollY, [0, 600], [0, -80]);
-
-  const { scrollYProgress: marketplaceProgress } = useScroll({ target: marketplaceRef, offset: ['start end', 'end start'] });
-  const stickyScale = useSpring(useTransform(marketplaceProgress, [0, 0.5, 1], [0.94, 1, 0.97]), { damping: 34, stiffness: 320 });
-  const stickyY = useTransform(marketplaceProgress, [0, 1], [36, -24]);
-  const stickyOpacity = useTransform(marketplaceProgress, [0, 0.12, 1], [0.35, 1, 0.9]);
 
   useScrollReveal();
 
@@ -103,40 +81,11 @@ export default function HomePage() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => {
-    const onResize = () => {
-      if (window.innerWidth > 900) {
-        setMobileNavOpen(false);
-      }
-    };
-    window.addEventListener('resize', onResize, { passive: true });
-    return () => window.removeEventListener('resize', onResize);
-  }, []);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      { threshold: 0.35 },
-    );
-
-    sectionIds.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
   const goToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     trackEvent({ name: 'nav_click', metadata: { section: id } });
     setMobileNavOpen(false);
+    setActiveSection(id);
   };
 
   const nextMobileService = () => setMobileServiceIndex((prev) => (prev + 1) % services.length);
@@ -224,7 +173,10 @@ export default function HomePage() {
 
       <motion.div className="hero" ref={heroRef} variants={heroContainer} initial="hidden" animate="show" id="about">
         <div className="hero-content">
-          <motion.h1 variants={heroItem}>We build infrastructure that deploys.</motion.h1>
+          <motion.h1 variants={heroItem} className="hero-headline">
+            <span className="hero-typewriter">We build infrastructure that deploys.</span>
+            <span className="hero-cursor" aria-hidden="true">|</span>
+          </motion.h1>
           <motion.p variants={heroItem}>
             From fintech rails to IoT sensor grids — Rodent, Inc. engineers production-ready systems for African enterprises,
             property platforms, and emerging-market operators.
