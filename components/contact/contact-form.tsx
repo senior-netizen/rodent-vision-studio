@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEvent, useMemo, useState } from 'react';
+import { FormEvent, useEffect, useMemo, useState } from 'react';
 import { trackEvent } from '@/lib/analytics/track';
 
 type ContactFormProps = {
@@ -27,6 +27,7 @@ export function ContactForm({
   source,
   onSuccess,
 }: ContactFormProps) {
+  const [hasMounted, setHasMounted] = useState(false);
   const [status, setStatus] = useState<SubmissionState>('idle');
   const [error, setError] = useState<string>('');
   const [formData, setFormData] = useState({
@@ -78,6 +79,10 @@ export function ContactForm({
     return fullInquiry ? 'Send Inquiry' : 'Send Message';
   }, [status, fullInquiry]);
 
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
   async function submitContact(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -122,6 +127,10 @@ export function ContactForm({
       setStatus('error');
       setError(submissionError instanceof Error ? submissionError.message : 'Unexpected error. Please retry.');
     }
+  }
+
+  if (!hasMounted) {
+    return <form className={className} noValidate style={{ minHeight: fullInquiry ? 520 : 280 }} />;
   }
 
   return (
