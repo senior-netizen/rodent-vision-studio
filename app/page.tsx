@@ -1,7 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { useEffect, useRef, useState } from 'react';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { useRouter } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
 import { StartProjectModal } from '@/components/contact/start-project-modal';
@@ -16,12 +18,61 @@ import { ContactFormSection } from '@/components/home/sections/contact-form-sect
 
 const sectionIds = ['about', 'services', 'projects', 'contact', 'labs', 'philosophy'];
 
+const heroContainer = { hidden: {}, show: { transition: { staggerChildren: 0.12, delayChildren: 0.2 } } };
+const heroItem = { hidden: { opacity: 0, y: 50, filter: 'blur(8px)' }, show: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 1, ease: easeCurve } } };
+const heroTechCards = [
+  {
+    className: 'card-1',
+    badge: 'MOBILE',
+    title: 'Flutter + NestJS + PostgreSQL',
+    details: ['Frontend: Flutter', 'Backend: NestJS', 'DB: PostgreSQL'],
+    useCase: 'Property mgmt, booking & remittance',
+  },
+  {
+    className: 'card-2',
+    badge: 'MVP',
+    title: 'Flutter + Firebase',
+    details: ['Auth + Firestore', 'Cloud Messaging', 'Real-time sync'],
+    useCase: 'Rapid prototypes, chat, notifications',
+  },
+  {
+    className: 'card-3',
+    badge: 'SAAS',
+    title: 'React + Node.js + MongoDB',
+    details: ['React frontend', 'Node APIs', 'MongoDB schema-flex'],
+    useCase: 'Dashboards, analytics, internal tools',
+  },
+  {
+    className: 'card-4',
+    badge: 'CMS',
+    title: 'Laravel + MySQL + Bootstrap',
+    details: ['Laravel MVC', 'MySQL data layer', 'Bootstrap UI'],
+    useCase: 'Corporate sites, CMS & admin portals',
+  },
+  {
+    className: 'card-5',
+    badge: 'IOT',
+    title: 'ESP32 + Node + WS + React',
+    details: ['ESP32 sensors', 'WebSocket streaming', 'React monitoring UI'],
+    useCase: 'SHEQ dashboards, smart meters, alerts',
+  },
+  {
+    className: 'card-6',
+    badge: 'ENTERPRISE',
+    title: 'ASP.NET + PostgreSQL + Cloudinary + Stripe',
+    details: ['Secure APIs', 'Media handling', 'Payment workflows'],
+    useCase: 'Fintech & property platforms at scale',
+  },
+] as const;
+
 export default function HomePage() {
   const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('about');
   const [projectModalOpen, setProjectModalOpen] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+
+  useScrollReveal();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -177,7 +228,7 @@ export default function HomePage() {
         </motion.div>
       </motion.div>
 
-      <motion.div className="section-wrap" style={{ background: '#fafaf8', padding: '60px 2rem' }} {...revealMotion} id="philosophy">
+      <motion.div className="section-wrap" style={{ background: '#fafaf8', padding: '60px 2rem' }} id="philosophy" data-reveal data-reveal-delay="40">
         <div className="gateway">
           <div className="gateway-label">ABOUT RODENT, INC.</div>
           <div className="gateway-inner">
@@ -211,7 +262,7 @@ export default function HomePage() {
         </div>
       </motion.div>
 
-      <motion.div className="marketplace-wrap" {...revealMotion} id="services" ref={marketplaceRef}>
+      <motion.div className="marketplace-wrap" id="services" ref={marketplaceRef} data-reveal data-reveal-delay="80">
         <div className="marketplace-inner">
           <div className="marketplace-header">
             <div className="mp-left"><div className="mp-label">SERVICES</div><h2>Engineering Pillars<br />for Deployment</h2><p className="mp-desc">Each service has a dedicated capability page and conversion flow.</p></div>
@@ -286,8 +337,8 @@ export default function HomePage() {
         </div>
       </motion.div>
 
-      <motion.div className="gallery-wrap" {...scaleReveal} id="projects">
-        <motion.div style={{ textAlign: 'center', marginBottom: '3rem' }} {...slideInLeft}><div style={{ fontSize: 12, fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', color: 'var(--teal)', marginBottom: '0.5rem' }}>PROJECTS</div><h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(32px,4vw,50px)', fontWeight: 800, letterSpacing: '-1.5px' }}>Our work is deployed in real environments.</h2></motion.div>
+      <motion.div className="gallery-wrap" id="projects" data-reveal data-reveal-delay="120">
+        <motion.div style={{ textAlign: 'center', marginBottom: '3rem' }} data-reveal data-reveal-direction="left" data-reveal-delay="120"><div style={{ fontSize: 12, fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', color: 'var(--teal)', marginBottom: '0.5rem' }}>PROJECTS</div><h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(32px,4vw,50px)', fontWeight: 800, letterSpacing: '-1.5px' }}>Our work is deployed in real environments.</h2></motion.div>
         <div className="gallery-grid gallery-grid-desktop">
           {projects.map((project) => (
             <motion.button key={project.id} className="g-card" whileHover={{ scale: 1.04, y: -6 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.4, ease: easeCurve }} onClick={() => router.push(`/projects/${project.id}`)} style={{ border: 'none' }}>
@@ -342,11 +393,11 @@ export default function HomePage() {
         </div>
       </motion.div>
 
-      <motion.section id="labs" style={{ padding: '0 2rem 4rem', maxWidth: 1100, margin: '0 auto' }} {...revealMotion}>
-        <motion.h2 style={{ fontFamily: 'var(--font-syne)', marginBottom: '1rem' }} {...slideInLeft}>Labs</motion.h2>
-        <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-10%' }} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: '1rem' }}>
+      <motion.section id="labs" style={{ padding: '0 2rem 4rem', maxWidth: 1100, margin: '0 auto' }} data-reveal data-reveal-delay="160">
+        <motion.h2 style={{ fontFamily: 'var(--font-syne)', marginBottom: '1rem' }} data-reveal data-reveal-direction="left">Labs</motion.h2>
+        <motion.div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: '1rem' }}>
           {labs.map((lab) => (
-            <motion.div key={lab.slug} variants={staggerItem}>
+            <motion.div key={lab.slug} data-reveal data-reveal-stagger="80">
               <Link href={`/labs/${lab.slug}`} style={{ border: '1px solid var(--border)', borderRadius: 12, padding: '1rem', textDecoration: 'none', color: 'inherit', display: 'block', transition: 'transform 0.3s ease, box-shadow 0.3s ease' }}>
                 <strong>{lab.title}</strong>
                 <p style={{ color: 'var(--mid)', fontSize: 14 }}>{lab.concept}</p>
@@ -358,10 +409,8 @@ export default function HomePage() {
 
       <motion.section
         id="contact"
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-10%' }}
-        transition={{ duration: 0.9, ease: easeCurve }}
+        data-reveal
+        data-reveal-delay="200"
         style={{
           background: 'linear-gradient(160deg, #0e0e10 0%, #17161c 60%, #1c1a26 100%)',
           color: '#fff',
@@ -391,12 +440,7 @@ export default function HomePage() {
         </div>
       </motion.section>
 
-      <motion.footer
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-10%' }}
-        transition={{ duration: 1, ease: easeCurve }}
-      >
+      <motion.footer data-reveal data-reveal-delay="240">
         <h2>Build systems that operate at scale.</h2>
         <p>Rodent, Inc. delivers infrastructure that works.</p>
         <button className="footer-btn" type="button" onClick={() => setProjectModalOpen(true)}>Start a Project</button>
