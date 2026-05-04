@@ -3,68 +3,68 @@
     "jofe-platform": {
       "health": {
         "statusCode": null,
-        "checkedAt": "2026-05-04T05:19:46.621Z",
-        "latencyMs": 13,
+        "checkedAt": "2026-05-04T05:21:28.435Z",
+        "latencyMs": 6,
         "errorClass": "network_error",
-        "consecutiveFailures": 5,
+        "consecutiveFailures": 6,
         "lastSuccessAt": null
       },
-      "updatedAt": "2026-05-04T05:19:46.616Z"
+      "updatedAt": "2026-05-04T05:21:28.434Z"
     },
     "feel-home": {
       "health": {
         "statusCode": null,
-        "checkedAt": "2026-05-04T05:19:46.634Z",
-        "latencyMs": 2,
+        "checkedAt": "2026-05-04T05:21:28.441Z",
+        "latencyMs": 1,
         "errorClass": "network_error",
-        "consecutiveFailures": 5,
+        "consecutiveFailures": 6,
         "lastSuccessAt": null
       },
-      "updatedAt": "2026-05-04T05:19:46.616Z"
+      "updatedAt": "2026-05-04T05:21:28.434Z"
     },
     "shedsense-grid": {
       "health": {
         "statusCode": null,
-        "checkedAt": "2026-05-04T05:19:46.636Z",
-        "latencyMs": 2,
+        "checkedAt": "2026-05-04T05:21:28.442Z",
+        "latencyMs": 0,
         "errorClass": "network_error",
-        "consecutiveFailures": 5,
+        "consecutiveFailures": 6,
         "lastSuccessAt": null
       },
-      "updatedAt": "2026-05-04T05:19:46.616Z"
+      "updatedAt": "2026-05-04T05:21:28.434Z"
     },
     "ar-experience": {
       "health": {
         "statusCode": null,
-        "checkedAt": "2026-05-04T05:19:46.638Z",
-        "latencyMs": 0,
+        "checkedAt": "2026-05-04T05:21:28.442Z",
+        "latencyMs": 1,
         "errorClass": "network_error",
-        "consecutiveFailures": 5,
+        "consecutiveFailures": 6,
         "lastSuccessAt": null
       },
-      "updatedAt": "2026-05-04T05:19:46.616Z"
+      "updatedAt": "2026-05-04T05:21:28.434Z"
     },
     "precise-locations-lib": {
       "health": {
         "statusCode": null,
-        "checkedAt": "2026-05-04T05:19:46.638Z",
-        "latencyMs": 3,
+        "checkedAt": "2026-05-04T05:21:28.443Z",
+        "latencyMs": 0,
         "errorClass": "network_error",
-        "consecutiveFailures": 5,
+        "consecutiveFailures": 6,
         "lastSuccessAt": null
       },
-      "updatedAt": "2026-05-04T05:19:46.616Z"
+      "updatedAt": "2026-05-04T05:21:28.434Z"
     },
     "express-energy": {
       "health": {
         "statusCode": null,
-        "checkedAt": "2026-05-04T05:19:46.641Z",
-        "latencyMs": 0,
+        "checkedAt": "2026-05-04T05:21:28.443Z",
+        "latencyMs": 1,
         "errorClass": "network_error",
-        "consecutiveFailures": 1,
+        "consecutiveFailures": 2,
         "lastSuccessAt": null
       },
-      "updatedAt": "2026-05-04T05:19:46.616Z"
+      "updatedAt": "2026-05-04T05:21:28.434Z"
     }
   }
 }
