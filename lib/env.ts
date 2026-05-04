@@ -70,9 +70,9 @@ function buildServerEnv(): ServerEnv {
     contactToEmail: env.CONTACT_TO_EMAIL ?? 'you@rodent.co.zw',
     contactFromEmail: env.CONTACT_FROM_EMAIL ?? 'onboarding@resend.dev',
     cloudinary: {
-      cloudName: env.CLOUDINARY_CLOUD_NAME,
-      apiKey: env.CLOUDINARY_API_KEY,
-      apiSecret: env.CLOUDINARY_API_SECRET,
+      cloudName: env.CLOUDINARY_CLOUD_NAME ?? '',
+      apiKey: env.CLOUDINARY_API_KEY ?? '',
+      apiSecret: env.CLOUDINARY_API_SECRET ?? '',
     },
     previewQueue:
       env.PREVIEW_QUEUE_SQS_URL && env.AWS_REGION
