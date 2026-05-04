@@ -1,72 +1,20 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { AnimatePresence, motion, useScroll, useSpring, useTransform } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { StartProjectModal } from '@/components/contact/start-project-modal';
-import { ContactForm } from '@/components/contact/contact-form';
-import { projects } from '@/data/projects';
-import { projectCaseStudiesById } from '@/data/project-case-studies';
-import { labs } from '@/data/labs';
-import { services } from '@/data/services';
 import { trackEvent } from '@/lib/analytics/track';
+import { easeCurve } from '@/components/home/sections/home-section-motion';
+import { HomeHeroSection } from '@/components/home/sections/hero-section-home';
+import { ProofBarSection } from '@/components/home/sections/proof-bar-section';
+import { ServicesListSection } from '@/components/home/sections/services-list-section';
+import { ProjectsCaseStudiesSection } from '@/components/home/sections/projects-case-studies-section';
+import { LabsSensorGridSection } from '@/components/home/sections/labs-sensor-grid-section';
+import { ContactFormSection } from '@/components/home/sections/contact-form-section';
 
-const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const sectionIds = ['about', 'services', 'projects', 'contact', 'labs', 'philosophy'];
-
-const heroContainer = { hidden: {}, show: { transition: { staggerChildren: 0.12, delayChildren: 0.2 } } };
-const heroItem = { hidden: { opacity: 0, y: 50, filter: 'blur(8px)' }, show: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 1, ease: easeCurve } } };
-const revealMotion = { initial: { opacity: 0, y: 60 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, margin: '-15%' }, transition: { duration: 0.9, ease: easeCurve } };
-const staggerContainer = { hidden: {}, show: { transition: { staggerChildren: 0.08, delayChildren: 0.15 } } };
-const staggerItem = { hidden: { opacity: 0, y: 30, scale: 0.96 }, show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.7, ease: easeCurve } } };
-const slideInLeft = { initial: { opacity: 0, x: -40 }, whileInView: { opacity: 1, x: 0 }, viewport: { once: true, margin: '-15%' }, transition: { duration: 0.8, ease: easeCurve } };
-const scaleReveal = { initial: { opacity: 0, scale: 0.92 }, whileInView: { opacity: 1, scale: 1 }, viewport: { once: true, margin: '-10%' }, transition: { duration: 1, ease: easeCurve } };
-const heroTechCards = [
-  {
-    className: 'card-1',
-    badge: 'MOBILE',
-    title: 'Flutter + NestJS + PostgreSQL',
-    details: ['Frontend: Flutter', 'Backend: NestJS', 'DB: PostgreSQL'],
-    useCase: 'Property mgmt, booking & remittance',
-  },
-  {
-    className: 'card-2',
-    badge: 'MVP',
-    title: 'Flutter + Firebase',
-    details: ['Auth + Firestore', 'Cloud Messaging', 'Real-time sync'],
-    useCase: 'Rapid prototypes, chat, notifications',
-  },
-  {
-    className: 'card-3',
-    badge: 'SAAS',
-    title: 'React + Node.js + MongoDB',
-    details: ['React frontend', 'Node APIs', 'MongoDB schema-flex'],
-    useCase: 'Dashboards, analytics, internal tools',
-  },
-  {
-    className: 'card-4',
-    badge: 'CMS',
-    title: 'Laravel + MySQL + Bootstrap',
-    details: ['Laravel MVC', 'MySQL data layer', 'Bootstrap UI'],
-    useCase: 'Corporate sites, CMS & admin portals',
-  },
-  {
-    className: 'card-5',
-    badge: 'IOT',
-    title: 'ESP32 + Node + WS + React',
-    details: ['ESP32 sensors', 'WebSocket streaming', 'React monitoring UI'],
-    useCase: 'SHEQ dashboards, smart meters, alerts',
-  },
-  {
-    className: 'card-6',
-    badge: 'ENTERPRISE',
-    title: 'ASP.NET + PostgreSQL + Cloudinary + Stripe',
-    details: ['Secure APIs', 'Media handling', 'Payment workflows'],
-    useCase: 'Fintech & property platforms at scale',
-  },
-] as const;
 
 export default function HomePage() {
   const router = useRouter();
@@ -74,29 +22,6 @@ export default function HomePage() {
   const [activeSection, setActiveSection] = useState('about');
   const [projectModalOpen, setProjectModalOpen] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
-  const [serviceIndex, setServiceIndex] = useState(0);
-  const [mobileServiceIndex, setMobileServiceIndex] = useState(0);
-  const [touchStartX, setTouchStartX] = useState<number | null>(null);
-  const [mobileProjectIndex, setMobileProjectIndex] = useState(0);
-  const [projectTouchStartX, setProjectTouchStartX] = useState<number | null>(null);
-  const activeService = services[serviceIndex];
-  const serviceVisuals: Record<string, { className: string; imageSrc?: string; imageAlt?: string }> = {
-    web: { className: 'art-gradient-dots', imageSrc: '/visuals/service-web.jpg', imageAlt: 'Web systems dashboard preview' },
-    mobile: { className: 'art-gradient-rainbow', imageSrc: '/visuals/service-mobile.jpg', imageAlt: 'Mobile application preview' },
-    iot: { className: 'art-teal', imageSrc: '/visuals/service-iot.jpg', imageAlt: 'IoT sensor device' },
-    robotics: { className: 'art-gradient-purple', imageSrc: '/visuals/service-robotics.jpg', imageAlt: 'Robotics arm in lab' },
-  };
-
-  const heroRef = useRef<HTMLDivElement | null>(null);
-  const marketplaceRef = useRef<HTMLDivElement | null>(null);
-
-  const { scrollY } = useScroll();
-  const heroParallaxY = useTransform(scrollY, [0, 600], [0, -80]);
-
-  const { scrollYProgress: marketplaceProgress } = useScroll({ target: marketplaceRef, offset: ['start end', 'end start'] });
-  const stickyScale = useSpring(useTransform(marketplaceProgress, [0, 0.5, 1], [0.94, 1, 0.97]), { damping: 34, stiffness: 320 });
-  const stickyY = useTransform(marketplaceProgress, [0, 1], [36, -24]);
-  const stickyOpacity = useTransform(marketplaceProgress, [0, 0.12, 1], [0.35, 1, 0.9]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -105,40 +30,11 @@ export default function HomePage() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => {
-    const onResize = () => {
-      if (window.innerWidth > 900) {
-        setMobileNavOpen(false);
-      }
-    };
-    window.addEventListener('resize', onResize, { passive: true });
-    return () => window.removeEventListener('resize', onResize);
-  }, []);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      { threshold: 0.35 },
-    );
-
-    sectionIds.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
   const goToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     trackEvent({ name: 'nav_click', metadata: { section: id } });
     setMobileNavOpen(false);
+    setActiveSection(id);
   };
 
   const nextMobileService = () => setMobileServiceIndex((prev) => (prev + 1) % services.length);
