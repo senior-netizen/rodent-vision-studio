@@ -11,10 +11,11 @@ export default function LabDetailPage({ params }: { params: { slug: string } }) 
 
   return (
     <main style={{ maxWidth: 900, margin: '0 auto', padding: '6rem 1rem 2rem' }}>
-      <h1 style={{ fontFamily: 'var(--font-syne)', marginBottom: '1rem' }}>{lab.title}</h1>
-      <p><strong>Concept:</strong> {lab.concept}</p>
-      <p><strong>What we are testing:</strong> {lab.testing}</p>
-      <p><strong>Future application:</strong> {lab.futureApplication}</p>
+      <h1 style={{ fontFamily: 'var(--font-syne)', marginBottom: '1rem' }}>{lab.name}</h1>
+      <p><strong>Description:</strong> {lab.description}</p>
+      <p><strong>Status:</strong> {lab.status}</p>
+      <p><strong>Domains:</strong> {lab.domains.join(' · ')}</p>
+      <p><strong>Why this lab:</strong> {lab.why}</p>
     </main>
   );
 }

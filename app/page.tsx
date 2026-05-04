@@ -341,7 +341,7 @@ export default function HomePage() {
         <motion.div style={{ textAlign: 'center', marginBottom: '3rem' }} data-reveal data-reveal-direction="left" data-reveal-delay="120"><div style={{ fontSize: 12, fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', color: 'var(--teal)', marginBottom: '0.5rem' }}>PROJECTS</div><h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(32px,4vw,50px)', fontWeight: 800, letterSpacing: '-1.5px' }}>Our work is deployed in real environments.</h2></motion.div>
         <div className="gallery-grid gallery-grid-desktop">
           {projects.map((project) => (
-            <motion.button key={project.id} className="g-card" whileHover={{ scale: 1.04, y: -6 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.4, ease: easeCurve }} onClick={() => router.push(`/projects/${project.id}`)} style={{ border: 'none' }}>
+            <motion.button key={project.slug} className="g-card" whileHover={{ scale: 1.04, y: -6 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.4, ease: easeCurve }} onClick={() => router.push(`/projects/${project.slug}`)} style={{ border: 'none' }}>
               <div className="g-card-media">
                 <Image
                   src={project.preview}
@@ -351,7 +351,7 @@ export default function HomePage() {
                   className="g-card-image"
                 />
               </div>
-              <div className="featured-overlay"><span className="name">{project.name}</span><div className="source">{projectCaseStudiesById[project.id]?.problem ?? project.category}</div></div>
+              <div className="featured-overlay"><span className="name">{project.name}</span><div className="source">{projectCaseStudiesById[project.id]?.problem ?? project.problem}</div></div>
             </motion.button>
           ))}
           <motion.div className="g-card featured art-orange" whileHover={{ scale: 1.03 }} transition={{ duration: 0.6, ease: easeCurve }}>
@@ -367,12 +367,12 @@ export default function HomePage() {
         >
           <button className="gallery-carousel-arrow gallery-carousel-arrow-left" type="button" onClick={prevMobileProject} aria-label="Previous project">←</button>
           <motion.button
-            key={projects[mobileProjectIndex].id}
+            key={projects[mobileProjectIndex].slug}
             className="g-card g-card-mobile"
             initial={{ opacity: 0.7, x: 24 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.35, ease: easeCurve }}
-            onClick={() => router.push(`/projects/${projects[mobileProjectIndex].id}`)}
+            onClick={() => router.push(`/projects/${projects[mobileProjectIndex].slug}`)}
             style={{ border: 'none', width: '100%' }}
           >
             <div className="g-card-media g-card-media-mobile">
@@ -386,7 +386,7 @@ export default function HomePage() {
             </div>
             <div className="featured-overlay">
               <span className="name">{projects[mobileProjectIndex].name}</span>
-              <div className="source">{projectCaseStudiesById[projects[mobileProjectIndex].id]?.problem ?? projects[mobileProjectIndex].category}</div>
+              <div className="source">{projectCaseStudiesById[projects[mobileProjectIndex].id]?.problem ?? projects[mobileProjectIndex].problem}</div>
             </div>
           </motion.button>
           <button className="gallery-carousel-arrow gallery-carousel-arrow-right" type="button" onClick={nextMobileProject} aria-label="Next project">→</button>
@@ -399,8 +399,8 @@ export default function HomePage() {
           {labs.map((lab) => (
             <motion.div key={lab.slug} data-reveal data-reveal-stagger="80">
               <Link href={`/labs/${lab.slug}`} style={{ border: '1px solid var(--border)', borderRadius: 12, padding: '1rem', textDecoration: 'none', color: 'inherit', display: 'block', transition: 'transform 0.3s ease, box-shadow 0.3s ease' }}>
-                <strong>{lab.title}</strong>
-                <p style={{ color: 'var(--mid)', fontSize: 14 }}>{lab.concept}</p>
+                <strong>{lab.name}</strong>
+                <p style={{ color: 'var(--mid)', fontSize: 14 }}>{lab.description}</p>
               </Link>
             </motion.div>
           ))}

@@ -65,9 +65,9 @@ export function SelectedSystemsSection() {
           className="space-y-1"
         >
           {projects.map((project, index) => (
-            <motion.div key={project.id} variants={staggerChild}>
+            <motion.div key={project.slug} variants={staggerChild}>
               <Link
-                href={`/projects/${project.id}`}
+                href={`/projects/${project.slug}`}
                 className="group relative block overflow-hidden"
               >
                 {/* Hover background with preview image */}
@@ -110,7 +110,7 @@ export function SelectedSystemsSection() {
 
                   {/* Role */}
                   <p className="text-body text-sm md:w-52 lg:w-64">
-                    {projectCaseStudiesById[project.id]?.role ?? project.category}
+                    {projectCaseStudiesById[project.id]?.role ?? project.outcome}
                   </p>
 
                   {/* Category */}

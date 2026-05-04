@@ -31,11 +31,12 @@ export type PreviewState = {
   updatedAt: string;
 };
 
-export type ProjectConfig = {
+export interface ProjectConfig {
   id: string;
   slug: string;
   name: string;
   category: string;
+  color: string;
   role: string;
   url: string;
   links: {
@@ -73,11 +74,12 @@ export type ProjectConfig = {
     timeline: string;
     primaryKpi: string;
   };
-};
+}
 
-export const projectConfigs: ProjectConfig[] = [
+export const projectConfigs = [
   {
     id: 'jofe-platform',
+    color: '#1D4ED8',
     slug: 'job-opportunities-for-everyone-platform',
     name: 'Job Opportunities For Everyone',
     category: 'Employment Platform',
@@ -115,6 +117,7 @@ export const projectConfigs: ProjectConfig[] = [
   },
   {
     id: 'feel-home',
+    color: '#0F766E',
     slug: 'feel-at-home',
     category: 'Property Platform',
     role: 'Platform Engineering',
@@ -152,6 +155,7 @@ export const projectConfigs: ProjectConfig[] = [
   },
   {
     id: 'shedsense-grid',
+    color: '#7C3AED',
     slug: 'shedsense-grid',
     category: 'Telemetry Platform',
     role: 'Distributed Systems Engineering',
@@ -189,6 +193,7 @@ export const projectConfigs: ProjectConfig[] = [
   },
   {
     id: 'ar-experience',
+    color: '#DB2777',
     slug: 'ar-by-rodent',
     category: 'AR Experience',
     role: 'Interactive Product Engineering',
@@ -226,6 +231,7 @@ export const projectConfigs: ProjectConfig[] = [
   },
   {
     id: 'precise-locations-lib',
+    color: '#D97706',
     slug: 'precise-locations',
     category: 'Developer Tooling',
     role: 'Library Architecture + Release Engineering',
@@ -264,6 +270,7 @@ export const projectConfigs: ProjectConfig[] = [
   },
   {
     id: 'express-energy',
+    color: '#DC2626',
     slug: 'express-energy',
     name: 'Express Energy Service Station',
     category: 'Fuel Retail Platform',
@@ -301,7 +308,9 @@ export const projectConfigs: ProjectConfig[] = [
       primaryKpi: 'Daily-updated fuel prices visible to drivers in Masvingo.',
     },
   },
-];
+] satisfies ProjectConfig[];
+
+export type Project = (typeof projectConfigs)[number];
 
 export const projectById = Object.fromEntries(
   projectConfigs
@@ -311,9 +320,8 @@ export const projectById = Object.fromEntries(
 
 export const projectIdBySlug = Object.fromEntries(
   projectConfigs
-    .filter((project): project is ProjectConfig & { slug: string } => Boolean(project.slug))
+    .filter((project) => Boolean(project.slug))
     .map((project) => [project.slug, project.id]),
 ) as Record<string, ProjectConfig['id']>;
 
-export type Project = ProjectConfig;
-export const projects = projectConfigs;
+export const projects: Project[] = projectConfigs;
