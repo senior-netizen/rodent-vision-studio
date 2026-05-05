@@ -13,11 +13,22 @@ export default function AdminLoginPage() {
   const [message, setMessage] = useState<{ kind: 'error' | 'info'; text: string } | null>(null);
 
   useEffect(() => {
+    async function redirectIfAdmin(session: Awaited<ReturnType<typeof supabase.auth.getSession>>['data']['session']) {
+      if (!session) return;
+      const { data } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', session.user.id)
+        .eq('role', 'admin')
+        .maybeSingle();
+      if (data) router.replace('/admin');
+    }
+
     const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
-      if (session) router.replace('/admin');
+      redirectIfAdmin(session);
     });
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) router.replace('/admin');
+      redirectIfAdmin(data.session);
     });
     return () => sub.subscription.unsubscribe();
   }, [router]);
