@@ -1,4 +1,4 @@
-import assert from 'node:assert/strict';
+import * as assert from 'node:assert/strict';
 import test from 'node:test';
 
 import {
@@ -20,7 +20,7 @@ function expectInvalid(url: string): void {
   assert.equal(result.ok, false, `expected URL to be rejected: ${url}`);
 
   if (!result.ok) {
-    assert.equal(result.code, INVALID_PREVIEW_SOURCE_URL);
+    assert.equal((result as { code: string }).code, INVALID_PREVIEW_SOURCE_URL);
   }
 }
 
@@ -61,6 +61,6 @@ test('fails closed in production when host allowlist is unset', () => {
 
   assert.equal(result.ok, false);
   if (!result.ok) {
-    assert.equal(result.code, INVALID_PREVIEW_SOURCE_URL);
+    assert.equal((result as { code: string }).code, INVALID_PREVIEW_SOURCE_URL);
   }
 });
