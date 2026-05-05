@@ -2,6 +2,35 @@ import { NextRequest, NextResponse } from 'next/server';
 
 type SupabaseUser = { id: string };
 
+type SessionLike = { access_token?: string };
+
+function decodeCookiePayload(value: string): unknown {
+  const decoded = decodeURIComponent(value);
+
+  if (decoded.startsWith('base64-')) {
+    const payload = decoded.slice('base64-'.length);
+    return JSON.parse(Buffer.from(payload, 'base64').toString('utf8'));
+  }
+
+  return JSON.parse(decoded);
+}
+
+function extractAccessToken(payload: unknown): string | null {
+  if (Array.isArray(payload) && payload.length > 0) {
+    const first = payload[0];
+    if (typeof first === 'string') return first;
+    if (first && typeof first === 'object' && typeof (first as SessionLike).access_token === 'string') {
+      return (first as SessionLike).access_token ?? null;
+    }
+  }
+
+  if (payload && typeof payload === 'object' && typeof (payload as SessionLike).access_token === 'string') {
+    return (payload as SessionLike).access_token ?? null;
+  }
+
+  return null;
+}
+
 function readSupabaseSessionCookie(request: NextRequest): string | null {
   const authCookies = request.cookies
     .getAll()
@@ -10,14 +39,17 @@ function readSupabaseSessionCookie(request: NextRequest): string | null {
 
   if (authCookies.length === 0) return null;
 
-  const raw = authCookies.map((cookie) => cookie.value).join('');
+  const combined = authCookies.map((cookie) => cookie.value).join('');
+  const candidates = [combined, ...authCookies.map((cookie) => cookie.value)];
 
-  try {
-    const parsed = JSON.parse(decodeURIComponent(raw));
-    if (Array.isArray(parsed) && typeof parsed[0] === 'string') return parsed[0];
-    if (parsed && typeof parsed === 'object' && typeof parsed.access_token === 'string') return parsed.access_token;
-  } catch {
-    return null;
+  for (const value of candidates) {
+    try {
+      const payload = decodeCookiePayload(value);
+      const token = extractAccessToken(payload);
+      if (token) return token;
+    } catch {
+      continue;
+    }
   }
 
   return null;
