@@ -449,8 +449,8 @@ export default function HomePage() {
           {labs.map((lab) => (
             <motion.div key={lab.slug} variants={staggerItem}>
               <Link href={`/labs/${lab.slug}`} style={{ border: '1px solid var(--border)', borderRadius: 12, padding: '1rem', textDecoration: 'none', color: 'inherit', display: 'block', transition: 'transform 0.3s ease, box-shadow 0.3s ease' }}>
-                <strong>{lab.title}</strong>
-                <p style={{ color: 'var(--mid)', fontSize: 14 }}>{lab.concept}</p>
+                <strong>{lab.name}</strong>
+                <p style={{ color: 'var(--mid)', fontSize: 14 }}>{lab.description}</p>
               </Link>
             </motion.div>
           ))}
