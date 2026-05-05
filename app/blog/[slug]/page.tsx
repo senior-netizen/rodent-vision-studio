@@ -2,17 +2,42 @@
 
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { blogBySlug, blogPosts } from '@/data/blog';
+import { blogBySlug, blogPosts as staticPosts } from '@/data/blog';
+import { supabase } from '@/lib/supabase';
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
-export default function BlogDetailPage({ params }: { params: { slug: string } }) {
-  if (!(params.slug in blogBySlug)) notFound();
+type DisplayPost = { slug: string; title: string; excerpt: string; body: string; publishedAt: string };
 
-  const post = blogBySlug[params.slug as keyof typeof blogBySlug];
-  const currentIndex = blogPosts.findIndex((p) => p.slug === params.slug);
-  const nextPost = blogPosts[(currentIndex + 1) % blogPosts.length];
+export default function BlogDetailPage({ params }: { params: { slug: string } }) {
+  const staticFallback = (params.slug in blogBySlug)
+    ? (blogBySlug as Record<string, { slug: string; title: string; excerpt: string; body: string; publishedAt: string }>)[params.slug]
+    : null;
+  const [post, setPost] = useState<DisplayPost | null>(staticFallback);
+  const [allPosts, setAllPosts] = useState<DisplayPost[]>(staticPosts as unknown as DisplayPost[]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      const [{ data: one }, { data: all }] = await Promise.all([
+        supabase.from('blog_posts').select('slug, title, excerpt, body, published_at').eq('slug', params.slug).eq('published', true).maybeSingle(),
+        supabase.from('blog_posts').select('slug, title, excerpt, body, published_at').eq('published', true).order('published_at', { ascending: false }),
+      ]);
+      if (one) setPost({ slug: one.slug, title: one.title, excerpt: one.excerpt, body: one.body, publishedAt: one.published_at });
+      if (all && all.length) setAllPosts(all.map((p) => ({ slug: p.slug, title: p.title, excerpt: p.excerpt, body: p.body, publishedAt: p.published_at })));
+      setLoading(false);
+    })();
+  }, [params.slug]);
+
+  if (!post && !loading) notFound();
+  if (!post) {
+    return <main style={{ minHeight: '100vh', display: 'grid', placeItems: 'center', color: 'var(--mid)' }}>Loading…</main>;
+  }
+  const currentIndex = allPosts.findIndex((p) => p.slug === params.slug);
+  const nextPost = allPosts[(currentIndex + 1) % Math.max(allPosts.length, 1)] ?? post;
+
 
   return (
     <main style={{ minHeight: '100vh', background: '#fff' }}>

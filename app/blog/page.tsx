@@ -1,8 +1,10 @@
 'use client';
 
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { blogPosts } from '@/data/blog';
+import { blogPosts as staticPosts, type BlogPost } from '@/data/blog';
+import { supabase } from '@/lib/supabase';
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -15,7 +17,24 @@ const staggerItem = {
   show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: easeCurve } },
 };
 
+type DisplayPost = { slug: string; title: string; excerpt: string; publishedAt: string };
+
 export default function BlogPage() {
+  const [blogPosts, setBlogPosts] = useState<DisplayPost[]>(staticPosts as unknown as DisplayPost[]);
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await supabase
+        .from('blog_posts')
+        .select('slug, title, excerpt, published_at')
+        .eq('published', true)
+        .order('published_at', { ascending: false });
+      if (data && data.length) {
+        setBlogPosts(data.map((p) => ({ slug: p.slug, title: p.title, excerpt: p.excerpt, publishedAt: p.published_at })));
+      }
+    })();
+  }, []);
+
   return (
     <main style={{ minHeight: '100vh', background: '#fff' }}>
       {/* Header */}
