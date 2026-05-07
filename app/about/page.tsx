@@ -7,7 +7,7 @@ export const metadata = {
 };
 
 const team = [
-  { name: 'Anesu Mudzviti', role: 'Founder & Systems Engineer', bio: 'Leads delivery across product architecture, infrastructure, and client execution for high-impact deployments.', linkedin: 'https://www.linkedin.com' },
+  { name: 'Anesu Ndava', role: 'Founder & Systems Engineer', bio: 'Leads delivery across product architecture, infrastructure, and client execution for high-impact deployments.', linkedin: 'https://www.linkedin.com' },
   { name: 'Platform Engineering Team', role: 'Web, Mobile & Backend', bio: 'Designs robust APIs, dashboards, and mobile workflows built for operational reliability and growth.', linkedin: 'https://www.linkedin.com' },
   { name: 'Embedded & IoT Team', role: 'Field Systems', bio: 'Builds telemetry, automation, and edge monitoring pipelines that connect physical infrastructure to decision systems.', linkedin: 'https://www.linkedin.com' },
 ];
