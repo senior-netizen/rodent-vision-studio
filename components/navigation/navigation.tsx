@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const navLinks = [
+  { label: 'About', href: '/about' },
   { label: 'Clients', href: '#clients' },
   { label: 'Impact', href: '#impact' },
   { label: 'Projects', href: '#projects' },
