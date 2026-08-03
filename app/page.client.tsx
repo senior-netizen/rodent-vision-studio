@@ -194,6 +194,7 @@ export default function HomePage() {
             ))}
           </div>
           <div className="nav-actions">
+            <button className="nav-icon" type="button" onClick={() => router.push('/about')} aria-label="Go to about" style={{ fontSize: 12, fontWeight: 600, width: 'auto', padding: '0 12px' }}>About</button>
             <button className="nav-icon" type="button" onClick={() => router.push('/blog')} aria-label="Go to blog" style={{ fontSize: 12, fontWeight: 600 }}>Blog</button>
             <button className="nav-icon" type="button" onClick={() => router.push('/contact')} aria-label="Go to contact" style={{ fontSize: 12, fontWeight: 600, width: 'auto', padding: '0 12px' }}>Contact</button>
           </div>
@@ -217,6 +218,7 @@ export default function HomePage() {
               </button>
             ))}
             <div className="mobile-nav-actions">
+              <button type="button" onClick={() => { setMobileNavOpen(false); router.push('/about'); }}>About</button>
               <button type="button" onClick={() => { setMobileNavOpen(false); router.push('/blog'); }}>Blog</button>
               <button type="button" onClick={() => { setMobileNavOpen(false); router.push('/contact'); }}>Contact</button>
             </div>
