@@ -30,9 +30,9 @@ test('uses the configured site origin', () => {
   );
 });
 
-test('rejects a missing production site URL', () => {
+test('uses the canonical production origin when unconfigured', () => {
   withEnvironment({ NODE_ENV: 'production' }, () => {
-    assert.throws(() => getSiteOrigin(), /required in production/);
+    assert.equal(getSiteOrigin(), 'https://rodent.co.zw');
   });
 });
 
