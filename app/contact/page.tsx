@@ -5,17 +5,17 @@ import { contact, contactEmailHref } from '@/data/contact';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Contact Rodent, Inc. — Start Your Project',
+  title: 'Contact Rodent — Start Your Project',
   description:
-    'Tell us about your web, mobile, IoT, robotics, or enterprise project. Rodent, Inc. responds within one business day.',
+    'Tell us about your web, mobile, IoT, robotics, or enterprise project. Rodent responds within one business day.',
   alternates: { canonical: '/contact' },
   openGraph: {
-    title: 'Contact Rodent, Inc. — Start Your Project',
+    title: 'Contact Rodent — Start Your Project',
     description:
-      'Tell us about your web, mobile, IoT, robotics, or enterprise project. Rodent, Inc. responds within one business day.',
+      'Tell us about your web, mobile, IoT, robotics, or enterprise project. Rodent responds within one business day.',
     type: 'website',
     url: '/contact',
-    images: [{ url: '/rodent-logo.png', alt: 'Rodent, Inc. logo' }],
+    images: [{ url: '/rodent-logo.png', alt: 'Rodent logo' }],
   },
 };
 
@@ -77,6 +77,9 @@ export default function ContactPage() {
                 <a href={contact.phone.href} style={{ color: 'inherit', textDecoration: 'none' }}>
                   Call · {contact.phone.display}
                 </a>
+              </li>
+              <li style={{ color: 'var(--mid)', lineHeight: 1.5 }}>
+                Company: Squirrellabs Technologies (Private) Limited.
               </li>
             </ul>
           </div>

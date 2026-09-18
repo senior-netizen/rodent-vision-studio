@@ -16,6 +16,16 @@ import { trackEvent } from '@/lib/analytics/track';
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const sectionIds = ['about', 'services', 'projects', 'contact', 'labs', 'philosophy'];
+const founders = [
+  {
+    name: 'Anesu Prince Ndava',
+    summary: 'Software development and electronic engineering, focused on digital infrastructure, APIs, and connected systems.',
+  },
+  {
+    name: 'Vulan Anotidaishe K Machiri',
+    summary: 'Millwright work, industrial maintenance, and industrial electrical systems, bringing a practical engineering perspective.',
+  },
+] as const;
 
 const heroContainer = { hidden: {}, show: { transition: { staggerChildren: 0.12, delayChildren: 0.2 } } };
 const heroItem = { hidden: { opacity: 0, y: 50, filter: 'blur(8px)' }, show: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 1, ease: easeCurve } } };
@@ -178,8 +188,8 @@ export default function HomePage() {
         transition={{ duration: 0.6, ease: easeCurve }}
       >
         <div role="button" tabIndex={0} onClick={() => goToSection('about')} onKeyDown={(e) => e.key === 'Enter' && goToSection('about')} className="nav-logo" style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>
-          <Image src="/rodent-logo.png" alt="Rodent, Inc. logo" width={28} height={28} style={{ borderRadius: '50%' }} />
-          Rodent, Inc.
+          <Image src="/rodent-logo.png" alt="Rodent logo" width={28} height={28} style={{ borderRadius: '50%' }} />
+          Rodent
         </div>
         <div className="nav-desktop-group">
           <div className="nav-links">
@@ -231,8 +241,11 @@ export default function HomePage() {
         <div className="hero-content">
           <motion.h1 variants={heroItem}>We build infrastructure that deploys.</motion.h1>
           <motion.p variants={heroItem}>
-            From fintech rails to IoT sensor grids — Rodent, Inc. engineers production-ready systems for African enterprises,
+            From fintech rails to IoT sensor grids — Rodent engineers production-ready systems for African enterprises,
             property platforms, and emerging-market operators.
+          </motion.p>
+          <motion.p variants={heroItem} className="hero-company-line">
+            A division of Squirrellabs Technologies (Private) Limited.
           </motion.p>
           <motion.div variants={heroItem} style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap', justifyContent: 'center', marginTop: '0.4rem' }}>
             <button className="btn-primary" type="button" onClick={() => setProjectModalOpen(true)}>
@@ -283,11 +296,12 @@ export default function HomePage() {
 
       <motion.div className="section-wrap" style={{ background: '#fafaf8', padding: '60px 2rem' }} {...revealMotion} id="philosophy">
         <div className="gateway">
-          <div className="gateway-label">ABOUT RODENT, INC.</div>
+          <div className="gateway-label">ABOUT RODENT</div>
           <div className="gateway-inner">
             <div className="gateway-text">
               <span className="gateway-bubble">Infrastructure Engineering</span>
-              <h2>Rodent, Inc. builds infrastructure-level systems across software and hardware domains.</h2>
+              <h2>Rodent is the software and hardware engineering division of Squirrellabs Technologies (Private) Limited.</h2>
+              <p className="gateway-about-copy">We design and build web platforms, mobile applications, IoT systems, and robotics solutions, bringing software development and practical engineering together to solve real business problems.</p>
               <div className="gateway-controls">
                 <button className="watch-btn" type="button" onClick={() => goToSection('services')}>Operate</button>
                 <button className="ctrl-btn" type="button" onClick={() => setServiceIndex((prev) => (prev - 1 + services.length) % services.length)}>←</button>
@@ -314,6 +328,24 @@ export default function HomePage() {
           </div>
         </div>
       </motion.div>
+
+      <motion.section className="home-founders" aria-labelledby="home-founders-title" {...revealMotion}>
+        <div className="home-founders-heading">
+          <p className="eyebrow">Meet the founders</p>
+          <h2 id="home-founders-title">Software, electronics, and industrial engineering.</h2>
+          <p>Squirrellabs Technologies (Private) Limited was founded by Anesu Prince Ndava and Vulan Anotidaishe K Machiri.</p>
+        </div>
+        <div className="founders-grid">
+          {founders.map((founder) => (
+            <article className="founder-card" key={founder.name}>
+              <p className="founder-role">Co-Founder</p>
+              <h3>{founder.name}</h3>
+              <p>{founder.summary}</p>
+            </article>
+          ))}
+        </div>
+        <Link className="founders-link" href="/about#founders">Meet the founding team →</Link>
+      </motion.section>
 
       <motion.div className="marketplace-wrap" {...revealMotion} id="services" ref={marketplaceRef}>
         <div className="marketplace-inner">
@@ -487,6 +519,7 @@ export default function HomePage() {
               <li>✉ <a href={contactEmailHref} style={{ color: 'inherit' }}>{contact.email}</a></li>
               <li>WhatsApp · <a href={contact.whatsapp.href} target="_blank" rel="noreferrer noopener" style={{ color: 'inherit' }}>{contact.whatsapp.display}</a></li>
               <li>Call · <a href={contact.phone.href} style={{ color: 'inherit' }}>{contact.phone.display}</a></li>
+              <li className="company-identification">Company: Squirrellabs Technologies (Private) Limited.</li>
             </ul>
           </div>
           <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 22, padding: '2rem' }}>
@@ -502,7 +535,7 @@ export default function HomePage() {
         transition={{ duration: 1, ease: easeCurve }}
       >
         <h2>Build systems that operate at scale.</h2>
-        <p>Rodent, Inc. delivers infrastructure that works.</p>
+        <p>Rodent delivers infrastructure that works.</p>
         <button className="footer-btn" type="button" onClick={() => setProjectModalOpen(true)}>Start a Project</button>
         <div className="footer-links">
           <Link href="/privacy">Privacy</Link>
@@ -513,7 +546,10 @@ export default function HomePage() {
           <Link href="/projects/shedsense-grid">Projects</Link>
           <Link href="/blog">Blog</Link>
         </div>
-        <div style={{ marginTop: '2rem', fontSize: 12, color: 'rgba(255,255,255,0.2)' }}>© 2026 Rodent, Inc. All rights reserved.</div>
+        <div className="footer-legal">
+          <span>Rodent is a division of Squirrellabs Technologies (Private) Limited.</span>
+          <span>© {new Date().getFullYear()} Squirrellabs Technologies (Private) Limited. All rights reserved.</span>
+        </div>
       </motion.footer>
     </motion.main>
   );

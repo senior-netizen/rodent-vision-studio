@@ -82,10 +82,10 @@ export async function GET() {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Rodent, Inc. — Journal</title>
+    <title>Rodent — Journal</title>
     <link>${siteUrl}/blog</link>
     <atom:link href="${siteUrl}/blog/rss.xml" rel="self" type="application/rss+xml" />
-    <description>Field notes on engineering production-grade web, mobile, IoT, and robotics systems from the Rodent, Inc. team.</description>
+    <description>Field notes on engineering production-grade web, mobile, IoT, and robotics systems from the Rodent team.</description>
     <language>en</language>
     <lastBuildDate>${lastBuild}</lastBuildDate>
 ${items}

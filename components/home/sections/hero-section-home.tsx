@@ -17,7 +17,7 @@ export function HomeHeroSection({ onStartProject, onViewWork }: { onStartProject
     <motion.div className="hero" ref={heroRef} variants={heroContainer} initial="hidden" animate="show" id="about">
       <div className="hero-content">
         <motion.h1 variants={heroItem}>We build infrastructure that deploys.</motion.h1>
-        <motion.p variants={heroItem}>From fintech rails to IoT sensor grids — Rodent, Inc. engineers production-ready systems.</motion.p>
+        <motion.p variants={heroItem}>From fintech rails to IoT sensor grids — Rodent engineers production-ready systems.</motion.p>
         <motion.div variants={heroItem} style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap', justifyContent: 'center', marginTop: '0.4rem' }}>
           <button className="btn-primary" type="button" onClick={onStartProject}>Start a Project</button>
           <button className="btn-ghost" type="button" onClick={onViewWork} style={{ border: '1px solid var(--border)', borderRadius: 100, padding: '12px 28px', background: '#fff' }}>View Our Work</button>

@@ -2,17 +2,17 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'About Rodent, Inc. — Mission, Team, and Africa Service Footprint',
+  title: 'About Rodent — Mission, Founders, and Africa Service Footprint',
   description:
-    'Learn how Rodent, Inc. builds production-grade web, mobile, IoT, and robotics systems for African operators, with team profiles, values, footprint, and milestones.',
+    'Learn about Rodent, the software and hardware engineering division of Squirrellabs Technologies (Private) Limited, and meet its founders.',
   alternates: { canonical: '/about' },
   openGraph: {
-    title: 'About Rodent, Inc. — Mission, Team, and Africa Service Footprint',
+    title: 'About Rodent — Mission, Founders, and Africa Service Footprint',
     description:
-      'Meet the Rodent, Inc. team and see how we deploy reliable digital infrastructure across Africa.',
+      'Meet the founders behind Rodent and see how the division deploys reliable digital infrastructure across Africa.',
     type: 'website',
     url: '/about',
-    images: [{ url: '/rodent-logo.png', alt: 'Rodent, Inc. logo' }],
+    images: [{ url: '/rodent-logo.png', alt: 'Rodent logo' }],
   },
 };
 
@@ -20,7 +20,6 @@ type TeamMember = {
   name: string;
   role: string;
   bio: string;
-  linkedinUrl: string;
 };
 
 type Milestone = {
@@ -29,24 +28,16 @@ type Milestone = {
   description: string;
 };
 
-const team: TeamMember[] = [
+const founders: TeamMember[] = [
   {
-    name: 'Anesu Ndava',
-    role: 'Founder & Systems Engineer',
-    bio: 'Leads product architecture, infrastructure design, and deployment strategy for operators that need dependable systems in the field.',
-    linkedinUrl: 'https://www.linkedin.com/in/anesu-ndava',
+    name: 'Anesu Prince Ndava',
+    role: 'Co-Founder',
+    bio: 'Anesu brings a background in software development and electronic engineering, with a focus on digital infrastructure, APIs, and connected systems. His project portfolio includes ShedSense, Precise Locations, AR by Rodent, and Feel At Home, spanning energy information, developer tools, augmented reality, and property technology.',
   },
   {
-    name: 'Platform Engineering Team',
-    role: 'Web, Mobile & Backend Systems',
-    bio: 'Builds secure APIs, internal tools, dashboards, and mobile workflows with clear operational ownership from prototype to production.',
-    linkedinUrl: 'https://www.linkedin.com/company/rodent-systems',
-  },
-  {
-    name: 'Field Systems Team',
-    role: 'IoT, Robotics & Edge Infrastructure',
-    bio: 'Connects sensors, robotics workflows, and field telemetry to resilient monitoring layers for real-world African operating environments.',
-    linkedinUrl: 'https://www.linkedin.com/company/rodent-systems',
+    name: 'Vulan Anotidaishe K Machiri',
+    role: 'Co-Founder',
+    bio: 'Vulan brings a background in millwright work, industrial maintenance, and industrial electrical systems. His experience adds a practical engineering perspective to the founding team, complementing its software and electronics capabilities.',
   },
 ];
 
@@ -61,7 +52,7 @@ const values = [
 const milestones: Milestone[] = [
   {
     year: '2023',
-    title: 'Rodent, Inc. founded',
+    title: 'Rodent engineering work begins',
     description:
       'Formed to help African businesses turn fragile software ideas into robust web, mobile, and connected infrastructure.',
   },
@@ -98,11 +89,11 @@ export default function AboutPage() {
   return (
     <main className="about-page">
       <section className="about-hero" aria-labelledby="about-title">
-        <p className="eyebrow">About Rodent, Inc.</p>
+        <p className="eyebrow">About Rodent</p>
         <h1 id="about-title">Engineering digital infrastructure for African operators.</h1>
         <div className="about-story">
           <p>
-            Rodent, Inc. was founded to close the gap between ambitious digital ideas and systems that survive real production constraints. We build for teams that need software, connected devices, and operational tooling to work reliably outside ideal lab conditions.
+            Rodent is the software and hardware engineering division of Squirrellabs Technologies (Private) Limited. We design and build web platforms, mobile applications, IoT systems, and robotics solutions, bringing software development and practical engineering together to solve real business problems.
           </p>
           <p>
             Our mission is to engineer practical web, mobile, IoT, and robotics platforms for African businesses, institutions, and field teams. That means pairing careful architecture with deployment discipline, security-minded defaults, and long-term support.
@@ -118,20 +109,20 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="about-section" aria-labelledby="team-title">
+      <section className="about-section" id="founders" aria-labelledby="founders-title">
         <div className="section-heading">
-          <p className="eyebrow">Team</p>
-          <h2 id="team-title">Small senior teams, accountable delivery.</h2>
+          <p className="eyebrow">Meet the founders</p>
+          <h2 id="founders-title">A founding team grounded in software and practical engineering.</h2>
+          <p className="founders-intro">Squirrellabs Technologies (Private) Limited was founded by Anesu Prince Ndava and Vulan Anotidaishe K Machiri. Through Rodent, the team brings together software, electronics, and industrial engineering.</p>
         </div>
-        <div className="team-grid">
-          {team.map((member) => (
+        <div className="team-grid founders-grid-full">
+          {founders.map((member) => (
             <article className="team-card" key={member.name}>
               <div className="team-avatar" aria-hidden="true">{getInitials(member.name)}</div>
               <div>
                 <h3>{member.name}</h3>
                 <p className="team-role">{member.role}</p>
                 <p className="team-bio">{member.bio}</p>
-                <a href={member.linkedinUrl} target="_blank" rel="noreferrer">LinkedIn profile</a>
               </div>
             </article>
           ))}
@@ -154,7 +145,7 @@ export default function AboutPage() {
           <h2 id="footprint-title">Africa-focused service footprint.</h2>
         </div>
         <p>
-          Rodent, Inc. serves organizations building for African markets, with delivery patterns shaped around Southern Africa and remote-first collaboration across the continent. We support discovery, architecture, build, launch, and iteration for clients operating in Zimbabwe, South Africa, Zambia, Botswana, Kenya, Nigeria, Ghana, Rwanda, and adjacent regional markets.
+          Rodent serves organizations building for African markets, with delivery patterns shaped around Southern Africa and remote-first collaboration across the continent. We support discovery, architecture, build, launch, and iteration for clients operating in Zimbabwe, South Africa, Zambia, Botswana, Kenya, Nigeria, Ghana, Rwanda, and adjacent regional markets.
         </p>
         <div className="footprint-tags" aria-label="Representative service regions">
           {['Southern Africa', 'East Africa', 'West Africa', 'Remote-first delivery', 'Field deployments'].map((region) => <span key={region}>{region}</span>)}

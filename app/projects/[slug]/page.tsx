@@ -20,7 +20,7 @@ export function generateMetadata({ params }: RouteParams): Metadata {
   const project = projectById[projectId];
   const description = project.tagline || project.outcome || project.problem;
   return {
-    title: `${project.name} — ${project.category} | Rodent, Inc.`,
+    title: `${project.name} — ${project.category} | Rodent`,
     description,
     alternates: { canonical: `/projects/${project.slug}` },
     openGraph: {

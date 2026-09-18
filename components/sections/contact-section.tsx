@@ -72,6 +72,7 @@ export function ContactSection() {
                 <div className="flex flex-col gap-1 md:items-end">
                   <a href={contact.whatsapp.href} className="text-caption">WhatsApp · {contact.whatsapp.display}</a>
                   <a href={contact.phone.href} className="text-caption">Call · {contact.phone.display}</a>
+                  <span className="text-caption">Company: Squirrellabs Technologies (Private) Limited.</span>
                 </div>
               </div>
             </div>
@@ -81,10 +82,10 @@ export function ContactSection() {
         {/* Footer */}
         <div className="mt-20 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 md:flex-row">
           <span className="text-caption">
-            © {new Date().getFullYear()} Rodent, Inc.
+            © {new Date().getFullYear()} Squirrellabs Technologies (Private) Limited. All rights reserved.
           </span>
           <span className="text-caption">
-            Designed & engineered with precision
+            Rodent is a division of Squirrellabs Technologies (Private) Limited.
           </span>
         </div>
       </div>
