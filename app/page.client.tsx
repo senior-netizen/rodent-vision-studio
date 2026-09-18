@@ -11,6 +11,7 @@ import { projects } from '@/data/projects';
 import { projectCaseStudiesById } from '@/data/project-case-studies';
 import { labs } from '@/data/labs';
 import { services } from '@/data/services';
+import { contact, contactEmailHref } from '@/data/contact';
 import { trackEvent } from '@/lib/analytics/track';
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -483,9 +484,9 @@ export default function HomePage() {
               Share scope, budget, and timeline. We respond within one business day with an implementation path.
             </p>
             <ul style={{ listStyle: 'none', padding: 0, display: 'grid', gap: '0.65rem', fontSize: 14, color: 'rgba(255,255,255,0.75)' }}>
-              <li>✉ <a href="mailto:anesu@rodent.co.zw" style={{ color: 'inherit' }}>anesu@rodent.co.zw</a></li>
-              <li>WhatsApp · <a href="https://wa.me/263787008238" target="_blank" rel="noreferrer noopener" style={{ color: 'inherit' }}>+263 78 700 8238</a></li>
-              <li>Call · <a href="tel:+263785286530" style={{ color: 'inherit' }}>+263 785 286 530</a></li>
+              <li>✉ <a href={contactEmailHref} style={{ color: 'inherit' }}>{contact.email}</a></li>
+              <li>WhatsApp · <a href={contact.whatsapp.href} target="_blank" rel="noreferrer noopener" style={{ color: 'inherit' }}>{contact.whatsapp.display}</a></li>
+              <li>Call · <a href={contact.phone.href} style={{ color: 'inherit' }}>{contact.phone.display}</a></li>
             </ul>
           </div>
           <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 22, padding: '2rem' }}>
