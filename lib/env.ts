@@ -1,4 +1,9 @@
 import { z } from 'zod';
+import { contact } from '@/data/contact';
+
+// Local development can deliver to the public mailbox without extra setup.
+// Production must always provide CONTACT_TO_EMAIL explicitly.
+const DEVELOPMENT_CONTACT_TO_EMAIL = contact.email;
 
 const featureFlagSchema = z.enum(['1', '0', 'true', 'false']).optional();
 
@@ -67,7 +72,8 @@ function buildServerEnv(): ServerEnv {
   return {
     nodeEnv: env.NODE_ENV,
     resendApiKey: env.RESEND_API_KEY,
-    contactToEmail: env.CONTACT_TO_EMAIL ?? 'you@rodent.co.zw',
+    contactToEmail:
+      env.CONTACT_TO_EMAIL ?? (env.NODE_ENV === 'production' ? '' : DEVELOPMENT_CONTACT_TO_EMAIL),
     contactFromEmail: env.CONTACT_FROM_EMAIL ?? 'onboarding@resend.dev',
     cloudinary: {
       cloudName: env.CLOUDINARY_CLOUD_NAME ?? '',
@@ -105,6 +111,7 @@ export function assertProductionEnv(): void {
 
   if (env.features.contactForm) {
     requiredInProduction.push(['RESEND_API_KEY', env.resendApiKey]);
+    requiredInProduction.push(['CONTACT_TO_EMAIL', env.contactToEmail]);
   }
 
   const cloudinaryVars: Array<[key: string, value: string | undefined]> = [
@@ -126,6 +133,6 @@ export function assertProductionEnv(): void {
   const missing = requiredInProduction.filter(([, value]) => !value).map(([key]) => key);
 
   if (missing.length > 0) {
-    console.warn(`[env] Missing optional production environment variables: ${missing.join(', ')}. Related features will be disabled.`);
+    throw new Error(`[env] Missing required production environment variables: ${missing.join(', ')}.`);
   }
 }

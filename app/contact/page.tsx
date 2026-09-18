@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { ContactForm } from '@/components/contact/contact-form';
+import { contact, contactEmailHref } from '@/data/contact';
 
 import type { Metadata } from 'next';
 
@@ -63,18 +64,18 @@ export default function ContactPage() {
             </p>
             <ul style={{ display: 'grid', gap: '0.7rem', listStyle: 'none', padding: 0, fontSize: 14 }}>
               <li>
-                <a href="mailto:anesu@rodent.co.zw" style={{ color: 'inherit', textDecoration: 'none' }}>
-                  ✉ anesu@rodent.co.zw
+                <a href={contactEmailHref} style={{ color: 'inherit', textDecoration: 'none' }}>
+                  ✉ {contact.email}
                 </a>
               </li>
               <li>
-                <a href="https://wa.me/263787008238" target="_blank" rel="noreferrer noopener" style={{ color: 'inherit', textDecoration: 'none' }}>
-                  WhatsApp · +263 78 700 8238
+                <a href={contact.whatsapp.href} target="_blank" rel="noreferrer noopener" style={{ color: 'inherit', textDecoration: 'none' }}>
+                  WhatsApp · {contact.whatsapp.display}
                 </a>
               </li>
               <li>
-                <a href="tel:+253785286530" style={{ color: 'inherit', textDecoration: 'none' }}>
-                  Call · +253 785 286 530
+                <a href={contact.phone.href} style={{ color: 'inherit', textDecoration: 'none' }}>
+                  Call · {contact.phone.display}
                 </a>
               </li>
             </ul>

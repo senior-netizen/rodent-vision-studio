@@ -31,6 +31,10 @@ npm run typecheck  # tsc --noEmit
 
 ## Environment variables
 
+### Public contact details
+
+The canonical site domain is `rodent.co.zw`. Public inquiries use `anesu@rodent.co.zw`, telephone `+263 78 528 6530`, and WhatsApp `+263 78 700 8238`. These values are defined once in `data/contact.ts`; update that module rather than hard-coding contact details in components.
+
 Create a local `.env` from `.env.example` and configure the following variables:
 
 | Variable | Required | Description |
@@ -40,7 +44,7 @@ Create a local `.env` from `.env.example` and configure the following variables:
 | `FEATURE_CONTACT_FORM` | No (defaults to enabled) | Enables/disables contact form route (`true/false` or `1/0`). |
 | `FEATURE_AUTOMATION` | No | Toggle reserved for automation workflows (`true/false` or `1/0`). |
 | `RESEND_API_KEY` | Required when `FEATURE_CONTACT_FORM=true` in production | API key for outbound contact email delivery. |
-| `CONTACT_TO_EMAIL` | No | Destination mailbox for contact requests. |
+| `CONTACT_TO_EMAIL` | Required when `FEATURE_CONTACT_FORM=true` in production | Destination mailbox for contact requests. Development alone falls back to the canonical public address, `anesu@rodent.co.zw`. |
 | `CONTACT_FROM_EMAIL` | No | Sender address used for contact requests. |
 | `CLOUDINARY_CLOUD_NAME` | Conditionally required in production* | Cloudinary cloud account identifier. |
 | `CLOUDINARY_API_KEY` | Conditionally required in production* | Cloudinary API key. |
