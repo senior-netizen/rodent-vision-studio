@@ -12,28 +12,23 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: '/projects/job-opportunities-for-everyone-platform',
-        destination: '/projects/jofe-platform',
+        source: '/projects/jofe-platform',
+        destination: '/projects/job-opportunities-for-everyone-platform',
         permanent: true,
       },
       {
-        source: '/projects/feel-at-home',
-        destination: '/projects/feel-home',
+        source: '/projects/feel-home',
+        destination: '/projects/feel-at-home',
         permanent: true,
       },
       {
-        source: '/projects/shedsense',
-        destination: '/projects/shedsense-grid',
+        source: '/projects/ar-experience',
+        destination: '/projects/ar-by-rodent',
         permanent: true,
       },
       {
-        source: '/projects/ar-by-rodent',
-        destination: '/projects/ar-experience',
-        permanent: true,
-      },
-      {
-        source: '/projects/precise-locations',
-        destination: '/projects/precise-locations-lib',
+        source: '/projects/precise-locations-lib',
+        destination: '/projects/precise-locations',
         permanent: true,
       },
     ];
