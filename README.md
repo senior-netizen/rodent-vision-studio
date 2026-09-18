@@ -1,6 +1,6 @@
-# Rodent Vision Studio
+# Rodent, Inc.
 
-Production-facing portfolio for infrastructure systems delivery, built with **Next.js 14**, **TypeScript**, **Tailwind CSS**, **Framer Motion**, and **Three.js**.
+Production-facing portfolio for **Rodent, Inc.**, publicly available at [rodent.co.zw](https://rodent.co.zw), built with **Next.js 14**, **TypeScript**, **Tailwind CSS**, **Framer Motion**, and **Three.js**.
 
 ## Stack
 
@@ -40,6 +40,7 @@ Create a local `.env` from `.env.example` and configure the following variables:
 | Variable | Required | Description |
 | --- | --- | --- |
 | `NODE_ENV` | No (defaults to `development`) | Runtime mode (`development`, `test`, or `production`). |
+| `NEXT_PUBLIC_SITE_URL` | **Required in production** | Canonical public origin used for metadata, canonical links, and RSS URLs. Set it to `https://rodent.co.zw` in production. Do not include a trailing path, query, fragment, or credentials. |
 | `FEATURE_ANALYTICS` | No | Enables/disables analytics ingestion route (`true/false` or `1/0`). |
 | `FEATURE_CONTACT_FORM` | No (defaults to enabled) | Enables/disables contact form route (`true/false` or `1/0`). |
 | `FEATURE_AUTOMATION` | No | Toggle reserved for automation workflows (`true/false` or `1/0`). |
@@ -57,7 +58,7 @@ Create a local `.env` from `.env.example` and configure the following variables:
 
 ### Boot-time validation
 
-Server runtime env is validated in `lib/env.ts`. In `production`, the app fails fast during boot if required secrets for enabled/used features are missing.
+Server runtime env is validated in `lib/env.ts`. The canonical public URL is validated in `lib/site-url.ts`; malformed values are rejected, HTTPS is required in production, and a missing production value fails the build/boot. In production, configure `NEXT_PUBLIC_SITE_URL=https://rodent.co.zw`. Local development falls back to `http://localhost:8080` when the variable is absent.
 
 ## Architecture Note
 

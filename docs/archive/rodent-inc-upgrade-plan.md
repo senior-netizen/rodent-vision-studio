@@ -1,3 +1,5 @@
+> **Archived / non-authoritative:** This historical planning document references former or proposed domains. The confirmed public brand is **Rodent, Inc.**, and the authoritative production origin is `NEXT_PUBLIC_SITE_URL=https://rodent.co.zw`.
+
 # Rodent, Inc. — Website Upgrade Plan
 
 **Site:** [www.rodent-lab.com](https://www.rodent-lab.com)  
