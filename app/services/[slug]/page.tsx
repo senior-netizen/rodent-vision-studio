@@ -127,7 +127,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
               {related.map((project) => (
                 <Link
                   key={project.id}
-                  href={`/projects/${project.id}`}
+                  href={`/projects/${project.slug}`}
                   className="card-glass group flex flex-col gap-3 p-6 transition-colors duration-300 hover:border-border-hover"
                 >
                   <span className="text-label">{project.category}</span>

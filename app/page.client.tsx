@@ -11,6 +11,7 @@ import { projects } from '@/data/projects';
 import { projectCaseStudiesById } from '@/data/project-case-studies';
 import { labs } from '@/data/labs';
 import { services } from '@/data/services';
+import { contact, contactEmailHref } from '@/data/contact';
 import { trackEvent } from '@/lib/analytics/track';
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -393,7 +394,7 @@ export default function HomePage() {
         <motion.div style={{ textAlign: 'center', marginBottom: '3rem' }} {...slideInLeft}><div style={{ fontSize: 12, fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', color: 'var(--teal)', marginBottom: '0.5rem' }}>PROJECTS</div><h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(32px,4vw,50px)', fontWeight: 800, letterSpacing: '-1.5px' }}>Our work is deployed in real environments.</h2></motion.div>
         <div className="gallery-grid gallery-grid-desktop">
           {projects.map((project) => (
-            <motion.button key={project.id} className="g-card" whileHover={{ scale: 1.04, y: -6 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.4, ease: easeCurve }} onClick={() => router.push(`/projects/${project.id}`)} style={{ border: 'none' }}>
+            <motion.button key={project.id} className="g-card" whileHover={{ scale: 1.04, y: -6 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.4, ease: easeCurve }} onClick={() => router.push(`/projects/${project.slug}`)} style={{ border: 'none' }}>
               <div className="g-card-media">
                 <Image
                   src={project.preview}
@@ -424,7 +425,7 @@ export default function HomePage() {
             initial={{ opacity: 0.7, x: 24 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.35, ease: easeCurve }}
-            onClick={() => router.push(`/projects/${projects[mobileProjectIndex].id}`)}
+            onClick={() => router.push(`/projects/${projects[mobileProjectIndex].slug}`)}
             style={{ border: 'none', width: '100%' }}
           >
             <div className="g-card-media g-card-media-mobile">
@@ -483,9 +484,9 @@ export default function HomePage() {
               Share scope, budget, and timeline. We respond within one business day with an implementation path.
             </p>
             <ul style={{ listStyle: 'none', padding: 0, display: 'grid', gap: '0.65rem', fontSize: 14, color: 'rgba(255,255,255,0.75)' }}>
-              <li>✉ <a href="mailto:anesu@rodent.co.zw" style={{ color: 'inherit' }}>anesu@rodent.co.zw</a></li>
-              <li>WhatsApp · <a href="https://wa.me/263787008238" target="_blank" rel="noreferrer noopener" style={{ color: 'inherit' }}>+263 78 700 8238</a></li>
-              <li>Call · <a href="tel:+253785286530" style={{ color: 'inherit' }}>+253 785 286 530</a></li>
+              <li>✉ <a href={contactEmailHref} style={{ color: 'inherit' }}>{contact.email}</a></li>
+              <li>WhatsApp · <a href={contact.whatsapp.href} target="_blank" rel="noreferrer noopener" style={{ color: 'inherit' }}>{contact.whatsapp.display}</a></li>
+              <li>Call · <a href={contact.phone.href} style={{ color: 'inherit' }}>{contact.phone.display}</a></li>
             </ul>
           </div>
           <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 22, padding: '2rem' }}>

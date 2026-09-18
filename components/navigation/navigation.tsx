@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
+import { contact, contactEmailHref } from '@/data/contact';
 
 const navLinks = [
   { label: 'About', href: '/about' },
@@ -64,7 +65,7 @@ export function Navigation() {
               </a>
             ))}
             <a
-              href="mailto:contact@rodent.systems"
+              href={contactEmailHref}
               className="ml-4 rounded-sm border border-accent/30 px-5 py-2 font-mono text-xs uppercase tracking-[0.12em] text-accent transition-all duration-300 hover:border-accent hover:bg-accent/10"
             >
               Get in touch
@@ -116,13 +117,13 @@ export function Navigation() {
                 </motion.a>
               ))}
               <motion.a
-                href="mailto:contact@rodent.systems"
+                href={contactEmailHref}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.5 }}
                 className="mt-4 text-label text-accent"
               >
-                contact@rodent.systems
+                {contact.email}
               </motion.a>
             </nav>
           </motion.div>

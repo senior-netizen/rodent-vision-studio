@@ -30,7 +30,7 @@ export default async function ProjectsPage() {
           return (
             <Link
               key={project.id}
-              href={`/projects/${project.id}`}
+              href={`/projects/${project.slug}`}
               style={{ border: '1px solid var(--border)', borderRadius: 12, padding: '1rem', textDecoration: 'none', color: 'inherit' }}
             >
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
