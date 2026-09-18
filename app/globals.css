@@ -100,6 +100,25 @@ nav {
   max-width: 64ch;
   line-height: 1.65;
 }
+.hero-content .hero-company-line {
+  font-size: 0.82rem;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  color: #62626d;
+}
+.gateway-about-copy { margin-top: 1rem; max-width: 62ch; color: var(--mid); line-height: 1.65; }
+.home-founders { max-width: 1100px; margin: 0 auto; padding: 6rem 2rem; }
+.home-founders-heading { max-width: 760px; }
+.home-founders-heading h2 { font-family: var(--font-syne), sans-serif; font-size: clamp(32px, 5vw, 54px); line-height: 1.04; letter-spacing: -0.04em; }
+.home-founders-heading > p:last-child { margin-top: 1rem; color: var(--mid); line-height: 1.7; }
+.founders-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-top: 2rem; }
+.founder-card { border: 1px solid var(--border); border-radius: 22px; padding: clamp(1.35rem, 3vw, 2rem); background: #fafafa; }
+.founder-card h3 { margin-top: 0.45rem; font-family: var(--font-syne), sans-serif; font-size: clamp(1.35rem, 3vw, 1.8rem); line-height: 1.1; }
+.founder-card > p:last-child { margin-top: 1rem; color: var(--mid); line-height: 1.65; }
+.founder-role { color: var(--orange); font-size: 0.76rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
+.founders-link { display: inline-block; margin-top: 1.5rem; color: var(--dark); font-weight: 700; text-decoration: none; }
+.company-identification { margin-top: 0.45rem; color: rgba(255,255,255,0.58); line-height: 1.5; }
+.footer-legal { display: grid; gap: 0.35rem; margin-top: 2rem; font-size: 12px; color: rgba(255,255,255,0.48); }
 .btn-primary {
   background: var(--dark); color: #fff; padding: 12px 28px; border-radius: 100px;
   font-size: 14px; font-weight: 500; border: none; cursor: pointer; text-decoration: none;
@@ -705,6 +724,8 @@ footer p { color: rgba(255,255,255,0.5); font-size: 14px; margin-bottom: 2rem; }
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
 }
+.founders-grid-full { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.founders-intro { color: var(--mid); line-height: 1.7; }
 .team-card {
   min-height: 100%;
   border: 1px solid var(--border);
@@ -787,5 +808,7 @@ footer p { color: rgba(255,255,255,0.5); font-size: 14px; margin-bottom: 2rem; }
 
 @media (max-width: 820px) {
   .team-grid { grid-template-columns: 1fr; }
+  .founders-grid { grid-template-columns: 1fr; }
+  .home-founders { padding: 4.5rem 1rem; }
   .timeline li { grid-template-columns: 1fr; }
 }

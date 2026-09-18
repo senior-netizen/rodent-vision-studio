@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Pricing & Engagement Models — Rodent, Inc.',
-  description: 'Explore Rodent, Inc. engagement models: MVP sprints, project-based builds, and embedded engineering retainers.',
+  title: 'Pricing & Engagement Models — Rodent',
+  description: 'Explore Rodent engagement models: MVP sprints, project-based builds, and embedded engineering retainers.',
 };
 
 const models = [

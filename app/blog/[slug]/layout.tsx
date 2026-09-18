@@ -11,7 +11,7 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   if (!(params.slug in blogBySlug)) return {};
   const post = blogBySlug[params.slug as keyof typeof blogBySlug];
   return {
-    title: `${post.title} — Rodent, Inc.`,
+    title: `${post.title} — Rodent`,
     description: post.excerpt,
     alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {

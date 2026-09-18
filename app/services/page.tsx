@@ -3,12 +3,12 @@ import Link from 'next/link';
 import { services } from '@/data/services';
 
 export const metadata: Metadata = {
-  title: 'Services — Web, Mobile, IoT, Robotics | Rodent, Inc.',
+  title: 'Services — Web, Mobile, IoT, Robotics | Rodent',
   description:
     'We design and build production-grade systems across web, mobile, IoT, and robotics. Explore our service capabilities and engagement model.',
   alternates: { canonical: '/services' },
   openGraph: {
-    title: 'Services | Rodent, Inc.',
+    title: 'Services | Rodent',
     description: 'Production-grade web, mobile, IoT, and robotics systems engineered for real operations.',
     type: 'website',
     url: '/services',

@@ -13,18 +13,18 @@ const fontVariables: CSSProperties = {
 
 export const metadata: Metadata = {
   title: {
-    default: 'Rodent, Inc. — Engineering Digital Infrastructure for Africa',
-    template: '%s | Rodent, Inc.',
+    default: 'Rodent — Engineering Digital Infrastructure for Africa',
+    template: '%s | Rodent',
   },
   description:
-    'We design and build production-grade systems across web, mobile, IoT, and robotics—focused on performance, reliability, and real-world deployment.',
+    'Rodent, a division of Squirrellabs Technologies (Private) Limited, builds web platforms, mobile applications, IoT systems, and robotics solutions.',
   metadataBase: getSiteUrl(),
   applicationName: PUBLIC_BRAND_LABEL,
   authors: [{ name: PUBLIC_BRAND_LABEL }],
-  keywords: ['Rodent Inc', 'web systems', 'mobile applications', 'IoT', 'robotics', 'Africa', 'product engineering'],
+  keywords: ['Rodent', 'Squirrellabs Technologies', 'web systems', 'mobile applications', 'IoT', 'robotics', 'Africa', 'product engineering'],
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'Rodent, Inc. — Engineering Digital Infrastructure for Africa',
+    title: 'Rodent — Engineering Digital Infrastructure for Africa',
     description:
       'Production-grade web, mobile, IoT, and robotics systems engineered for performance, reliability, and real-world deployment.',
     type: 'website',
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Rodent, Inc.',
+    title: 'Rodent',
     description: 'Engineering digital infrastructure for Africa.',
   },
   robots: { index: true, follow: true },

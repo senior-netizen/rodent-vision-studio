@@ -1,7 +1,7 @@
 const LOCAL_SITE_URL = 'http://localhost:8080';
 
 /** The public brand and production origin confirmed for this application. */
-export const PUBLIC_BRAND_LABEL = 'Rodent, Inc.';
+export const PUBLIC_BRAND_LABEL = 'Rodent';
 export const PRODUCTION_SITE_URL = 'https://rodent.co.zw';
 
 /**

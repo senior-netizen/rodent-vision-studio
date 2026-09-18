@@ -2,18 +2,41 @@ import type { Metadata } from 'next';
 import HomePage from './page.client';
 
 export const metadata: Metadata = {
-  title: 'Rodent, Inc. — Web, Mobile, IoT & Robotics Systems',
+  title: 'Rodent — Web, Mobile, IoT & Robotics Systems',
   description:
-    'Rodent, Inc. designs and builds production-ready web, mobile, IoT, and robotics systems for ambitious teams.',
+    'Rodent, a division of Squirrellabs Technologies (Private) Limited, builds web platforms, mobile applications, IoT systems, and robotics solutions.',
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'Rodent, Inc. — Web, Mobile, IoT & Robotics Systems',
+    title: 'Rodent — Web, Mobile, IoT & Robotics Systems',
     description:
-      'Rodent, Inc. designs and builds production-ready web, mobile, IoT, and robotics systems for ambitious teams.',
+      'Rodent, a division of Squirrellabs Technologies (Private) Limited, builds web platforms, mobile applications, IoT systems, and robotics solutions.',
     type: 'website',
     url: '/',
-    images: [{ url: '/rodent-logo.png', alt: 'Rodent, Inc. logo' }],
+    images: [{ url: '/rodent-logo.png', alt: 'Rodent logo' }],
   },
 };
 
-export default HomePage;
+const organizationData = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Squirrellabs Technologies (Private) Limited',
+  url: 'https://rodent.co.zw',
+  department: {
+    '@type': 'Organization',
+    name: 'Rodent',
+    description: 'The software and hardware engineering division of Squirrellabs Technologies (Private) Limited.',
+    url: 'https://rodent.co.zw',
+  },
+};
+
+export default function Page() {
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationData) }}
+      />
+      <HomePage />
+    </>
+  );
+}
