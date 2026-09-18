@@ -6,17 +6,16 @@ export const PRODUCTION_SITE_URL = 'https://rodent.co.zw';
 
 /**
  * Resolve the canonical site origin used to construct absolute public URLs.
- * Production must always provide NEXT_PUBLIC_SITE_URL; only local/test runs get
- * a localhost fallback.
+ * Production falls back to the confirmed public origin so metadata generation
+ * does not depend on deployment-provider environment injection. Local and test
+ * runs use localhost unless an explicit value is configured.
  */
 export function getSiteUrl(): URL {
   const configuredValue = process.env.NEXT_PUBLIC_SITE_URL;
 
   if (!configuredValue) {
     if (process.env.NODE_ENV === 'production') {
-      throw new Error(
-        `NEXT_PUBLIC_SITE_URL is required in production (expected ${PRODUCTION_SITE_URL}).`,
-      );
+      return new URL(PRODUCTION_SITE_URL);
     }
 
     return new URL(LOCAL_SITE_URL);
