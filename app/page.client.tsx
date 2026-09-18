@@ -394,7 +394,7 @@ export default function HomePage() {
         <motion.div style={{ textAlign: 'center', marginBottom: '3rem' }} {...slideInLeft}><div style={{ fontSize: 12, fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', color: 'var(--teal)', marginBottom: '0.5rem' }}>PROJECTS</div><h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(32px,4vw,50px)', fontWeight: 800, letterSpacing: '-1.5px' }}>Our work is deployed in real environments.</h2></motion.div>
         <div className="gallery-grid gallery-grid-desktop">
           {projects.map((project) => (
-            <motion.button key={project.id} className="g-card" whileHover={{ scale: 1.04, y: -6 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.4, ease: easeCurve }} onClick={() => router.push(`/projects/${project.id}`)} style={{ border: 'none' }}>
+            <motion.button key={project.id} className="g-card" whileHover={{ scale: 1.04, y: -6 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.4, ease: easeCurve }} onClick={() => router.push(`/projects/${project.slug}`)} style={{ border: 'none' }}>
               <div className="g-card-media">
                 <Image
                   src={project.preview}
@@ -425,7 +425,7 @@ export default function HomePage() {
             initial={{ opacity: 0.7, x: 24 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.35, ease: easeCurve }}
-            onClick={() => router.push(`/projects/${projects[mobileProjectIndex].id}`)}
+            onClick={() => router.push(`/projects/${projects[mobileProjectIndex].slug}`)}
             style={{ border: 'none', width: '100%' }}
           >
             <div className="g-card-media g-card-media-mobile">
