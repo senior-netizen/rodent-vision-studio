@@ -73,8 +73,8 @@ export default function ContactPage() {
                 </a>
               </li>
               <li>
-                <a href="tel:+253785286530" style={{ color: 'inherit', textDecoration: 'none' }}>
-                  Call · +253 785 286 530
+                <a href="tel:+263785286530" style={{ color: 'inherit', textDecoration: 'none' }}>
+                  Call · +263 785 286 530
                 </a>
               </li>
             </ul>

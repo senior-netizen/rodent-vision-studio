@@ -485,7 +485,7 @@ export default function HomePage() {
             <ul style={{ listStyle: 'none', padding: 0, display: 'grid', gap: '0.65rem', fontSize: 14, color: 'rgba(255,255,255,0.75)' }}>
               <li>✉ <a href="mailto:anesu@rodent.co.zw" style={{ color: 'inherit' }}>anesu@rodent.co.zw</a></li>
               <li>WhatsApp · <a href="https://wa.me/263787008238" target="_blank" rel="noreferrer noopener" style={{ color: 'inherit' }}>+263 78 700 8238</a></li>
-              <li>Call · <a href="tel:+253785286530" style={{ color: 'inherit' }}>+253 785 286 530</a></li>
+              <li>Call · <a href="tel:+263785286530" style={{ color: 'inherit' }}>+263 785 286 530</a></li>
             </ul>
           </div>
           <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 22, padding: '2rem' }}>
