@@ -1,10 +1,9 @@
 import { createClient } from '@supabase/supabase-js';
 import { blogPosts as staticPosts } from '@/data/blog';
+import { getSiteOrigin } from '@/lib/site-url';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 600;
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://rodent.co.zw';
 
 const SUPABASE_URL =
   process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.VITE_SUPABASE_URL || '';
@@ -59,6 +58,7 @@ async function loadPosts(): Promise<Item[]> {
 }
 
 export async function GET() {
+  const siteUrl = getSiteOrigin();
   const posts = await loadPosts();
   const lastBuild = posts[0]
     ? new Date(posts[0].publishedAt).toUTCString()
@@ -66,7 +66,7 @@ export async function GET() {
 
   const items = posts
     .map((p) => {
-      const url = `${SITE_URL}/blog/${p.slug}`;
+      const url = `${siteUrl}/blog/${p.slug}`;
       const desc = p.body || p.excerpt || '';
       return `    <item>
       <title>${escapeXml(p.title)}</title>
@@ -83,8 +83,8 @@ export async function GET() {
 <rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Rodent, Inc. — Journal</title>
-    <link>${SITE_URL}/blog</link>
-    <atom:link href="${SITE_URL}/blog/rss.xml" rel="self" type="application/rss+xml" />
+    <link>${siteUrl}/blog</link>
+    <atom:link href="${siteUrl}/blog/rss.xml" rel="self" type="application/rss+xml" />
     <description>Field notes on engineering production-grade web, mobile, IoT, and robotics systems from the Rodent, Inc. team.</description>
     <language>en</language>
     <lastBuildDate>${lastBuild}</lastBuildDate>
