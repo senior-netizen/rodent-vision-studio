@@ -2,14 +2,14 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'About Rodent — Mission, Founders, and Africa Service Footprint',
+  title: 'About Rodent — Meet the Founders',
   description:
     'Learn about Rodent, the software and hardware engineering division of Squirrellabs Technologies (Private) Limited, and meet its founders.',
   alternates: { canonical: '/about' },
   openGraph: {
-    title: 'About Rodent — Mission, Founders, and Africa Service Footprint',
+    title: 'About Rodent — Meet the Founders',
     description:
-      'Meet the founders behind Rodent and see how the division deploys reliable digital infrastructure across Africa.',
+      'Meet the founders behind Rodent, the engineering division of Squirrellabs Technologies (Private) Limited.',
     type: 'website',
     url: '/about',
     images: [{ url: '/rodent-logo.png', alt: 'Rodent logo' }],
@@ -20,12 +20,6 @@ type TeamMember = {
   name: string;
   role: string;
   bio: string;
-};
-
-type Milestone = {
-  year: string;
-  title: string;
-  description: string;
 };
 
 const founders: TeamMember[] = [
@@ -49,33 +43,6 @@ const values = [
   'Long-term partnership: ship, measure, support, and improve alongside client teams.',
 ];
 
-const milestones: Milestone[] = [
-  {
-    year: '2023',
-    title: 'Rodent engineering work begins',
-    description:
-      'Formed to help African businesses turn fragile software ideas into robust web, mobile, and connected infrastructure.',
-  },
-  {
-    year: '2024',
-    title: 'First production deployments',
-    description:
-      'Delivered early client platforms for property operations, fintech workflows, and service-business automation.',
-  },
-  {
-    year: '2025',
-    title: 'IoT and monitoring expansion',
-    description:
-      'Extended delivery into telemetry dashboards, smart metering concepts, and field-alert systems for distributed operations.',
-  },
-  {
-    year: '2026',
-    title: 'Key client markers',
-    description:
-      'Consolidated project work across logistics, energy, property, SHEQ, and inspection use cases with Africa-focused deployment patterns.',
-  },
-];
-
 function getInitials(name: string) {
   return name
     .split(' ')
@@ -93,13 +60,7 @@ export default function AboutPage() {
         <h1 id="about-title">Engineering digital infrastructure for African operators.</h1>
         <div className="about-story">
           <p>
-            Rodent is the software and hardware engineering division of Squirrellabs Technologies (Private) Limited. We design and build web platforms, mobile applications, IoT systems, and robotics solutions, bringing software development and practical engineering together to solve real business problems.
-          </p>
-          <p>
-            Our mission is to engineer practical web, mobile, IoT, and robotics platforms for African businesses, institutions, and field teams. That means pairing careful architecture with deployment discipline, security-minded defaults, and long-term support.
-          </p>
-          <p>
-            We focus on the layer where technology meets operations: booking flows, payment workflows, telemetry, dashboards, inspections, and decision systems that help teams move faster with less fragility.
+            Rodent is the software and hardware engineering division of Squirrellabs Technologies (Private) Limited. We build web platforms, mobile applications, and connected systems around the way a business actually works—from booking and publishing flows to telemetry and operational dashboards.
           </p>
         </div>
         <div className="about-cta-row" aria-label="About page calls to action">
@@ -145,29 +106,11 @@ export default function AboutPage() {
           <h2 id="footprint-title">Africa-focused service footprint.</h2>
         </div>
         <p>
-          Rodent serves organizations building for African markets, with delivery patterns shaped around Southern Africa and remote-first collaboration across the continent. We support discovery, architecture, build, launch, and iteration for clients operating in Zimbabwe, South Africa, Zambia, Botswana, Kenya, Nigeria, Ghana, Rwanda, and adjacent regional markets.
+          Rodent is based in Southern Africa and is available to work remotely with organizations across the continent. The regions below describe where we are available to serve; they are not a claim that client work has been completed in every market.
         </p>
         <div className="footprint-tags" aria-label="Representative service regions">
           {['Southern Africa', 'East Africa', 'West Africa', 'Remote-first delivery', 'Field deployments'].map((region) => <span key={region}>{region}</span>)}
         </div>
-      </section>
-
-      <section className="about-section" aria-labelledby="milestones-title">
-        <div className="section-heading">
-          <p className="eyebrow">Milestones</p>
-          <h2 id="milestones-title">From founding to field deployments.</h2>
-        </div>
-        <ol className="timeline">
-          {milestones.map((milestone) => (
-            <li key={`${milestone.year}-${milestone.title}`}>
-              <span>{milestone.year}</span>
-              <div>
-                <h3>{milestone.title}</h3>
-                <p>{milestone.description}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
       </section>
 
       <section className="about-final-cta" aria-labelledby="next-step-title">

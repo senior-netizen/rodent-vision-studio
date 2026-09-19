@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Rodent — Engineering Digital Infrastructure for Africa',
     description:
-      'Production-grade web, mobile, IoT, and robotics systems engineered for performance, reliability, and real-world deployment.',
+      'Web platforms, mobile applications, and connected systems built around real operational needs.',
     type: 'website',
     siteName: PUBLIC_BRAND_LABEL,
     url: '/',

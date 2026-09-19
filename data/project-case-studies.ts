@@ -25,7 +25,7 @@ export const projectCaseStudiesById: Partial<Record<Project['id'], ProjectCaseSt
     architecture: ['Next.js App Router (SSR)', 'Supabase Auth + PostgREST API', 'PostgreSQL data layer', 'Vercel deployment edge network'],
     dataFlow: ['Submission Form → Validation', 'Validation → Supabase API', 'Supabase API → PostgreSQL', 'PostgreSQL → SSR Job Pages'],
     decisions: ['Prioritized mobile-first interaction patterns for accessibility.', 'Structured listings and submissions to support data ownership and scale.'],
-    visuals: { screenshot: '/visuals/sheq-ui.jpg', diagram: '/visuals/sheq-architecture.jpg' },
+    visuals: { screenshot: '/visuals/jofe-preview.jpg', diagram: '/visuals/jofe-preview.jpg' },
     outcome: 'Established a centralized job platform with a scalable intake and publishing foundation.',
     summary: {
       scope: 'End-to-end architecture and case study execution for employment distribution platform.',
@@ -39,7 +39,7 @@ export const projectCaseStudiesById: Partial<Record<Project['id'], ProjectCaseSt
     architecture: ['Listing Search API', 'Property Catalog', 'Auth + Session Guard', 'Publishing Workflow'],
     dataFlow: ['User Query → Search Index', 'Search Index → Property Catalog', 'Catalog → Listing Detail', 'Listing Events → Agent Dashboard'],
     decisions: ['Kept property lookup paths index-first for responsive browsing.', 'Separated listing write access behind authenticated publisher flows.'],
-    visuals: { screenshot: '/visuals/meterflow-ui.jpg', diagram: '/visuals/meterflow-architecture.jpg' },
+    visuals: { screenshot: '/visuals/feel-at-home-preview.jpg', diagram: '/visuals/feel-at-home-preview.jpg' },
     outcome: 'Delivered a single platform for discovering homes and publishing managed listings.',
     summary: {
       scope: 'End-to-end property search and listing platform.',
@@ -54,11 +54,11 @@ export const projectCaseStudiesById: Partial<Record<Project['id'], ProjectCaseSt
     dataFlow: ['Edge Meter → MQTT Broker', 'Broker → Stream Processor', 'Processor → Rule Engine', 'Rule Engine → Dashboard'],
     decisions: ['Prioritized eventual consistency for wide-area device bursts.', 'Used deterministic replay paths for incident reconstruction.'],
     visuals: { screenshot: '/visuals/sh.png', diagram: '/visuals/shedsense-architecture.jpg' },
-    outcome: 'Reduced event-to-action time by 41% with deterministic alert confidence routing.',
+    outcome: 'Connected field telemetry, rule evaluation, alerts, and an operator-facing incident view.',
     summary: {
       scope: 'Telemetry and dispatch intelligence platform across distributed field assets.',
-      timeline: '16-week delivery across discovery, hardening and rollout.',
-      primaryKpi: '41% faster event-to-action response.',
+      timeline: 'Delivery timeline requires owner confirmation.',
+      primaryKpi: 'Alert routing and incident visibility.',
     },
   },
   'ar-by-rodent': {
@@ -67,7 +67,7 @@ export const projectCaseStudiesById: Partial<Record<Project['id'], ProjectCaseSt
     architecture: ['Experience Shell', 'Animation Orchestrator', 'Media Surface', 'CTA Interaction Layer'],
     dataFlow: ['User Session → Experience Shell', 'Interaction Events → Animation Layer', 'Media Assets → Render Pipeline', 'CTA Actions → Source Destination'],
     decisions: ['Optimized animation sequencing to keep motion smooth across device classes.', 'Structured interactive elements to preserve accessibility while remaining immersive.'],
-    visuals: { screenshot: '/visuals/sheq-ui.jpg', diagram: '/visuals/sheq-architecture.jpg' },
+    visuals: { screenshot: '/visuals/ar-by-rodent-preview.jpg', diagram: '/visuals/ar-by-rodent-preview.jpg' },
     outcome: 'Shipped an immersive AR-led product surface with strong visual identity and engagement.',
     summary: {
       scope: 'Interactive AR showcase and product landing experience.',
@@ -81,7 +81,7 @@ export const projectCaseStudiesById: Partial<Record<Project['id'], ProjectCaseSt
     architecture: ['Coordinate Validator', 'Distance Engine', 'Location Resolver', 'Package API Surface'],
     dataFlow: ['Input Coordinates → Validation', 'Validated Data → Distance Engine', 'Distance Results → Consumer APIs', 'Package Releases → npm/GitHub'],
     decisions: ['Kept API contracts small and deterministic for broad downstream use.', 'Automated publish and verification checks to keep releases reliable.'],
-    visuals: { screenshot: '/visuals/kwiksend-ui.jpg', diagram: '/visuals/kwiksend-architecture.jpg' },
+    visuals: { screenshot: '/visuals/precise-locations-preview.jpg', diagram: '/visuals/precise-locations-preview.jpg' },
     outcome: 'Provided a reusable geospatial toolkit for coordinate-driven applications.',
     summary: {
       scope: 'Open source Node.js package for precise location operations.',

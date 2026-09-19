@@ -30,8 +30,8 @@ export default function ContactPage() {
           Tell us what you&apos;re building.
         </h1>
         <p style={{ color: 'var(--mid)', maxWidth: 640, fontSize: 17, lineHeight: 1.65 }}>
-          Share your system requirements, budget, and delivery timeline. We&apos;ll respond within one business day with an
-          implementation path and next steps.
+          Share your system requirements, budget, and delivery timeline. We&apos;ll respond within one business day with
+          a practical plan and next steps.
         </p>
       </header>
 
