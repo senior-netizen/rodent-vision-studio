@@ -5,7 +5,7 @@ import { services } from '@/data/services';
 export const metadata: Metadata = {
   title: 'Services — Web, Mobile, IoT, Robotics | Rodent',
   description:
-    'We design and build production-grade systems across web, mobile, IoT, and robotics. Explore our service capabilities and engagement model.',
+    'We design and build practical systems across web, mobile, IoT, and robotics. Explore our service capabilities and engagement model.',
   alternates: { canonical: '/services' },
   openGraph: {
     title: 'Services | Rodent',
@@ -29,7 +29,7 @@ export default function ServicesPage() {
           </div>
           <h1 className="text-display text-[clamp(2.75rem,7vw,6rem)]">Services</h1>
           <p className="text-body mt-6 max-w-2xl text-lg">
-            We design and build production-grade systems across web, mobile, IoT, and robotics — focused on
+            We design and build practical systems across web, mobile, IoT, and robotics — focused on
             performance, reliability, and real-world deployment.
           </p>
         </div>

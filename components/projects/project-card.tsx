@@ -19,10 +19,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
     ? project.links.live
     : undefined;
   const stackLabel = project.stack.join(' • ');
-  const lastSuccessfulCheckAt = project.linkHealth?.lastSuccessfulCheckAt;
-  const staleContextLabel = lastSuccessfulCheckAt
-    ? `Last successful check: ${new Date(lastSuccessfulCheckAt).toLocaleString()}`
-    : 'No successful deployment health check recorded yet.';
+
 
   const handleCardClick = useCallback(() => {
     if (!externalLiveHref) return;
@@ -70,25 +67,16 @@ export function ProjectCard({ project }: ProjectCardProps) {
         <div className="space-y-2">
           <div className="flex flex-wrap items-center gap-2">
             <h2 className="text-xl font-semibold text-fg">{project.name}</h2>
-            {project.stale && (
-              <span
-                className="rounded-full border border-amber-400/40 bg-amber-500/10 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-amber-300"
-                title={staleContextLabel}
-              >
-                Stale
-              </span>
-            )}
+            <span className="rounded-full border border-emerald-400/40 bg-emerald-500/10 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-emerald-300">
+              Project delivered
+            </span>
           </div>
           <p className="text-sm text-fg-muted">{stackLabel}</p>
           <p className="text-xs uppercase tracking-wider text-fg-dim">{project.category}</p>
           {project.tagline && (
             <p className="pt-2 text-sm leading-relaxed text-fg/80">{project.tagline}</p>
           )}
-          {project.stale && (
-            <p className="text-xs text-amber-300/90" title={staleContextLabel}>
-              {staleContextLabel}
-            </p>
-          )}
+          <p className="text-xs text-fg-dim">Demo availability unverified.</p>
         </div>
 
         <div className="mt-auto flex gap-3 pt-3">
@@ -100,11 +88,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
               className="inline-flex items-center rounded-md border border-accent px-3 py-2 text-sm font-medium text-accent transition-colors hover:bg-accent/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               onClick={(event) => event.stopPropagation()}
             >
-              View Live
+              Try public demo
             </a>
           ) : (
             <span className="inline-flex cursor-not-allowed items-center rounded-md border border-border px-3 py-2 text-sm text-fg-dim">
-              View Live
+              Try public demo
             </span>
           )}
 

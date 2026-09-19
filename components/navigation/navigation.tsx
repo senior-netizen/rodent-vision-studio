@@ -10,9 +10,9 @@ const navLinks = [
   { label: 'About', href: '/about' },
   { label: 'Clients', href: '#clients' },
   { label: 'Impact', href: '#impact' },
-  { label: 'Projects', href: '#projects' },
+  { label: 'Projects', href: '/projects' },
   { label: 'Systems', href: '#systems' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Contact', href: '/contact' },
 ];
 
 export function Navigation() {

@@ -85,7 +85,7 @@ export async function GET() {
     <title>Rodent — Journal</title>
     <link>${siteUrl}/blog</link>
     <atom:link href="${siteUrl}/blog/rss.xml" rel="self" type="application/rss+xml" />
-    <description>Field notes on engineering production-grade web, mobile, IoT, and robotics systems from the Rodent team.</description>
+    <description>Field notes on engineering web, mobile, IoT, and robotics systems from the Rodent team.</description>
     <language>en</language>
     <lastBuildDate>${lastBuild}</lastBuildDate>
 ${items}

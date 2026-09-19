@@ -75,6 +75,7 @@ export default function BlogDetailPage({ params }: { params: { slug: string } })
             </Link>
           </motion.div>
 
+          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1.5, textTransform: 'uppercase', color: 'var(--orange)', marginBottom: 10 }}>Brief note</p>
           <motion.span
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -138,7 +139,9 @@ export default function BlogDetailPage({ params }: { params: { slug: string } })
               fontFamily: 'var(--font-dm-sans), sans-serif',
             }}
           >
-            {post.body}
+            {post.body.split('\n\n').map((paragraph) => (
+              <p key={paragraph} style={{ marginBottom: 20 }}>{paragraph}</p>
+            ))}
           </div>
 
           {/* Divider */}

@@ -15,7 +15,7 @@ import { contact, contactEmailHref } from '@/data/contact';
 import { trackEvent } from '@/lib/analytics/track';
 
 const easeCurve: [number, number, number, number] = [0.16, 1, 0.3, 1];
-const sectionIds = ['about', 'services', 'projects', 'contact', 'labs', 'philosophy'];
+const sectionIds = ['services', 'projects', 'labs'];
 const founders = [
   {
     name: 'Anesu Prince Ndava',
@@ -241,8 +241,7 @@ export default function HomePage() {
         <div className="hero-content">
           <motion.h1 variants={heroItem}>We build infrastructure that deploys.</motion.h1>
           <motion.p variants={heroItem}>
-            From fintech rails to IoT sensor grids — Rodent engineers production-ready systems for African enterprises,
-            property platforms, and emerging-market operators.
+            Rodent builds web platforms, mobile applications, and connected systems for businesses and field teams that need clearer, more reliable day-to-day operations.
           </motion.p>
           <motion.p variants={heroItem} className="hero-company-line">
             A division of Squirrellabs Technologies (Private) Limited.
@@ -350,7 +349,7 @@ export default function HomePage() {
       <motion.div className="marketplace-wrap" {...revealMotion} id="services" ref={marketplaceRef}>
         <div className="marketplace-inner">
           <div className="marketplace-header">
-            <div className="mp-left"><div className="mp-label">SERVICES</div><h2>Engineering Pillars<br />for Deployment</h2><p className="mp-desc">Each service has a dedicated capability page and conversion flow.</p></div>
+            <div className="mp-left"><div className="mp-label">SERVICES</div><h2>What we build</h2><p className="mp-desc">We build web platforms, mobile applications, and connected systems around the way your business works.</p></div>
             <motion.div className="mp-right" style={{ position: 'sticky', top: 96, y: stickyY, scale: stickyScale, opacity: stickyOpacity, willChange: 'transform, opacity' }}>
               <button className="view-all-btn" type="button" onClick={() => router.push('/projects')}>View Work</button>
             </motion.div>
@@ -513,7 +512,7 @@ export default function HomePage() {
               Tell us what you&apos;re building.
             </h2>
             <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: 16, lineHeight: 1.65, maxWidth: 440, marginBottom: '2rem' }}>
-              Share scope, budget, and timeline. We respond within one business day with an implementation path.
+              Share scope, budget, and timeline. We respond within one business day with a practical plan and next steps.
             </p>
             <ul style={{ listStyle: 'none', padding: 0, display: 'grid', gap: '0.65rem', fontSize: 14, color: 'rgba(255,255,255,0.75)' }}>
               <li>✉ <a href={contactEmailHref} style={{ color: 'inherit' }}>{contact.email}</a></li>
@@ -543,7 +542,7 @@ export default function HomePage() {
           <Link href="/contact">Contact</Link>
           <Link href="/about">About</Link>
           <Link href="/pricing">Pricing</Link>
-          <Link href="/projects/shedsense-grid">Projects</Link>
+          <Link href="/projects">Projects</Link>
           <Link href="/blog">Blog</Link>
         </div>
         <div className="footer-legal">
