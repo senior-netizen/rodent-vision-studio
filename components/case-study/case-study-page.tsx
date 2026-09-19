@@ -8,7 +8,14 @@ import { reveal, revealLeft, stagger, staggerChild } from '@/lib/animations/reve
 
 
 export function CaseStudyPage({ project }: { project: ProjectConfig }) {
-  const demoUrl = project.links.live;
+  const demoUrl = project.status === 'live' || project.status === 'staging'
+    ? project.links.live
+    : undefined;
+  const availabilityLabel = project.status === 'live'
+    ? 'Public demo available.'
+    : project.status === 'staging'
+      ? 'Public preview available.'
+      : 'Case study only.';
 
 
   return (
@@ -70,7 +77,7 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
             <span className="rounded-full border border-emerald-400/40 bg-emerald-500/10 px-3 py-1 text-xs uppercase tracking-[0.14em] text-emerald-300">
               Project delivered
             </span>
-            <span className="text-body text-xs">Demo availability unverified.</span>
+            <span className="text-body text-xs">{availabilityLabel}</span>
           </div>
 
           {demoUrl && (
@@ -115,12 +122,14 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
               <span className="text-label">Scope</span>
               <p className="text-body mt-3 text-sm">{project.summary.scope}</p>
             </motion.div>
+            {project.summary.timeline && (
+              <motion.div variants={staggerChild} className="card-glass p-6">
+                <span className="text-label">Timeline</span>
+                <p className="text-body mt-3 text-sm">{project.summary.timeline}</p>
+              </motion.div>
+            )}
             <motion.div variants={staggerChild} className="card-glass p-6">
-              <span className="text-label">Timeline</span>
-              <p className="text-body mt-3 text-sm">{project.summary.timeline}</p>
-            </motion.div>
-            <motion.div variants={staggerChild} className="card-glass p-6">
-              <span className="text-label">Primary KPI</span>
+              <span className="text-label">Main capability</span>
               <p className="text-body mt-3 text-sm">{project.summary.primaryKpi}</p>
             </motion.div>
           </motion.div>

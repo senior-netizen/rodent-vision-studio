@@ -71,7 +71,7 @@ export interface ProjectConfig {
   outcome: string;
   summary: {
     scope: string;
-    timeline: string;
+    timeline?: string;
     primaryKpi: string;
   };
 }
@@ -173,16 +173,19 @@ export const projectConfigs = [
     architecture: ['Edge ingestion', 'Stream processing', 'Rule evaluation engine', 'Operational dashboard'],
     name: 'ShedSense',
     url: 'https://backend-nl4r.onrender.com',
-    preview: '/visuals/shedsense-real.jpg',
+    preview: '/visuals/shedsense-preview.jpg',
     stack: ['Next.js 14', 'TypeScript', 'Three.js', 'Framer Motion', 'PostgreSQL'],
     dataFlow: ['Edge Meter → MQTT Broker', 'Broker → Stream Processor', 'Processor → Rule Engine', 'Rule Engine → Dashboard'],
     decisions: ['Prioritized eventual consistency for wide-area device bursts.', 'Used deterministic replay paths for incident reconstruction.'],
-    visuals: { screenshot: '/visuals/shedsense-real.jpg', diagram: '/visuals/shedsense-real.jpg', preview: '/visuals/shedsense-real.jpg' },
+    visuals: {
+      screenshot: '/visuals/shedsense-ui.jpg',
+      diagram: '/visuals/shedsense-architecture.jpg',
+      preview: '/visuals/shedsense-preview.jpg',
+    },
     previewGeneratedAt: '2026-04-20T00:00:00.000Z',
     outcome: 'Connected field telemetry, rule evaluation, alerts, and an operator-facing incident view.',
     summary: {
       scope: 'Telemetry and dispatch tooling for distributed field assets.',
-      timeline: 'Delivery timeline requires owner confirmation.',
       primaryKpi: 'Alert routing and incident visibility.',
     },
   },
