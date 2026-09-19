@@ -15,9 +15,14 @@ function isExternalUrl(url: string | undefined): url is string {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   const caseStudyHref = `/projects/${project.slug}`;
-  const externalLiveHref = isExternalUrl(project.links.live)
+  const externalLiveHref = (project.status === 'live' || project.status === 'staging') && isExternalUrl(project.links.live)
     ? project.links.live
     : undefined;
+  const availabilityLabel = project.status === 'live'
+    ? 'Public demo available.'
+    : project.status === 'staging'
+      ? 'Public preview available.'
+      : 'Case study only.';
   const stackLabel = project.stack.join(' • ');
 
 
@@ -76,7 +81,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           {project.tagline && (
             <p className="pt-2 text-sm leading-relaxed text-fg/80">{project.tagline}</p>
           )}
-          <p className="text-xs text-fg-dim">Demo availability unverified.</p>
+          <p className="text-xs text-fg-dim">{availabilityLabel}</p>
         </div>
 
         <div className="mt-auto flex gap-3 pt-3">
@@ -88,11 +93,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
               className="inline-flex items-center rounded-md border border-accent px-3 py-2 text-sm font-medium text-accent transition-colors hover:bg-accent/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               onClick={(event) => event.stopPropagation()}
             >
-              Try public demo
+              {project.status === 'staging' ? 'View public preview' : 'Try public demo'}
             </a>
           ) : (
             <span className="inline-flex cursor-not-allowed items-center rounded-md border border-border px-3 py-2 text-sm text-fg-dim">
-              Try public demo
+              No public demo
             </span>
           )}
 

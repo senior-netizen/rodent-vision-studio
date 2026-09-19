@@ -13,7 +13,7 @@ export type ProjectCaseStudy = {
   outcome: string;
   summary: {
     scope: string;
-    timeline: string;
+    timeline?: string;
     primaryKpi: string;
   };
 };
@@ -57,7 +57,6 @@ export const projectCaseStudiesById: Partial<Record<Project['id'], ProjectCaseSt
     outcome: 'Connected field telemetry, rule evaluation, alerts, and an operator-facing incident view.',
     summary: {
       scope: 'Telemetry and dispatch intelligence platform across distributed field assets.',
-      timeline: 'Delivery timeline requires owner confirmation.',
       primaryKpi: 'Alert routing and incident visibility.',
     },
   },

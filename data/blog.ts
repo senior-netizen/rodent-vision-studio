@@ -11,7 +11,7 @@ export const blogPosts: BlogPost[] = [
     slug: 'designing-for-operations',
     title: 'Designing Interfaces for Operations Teams',
     excerpt: 'How interface decisions impact uptime, mean-time-to-resolution, and operator trust.',
-    body: 'Operational interfaces need to stay clear when people are under pressure. Status, ownership, and the next available action should be visible without interpretation.\n\nA readable timeline helps an operator understand what changed and when. Alerts are more useful when they include context and a clear route to action, rather than adding another disconnected notification.\n\nThis is a brief design note based on the principles we use when shaping dashboards. A fuller project account will be published only when the underlying decisions and results can be documented.',
+    body: 'Operational interfaces need to stay clear when people are under pressure. Status, ownership, and the next available action should be visible without interpretation.\n\nA readable timeline helps an operator understand what changed and when. Alerts are more useful when they include context and a clear route to action, rather than adding another disconnected notification.\n\nWe use these principles to make dashboards easier to scan, trust, and act on during day-to-day operations.',
     publishedAt: '2026-02-10',
   },
   {

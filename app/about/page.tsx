@@ -102,11 +102,11 @@ export default function AboutPage() {
 
       <section className="about-section footprint-section" aria-labelledby="footprint-title">
         <div className="section-heading">
-          <p className="eyebrow">Geography</p>
-          <h2 id="footprint-title">Africa-focused service footprint.</h2>
+          <p className="eyebrow">Where we work</p>
+          <h2 id="footprint-title">Built in Southern Africa. Available across the continent.</h2>
         </div>
         <p>
-          Rodent is based in Southern Africa and is available to work remotely with organizations across the continent. The regions below describe where we are available to serve; they are not a claim that client work has been completed in every market.
+          We partner remotely with teams across Africa and support field deployments where the work requires an on-site presence.
         </p>
         <div className="footprint-tags" aria-label="Representative service regions">
           {['Southern Africa', 'East Africa', 'West Africa', 'Remote-first delivery', 'Field deployments'].map((region) => <span key={region}>{region}</span>)}

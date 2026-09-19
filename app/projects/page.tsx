@@ -33,7 +33,13 @@ export default function ProjectsPage() {
               </span>
             </div>
             <p style={{ color: 'var(--mid)', fontSize: 14 }}>{project.problem}</p>
-            <p style={{ color: 'var(--mid)', fontSize: 12, marginTop: 8 }}>Demo availability unverified.</p>
+            <p style={{ color: 'var(--mid)', fontSize: 12, marginTop: 8 }}>
+              {project.status === 'live'
+                ? 'Public demo available.'
+                : project.status === 'staging'
+                  ? 'Public preview available.'
+                  : 'Case study only.'}
+            </p>
           </Link>
         ))}
       </div>
