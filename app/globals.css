@@ -718,8 +718,69 @@ footer p { color: rgba(255,255,255,0.5); font-size: 14px; margin-bottom: 2rem; }
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
 }
-.founders-grid-full { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.founders-intro { color: var(--mid); line-height: 1.7; }
+  .founders-grid-full { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .founders-intro { color: var(--mid); line-height: 1.7; }
+  .founder-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+  gap: clamp(2rem, 6vw, 5.5rem);
+  align-items: center;
+  margin: 2.5rem 0 1.5rem;
+  padding: clamp(1rem, 2vw, 1.5rem) 0 clamp(2.5rem, 5vw, 4.5rem);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  }
+  .founder-feature-media {
+  position: relative;
+  min-height: 560px;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: #12151b;
+  }
+  .founder-feature-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(10, 14, 22, 0.08), rgba(10, 14, 22, 0.3));
+  }
+  .founder-feature-media img { object-fit: cover; object-position: center 23%; }
+  .founder-feature-index {
+  position: absolute;
+  z-index: 1;
+  top: 1rem;
+  left: 1rem;
+  color: rgba(255,255,255,0.8);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  }
+  .founder-feature-copy { max-width: 34rem; }
+  .founder-feature-copy h3 {
+  font-family: var(--font-syne), sans-serif;
+  font-size: clamp(2.2rem, 5vw, 5rem);
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+  }
+  .founder-company { margin-top: 0.65rem; color: var(--mid); font-size: 1.05rem; }
+  .founder-feature-copy .team-bio { max-width: 32rem; margin-top: 2rem; }
+  .founder-social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1.5rem;
+  color: var(--dark);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.35rem;
+  }
+  .founder-social-link:hover { color: var(--orange); border-color: currentColor; }
+  .founder-secondary { grid-column: 2; }
+
 .team-card {
   min-height: 100%;
   border: 1px solid var(--border);
@@ -800,7 +861,12 @@ footer p { color: rgba(255,255,255,0.5); font-size: 14px; margin-bottom: 2rem; }
 .about-final-cta .btn-secondary { border-color: rgba(255,255,255,0.24); }
 .about-final-cta .btn-primary { background: #fff; color: var(--dark); }
 
-@media (max-width: 820px) {
+  @media (max-width: 820px) {
+  .founder-feature { grid-template-columns: 1fr; gap: 2rem; padding-top: 1rem; }
+  .founder-feature-media { min-height: 0; aspect-ratio: 4 / 5; }
+  .founder-feature-copy h3 { font-size: clamp(2.5rem, 11vw, 4rem); }
+  .founder-feature-copy .team-bio { margin-top: 1.5rem; }
+  .founder-secondary { grid-column: auto; }
   .team-grid { grid-template-columns: 1fr; }
   .founders-grid { grid-template-columns: 1fr; }
   .home-founders { padding: 4.5rem 1rem; }
