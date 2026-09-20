@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
@@ -35,15 +36,6 @@ const founders: TeamMember[] = [
   },
 ];
 
-function getInitials(name: string) {
-  return name
-    .split(' ')
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) => part[0]?.toUpperCase())
-    .join('');
-}
-
 export default function AboutPage() {
   return (
     <main className="about-page">
@@ -68,17 +60,33 @@ export default function AboutPage() {
           <h2 id="founders-title">A founding team grounded in software and practical engineering.</h2>
           <p className="founders-intro">Squirrellabs Technologies (Private) Limited was founded by Anesu Prince Ndava and Vulan Anotidaishe K Machiri. Through Rodent, the team brings together software, electronics, and industrial engineering.</p>
         </div>
+        <div className="founder-feature">
+          <div className="founder-feature-media">
+            <span className="founder-feature-index" aria-hidden="true">01 / FOUNDER</span>
+            <Image
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Sep%2020%2C%202026%2C%2009_47_42%20PM-dhV41HKfONsHkP4idQE9iFGrhhNax4.png"
+              alt="Anesu Prince Ndava, Co-Founder of SquirrelLabs Technologies"
+              fill
+              sizes="(max-width: 820px) 100vw, 44vw"
+              priority
+            />
+          </div>
+          <div className="founder-feature-copy">
+            <p className="eyebrow">Co-Founder</p>
+            <h3>Anesu Prince Ndava</h3>
+            <p className="founder-company">SquirrelLabs Technologies</p>
+            <p className="team-bio">Anesu Prince Ndava is a co-founder of SquirrelLabs Technologies, the company behind Rodent. His work focuses on building practical digital products, infrastructure and technology-driven businesses.</p>
+          </div>
+        </div>
         <div className="team-grid founders-grid-full">
-          {founders.map((member) => (
-            <article className="team-card" key={member.name}>
-              <div className="team-avatar" aria-hidden="true">{getInitials(member.name)}</div>
-              <div>
-                <h3>{member.name}</h3>
-                <p className="team-role">{member.role}</p>
-                <p className="team-bio">{member.bio}</p>
-              </div>
-            </article>
-          ))}
+          <article className="team-card founder-secondary">
+            <div className="team-avatar" aria-hidden="true">VK</div>
+            <div>
+              <h3>{founders[1].name}</h3>
+              <p className="team-role">{founders[1].role}</p>
+              <p className="team-bio">{founders[1].bio}</p>
+            </div>
+          </article>
         </div>
       </section>
 
