@@ -76,6 +76,7 @@ export default function AboutPage() {
             <h3>Anesu Prince Ndava</h3>
             <p className="founder-company">SquirrelLabs Technologies</p>
             <p className="team-bio">Anesu Prince Ndava is a co-founder of SquirrelLabs Technologies, the company behind Rodent. His work focuses on building practical digital products, infrastructure and technology-driven businesses.</p>
+            <a className="founder-social-link" href="https://www.linkedin.com/in/anesu-p-ndava-a73567421" target="_blank" rel="noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
           </div>
         </div>
         <div className="team-grid founders-grid-full">
@@ -85,6 +86,7 @@ export default function AboutPage() {
               <h3>{founders[1].name}</h3>
               <p className="team-role">{founders[1].role}</p>
               <p className="team-bio">{founders[1].bio}</p>
+              <a className="founder-social-link" href="https://www.linkedin.com/in/vulan-machiri▪︎▪︎industrial-maintenance▪︎-00a3b3338" target="_blank" rel="noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
             </div>
           </article>
         </div>
