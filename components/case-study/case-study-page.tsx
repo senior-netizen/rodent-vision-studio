@@ -12,10 +12,15 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
     ? project.links.live
     : undefined;
   const availabilityLabel = project.status === 'live'
-    ? 'Public demo available.'
+    ? 'Public project link available.'
     : project.status === 'staging'
       ? 'Public preview available.'
-      : 'Case study only.';
+      : 'No public project link.';
+  const statusLabel = project.status === 'live'
+    ? 'Live project'
+    : project.status === 'staging'
+      ? 'Preview'
+      : 'Case study';
 
 
   return (
@@ -37,6 +42,7 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
               priority
               className="h-auto w-full object-cover"
             />
+            <p className="px-4 py-3 text-caption">Project preview</p>
           </motion.div>
 
           <motion.div
@@ -46,10 +52,10 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
             className="mb-6 flex items-center gap-4"
           >
             <Link
-              href="/"
+              href="/projects"
               className="text-caption transition-colors duration-300 hover:text-fg-muted"
             >
-              ← Back
+              ← All projects
             </Link>
             <span className="h-px w-6 bg-border" />
             <span className="text-label">{project.category}</span>
@@ -75,7 +81,7 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
 
           <div className="mt-4 flex flex-wrap items-center gap-3">
             <span className="rounded-full border border-emerald-400/40 bg-emerald-500/10 px-3 py-1 text-xs uppercase tracking-[0.14em] text-emerald-300">
-              Project delivered
+              {statusLabel}
             </span>
             <span className="text-body text-xs">{availabilityLabel}</span>
           </div>
@@ -94,7 +100,7 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
                   rel="noreferrer"
                   className="rounded-md border border-border px-4 py-2 text-caption transition-colors duration-300 hover:border-border-hover hover:text-fg-muted"
                 >
-                  Try public demo
+                  Open project link
                 </Link>
               )}
             </motion.div>
@@ -171,10 +177,10 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
         <section className="section-shell">
           <div className="container-wide editorial-grid">
             <motion.div {...revealLeft} viewport={{ once: true }} className="col-span-12 md:col-span-1">
-              <span className="section-number">01b</span>
+              <span className="section-number">02</span>
             </motion.div>
             <motion.div {...reveal} viewport={{ once: true }} className="col-span-12 md:col-span-4">
-              <h2 className="text-heading text-[clamp(2rem,3vw,3rem)]">Solution</h2>
+              <h2 className="text-heading text-[clamp(2rem,3vw,3rem)]">What Rodent built</h2>
             </motion.div>
             <motion.div {...reveal} viewport={{ once: true }} className="col-span-12 md:col-span-7">
               <p className="text-body text-lg leading-relaxed">{project.solution}</p>
@@ -191,10 +197,10 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
         <section className="section-shell">
           <div className="container-wide editorial-grid">
             <motion.div {...revealLeft} viewport={{ once: true }} className="col-span-12 md:col-span-1">
-              <span className="section-number">01c</span>
+              <span className="section-number">03</span>
             </motion.div>
             <motion.div {...reveal} viewport={{ once: true }} className="col-span-12 md:col-span-4">
-              <h2 className="text-heading text-[clamp(2rem,3vw,3rem)]">Result</h2>
+              <h2 className="text-heading text-[clamp(2rem,3vw,3rem)]">Demonstrated result</h2>
             </motion.div>
             <motion.div {...reveal} viewport={{ once: true }} className="col-span-12 md:col-span-7">
               {project.result && (
@@ -224,7 +230,7 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
         </section>
       )}
 
-      {/* Architecture */}
+      {/* How it works */}
       <section className="section-shell">
         <div className="container-wide">
           <div className="editorial-grid mb-12">
@@ -233,32 +239,35 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
               viewport={{ once: true }}
               className="col-span-12 md:col-span-1"
             >
-              <span className="section-number">02</span>
+              <span className="section-number">04</span>
             </motion.div>
             <motion.div
               {...reveal}
               viewport={{ once: true }}
               className="col-span-12 md:col-span-11"
             >
-              <h2 className="text-heading text-[clamp(2rem,3vw,3rem)]">Architecture</h2>
+              <h2 className="text-heading text-[clamp(2rem,3vw,3rem)]">How it works</h2>
             </motion.div>
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            viewport={{ once: true }}
-            className="card-glass overflow-hidden p-1"
-          >
-            <Image
-              src={project.visuals.diagram}
-              alt={`${project.name} architecture diagram`}
-              width={1600}
-              height={900}
-              className="w-full"
-            />
-          </motion.div>
+          {project.visuals.diagram && (
+            <motion.figure
+              initial={{ opacity: 0, scale: 0.96 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              viewport={{ once: true }}
+              className="card-glass overflow-hidden p-1"
+            >
+              <Image
+                src={project.visuals.diagram}
+                alt={`${project.name} system diagram`}
+                width={1600}
+                height={900}
+                className="w-full"
+              />
+              <figcaption className="px-4 py-3 text-caption">System diagram</figcaption>
+            </motion.figure>
+          )}
 
           <motion.div
             variants={stagger}
@@ -291,7 +300,7 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
               viewport={{ once: true }}
               className="col-span-12 md:col-span-1"
             >
-              <span className="section-number">03</span>
+              <span className="section-number">05</span>
             </motion.div>
             <motion.div
               {...reveal}
@@ -342,6 +351,7 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
       </section>
 
       {/* Interface */}
+      {project.visuals.screenshot !== project.visuals.preview && (
       <section className="section-shell">
         <div className="container-wide">
           <div className="editorial-grid mb-12">
@@ -350,7 +360,7 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
               viewport={{ once: true }}
               className="col-span-12 md:col-span-1"
             >
-              <span className="section-number">05</span>
+              <span className="section-number">06</span>
             </motion.div>
             <motion.div
               {...reveal}
@@ -375,44 +385,19 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
               height={900}
               className="w-full"
             />
+            <p className="px-4 py-3 text-caption">Product interface screenshot</p>
           </motion.div>
 
           <div className="divider mt-16" />
         </div>
       </section>
-
-      {/* Outcome */}
-      <section className="section-shell">
-        <div className="container-wide editorial-grid">
-          <motion.div
-            {...revealLeft}
-            viewport={{ once: true }}
-            className="col-span-12 md:col-span-1"
-          >
-            <span className="section-number">06</span>
-          </motion.div>
-          <motion.div
-            {...reveal}
-            viewport={{ once: true }}
-            className="col-span-12 md:col-span-4"
-          >
-            <h2 className="text-heading text-[clamp(2rem,3vw,3rem)]">Outcome</h2>
-          </motion.div>
-          <motion.div
-            {...reveal}
-            viewport={{ once: true }}
-            className="col-span-12 md:col-span-7"
-          >
-            <p className="text-body text-lg leading-relaxed">{project.outcome}</p>
-          </motion.div>
-        </div>
-      </section>
+      )}
 
       {/* Back link */}
       <section className="pb-20">
         <div className="container-wide flex justify-center">
           <Link
-            href="/"
+            href="/projects"
             className="group flex items-center gap-3 text-caption transition-colors duration-300 hover:text-fg-muted"
           >
             <svg
@@ -426,7 +411,7 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
             >
               <path d="M19 12H5M5 12L12 19M5 12L12 5" />
             </svg>
-            <span>All Systems</span>
+            <span>All projects</span>
           </Link>
         </div>
       </section>
