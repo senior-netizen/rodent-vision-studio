@@ -81,7 +81,14 @@ export default function AboutPage() {
         </div>
         <div className="team-grid founders-grid-full">
           <article className="team-card founder-secondary">
-            <div className="team-avatar" aria-hidden="true">VK</div>
+            <div className="founder-secondary-media">
+              <Image
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ChatGPT%20Image%20Sep%2020%2C%202026%2C%2010_15_32%20PM-u4bmoHkYO2MMCOhXFa2iZaHWQ7ljmc.png"
+                alt="Vulan Anotidaishe K Machiri, Co-Founder of SquirrelLabs Technologies"
+                fill
+                sizes="(max-width: 820px) 100vw, 40vw"
+              />
+            </div>
             <div>
               <h3>{founders[1].name}</h3>
               <p className="team-role">{founders[1].role}</p>
