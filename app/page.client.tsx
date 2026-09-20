@@ -8,7 +8,6 @@ import { AnimatePresence, motion, useScroll, useSpring, useTransform } from 'fra
 import { StartProjectModal } from '@/components/contact/start-project-modal';
 import { ContactForm } from '@/components/contact/contact-form';
 import { projects } from '@/data/projects';
-import { projectCaseStudiesById } from '@/data/project-case-studies';
 import { labs } from '@/data/labs';
 import { services } from '@/data/services';
 import { contact, contactEmailHref } from '@/data/contact';
@@ -19,11 +18,11 @@ const sectionIds = ['services', 'projects', 'labs'];
 const founders = [
   {
     name: 'Anesu Prince Ndava',
-    summary: 'Software development and electronic engineering, focused on digital infrastructure, APIs, and connected systems.',
+    summary: 'Anesu’s background combines software development and electronic engineering. His portfolio includes ShedSense, Precise Locations, AR by Rodent, and Feel At Home.',
   },
   {
     name: 'Vulan Anotidaishe K Machiri',
-    summary: 'Millwright work, industrial maintenance, and industrial electrical systems, bringing a practical engineering perspective.',
+    summary: 'Vulan brings a background in millwright work, industrial maintenance, and electrical systems, complementing the team’s software and electronics capabilities.',
   },
 ] as const;
 
@@ -38,44 +37,44 @@ const heroTechCards = [
   {
     className: 'card-1',
     badge: 'MOBILE',
-    title: 'Flutter + NestJS + PostgreSQL',
-    details: ['Frontend: Flutter', 'Backend: NestJS', 'DB: PostgreSQL'],
-    useCase: 'Property mgmt, booking & remittance',
+    title: 'Mobile tools for daily work',
+    details: ['Bookings and records', 'Staff workflows', 'Flutter, NestJS, PostgreSQL'],
+    useCase: 'Capture and manage work away from a desk',
   },
   {
     className: 'card-2',
     badge: 'MVP',
-    title: 'Flutter + Firebase',
-    details: ['Auth + Firestore', 'Cloud Messaging', 'Real-time sync'],
-    useCase: 'Rapid prototypes, chat, notifications',
+    title: 'Focused product prototypes',
+    details: ['Sign-in and permissions', 'Notifications', 'Flutter and Firebase'],
+    useCase: 'Test a useful first version before expanding it',
   },
   {
     className: 'card-3',
     badge: 'SAAS',
-    title: 'React + Node.js + MongoDB',
-    details: ['React frontend', 'Node APIs', 'MongoDB schema-flex'],
-    useCase: 'Dashboards, analytics, internal tools',
+    title: 'Web platforms and internal tools',
+    details: ['Dashboards', 'Business workflows', 'React, Node.js, databases'],
+    useCase: 'Put shared information and actions in one place',
   },
   {
     className: 'card-4',
     badge: 'CMS',
-    title: 'Laravel + MySQL + Bootstrap',
-    details: ['Laravel MVC', 'MySQL data layer', 'Bootstrap UI'],
-    useCase: 'Corporate sites, CMS & admin portals',
+    title: 'Websites your team can manage',
+    details: ['Publishing tools', 'Admin access', 'Laravel and MySQL'],
+    useCase: 'Keep public information current without code changes',
   },
   {
     className: 'card-5',
     badge: 'IOT',
-    title: 'ESP32 + Node + WS + React',
-    details: ['ESP32 sensors', 'WebSocket streaming', 'React monitoring UI'],
-    useCase: 'SHEQ dashboards, smart meters, alerts',
+    title: 'Connected monitoring systems',
+    details: ['Sensor readings', 'Alerts and history', 'ESP32, Node.js, React'],
+    useCase: 'See what equipment is reporting and respond',
   },
   {
     className: 'card-6',
     badge: 'ENTERPRISE',
-    title: 'ASP.NET + PostgreSQL + Cloudinary + Stripe',
-    details: ['Secure APIs', 'Media handling', 'Payment workflows'],
-    useCase: 'Fintech & property platforms at scale',
+    title: 'Business platforms',
+    details: ['Customer accounts', 'Media and payments', 'ASP.NET and PostgreSQL'],
+    useCase: 'Run multi-step services through one system',
   },
 ] as const;
 
@@ -239,9 +238,9 @@ export default function HomePage() {
 
       <motion.div className="hero" ref={heroRef} variants={heroContainer} initial="hidden" animate="show" id="about">
         <div className="hero-content">
-          <motion.h1 variants={heroItem}>We build infrastructure that deploys.</motion.h1>
+          <motion.h1 variants={heroItem}>Software and connected systems built around your business.</motion.h1>
           <motion.p variants={heroItem}>
-            Rodent builds web platforms, mobile applications, and connected systems for businesses and field teams that need clearer, more reliable day-to-day operations.
+            We build web platforms, mobile applications, and connected systems that help businesses manage their daily work.
           </motion.p>
           <motion.p variants={heroItem} className="hero-company-line">
             A division of Squirrellabs Technologies (Private) Limited.
@@ -298,11 +297,11 @@ export default function HomePage() {
           <div className="gateway-label">ABOUT RODENT</div>
           <div className="gateway-inner">
             <div className="gateway-text">
-              <span className="gateway-bubble">Infrastructure Engineering</span>
+              <span className="gateway-bubble">Who we are</span>
               <h2>Rodent is the software and hardware engineering division of Squirrellabs Technologies (Private) Limited.</h2>
-              <p className="gateway-about-copy">We design and build web platforms, mobile applications, IoT systems, and robotics solutions, bringing software development and practical engineering together to solve real business problems.</p>
+              <p className="gateway-about-copy">Our team brings software, electronics, and practical industrial experience to projects that cross the digital and physical worlds.</p>
               <div className="gateway-controls">
-                <button className="watch-btn" type="button" onClick={() => goToSection('services')}>Operate</button>
+                <button className="watch-btn" type="button" onClick={() => goToSection('services')}>See what we build</button>
                 <button className="ctrl-btn" type="button" onClick={() => setServiceIndex((prev) => (prev - 1 + services.length) % services.length)}>←</button>
                 <button className="ctrl-btn" type="button" onClick={() => setServiceIndex((prev) => (prev + 1) % services.length)}>→</button>
               </div>
@@ -422,7 +421,7 @@ export default function HomePage() {
       </motion.div>
 
       <motion.div className="gallery-wrap" {...scaleReveal} id="projects">
-        <motion.div style={{ textAlign: 'center', marginBottom: '3rem' }} {...slideInLeft}><div style={{ fontSize: 12, fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', color: 'var(--teal)', marginBottom: '0.5rem' }}>PROJECTS</div><h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(32px,4vw,50px)', fontWeight: 800, letterSpacing: '-1.5px' }}>Our work is deployed in real environments.</h2></motion.div>
+        <motion.div style={{ textAlign: 'center', marginBottom: '3rem' }} {...slideInLeft}><div style={{ fontSize: 12, fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', color: 'var(--teal)', marginBottom: '0.5rem' }}>PROJECTS</div><h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(32px,4vw,50px)', fontWeight: 800, letterSpacing: '-1.5px' }}>What we have built</h2></motion.div>
         <div className="gallery-grid gallery-grid-desktop">
           {projects.map((project) => (
             <motion.button key={project.id} className="g-card" whileHover={{ scale: 1.04, y: -6 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.4, ease: easeCurve }} onClick={() => router.push(`/projects/${project.slug}`)} style={{ border: 'none' }}>
@@ -435,7 +434,7 @@ export default function HomePage() {
                   className="g-card-image"
                 />
               </div>
-              <div className="featured-overlay"><span className="name">{project.name}</span><div className="source">{projectCaseStudiesById[project.id]?.problem ?? project.category}</div></div>
+              <div className="featured-overlay"><span className="name">{project.name}</span><div className="source">{project.problem}</div></div>
             </motion.button>
           ))}
           <motion.div className="g-card featured art-orange" whileHover={{ scale: 1.03 }} transition={{ duration: 0.6, ease: easeCurve }}>
@@ -470,7 +469,7 @@ export default function HomePage() {
             </div>
             <div className="featured-overlay">
               <span className="name">{projects[mobileProjectIndex].name}</span>
-              <div className="source">{projectCaseStudiesById[projects[mobileProjectIndex].id]?.problem ?? projects[mobileProjectIndex].category}</div>
+              <div className="source">{projects[mobileProjectIndex].problem}</div>
             </div>
           </motion.button>
           <button className="gallery-carousel-arrow gallery-carousel-arrow-right" type="button" onClick={nextMobileProject} aria-label="Next project">→</button>
@@ -512,7 +511,7 @@ export default function HomePage() {
               Tell us what you&apos;re building.
             </h2>
             <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: 16, lineHeight: 1.65, maxWidth: 440, marginBottom: '2rem' }}>
-              Share scope, budget, and timeline. We respond within one business day with a practical plan and next steps.
+              Share what you need, your budget, and your preferred timeline. We will reply with practical next steps.
             </p>
             <ul style={{ listStyle: 'none', padding: 0, display: 'grid', gap: '0.65rem', fontSize: 14, color: 'rgba(255,255,255,0.75)' }}>
               <li>✉ <a href={contactEmailHref} style={{ color: 'inherit' }}>{contact.email}</a></li>
@@ -533,8 +532,8 @@ export default function HomePage() {
         viewport={{ once: true, margin: '-10%' }}
         transition={{ duration: 1, ease: easeCurve }}
       >
-        <h2>Build systems that operate at scale.</h2>
-        <p>Rodent delivers infrastructure that works.</p>
+        <h2>Have a project in mind?</h2>
+        <p>Tell us about the work your business needs to manage.</p>
         <button className="footer-btn" type="button" onClick={() => setProjectModalOpen(true)}>Start a Project</button>
         <div className="footer-links">
           <Link href="/privacy">Privacy</Link>

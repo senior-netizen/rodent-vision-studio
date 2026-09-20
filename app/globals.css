@@ -5,12 +5,12 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --teal: #1ac99e;
+  --teal: #087a60;
   --dark: #111;
   --mid: #555;
   --light: #f5f5f3;
   --border: #e8e8e4;
-  --orange: #f05a28;
+  --orange: #b83b12;
   --purple: #a855f7;
 }
 
@@ -173,8 +173,12 @@ nav {
   color: #fff;
 }
 
-.card-2 .card-badge { color: var(--dark); background: rgba(255, 255, 255, 0.48); border-color: rgba(0, 0, 0, 0.08); }
-.card-2 .card-inner { color: #17191d; text-shadow: none; }
+.card-2 .card-badge,
+.card-3 .card-badge,
+.card-4 .card-badge { color: var(--dark); background: rgba(255, 255, 255, 0.62); border-color: rgba(0, 0, 0, 0.12); }
+.card-2 .card-inner,
+.card-3 .card-inner,
+.card-4 .card-inner { color: #17191d; text-shadow: none; }
 
 .card-inner {
   position: relative;

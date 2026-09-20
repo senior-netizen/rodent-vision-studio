@@ -55,7 +55,7 @@ export interface ProjectConfig {
   decisions: string[];
   visuals: {
     screenshot: string;
-    diagram: string;
+    diagram?: string;
     preview: string;
   };
   previewGeneratedAt?: string;
@@ -88,21 +88,16 @@ export const projectConfigs = [
     links: {
       live: 'https://jobopportunities.co.zw',
     },
-    problem: 'Job listings were fragmented across informal channels with no centralized, scalable data system.',
-    solution: 'Built a Next.js + Supabase platform with structured submission, validation, and SSR-rendered job pages on a unified PostgreSQL data layer.',
-    result: 'Centralized listing intake with a publishing pipeline that scales beyond informal channels.',
-    metrics: [
-      { label: 'Channels consolidated', value: '5+' },
-      { label: 'Build cycle', value: '6 weeks' },
-      { label: 'Time-to-publish', value: '< 1 min' },
-    ],
-    tagline: 'Fragmented listings → one structured intake and publishing pipeline.',
+    problem: 'Job opportunities shared across separate channels can be difficult for applicants to find and for publishers to keep organised.',
+    solution: 'Rodent built a web platform where opportunities can be submitted as structured records and published as individual job pages.',
+    result: 'The delivered platform gives job seekers one place to browse listings and gives publishers a consistent way to add them.',
+    tagline: 'One place to publish and browse structured job listings.',
     architecture: ['Next.js App Router (SSR)', 'Supabase Auth + PostgREST API', 'PostgreSQL data layer', 'Vercel deployment edge network'],
     preview: '/visuals/jofe-preview.jpg',
     stack: ['Next.js (App Router)', 'Supabase', 'PostgreSQL', 'TailwindCSS', 'Vercel'],
     dataFlow: ['Submission Form → Validation', 'Validation → Supabase API', 'Supabase API → PostgreSQL', 'PostgreSQL → SSR Job Pages'],
     decisions: ['Prioritized mobile-first interaction patterns for accessibility.', 'Structured listings and submissions to support data ownership and scale.'],
-    visuals: { screenshot: '/visuals/jofe-preview.jpg', diagram: '/visuals/sheq-architecture.jpg', preview: '/visuals/jofe-preview.jpg' },
+    visuals: { screenshot: '/visuals/jofe-preview.jpg', preview: '/visuals/jofe-preview.jpg' },
     previewGeneratedAt: '2026-04-20T00:00:00.000Z',
     status: 'live',
     deployments: [
@@ -110,9 +105,8 @@ export const projectConfigs = [
     ],
     outcome: 'Established a centralized job platform with a scalable intake and publishing foundation.',
     summary: {
-      scope: 'End-to-end architecture and case study execution for employment distribution platform.',
-      timeline: '6-week design and build cycle.',
-      primaryKpi: 'Centralized listing access with reduced channel fragmentation.',
+      scope: 'Job listing submission, publishing, and browsing.',
+      primaryKpi: 'Structured listings in one public platform.',
     },
   },
   {
@@ -124,15 +118,10 @@ export const projectConfigs = [
     links: {
       live: 'https://feelathome.vercel.app',
     },
-    problem: 'Property discovery and publishing required a single reliable platform with fast indexing.',
-    solution: 'Index-first search architecture with typed API contracts and authenticated publisher flows for managed listings.',
-    result: 'A unified discovery and publishing experience that shortens listing turnaround for renters and agents alike.',
-    metrics: [
-      { label: 'Listing surfaces', value: '1 unified' },
-      { label: 'Publisher access', value: 'Auth-gated' },
-      { label: 'Search latency', value: 'Index-first' },
-    ],
-    tagline: 'Fragmented property search → one index-first discovery + publishing platform.',
+    problem: 'People looking for a home and people publishing properties needed a shared place to manage listings.',
+    solution: 'Rodent built a property website with searchable listings and sign-in-protected publishing tools.',
+    result: 'The preview brings property discovery and managed listing publication into one interface.',
+    tagline: 'Property discovery and managed publishing in one preview.',
     architecture: ['Next.js application layer', 'Typed API contracts', 'PostgreSQL persistence', 'Vercel deployment'],
     name: 'Feel At Home',
     url: 'https://feelathome.vercel.app',
@@ -140,7 +129,7 @@ export const projectConfigs = [
     stack: ['Next.js', 'TypeScript', 'React Query', 'PostgreSQL', 'Tailwind CSS'],
     dataFlow: ['User Query → Search Index', 'Search Index → Property Catalog', 'Catalog → Listing Detail', 'Listing Events → Agent Dashboard'],
     decisions: ['Kept property lookup paths index-first for responsive browsing.', 'Separated listing write access behind authenticated publisher flows.'],
-    visuals: { screenshot: '/visuals/feel-at-home-preview.jpg', diagram: '/visuals/feel-at-home-preview.jpg', preview: '/visuals/feel-at-home-preview.jpg' },
+    visuals: { screenshot: '/visuals/feel-at-home-preview.jpg', preview: '/visuals/feel-at-home-preview.jpg' },
     previewGeneratedAt: '2026-04-20T00:00:00.000Z',
     status: 'staging',
     deployments: [
@@ -149,8 +138,7 @@ export const projectConfigs = [
     outcome: 'Delivered a single platform for discovering homes and publishing managed listings.',
     summary: {
       scope: 'End-to-end property search and listing platform.',
-      timeline: 'Iterative delivery with continuous UX refinement.',
-      primaryKpi: 'Faster listing discovery and publication turnaround.',
+      primaryKpi: 'Search and publishing in one interface.',
     },
   },
   {
@@ -162,13 +150,9 @@ export const projectConfigs = [
     links: {
       live: 'https://backend-nl4r.onrender.com',
     },
-    problem: 'Field telemetry pipelines needed deterministic routing and resilient actioning.',
-    solution: 'Edge ingestion over MQTT into a stream processor and rule engine that routes alerts with deterministic confidence to an ops dashboard.',
-    result: 'Built a telemetry path for turning field readings into operator alerts and an incident timeline.',
-    metrics: [
-      { label: 'Pipeline', value: 'MQTT → Rules → UI' },
-      { label: 'Interface', value: 'Operations dashboard' },
-    ],
+    problem: 'Teams monitoring equipment in the field needed a clear way to turn incoming meter readings into information they could act on.',
+    solution: 'Rodent built a telemetry flow that receives readings through MQTT, checks them against rules, and sends alerts and status updates to an operations dashboard.',
+    result: 'The system demonstrates field readings appearing as alerts and a time-ordered incident record for operators to review.',
     tagline: 'Field telemetry routed into alerts and an operations dashboard.',
     architecture: ['Edge ingestion', 'Stream processing', 'Rule evaluation engine', 'Operational dashboard'],
     name: 'ShedSense',
@@ -176,7 +160,7 @@ export const projectConfigs = [
     preview: '/visuals/shedsense-preview.jpg',
     stack: ['Next.js 14', 'TypeScript', 'Three.js', 'Framer Motion', 'PostgreSQL'],
     dataFlow: ['Edge Meter → MQTT Broker', 'Broker → Stream Processor', 'Processor → Rule Engine', 'Rule Engine → Dashboard'],
-    decisions: ['Prioritized eventual consistency for wide-area device bursts.', 'Used deterministic replay paths for incident reconstruction.'],
+    decisions: ['Kept incoming readings separate from the operator interface.', 'Recorded events in order so an operator can review what happened.'],
     visuals: {
       screenshot: '/visuals/shedsense-ui.jpg',
       diagram: '/visuals/shedsense-architecture.jpg',
@@ -185,7 +169,7 @@ export const projectConfigs = [
     previewGeneratedAt: '2026-04-20T00:00:00.000Z',
     outcome: 'Connected field telemetry, rule evaluation, alerts, and an operator-facing incident view.',
     summary: {
-      scope: 'Telemetry and dispatch tooling for distributed field assets.',
+      scope: 'Telemetry intake, rule checks, alerts, and an operator dashboard.',
       primaryKpi: 'Alert routing and incident visibility.',
     },
   },
@@ -198,15 +182,10 @@ export const projectConfigs = [
     links: {
       live: 'https://arbyrodent.vercel.app',
     },
-    problem: 'The product needed a performant immersive presentation layer that remained accessible.',
-    solution: 'Next.js shell with a WebGL render surface and Framer Motion orchestration tuned for smooth motion across device classes.',
-    result: 'An immersive AR-led product surface with strong identity and accessible interaction.',
-    metrics: [
-      { label: 'Render surface', value: 'WebGL' },
-      { label: 'Target devices', value: 'Mobile + desktop' },
-      { label: 'Accessibility', value: 'Preserved' },
-    ],
-    tagline: 'Static landing → immersive, accessible AR-led product surface.',
+    problem: 'The project needed a web-based way to introduce and demonstrate an augmented-reality concept.',
+    solution: 'Rodent built an interactive product site using a Next.js interface, WebGL visuals, and motion that responds to user input.',
+    result: 'The public site lets visitors explore the visual concept and follow its calls to action on mobile or desktop.',
+    tagline: 'An interactive web presentation for an augmented-reality concept.',
     architecture: ['Next.js UI shell', 'WebGL render surface', 'Motion orchestration', 'CTA analytics hooks'],
     name: 'AR by Rodent',
     url: 'https://arbyrodent.vercel.app',
@@ -214,7 +193,7 @@ export const projectConfigs = [
     stack: ['Next.js', 'TypeScript', 'Framer Motion', 'WebGL', 'CSS Effects'],
     dataFlow: ['User Session → Experience Shell', 'Interaction Events → Animation Layer', 'Media Assets → Render Pipeline', 'CTA Actions → Source Destination'],
     decisions: ['Optimized animation sequencing to keep motion smooth across device classes.', 'Structured interactive elements to preserve accessibility while remaining immersive.'],
-    visuals: { screenshot: '/visuals/ar-by-rodent-preview.jpg', diagram: '/visuals/ar-by-rodent-preview.jpg', preview: '/visuals/ar-by-rodent-preview.jpg' },
+    visuals: { screenshot: '/visuals/ar-by-rodent-preview.jpg', preview: '/visuals/ar-by-rodent-preview.jpg' },
     previewGeneratedAt: '2026-04-20T00:00:00.000Z',
     status: 'live',
     deployments: [
@@ -223,8 +202,7 @@ export const projectConfigs = [
     outcome: 'Shipped an immersive AR-led product surface with strong visual identity and engagement.',
     summary: {
       scope: 'Interactive AR showcase and product landing experience.',
-      timeline: 'Rapid delivery with design-led iterations.',
-      primaryKpi: 'Higher session engagement on interactive surfaces.',
+      primaryKpi: 'Interactive presentation on mobile and desktop.',
     },
   },
   {
@@ -237,23 +215,18 @@ export const projectConfigs = [
       live: 'https://github.com/anesu398/precise-locations',
       repo: 'https://github.com/anesu398/precise-locations',
     },
-    problem: 'Teams required deterministic geospatial primitives with stable package contracts.',
-    solution: 'Typed Node.js library with a strict validation boundary, semver-driven releases, and automated GitHub Actions publishing.',
-    result: 'A reusable geospatial toolkit consumed across multiple downstream products.',
-    metrics: [
-      { label: 'Distribution', value: 'npm + GitHub' },
-      { label: 'Release pipeline', value: 'Automated' },
-      { label: 'API surface', value: 'Stable' },
-    ],
-    tagline: 'Ad-hoc geo math → deterministic, versioned location primitives.',
+    problem: 'Applications working with coordinates needed reusable validation and distance calculations instead of implementing them repeatedly.',
+    solution: 'Rodent built a typed Node.js library that checks coordinate input, calculates distance, and packages those functions for reuse.',
+    result: 'The source and release history are publicly available for developers to inspect and use.',
+    tagline: 'Reusable coordinate validation and distance calculations.',
     architecture: ['Typed Node.js library core', 'Validation boundary', 'Automated release pipeline', 'GitHub/npm distribution'],
     name: 'Precise Locations',
     url: 'https://github.com/anesu398/precise-locations',
     preview: '/visuals/precise-locations-preview.jpg',
     stack: ['Node.js', 'TypeScript', 'npm', 'GitHub Actions', 'Semantic Versioning'],
     dataFlow: ['Input Coordinates → Validation', 'Validated Data → Distance Engine', 'Distance Results → Consumer APIs', 'Package Releases → npm/GitHub'],
-    decisions: ['Kept API contracts small and deterministic for broad downstream use.', 'Automated publish and verification checks to keep releases reliable.'],
-    visuals: { screenshot: '/visuals/precise-locations-preview.jpg', diagram: '/visuals/precise-locations-preview.jpg', preview: '/visuals/precise-locations-preview.jpg' },
+    decisions: ['Kept the public functions small and typed.', 'Automated checks and package publishing through GitHub Actions.'],
+    visuals: { screenshot: '/visuals/precise-locations-preview.jpg', preview: '/visuals/precise-locations-preview.jpg' },
     previewGeneratedAt: '2026-04-20T00:00:00.000Z',
     status: 'live',
     deployments: [
@@ -262,8 +235,7 @@ export const projectConfigs = [
     outcome: 'Provided a reusable geospatial toolkit for coordinate-driven applications.',
     summary: {
       scope: 'Open source Node.js package for precise location operations.',
-      timeline: 'Incremental releases with API stability focus.',
-      primaryKpi: 'Reusable location primitives for multiple products.',
+      primaryKpi: 'Reusable location functions in a public package.',
     },
   },
   {
@@ -275,15 +247,10 @@ export const projectConfigs = [
     role: 'Brand + Web Engineering',
     url: 'https://expressenergy.co.zw',
     links: { live: 'https://expressenergy.co.zw' },
-    problem: 'A 24hr Masvingo fuel station needed an authoritative web presence with live pricing and station info.',
-    solution: 'Built a brand-led marketing site with a daily fuel-price module, station finder, and trust signals (24hr service, direct from Feruka).',
-    result: 'A clear, mobile-first hub that surfaces today\'s prices and drives visits to the station.',
-    metrics: [
-      { label: 'Service window', value: '24/7' },
-      { label: 'Location', value: 'Masvingo' },
-      { label: 'Sourcing', value: 'Direct from Feruka' },
-    ],
-    tagline: 'Static fuel branding → live pricing + station discovery on web.',
+    problem: 'Express Energy needed a clear web presence where drivers could find station information and current published prices.',
+    solution: 'Rodent built a mobile-friendly marketing site with a fuel-price section, station information, and a route to directions.',
+    result: 'The public website gives drivers one place to check the information the station publishes online.',
+    tagline: 'Published fuel prices and station information in one website.',
     architecture: ['Next.js marketing site', 'Daily price module', 'Station locator', 'CMS-backed content'],
     preview: '/visuals/express-energy-preview.jpg',
     stack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Vercel'],
@@ -291,7 +258,6 @@ export const projectConfigs = [
     decisions: ['Mobile-first hero with strong brand identity.', 'Surfaced 24hr availability and Feruka sourcing as primary trust signals.'],
     visuals: {
       screenshot: '/visuals/express-energy-preview.jpg',
-      diagram: '/visuals/express-energy-preview.jpg',
       preview: '/visuals/express-energy-preview.jpg',
     },
     previewGeneratedAt: '2026-05-03T00:00:00.000Z',
@@ -302,8 +268,7 @@ export const projectConfigs = [
     outcome: 'Launched a branded fuel-retail web presence with live pricing and station discovery.',
     summary: {
       scope: 'Marketing site, pricing module, and station finder for a 24hr fuel retailer.',
-      timeline: 'Rapid brand-aligned build and launch.',
-      primaryKpi: 'Daily-updated fuel prices visible to drivers in Masvingo.',
+      primaryKpi: 'Prices and station details visible in one place.',
     },
   },
 ] satisfies ProjectConfig[];
@@ -322,4 +287,7 @@ export const projectIdBySlug = Object.fromEntries(
     .map((project) => [project.slug, project.id]),
 ) as Record<string, ProjectConfig['id']>;
 
-export const projects: Project[] = projectConfigs;
+export const projects: Project[] = [
+  projectConfigs.find((project) => project.id === 'shedsense-grid')!,
+  ...projectConfigs.filter((project) => project.id !== 'shedsense-grid'),
+];

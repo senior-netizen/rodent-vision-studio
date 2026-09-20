@@ -54,7 +54,7 @@ export default function BlogPage() {
           >
             <div style={{ height: 1, width: 40, background: 'var(--teal)' }} />
             <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', color: 'var(--mid)' }}>
-              Journal
+              Journal · Brief notes
             </span>
           </motion.div>
           <motion.h1
