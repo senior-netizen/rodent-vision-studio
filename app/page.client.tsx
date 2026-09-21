@@ -174,7 +174,7 @@ export default function HomePage() {
   };
 
   return (
-    <motion.main initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, ease: easeCurve }}>
+    <motion.main className="home-main" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, ease: easeCurve }}>
       <StartProjectModal isOpen={projectModalOpen} onClose={() => setProjectModalOpen(false)} />
 
       <motion.nav
@@ -292,7 +292,7 @@ export default function HomePage() {
         </motion.div>
       </motion.div>
 
-      <motion.div className="section-wrap" style={{ background: '#fafaf8', padding: '60px 2rem' }} {...revealMotion} id="philosophy">
+      <motion.div className="section-wrap home-philosophy" style={{ background: '#fafaf8', padding: '60px 2rem' }} {...revealMotion} id="philosophy">
         <div className="gateway">
           <div className="gateway-label">ABOUT RODENT</div>
           <div className="gateway-inner">
@@ -327,7 +327,7 @@ export default function HomePage() {
         </div>
       </motion.div>
 
-      <motion.section className="home-founders" aria-labelledby="home-founders-title" {...revealMotion}>
+      <motion.section className="home-founders home-founders-section" aria-labelledby="home-founders-title" {...revealMotion}>
         <div className="home-founders-heading">
           <p className="eyebrow">Meet the founders</p>
           <h2 id="home-founders-title">Software, electronics, and industrial engineering.</h2>
@@ -345,7 +345,7 @@ export default function HomePage() {
         <Link className="founders-link" href="/about#founders">Meet the founding team →</Link>
       </motion.section>
 
-      <motion.div className="marketplace-wrap" {...revealMotion} id="services" ref={marketplaceRef}>
+      <motion.div className="marketplace-wrap home-services" {...revealMotion} id="services" ref={marketplaceRef}>
         <div className="marketplace-inner">
           <div className="marketplace-header">
             <div className="mp-left"><div className="mp-label">SERVICES</div><h2>What we build</h2><p className="mp-desc">We build web platforms, mobile applications, and connected systems around the way your business works.</p></div>
@@ -420,7 +420,7 @@ export default function HomePage() {
         </div>
       </motion.div>
 
-      <motion.div className="gallery-wrap" {...scaleReveal} id="projects">
+      <motion.div className="gallery-wrap home-projects" {...scaleReveal} id="projects">
         <motion.div style={{ textAlign: 'center', marginBottom: '3rem' }} {...slideInLeft}><div style={{ fontSize: 12, fontWeight: 600, letterSpacing: 2, textTransform: 'uppercase', color: 'var(--teal)', marginBottom: '0.5rem' }}>PROJECTS</div><h2 style={{ fontFamily: 'Syne, sans-serif', fontSize: 'clamp(32px,4vw,50px)', fontWeight: 800, letterSpacing: '-1.5px' }}>What we have built</h2></motion.div>
         <div className="gallery-grid gallery-grid-desktop">
           {projects.map((project) => (
@@ -476,7 +476,7 @@ export default function HomePage() {
         </div>
       </motion.div>
 
-      <motion.section id="labs" style={{ padding: '0 2rem 4rem', maxWidth: 1100, margin: '0 auto' }} {...revealMotion}>
+      <motion.section className="home-labs" id="labs" style={{ padding: '0 2rem 4rem', maxWidth: 1100, margin: '0 auto' }} {...revealMotion}>
         <motion.h2 style={{ fontFamily: 'var(--font-syne)', marginBottom: '1rem' }} {...slideInLeft}>Labs</motion.h2>
         <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-10%' }} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: '1rem' }}>
           {labs.map((lab) => (
@@ -491,6 +491,7 @@ export default function HomePage() {
       </motion.section>
 
       <motion.section
+        className="home-contact"
         id="contact"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
