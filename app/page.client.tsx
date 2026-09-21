@@ -298,7 +298,8 @@ export default function HomePage() {
           <div className="gateway-inner">
             <div className="gateway-text">
               <span className="gateway-bubble">Who we are</span>
-              <h2>Rodent is the software and hardware engineering division of Squirrellabs Technologies (Private) Limited.</h2>
+              <h2>Software and practical engineering.</h2>
+              <p className="gateway-about-copy">Rodent is the software and hardware engineering division of Squirrellabs Technologies (Private) Limited.</p>
               <p className="gateway-about-copy">Our team brings software, electronics, and practical industrial experience to projects that cross the digital and physical worlds.</p>
               <div className="gateway-controls">
                 <button className="watch-btn" type="button" onClick={() => goToSection('services')}>See what we build</button>
