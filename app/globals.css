@@ -113,6 +113,7 @@ nav {
   color: #62626d;
 }
 .gateway-about-copy { margin-top: 1rem; max-width: 62ch; color: var(--mid); line-height: 1.65; }
+.gateway-about-copy + .gateway-about-copy { margin-top: 0.75rem; }
 .home-founders { max-width: 1100px; margin: 0 auto; padding: 6rem 2rem; }
 .home-founders-heading { max-width: 760px; }
 .home-founders-heading h2 { font-family: var(--font-syne), sans-serif; font-size: clamp(32px, 5vw, 54px); line-height: 1.04; letter-spacing: -0.04em; }
@@ -312,7 +313,7 @@ section { padding: 100px 2rem; max-width: 1200px; margin: 0 auto; }
 .gateway-label { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--mid); padding: 2rem 2.5rem 0; }
 .gateway-inner { display: grid; grid-template-columns: 1fr 1.4fr; align-items: center; gap: 0; }
 .gateway-text { padding: 2.5rem; }
-.gateway-text h2 { font-family: var(--font-syne), sans-serif; font-size: clamp(36px, 5vw, 58px); font-weight: 800; line-height: 1.05; letter-spacing: -2px; margin-bottom: 2rem; }
+.gateway-text h2 { max-width: 18ch; font-family: var(--font-syne), sans-serif; font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 800; line-height: 1.08; letter-spacing: -0.035em; }
 .gateway-bubble { display: inline-block; background: var(--teal); color: #fff; border-radius: 100px; padding: 6px 16px; font-size: 13px; font-weight: 500; margin-bottom: 1.5rem; }
 .gateway-controls { display: flex; align-items: center; gap: 12px; }
 .ctrl-btn { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border); background: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; transition: background 0.2s; }
@@ -610,8 +611,6 @@ footer p { color: rgba(255,255,255,0.5); font-size: 14px; margin-bottom: 2rem; }
   .home-projects > div:first-child > h2 { color: var(--dark); }
   .home-main .cards-fan { display: none; }
   .hero { min-height: 78vh; }
-  .home-philosophy { display: none; }
-
   .gallery-wrap { padding: 72px 1rem; }
   footer { padding: 3rem 1rem; }
   .footer-links { gap: 1rem; flex-wrap: wrap; }
