@@ -430,17 +430,13 @@ export default function HomePage() {
                   src={project.preview}
                   alt={`${project.name} preview`}
                   fill
-                  sizes="(max-width: 768px) 100vw, 25vw"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="g-card-image"
                 />
               </div>
               <div className="featured-overlay"><span className="name">{project.name}</span><div className="source">{project.problem}</div></div>
             </motion.button>
           ))}
-          <motion.div className="g-card featured art-orange" whileHover={{ scale: 1.03 }} transition={{ duration: 0.6, ease: easeCurve }}>
-            <button className="like-btn" type="button" onClick={() => router.push('/labs')}>LABS</button>
-            <div className="featured-overlay"><span className="tag">Internal research and system development focused on IoT, robotics, and intelligent infrastructure.</span></div>
-          </motion.div>
         </div>
 
         <div
