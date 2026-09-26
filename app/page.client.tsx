@@ -473,30 +473,6 @@ export default function HomePage() {
         </div>
       </motion.div>
 
-      <motion.section className="engineering-projects" aria-labelledby="engineering-projects-title" {...revealMotion}>
-        <div className="engineering-projects-heading">
-          <div>
-            <p className="eyebrow">Engineering projects</p>
-            <h2 id="engineering-projects-title">Practical systems, installed in the real world.</h2>
-          </div>
-          <p>Selected fieldwork delivered for Fortsync Technologies (Private) Limited, from structured cabling and access work to on-site installation support.</p>
-        </div>
-        <div className="engineering-projects-grid">
-          <figure className="engineering-project-image engineering-project-image-wide">
-            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/45bde209-9473-4818-932f-ce7044f9f9f1_0_watermark-QPbvcWsT4FsVQjImo0GccLUS7njzaC.jpeg" alt="Rodent engineering team working at an international airport entrance" loading="lazy" />
-            <figcaption><span>Airport infrastructure</span><strong>On-site installation and systems support</strong></figcaption>
-          </figure>
-          <figure className="engineering-project-image">
-            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG-20260514-WA0027-OvODyJK27WXADsmbc1epLrvBpLbaPv.jpg" alt="Engineer accessing ceiling infrastructure during an office installation" loading="lazy" />
-            <figcaption><span>Commercial fit-out</span><strong>Careful delivery in active workspaces</strong></figcaption>
-          </figure>
-          <figure className="engineering-project-image">
-            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/45bde209-9473-4818-932f-ce7044f9f9f1_1_watermark-dmliR6mbVU9GTujL5EpCo0QuqELpNQ.jpeg" alt="Engineer working above an aircraft cabin during an installation" loading="lazy" />
-            <figcaption><span>Specialist access</span><strong>Field engineering where it matters</strong></figcaption>
-          </figure>
-        </div>
-      </motion.section>
-
       <motion.section className="home-labs" id="labs" style={{ padding: '0 2rem 4rem', maxWidth: 1100, margin: '0 auto' }} {...revealMotion}>
         <motion.h2 style={{ fontFamily: 'var(--font-syne)', marginBottom: '1rem' }} {...slideInLeft}>Labs</motion.h2>
         <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-10%' }} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: '1rem' }}>
@@ -563,8 +539,9 @@ export default function HomePage() {
           <Link href="/contact">Contact</Link>
           <Link href="/about">About</Link>
           <Link href="/pricing">Pricing</Link>
-          <Link href="/projects">Projects</Link>
-          <Link href="/blog">Blog</Link>
+  <Link href="/projects">Projects</Link>
+  <Link href="/engineering-projects">Engineering Projects</Link>
+  <Link href="/blog">Blog</Link>
         </div>
         <div className="footer-legal">
           <span>Rodent is a division of Squirrellabs Technologies (Private) Limited.</span>
