@@ -10,6 +10,7 @@ import { ContactForm } from '@/components/contact/contact-form';
 import { projects } from '@/data/projects';
 import { labs } from '@/data/labs';
 import { services } from '@/data/services';
+import { categoryLabel, estimateReadingTime, publishedPosts } from '@/data/blog';
 import { contact, contactEmailHref } from '@/data/contact';
 import { trackEvent } from '@/lib/analytics/track';
 
@@ -206,7 +207,7 @@ export default function HomePage() {
           </div>
           <div className="nav-actions">
             <button className="nav-icon" type="button" onClick={() => router.push('/about')} aria-label="Go to about" style={{ fontSize: 12, fontWeight: 600, width: 'auto', padding: '0 12px' }}>About</button>
-            <button className="nav-icon" type="button" onClick={() => router.push('/blog')} aria-label="Go to blog" style={{ fontSize: 12, fontWeight: 600 }}>Blog</button>
+            <button className="nav-icon" type="button" onClick={() => router.push('/insights')} aria-label="Go to insights" style={{ fontSize: 12, fontWeight: 600 }}>Insights</button>
             <button className="nav-icon" type="button" onClick={() => router.push('/contact')} aria-label="Go to contact" style={{ fontSize: 12, fontWeight: 600, width: 'auto', padding: '0 12px' }}>Contact</button>
           </div>
         </div>
@@ -230,7 +231,7 @@ export default function HomePage() {
             ))}
             <div className="mobile-nav-actions">
               <button type="button" onClick={() => { setMobileNavOpen(false); router.push('/about'); }}>About</button>
-              <button type="button" onClick={() => { setMobileNavOpen(false); router.push('/blog'); }}>Blog</button>
+              <button type="button" onClick={() => { setMobileNavOpen(false); router.push('/insights'); }}>Insights</button>
               <button type="button" onClick={() => { setMobileNavOpen(false); router.push('/contact'); }}>Contact</button>
             </div>
           </motion.div>
@@ -494,6 +495,11 @@ export default function HomePage() {
         </motion.div>
       </motion.section>
 
+      <motion.section className="home-insights" aria-labelledby="home-insights-title" {...revealMotion}>
+        <div className="home-insights-head"><div><p className="insight-eyebrow">Latest insights</p><h2 id="home-insights-title">Notes from the engineering work.</h2></div><Link href="/insights">View all insights →</Link></div>
+        <div className="home-insights-grid">{publishedPosts.slice(0, 3).map(post => <Link className="home-insight-card" href={`/insights/${post.slug}`} key={post.slug}><span>{categoryLabel(post.category)}</span><h3>{post.title}</h3><p>{post.description}</p><p style={{ marginTop: '.8rem' }}>{estimateReadingTime(post)} min read</p></Link>)}</div>
+      </motion.section>
+
       <motion.section
         className="home-contact"
         id="contact"
@@ -548,7 +554,7 @@ export default function HomePage() {
           <Link href="/pricing">Pricing</Link>
   <Link href="/projects">Projects</Link>
   <Link href="/engineering-projects">Engineering Projects</Link>
-  <Link href="/blog">Blog</Link>
+  <Link href="/insights">Insights</Link>
         </div>
         <div className="footer-legal">
           <span>Rodent is a division of Squirrellabs Technologies (Private) Limited.</span>

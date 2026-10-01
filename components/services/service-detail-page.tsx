@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { Service } from '@/data/services';
 import type { ProjectConfig } from '@/data/projects';
 import { ArchitectureFlow, CapabilityGrid, EnterpriseCta, NumberedProcess } from '@/components/content/content-sections';
+import { RelatedInsights } from '@/components/insights/related-insights';
 
 export function ServiceDetailPage({ service, related }: { service: Service; related: ProjectConfig[] }) {
   return <main className={`detail-page detail-${service.slug}`}>
@@ -23,6 +24,7 @@ export function ServiceDetailPage({ service, related }: { service: Service; rela
     <section className="detail-section"><div className="detail-split"><div><p className="detail-kicker">Who it is for</p><h2>Relevant operating contexts.</h2><p>Fit is established in discovery; this service is not presented as equally appropriate for every organisation.</p></div><ul className="audience-list">{service.audiences.map((audience) => <li key={audience}>{audience}</li>)}</ul></div></section>
 
     {related.length > 0 && <section className="detail-section"><header><p className="detail-kicker">Related projects</p><h2>See the capability in working systems.</h2></header><div className="related-grid">{related.map((project) => <Link href={`/projects/${project.slug}`} key={project.id}><span>{project.category}</span><h3>{project.name}</h3><p>{project.tagline}</p><strong>View case study →</strong></Link>)}</div></section>}
+    <RelatedInsights service={service.slug} />
 
     {service.faqs.length > 0 && <section className="detail-section"><header><p className="detail-kicker">Practical questions</p><h2>Before an engagement starts.</h2></header><div className="content-grid">{service.faqs.map((faq) => <article className="content-card" key={faq.q}><h3>{faq.q}</h3><p>{faq.a}</p></article>)}</div></section>}
     <EnterpriseCta eyebrow="Start the conversation" title={service.cta} body="Bring the current process, constraints and intended users. Rodent will help define a credible next engineering step." />
