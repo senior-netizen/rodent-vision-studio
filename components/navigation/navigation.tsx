@@ -11,6 +11,7 @@ const navLinks = [
   { label: 'Clients', href: '#clients' },
   { label: 'Impact', href: '#impact' },
   { label: 'Projects', href: '/projects' },
+  { label: 'Insights', href: '/insights' },
   { label: 'Systems', href: '#systems' },
   { label: 'Contact', href: '/contact' },
 ];

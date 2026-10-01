@@ -13,6 +13,21 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: '/blog',
+        destination: '/insights',
+        permanent: true,
+      },
+      {
+        source: '/blog/rss.xml',
+        destination: '/rss.xml',
+        permanent: true,
+      },
+      {
+        source: '/blog/:slug',
+        destination: '/insights/:slug',
+        permanent: true,
+      },
+      {
         source: '/projects/jofe-platform',
         destination: '/projects/job-opportunities-for-everyone-platform',
         permanent: true,

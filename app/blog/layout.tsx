@@ -1,12 +1,11 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Journal — Notes from Rodent',
-  description:
-    'Field notes on engineering web, mobile, IoT, and robotics systems from the Rodent team.',
+  title: 'Rodent Lab Insights',
+  description: 'Engineering notes, build stories and practical thinking from Rodent Lab.',
   alternates: {
-    canonical: '/blog',
-    types: { 'application/rss+xml': '/blog/rss.xml' },
+    canonical: '/insights',
+    types: { 'application/rss+xml': '/rss.xml' },
   },
   openGraph: {
     title: 'Journal | Rodent',

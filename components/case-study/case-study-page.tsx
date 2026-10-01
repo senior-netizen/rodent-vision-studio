@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import type { ProjectConfig } from '@/data/projects';
 import { ArchitectureFlow, CapabilityGrid, EnterpriseCta } from '@/components/content/content-sections';
+import { RelatedInsights } from '@/components/insights/related-insights';
 
 function Section({ kicker, title, children }: { kicker: string; title: string; children: React.ReactNode }) {
   return <section className="detail-section"><header><p className="detail-kicker">{kicker}</p><h2>{title}</h2></header>{children}</section>;
@@ -36,6 +37,7 @@ export function CaseStudyPage({ project }: { project: ProjectConfig }) {
 
     <Section kicker="Outcome" title="A demonstrable result, without invented metrics."><div className="outcome-panel"><p>{project.result || project.outcome}</p><strong>{project.outcome}</strong></div></Section>
     <Section kicker="Related services" title="Capabilities behind this project."><div className="related-grid">{project.relatedServices.map((service) => <Link href={service.href} key={service.href}><span>Engineering service</span><h3>{service.name}</h3><strong>Explore service →</strong></Link>)}</div></Section>
+    <RelatedInsights project={project.id} title="Engineering notes from this project." />
     <EnterpriseCta eyebrow="Build something similar" title="Need a system with similar capabilities?" body="Tell Rodent about the operational problem, users and constraints—not just the technology you think you need." />
   </main>;
 }

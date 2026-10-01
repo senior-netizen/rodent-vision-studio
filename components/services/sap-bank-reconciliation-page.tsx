@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { RelatedInsights } from '@/components/insights/related-insights';
 
 const stages = [
   ['Bank Statement Integration', 'Receive structured electronic statements from supported banking institutions.'],
@@ -61,6 +62,8 @@ export function SapBankReconciliationPage() {
     <section className="sap-section"><div className="sap-heading"><p className="sap-kicker">Business outcomes</p><h2>Less repetitive processing. Greater financial visibility.</h2></div><div className="sap-benefits">{benefits.map(([title, description]) => <article key={title}><h3>{title}</h3><p>{description}</p></article>)}</div></section>
 
     <section className="sap-section sap-implementation"><div className="sap-heading"><p className="sap-kicker">Implementation approach</p><h2>From discovery to continuous optimisation.</h2></div><ol>{implementation.map((x,i)=><li key={x}><span>{String(i+1).padStart(2,'0')}</span>{x}</li>)}</ol></section>
+
+    <RelatedInsights service="sap-bank-reconciliation" />
 
     <section className="sap-final"><p className="sap-kicker">Start the conversation</p><h2>Ready to automate your bank reconciliation process?</h2><p>Talk to Rodent Lab about your SAP environment, banking relationships, currencies and current reconciliation process.</p><div className="sap-actions"><Link href="/contact" className="btn-primary">Discuss Your SAP Environment</Link><Link href="/contact" className="btn-secondary">Contact Rodent Lab</Link></div></section>
     <footer className="sap-footer"><Link href="/">Rodent</Link><p>Engineering systems for real operations.</p><div><Link href="/services">Services</Link><Link href="/projects">Projects</Link><Link href="/contact">Contact</Link></div></footer>
