@@ -29,7 +29,6 @@ export const projectCaseStudiesById: Partial<Record<Project['id'], ProjectCaseSt
     outcome: 'Established a centralized job platform with a scalable intake and publishing foundation.',
     summary: {
       scope: 'End-to-end architecture and case study execution for employment distribution platform.',
-      timeline: '6-week design and build cycle.',
       primaryKpi: 'Centralized listing access with reduced channel fragmentation.',
     },
   },
@@ -44,7 +43,7 @@ export const projectCaseStudiesById: Partial<Record<Project['id'], ProjectCaseSt
     summary: {
       scope: 'End-to-end property search and listing platform.',
       timeline: 'Iterative delivery with continuous UX refinement.',
-      primaryKpi: 'Faster listing discovery and publication turnaround.',
+      primaryKpi: 'Search and publishing in one interface.',
     },
   },
   shedsense: {
@@ -67,11 +66,11 @@ export const projectCaseStudiesById: Partial<Record<Project['id'], ProjectCaseSt
     dataFlow: ['User Session → Experience Shell', 'Interaction Events → Animation Layer', 'Media Assets → Render Pipeline', 'CTA Actions → Source Destination'],
     decisions: ['Optimized animation sequencing to keep motion smooth across device classes.', 'Structured interactive elements to preserve accessibility while remaining immersive.'],
     visuals: { screenshot: '/visuals/ar-by-rodent-preview.jpg', diagram: '/visuals/ar-by-rodent-preview.jpg' },
-    outcome: 'Shipped an immersive AR-led product surface with strong visual identity and engagement.',
+    outcome: 'Delivered a public interactive product surface with browser-rendered visuals and explicit calls to action.',
     summary: {
       scope: 'Interactive AR showcase and product landing experience.',
       timeline: 'Rapid delivery with design-led iterations.',
-      primaryKpi: 'Higher session engagement on interactive surfaces.',
+      primaryKpi: 'Interactive presentation on mobile and desktop.',
     },
   },
   'precise-locations': {
