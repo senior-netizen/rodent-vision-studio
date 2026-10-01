@@ -1,6 +1,6 @@
 import type { Project } from './projects';
 
-export type ServiceSlug = 'web' | 'mobile' | 'iot' | 'robotics';
+export type ServiceSlug = 'web' | 'mobile' | 'iot' | 'robotics' | 'sap-bank-reconciliation';
 
 export type ServiceFaq = { q: string; a: string };
 
@@ -17,9 +17,32 @@ export type Service = {
   metaDescription: string;
   relatedProjects: Project['id'][];
   cta: string;
+  category?: string;
+  tags?: string[];
 };
 
 export const services: Service[] = [
+  {
+    slug: 'sap-bank-reconciliation',
+    name: 'SAP Bank Reconciliation Automation',
+    category: 'SAP & Enterprise Automation',
+    summary: 'Automate reconciliation across multiple banks, accounts and currencies within SAP. We integrate structured electronic bank statements, configure intelligent transaction-matching rules, automate posting and clearing, and route unmatched transactions for exception review.',
+    capability: 'Automate bank reconciliation across multiple banks, accounts and currencies directly within your SAP environment.',
+    tags: ['Multi-Currency', 'Multi-Bank', 'ISO 20022', 'SAP EBS', 'Automated Matching', 'Exception Management'],
+    deliverables: ['Bank statement interfaces', 'SAP matching and posting rules', 'Exception-management workflow', 'Controls, testing and rollout support'],
+    process: [
+      { title: 'Discovery', description: 'Assess the SAP landscape, accounts, banks, currencies and current controls.' },
+      { title: 'Integration design', description: 'Define statement formats, connectivity and validation requirements.' },
+      { title: 'Configure', description: 'Implement matching, posting, clearing and exception rules.' },
+      { title: 'Rollout', description: 'Test, complete UAT, deploy and optimise the reconciliation framework.' },
+    ],
+    technologies: ['SAP EBS', 'ISO 20022', 'CAMT.053', 'SWIFT MT940', 'SFTP', 'APIs'],
+    faqs: [],
+    metaTitle: 'SAP Bank Reconciliation Automation | Rodent Lab',
+    metaDescription: 'Rodent Lab designs SAP bank reconciliation automation for multi-bank and multi-currency environments using ISO 20022, electronic bank statements, automated matching and exception management.',
+    relatedProjects: [],
+    cta: 'Ready to automate your bank reconciliation process?',
+  },
   {
     slug: 'web',
     name: 'Web Systems',

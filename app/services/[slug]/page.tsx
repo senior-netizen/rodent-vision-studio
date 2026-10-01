@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { projectById } from '@/data/projects';
 import { serviceBySlug, services } from '@/data/services';
+import { SapBankReconciliationPage } from '@/components/services/sap-bank-reconciliation-page';
 
 export function generateStaticParams() {
   return services.map((service) => ({ slug: service.slug }));
@@ -21,12 +22,16 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
       type: 'article',
       url: `/services/${service.slug}`,
     },
+    ...(service.slug === 'sap-bank-reconciliation' ? {
+      keywords: ['SAP bank reconciliation', 'SAP automation', 'SAP electronic bank statement', 'ISO 20022 SAP', 'CAMT.053 integration', 'SWIFT MT940 SAP', 'automated bank reconciliation', 'SAP finance automation', 'enterprise finance automation', 'multi-currency reconciliation'],
+    } : {}),
   };
 }
 
 export default function ServiceDetailPage({ params }: { params: { slug: string } }) {
   if (!(params.slug in serviceBySlug)) notFound();
   const service = serviceBySlug[params.slug as keyof typeof serviceBySlug];
+  if (service.slug === 'sap-bank-reconciliation') return <SapBankReconciliationPage />;
   const related = service.relatedProjects
     .map((id) => projectById[id])
     .filter(Boolean);
