@@ -3,13 +3,13 @@ import Link from 'next/link';
 import { services } from '@/data/services';
 
 export const metadata: Metadata = {
-  title: 'Services — Web, Mobile, IoT, Robotics | Rodent',
+  title: 'Engineering Services | Rodent Lab',
   description:
-    'We design and build practical systems across web, mobile, IoT, and robotics. Explore our service capabilities and engagement model.',
+    'Software, connected systems, enterprise automation and physical-system engineering built around real operational requirements.',
   alternates: { canonical: '/services' },
   openGraph: {
-    title: 'Services | Rodent',
-    description: 'Production-grade web, mobile, IoT, and robotics systems engineered for real operations.',
+    title: 'Engineering Services | Rodent Lab',
+    description: 'Explore web, mobile, IoT, robotics and SAP finance-automation engineering from Rodent Lab.',
     type: 'website',
     url: '/services',
   },
@@ -27,10 +27,9 @@ export default function ServicesPage() {
             <span className="h-px w-6 bg-border" />
             <span className="text-label">What we build</span>
           </div>
-          <h1 className="text-display text-[clamp(2.75rem,7vw,6rem)]">Services</h1>
+          <h1 className="text-display text-[clamp(2.75rem,7vw,6rem)]">Engineering Services</h1>
           <p className="text-body mt-6 max-w-2xl text-lg">
-            We design and build practical systems across web, mobile, IoT, and robotics — focused on
-            performance, reliability, and real-world deployment.
+            Software, connected systems and automation built around real operational requirements—from public interfaces to field equipment and enterprise finance workflows.
           </p>
         </div>
       </section>
@@ -44,7 +43,7 @@ export default function ServicesPage() {
                 href={`/services/${service.slug}`}
                 className="card-glass group flex flex-col gap-4 p-8 transition-colors duration-300 hover:border-border-hover"
               >
-                <span className="text-label">{service.slug.toUpperCase()}</span>
+                <span className="text-label">{service.eyebrow}</span>
                 {service.category && <span className="service-category">{service.category}</span>}
                 <h2 className="text-heading text-3xl">{service.name}</h2>
                 <p className="text-body text-base leading-relaxed">{service.summary}</p>
@@ -54,7 +53,7 @@ export default function ServicesPage() {
                   </div>
                 )}
                 <span className="mt-auto text-caption transition-colors duration-300 group-hover:text-fg-muted">
-                  Read service →
+                  Explore {service.name} →
                 </span>
               </Link>
             ))}

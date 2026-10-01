@@ -376,6 +376,8 @@ export default function HomePage() {
                   );
                 })()}
                 <div className="mp-card-label">{card.name}</div>
+                <p className="home-card-summary">{card.summary}</p>
+                <span className="home-card-link">Explore service →</span>
               </motion.button>
             ))}
           </div>
@@ -416,6 +418,8 @@ export default function HomePage() {
                 );
               })()}
               <div className="mp-card-label">{services[mobileServiceIndex].name}</div>
+              <p className="home-card-summary">{services[mobileServiceIndex].summary}</p>
+              <span className="home-card-link">Explore service →</span>
             </motion.button>
             <button className="mp-carousel-arrow mp-carousel-arrow-right" type="button" onClick={nextMobileService} aria-label="Next service">→</button>
           </div>
@@ -436,7 +440,7 @@ export default function HomePage() {
                   className="g-card-image"
                 />
               </div>
-              <div className="featured-overlay"><span className="name">{project.name}</span><div className="source">{project.problem}</div></div>
+              <div className="featured-overlay"><span className="project-card-category">{project.category}</span><span className="name">{project.name}</span><div className="source">{project.tagline}</div><strong>View case study →</strong></div>
             </motion.button>
           ))}
         </div>
@@ -467,7 +471,9 @@ export default function HomePage() {
             </div>
             <div className="featured-overlay">
               <span className="name">{projects[mobileProjectIndex].name}</span>
-              <div className="source">{projects[mobileProjectIndex].problem}</div>
+              <span className="project-card-category">{projects[mobileProjectIndex].category}</span>
+              <div className="source">{projects[mobileProjectIndex].tagline}</div>
+              <strong>View case study →</strong>
             </div>
           </motion.button>
           <button className="gallery-carousel-arrow gallery-carousel-arrow-right" type="button" onClick={nextMobileProject} aria-label="Next project">→</button>

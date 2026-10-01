@@ -1,48 +1,18 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { projectConfigs } from '@/data/projects';
 
 export const metadata: Metadata = {
-  title: 'Projects — Selected Systems by Rodent',
-  description:
-    'Selected web, mobile, and connected systems built by Rodent for businesses and field teams.',
+  title: 'Engineering Case Studies | Rodent Lab',
+  description: 'Explore Rodent Lab case studies across web platforms, IoT telemetry, interactive products, developer tooling and commercial websites.',
   alternates: { canonical: '/projects' },
-  openGraph: {
-    title: 'Projects | Rodent',
-    description: 'Selected web, mobile, and connected systems built by Rodent.',
-    type: 'website',
-    url: '/projects',
-  },
+  openGraph: { title: 'Engineering Case Studies | Rodent Lab', description: 'The operational problems, architecture and engineering decisions behind systems built by Rodent.', type: 'website', url: '/projects' },
 };
 
 export default function ProjectsPage() {
-  return (
-    <main style={{ maxWidth: 1100, margin: '0 auto', padding: '6rem 1rem 2rem' }}>
-      <h1 style={{ fontFamily: 'var(--font-syne)', marginBottom: '1rem' }}>Projects</h1>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: '1rem' }}>
-        {projectConfigs.map((project) => (
-          <Link
-            key={project.id}
-            href={`/projects/${project.slug}`}
-            style={{ border: '1px solid var(--border)', borderRadius: 12, padding: '1rem', textDecoration: 'none', color: 'inherit' }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
-              <h2 style={{ fontFamily: 'var(--font-syne)', fontSize: 24 }}>{project.name}</h2>
-              <span style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.06em', border: '1px solid var(--teal)', color: '#087d65', borderRadius: 999, padding: '0.15rem 0.55rem' }}>
-                Project delivered
-              </span>
-            </div>
-            <p style={{ color: 'var(--mid)', fontSize: 14 }}>{project.problem}</p>
-            <p style={{ color: 'var(--mid)', fontSize: 12, marginTop: 8 }}>
-              {project.status === 'live'
-                ? 'Public demo available.'
-                : project.status === 'staging'
-                  ? 'Public preview available.'
-                  : 'Case study only.'}
-            </p>
-          </Link>
-        ))}
-      </div>
-    </main>
-  );
+  return <main className="detail-page">
+    <section className="detail-hero" style={{ gridTemplateColumns: '1fr' }}><div><Link href="/" className="detail-back">← Home</Link><p className="detail-kicker">Selected work</p><h1>Engineering case studies.</h1><p className="detail-lead">The problems, system boundaries and decisions behind software, connected products and public platforms built by Rodent.</p></div></section>
+    <section className="detail-section"><div className="project-index-grid">{projectConfigs.map((project) => <Link href={`/projects/${project.slug}`} key={project.id} className="project-index-card"><div className="project-index-image"><Image src={project.visuals.preview} alt={`${project.name} project preview`} fill sizes="(max-width: 700px) 100vw, 50vw" /></div><div><span>{project.category} · {project.projectType}</span><h2>{project.name}</h2><p>{project.tagline}</p><ul>{project.stack.slice(0,3).map((technology) => <li key={technology}>{technology}</li>)}</ul><strong>View case study →</strong></div></Link>)}</div></section>
+  </main>;
 }
