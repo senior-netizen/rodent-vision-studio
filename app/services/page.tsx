@@ -45,8 +45,14 @@ export default function ServicesPage() {
                 className="card-glass group flex flex-col gap-4 p-8 transition-colors duration-300 hover:border-border-hover"
               >
                 <span className="text-label">{service.slug.toUpperCase()}</span>
+                {service.category && <span className="service-category">{service.category}</span>}
                 <h2 className="text-heading text-3xl">{service.name}</h2>
                 <p className="text-body text-base leading-relaxed">{service.summary}</p>
+                {service.tags && (
+                  <div className="service-tags" aria-label={`${service.name} capabilities`}>
+                    {service.tags.map((tag) => <span key={tag}>{tag}</span>)}
+                  </div>
+                )}
                 <span className="mt-auto text-caption transition-colors duration-300 group-hover:text-fg-muted">
                   Read service →
                 </span>

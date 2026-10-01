@@ -95,6 +95,7 @@ export default function HomePage() {
     mobile: { className: 'art-gradient-rainbow', imageSrc: '/visuals/service-mobile.jpg', imageAlt: 'Mobile application preview' },
     iot: { className: 'art-teal', imageSrc: '/visuals/service-iot.jpg', imageAlt: 'IoT sensor device' },
     robotics: { className: 'art-gradient-purple', imageSrc: '/visuals/service-robotics.jpg', imageAlt: 'Robotics arm in lab' },
+    'sap-bank-reconciliation': { className: 'art-enterprise-flow', imageAlt: 'Connected finance systems and reconciliation flow' },
   };
 
   const heroRef = useRef<HTMLDivElement | null>(null);
