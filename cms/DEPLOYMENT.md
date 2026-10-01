@@ -44,7 +44,7 @@ Connect a Vercel Blob store to this project and provide its read/write token. Th
 
 - Restrict CORS/CSRF to the exact CMS and public-site origins; never use a wildcard.
 - Add Vercel Firewall/Cloudflare distributed rate limits to login, reset, and preview endpoints.
-- Keep dependencies patched and review admin CSP in report-only mode before adding a strict policy (a guessed CSP can break Payload Admin).
+- Keep dependencies patched and validate the configured admin CSP in report-only mode before making it more restrictive (a guessed policy can break Payload Admin).
 - MFA is an explicitly documented gap: enforce it upstream until a maintained Payload-compatible implementation is reviewed.
 - Confirm `/admin` and `/api` return `X-Robots-Tag: noindex, nofollow` and HTTPS returns HSTS.
 

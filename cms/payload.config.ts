@@ -29,7 +29,7 @@ export default buildConfig({
   admin: { user: Users.slug, meta: { titleSuffix: '— Rodent Lab CMS' } }, routes: { admin: '/admin', api: '/api' }, cors: origins, csrf: origins,
   db: postgresAdapter({ pool: { connectionString: required('DATABASE_URL') }, push: process.env.NODE_ENV !== 'production' }), editor: lexicalEditor(),
   collections: [Users, Media, Insights, Services, Projects, Categories, Tags, Authors, Technologies, Industries, AuditLogs], globals: [SiteSettings, Navigation, Homepage],
-  plugins: [vercelBlobStorage({ enabled: true, collections: { media: { clientUploads: true } }, token: blobToken })],
+  plugins: [vercelBlobStorage({ enabled: true, clientUploads: true, collections: { media: true }, token: blobToken })],
   ...(smtpConfigured ? { email: nodemailerAdapter({ defaultFromAddress: process.env.SMTP_FROM!, defaultFromName: 'Rodent Lab CMS', transportOptions: { host: process.env.SMTP_HOST, port: Number(process.env.SMTP_PORT || 587), auth: process.env.SMTP_USER ? { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS } : undefined } }) } : {}),
   typescript: { outputFile: path.resolve(dirname, 'payload-types.ts') }, graphQL: { disablePlaygroundInProduction: true },
 })
